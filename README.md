@@ -20,7 +20,7 @@ At this early stage, my code is not readable or well commented. I will be creati
 
 I will be attempting to structure the code so that this repository can be included as a sub-repository in other projects easily.
 
-Otherwise, just download the code and use the following include statement to start coding.
+Your project just needs to compile and link XDDSP.cpp and include the XDDSP.h header file
 
     #include "[path_to_library]/XDDSP.h"
 
