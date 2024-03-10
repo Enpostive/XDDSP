@@ -366,7 +366,7 @@ public:
     SampleType x = 0.;
     buffer[c].tapIn(signalIn(c, i));
     
-    for (int t = 0; t < FIRTapCount; ++t)
+    for (int t = 0; t < FIRTapCount; t += 2)
     {
      x += buffer[c].tapOut(t)*taps[t];
     }
