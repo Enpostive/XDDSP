@@ -334,11 +334,9 @@ public:
 
 
 
-template <int NoConnections = 0, int ChannelCount = 1>
+template <int NoConnections, int ChannelCount = 1>
 class Switch : public Coupler<ChannelCount>
 {
- static_assert(NoConnections > 0, "Number of connections must be specified");
- 
  int selected;
  
  std::array<Coupler<ChannelCount>*, NoConnections> connections;
@@ -346,7 +344,7 @@ class Switch : public Coupler<ChannelCount>
 protected:
  virtual SampleType get(int channel, int index) override
  {
-  return *(connections[selected])(channel, index);
+  return (*(connections[selected]))(channel, index);
  }
  
 public:
