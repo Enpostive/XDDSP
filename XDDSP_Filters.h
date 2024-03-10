@@ -307,25 +307,34 @@ class FIRHilbertTransform : public Component<FIRHilbertTransform<SignalIn>>
  
  // Private data members here
  std::array<SampleType, FIRTapCount> taps;
+ std::array<DynamicCircularBuffer<>, SignalIn::Count> inPhaseDelay;
  std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
  
  static constexpr SampleType alpha = 25.0/46.0;
 public:
- static constexpr int DelayLength = FIRTapCount / 2;
+ static constexpr int DelayLength = FIRTapCount/2;
  static constexpr int Count = SignalIn::Count;
  
  // Specify your inputs as public members here
  SignalIn signalIn;
  
  // Specify your outputs like this
- Output<Count> signalOut;
+ Output<Count> inPhaseOut;
+ Output<Count> quadratureOut;
  
  // Include a definition for each input in the constructor
  FIRHilbertTransform(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),
- signalOut(p)
+ inPhaseOut(p),
+ quadratureOut(p)
  {
-  for(auto &b: buffer)
+  for (auto &d: inPhaseDelay)
+  {
+   d.setMaximumLength(DelayLength);
+   d.reset();
+  }
+  
+  for (auto &b: buffer)
   {
    b.setMaximumLength(FIRTapCount);
    b.reset();
@@ -344,8 +353,10 @@ public:
  // the component is disabled.
  void reset()
  {
-  for(auto &b: buffer) b.reset();
-  signalOut.reset();
+  for (auto &d: inPhaseDelay) d.reset();
+  for (auto &b: buffer) b.reset();
+  inPhaseOut.reset();
+  quadratureOut.reset();
  }
  
  // startProcess prepares the component for processing one block and returns the step
@@ -362,11 +373,15 @@ public:
    {
     SampleType x = 0.;
     buffer[c].tapIn(signalIn(c, i));
+    inPhaseDelay[c].tapIn(signalIn(c, i));
+    
     for (int t = 0; t < FIRTapCount; ++t)
     {
      x += buffer[c].tapOut(t)*taps[t];
     }
-    signalOut.buffer(c, i) = x;
+    
+    inPhaseOut.buffer(c, i) = inPhaseDelay[c].tapOut(DelayLength);
+    quadratureOut.buffer(c, i) = x;
    }
   }
  }
@@ -398,14 +413,14 @@ public:
  SignalIn signalIn;
  
  // Specify your outputs like this
- Output<Count> aOut;
- Output<Count> bOut;
+ Output<Count> quadratureOut;
+ Output<Count> inPhaseOut;
  
  // Include a definition for each input in the constructor
  IIRHilbertApproximator(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),
- aOut(p),
- bOut(p)
+ quadratureOut(p),
+ inPhaseOut(p)
  {
   for (auto &hx : h) hx.fill(0.);
  }
@@ -414,8 +429,8 @@ public:
  // the component is disabled.
  void reset()
  {
-  aOut.reset();
-  bOut.reset();
+  quadratureOut.reset();
+  inPhaseOut.reset();
   for (auto &hx : h) hx.fill(0.);
  }
  
@@ -448,7 +463,7 @@ public:
     h[c][12] = xb + 0.590957946f*xa;
     xb = h[c][15] - 0.219852059f*xa;  h[c][15] = h[c][14];
     h[c][14] = xa + 0.219852059f*xb;
-    aOut.buffer(c, i) = h[c][32]; h[c][32] = xb;
+    quadratureOut.buffer(c, i) = h[c][32]; h[c][32] = xb;
 
     // out2 filter chain: 8 allpasses
     xa = h[c][17] - 0.998478404f*signalIn(c, i);  h[c][17] = h[c][16];
@@ -465,8 +480,8 @@ public:
     h[c][26] = xa + 0.729672406f*xb;
     xa = h[c][29] - 0.413200818f*xb;  h[c][29] = h[c][28];
     h[c][28] = xb + 0.413200818f*xa;
-    bOut.buffer(c, i) = h[c][31] - 0.061990080f*xa; h[c][31] = h[c][30];
-    h[c][30] = xa + 0.061990080f*bOut.buffer(c, i);
+    inPhaseOut.buffer(c, i) = h[c][31] - 0.061990080f*xa; h[c][31] = h[c][30];
+    h[c][30] = xa + 0.061990080f*inPhaseOut.buffer(c, i);
    }
   }
  }

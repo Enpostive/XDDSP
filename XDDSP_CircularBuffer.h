@@ -69,7 +69,7 @@ public:
   return input;
  }
  
- T tapOut(uint32_t delay)
+ T& tapOut(uint32_t delay)
  {
   if (delay > Size.mask()) delay = Size.mask();
   return buffer[(bc - delay) & Size.mask()];
@@ -121,7 +121,7 @@ public:
   return input;
  }
  
- T tapOut(uint32_t delay)
+ T& tapOut(uint32_t delay)
  {
   if (delay > size.mask()) delay = size.mask();
   return buffer[(bc - delay) & size.mask()];
@@ -182,7 +182,7 @@ public:
   return input;
  }
  
- T tapOut(uint32_t delay)
+ T& tapOut(uint32_t delay)
  {
   if (delay >= size) delay = size - 1;
   return buffer[(bc - delay + size) % size];

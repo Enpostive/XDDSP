@@ -10,6 +10,8 @@
 
 #include <cmath>
 #include <array>
+#include "XDDSP_Types.h"
+#include "XDDSP_Parameters.h"
 
 
 
@@ -31,7 +33,7 @@ void fftDynamicSize(T *data, unsigned long n)
 {
  unsigned long i, j, k, i5, i6, i7, i8, i0, iD, i1, i2, i3, i4, n2, n4, n8;
  T t1, t2, t3, t4, t5, t6, a3, ss1, ss3, cc1, cc3, a, e;
-
+ 
  n4 = n - 1;
  
  //data shuffling
@@ -163,7 +165,7 @@ void fftDynamicSize(T *data, unsigned long n)
    } while(i < n);
   }
  }
-
+ 
  
  T nRec = 1./static_cast<T>(n);
  for (i = 0; i < n; ++i) data[i] *= nRec;
@@ -183,7 +185,7 @@ void ifftDynamicSize(T *data, unsigned long n)
 {
  long i, j, k, i5, i6, i7, i8, i0, iD, i1, i2, i3, i4, n2, n4, n8, n1;
  T t1, t2, t3, t4, t5, a3, ss1, ss3, cc1, cc3, a, e;
-  
+ 
  n1 = n - 1;
  n2 = n<<1;
  for(k = n; k > 2; k >>= 1)
@@ -319,6 +321,12 @@ void fftStaticSize(std::array<T, n> &data)
  fftDynamicSize(data.data(), data.size());
 }
 
+template <typename T>
+void fftDynamicSize(std::vector<T> &data)
+{
+ fftDynamicSize(data.data(), data.size());
+}
+
 
 
 
@@ -334,6 +342,56 @@ void ifftStaticSize(std::array<T, n> &data)
  ifftDynamicSize(data.data(), data.size());
 }
 
+template <typename T>
+void ifftDynamicSize(std::vector<T> &data)
+{
+ ifftDynamicSize(data.data(), data.size());
+}
+
+
+
+
+
+
+
+
+
+
+template <typename T>
+std::pair<T, T> getComplexSample(T* data, unsigned long index, unsigned long n)
+{
+ return {data[index], data[n - index - 1]};
+}
+
+
+
+
+
+
+
+
+
+template <typename T>
+void multiplyFFTs(T* input, T* m, unsigned long n)
+{
+ for (unsigned long p = 0; p < n/2; ++p)
+ {
+  const unsigned long p2 = n - p - 1;
+  // Complex multipliction formula
+  // x + yi = (a + bi)(c + di)
+  //        = (ac - bd) + (ad + bc)i
+  const T a = input[p];
+  const T b = input[p2];
+  const T c = m[p];
+  const T d = m[p2];
+  
+  // x = ac - bd
+  input[p] = a*c - b*d;
+  // y = ad + bc
+  input[p2] = a*d + b*c;
+ }
+}
+
 
 
 
@@ -346,8 +404,8 @@ void ifftStaticSize(std::array<T, n> &data)
 template <typename T>
 T magnitudeAt(T* data, unsigned long index, unsigned long n)
 {
- T magSqr =
- data[index]*data[index] + data[n - index - 1]*data[n - index - 1];
+ auto sample = getComplexSample(data, index, n);
+ T magSqr = sample.first*sample.first + sample.second*sample.second;
  return sqrt(magSqr);
 }
 
@@ -383,9 +441,9 @@ void calculateMagnitudes(T* data, unsigned long n)
 
 
 /*
-template <typename T, unsigned long n>
-T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
-{
+ template <typename T, unsigned long n>
+ T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
+ {
  constexpr unsigned long nHalved = n/2;
  
  fftStaticSize(data);
@@ -393,8 +451,8 @@ T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
  // Multiply by conjugate
  for (unsigned long i = 0; i < nHalved; ++i)
  {
-  data[i] = data[i]*data[i] + data[data.size() - i - 1]*data[data.size() - i - 1];
-  data[data.size() - i - 1] = 0.;
+ data[i] = data[i]*data[i] + data[data.size() - i - 1]*data[data.size() - i - 1];
+ data[data.size() - i - 1] = 0.;
  }
  data[0] = data[1] = 0.;
  ifftStaticSize(data);
@@ -403,7 +461,7 @@ T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
  if (norm > 0.) norm = 1./norm;
  for (unsigned long i = 0; i < nHalved; ++i)
  {
-  data[i] = data[i]*norm;
+ data[i] = data[i]*norm;
  }
  
  unsigned long maxima = 1;
@@ -417,20 +475,146 @@ T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
  
  if (maxima < nHalved - 1)
  {
-  T maxima1;
-  XDDSP::IntersectionEstimator<T> intersect;
-  intersect.setSampleValues(data[maxima - 2],
-                            data[maxima - 1],
-                            data[maxima],
-                            data[maxima + 1]);
-  
-  intersect.calculateStationaryPoints(fMaxima, maxima1);
-  fMaxima = maxima + maxima1 - 2.;
+ T maxima1;
+ XDDSP::IntersectionEstimator<T> intersect;
+ intersect.setSampleValues(data[maxima - 2],
+ data[maxima - 1],
+ data[maxima],
+ data[maxima + 1]);
+ 
+ intersect.calculateStationaryPoints(fMaxima, maxima1);
+ fMaxima = maxima + maxima1 - 2.;
  }
  
  return fMaxima;
-}
+ }
+ */
+
+
+
+
+
+
+
+
+
+/*
+template <typename SignalIn>
+class FIRFilter : public Component<FIRFilter<SignalIn>>
+{
+public:
+ static constexpr int Count = SignalIn::Count;
+
+private:
+ // Private data members here
+ unsigned long fftSize = 0;
+ unsigned long blockSize = 0;
+ 
+ std::vector<std::vector<SampleType>> FFTKernels;
+ std::array<std::vector<SampleType>, Count> procBuff;
+ std::array<DynamicCircularBuffer<>, Count> outputBuffer;
+ 
+ void computeBlockLength(unsigned long kernelLength)
+ {
+  PowerSize s;
+  s.setToNextPowerTwo(kernelLength);
+  fftSize = 8 * s.bits();
+  blockSize = fftSize - kernelLength - 1;
+ }
+  
+public:
+ 
+ // Specify your inputs as public members here
+ SignalIn signalIn;
+ 
+ // Specify your outputs like this
+ Output<Count> signalOut;
+ 
+ // Include a definition for each input in the constructor
+ FIRFilter(Parameters &p, SignalIn _signalIn) :
+ signalIn(_signalIn),
+ signalOut(p)
+ {}
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  signalOut.reset();
+ }
+ 
+ unsigned long getPropagationDelay()
+ { return blockSize; }
+ 
+ void resetKernels(unsigned long fft)
+ {
+  FFTKernels.clear();
+  blockSize = 0;
+ }
+ 
+ template <typename T>
+ void setKernel(int index, T* data, unsigned long length)
+ {
+  dsp_assert(index >= 0 && index < Count);
+  
+  if (index > 0) FFTKernels.resize(Count);
+  else if (FFTKernels.size() == 0) FFTKernels.resize(1);
+  
+  FFTKernels[index].resize(length);
+  std::copy(data, data + length, FFTKernels[index].begin());
+ }
+ 
+ 
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+// int startProcess(int startPoint, int sampleCount)
+// { }
+
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  // If there are no kernels loaded, simply pass signal through
+  if (FFTKernels.size() == 0)
+  {
+   for (int c = 0; c < Count; ++c)
+   {
+    for (int i = startPoint, s = sampleCount; s--; ++i)
+    {
+     signalOut.buffer(c, i) = signalIn(c, i);
+    }
+   }
+  }
+  
+  // otherwise process the inputs
+  else
+  {
+   
+   // Copy each input into it's process buffer and zero out the remaining length
+   for (int c = 0; c < Count; ++c)
+   {
+    for (int i = startPoint, s = sampleCount; s--; ++i)
+    {
+     
+    }
+   }
+  }
+ }
+ 
+ // finishProcess is called after the block has been processed
+// void finishProcess()
+// {}
+};
 */
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 }
 
 #endif /* FFT_h */
