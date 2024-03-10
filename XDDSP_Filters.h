@@ -307,7 +307,6 @@ class FIRHilbertTransform : public Component<FIRHilbertTransform<SignalIn>>
  
  // Private data members here
  std::array<SampleType, FIRTapCount> taps;
- std::array<DynamicCircularBuffer<>, SignalIn::Count> inPhaseDelay;
  std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
  
  static constexpr SampleType alpha = 25.0/46.0;
@@ -328,12 +327,6 @@ public:
  inPhaseOut(p),
  quadratureOut(p)
  {
-  for (auto &d: inPhaseDelay)
-  {
-   d.setMaximumLength(DelayLength);
-   d.reset();
-  }
-  
   for (auto &b: buffer)
   {
    b.setMaximumLength(FIRTapCount);
@@ -343,7 +336,7 @@ public:
   taps.fill(0.0);
   for (int i = 0, x = -DelayLength; i < FIRTapCount; i += 2, x += 2)
   {
-   if (x != 0) taps[i] = 1./static_cast<SampleType>(x);
+   if (x != 0) taps[i] = 2./(M_PI*static_cast<SampleType>(x));
   }
   
   applyWindowFunction(WindowFunction::CosineWindow(alpha), taps);
@@ -353,7 +346,6 @@ public:
  // the component is disabled.
  void reset()
  {
-  for (auto &d: inPhaseDelay) d.reset();
   for (auto &b: buffer) b.reset();
   inPhaseOut.reset();
   quadratureOut.reset();
@@ -373,14 +365,13 @@ public:
    {
     SampleType x = 0.;
     buffer[c].tapIn(signalIn(c, i));
-    inPhaseDelay[c].tapIn(signalIn(c, i));
     
     for (int t = 0; t < FIRTapCount; ++t)
     {
      x += buffer[c].tapOut(t)*taps[t];
     }
     
-    inPhaseOut.buffer(c, i) = inPhaseDelay[c].tapOut(DelayLength);
+    inPhaseOut.buffer(c, i) = buffer[c].tapOut(DelayLength);
     quadratureOut.buffer(c, i) = x;
    }
   }
