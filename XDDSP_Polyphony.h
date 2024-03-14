@@ -254,13 +254,18 @@ public:
   }
   
   it = schedule.erase(schedule.begin(), it);
+ }
+ 
+ void advanceMidiEvents(int sampleCount)
+ {
+  auto it = schedule.begin();
   while (it != schedule.end())
   {
    it->samplePosition -= sampleCount;
    ++it;
   }
  }
- 
+
  virtual void updateSampleRate(SampleType sr, SampleType isr) override
  { smoothFactor = expCoef(0.001*RampLengthms*sr); }
 };
@@ -702,6 +707,12 @@ public:
   scheduleNoteEvent(0, NoteSchedule::AllSoundOff, samplePosition);
  }
  
+ void reset()
+ {
+  resetAllNotes();
+  schedule.clear();
+ }
+
  void process(int startPosition, int sampleCount)
  {
   int i = startPosition;
@@ -726,6 +737,14 @@ public:
   if (s > 0) voiceArray.process(i, s);
   
   purgeInactiveVoices();
+ }
+
+ void advanceMidiEvents(int sampleCount)
+ {
+  for (auto & sch: schedule)
+  {
+   sch.samplePosition -= sampleCount;
+  }
  }
 };
 
