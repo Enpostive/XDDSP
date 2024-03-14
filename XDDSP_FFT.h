@@ -376,25 +376,56 @@ std::pair<T, T> getComplexSample(T* data, unsigned long index, unsigned long n)
 
 
 template <typename T>
-void multiplyFFTs(T* input, T* m, unsigned long n)
+void multiplyFFTs(T* output, T* in1, T* in2, unsigned long n)
 {
- input[0] *= m[0];
- input[n/2] *= m[n/2];
+ output[0] = in1[0] * in2[0];
+ output[n/2] = in1[n/2] * in2[n/2];
  for (unsigned long p = 1; p < n/2; ++p)
  {
   const unsigned long p2 = n - p;
   // Complex multipliction formula
   // x + yi = (a + bi)(c + di)
   //        = (ac - bd) + (ad + bc)i
-  const T a = input[p];
-  const T b = input[p2];
-  const T c = m[p];
-  const T d = m[p2];
+  const T a = in1[p];
+  const T b = in1[p2];
+  const T c = in2[p];
+  const T d = in2[p2];
   
   // x = ac - bd
-  input[p] = std::fma(a, c, -b*d);
+  output[p] = std::fma(a, c, -b*d);
   // y = ad + bc
-  input[p2] = std::fma(a, d, b*c);
+  output[p2] = std::fma(a, d, b*c);
+ }
+}
+
+
+
+
+
+
+
+
+
+
+template <typename T>
+void multiplyAndAddFFTs(T* output, T* in1, T* in2, unsigned long n)
+{
+ output[0] += in1[0] * in2[0];
+ output[n/2] += in1[n/2] * in2[n/2];
+ for (unsigned long p = 1; p < n/2; ++p)
+ {
+  const unsigned long p2 = n - p;
+  const T a = in1[p];
+  const T b = in1[p2];
+  const T c = in2[p];
+  const T d = in2[p2];
+  
+  // x += ac - bd
+  output[p] = std::fma(a, c, output[p]);
+  output[p] = std::fma(-b, d, output[p]);
+  // y += ad + bc
+  output[p2] = std::fma(a, d, output[p2]);
+  output[p2] = std::fma(b, c, output[p2]);
  }
 }
 
@@ -552,7 +583,7 @@ public:
  void setMaxBlockSize(int maxBlockSize)
  {
   blockPowerSize.setToNextPowerTwo(maxBlockSize);
-  _fftSize = (blockPowerSize.size() > 128 ? 2 : 4) * blockPowerSize.size();
+  _fftSize = 2*blockPowerSize.size();
   _segmentSize = _fftSize - blockPowerSize.size();
  }
  
@@ -570,11 +601,13 @@ public:
 struct ImpulseResponse
 {
  KernelContainer impulseKernels;
+ unsigned int sampleCount;
 
  void setImpulseResponse(ConvolutionParameters &cp,
                          const SampleType *impulseSamples,
                          unsigned int size)
  {
+  sampleCount = size;
   const unsigned int impulseKernCount = size / cp.segmentSize() + 1;
   impulseKernels.setup(impulseKernCount, cp.fftSize());
   
@@ -594,7 +627,7 @@ struct ImpulseResponse
 
 
 
-
+/*
 class ConvolutionEngine
 {
  ImpulseResponse *imp {nullptr};
@@ -721,6 +754,95 @@ public:
   }
  }
 };
+*/
+
+
+
+
+class ConvolutionEngine
+{
+ ImpulseResponse *imp {nullptr};
+ ConvolutionParameters &convParam;
+ 
+ std::vector<SampleType> inputBuffer;
+ std::vector<SampleType> procBuffer;
+ std::vector<SampleType> olapBuffer;
+ unsigned int olapC {0};
+ PowerSize olapSize;
+ 
+ void addVector(SampleType* r, SampleType* a, SampleType* b, unsigned int count)
+ {
+  for (int i = 0; i < count; ++i) r[i] = a[i] + b[i];
+ }
+ 
+ void addVector(SampleType* r, SampleType *a, unsigned int count)
+ {
+  addVector(r, r, a, count);
+ }
+ 
+public:
+ ConvolutionEngine(ConvolutionParameters &cp) :
+ convParam(cp)
+ {}
+ 
+ void setImpulseResponse(ImpulseResponse &impulse)
+ {
+  imp = &impulse;
+ }
+ 
+ void reset()
+ {
+  if (imp)
+  {
+   procBuffer.resize(convParam.fftSize());
+   inputBuffer.resize(convParam.fftSize());
+   unsigned int overlapSize = convParam.segmentSize() + imp->sampleCount + convParam.fftSize();
+   olapSize.setToNextPowerTwo(overlapSize);
+   olapBuffer.assign(olapSize.size(), 0.);
+   olapC = 0;
+  }
+ }
+ 
+ void processSamples(SampleType *input,
+                     SampleType *output,
+                     unsigned int sampleCount)
+ {
+  if (imp)
+  {
+   {
+    unsigned int i = 0;
+    for (; i < sampleCount; ++i) inputBuffer[i] = input[i];
+    for (; i < convParam.fftSize(); ++i) inputBuffer[i] = 0.;
+   }
+   
+   fftDynamicSize(inputBuffer, false);
+   
+   for (int i = 0; i < imp->impulseKernels.size(); ++i)
+   {
+    multiplyFFTs(procBuffer.data(),
+                 inputBuffer.data(),
+                 imp->impulseKernels.k[i].data(),
+                 convParam.fftSize());
+    ifftDynamicSize(procBuffer);
+    
+    unsigned int j;
+    unsigned int c = convParam.segmentSize()*i;
+    unsigned int q = convParam.fftSize();
+    for (j = 0; j < q; j++, ++c)
+    {
+     olapBuffer[(olapC + c) & olapSize.mask()] += procBuffer[j];
+    }
+   }
+   
+   for (int i = 0; i < sampleCount; ++i)
+   {
+    output[i] = olapBuffer[olapC];
+    olapBuffer[olapC] = 0.;
+    olapC = (olapC + 1) & olapSize.mask();
+   }
+  }
+ }
+};
 
 
 
@@ -786,7 +908,7 @@ public:
  
  // This function is responsible for clearing the output buffers to a default state when
  // the component is disabled.
- void reset()
+ void reset() override
  {
   for (auto &e : eng) e.reset();
   signalOut.reset();
@@ -828,12 +950,13 @@ public:
    if (samples[i].set)
    {
     imp[i].setImpulseResponse(cp, samples[i].pointerToSample, samples[i].length);
-    eng[i].setImpulseResponse(imp[0]);
+    eng[i].setImpulseResponse(imp[i]);
    }
    else eng[i].setImpulseResponse(imp[0]);
   }
   
   initialised = true;
+  for (auto &e : eng) e.reset();
  }
  
  // startProcess prepares the component for processing one block and returns the step
@@ -842,7 +965,7 @@ public:
 // { }
 
  // stepProcess is called repeatedly with the start point incremented by step size
- void stepProcess(int startPoint, int sampleCount)
+ void stepProcess(int startPoint, int sampleCount) override
  {
   // If there are no kernels loaded, simply pass signal through
   if (!initialised)
