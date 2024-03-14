@@ -11,6 +11,7 @@
 #include "XDDSP_BiquadKernel.h"
 #include "XDDSP_LinkwitzRileyKernel.h"
 #include "XDDSP_WindowFunctions.h"
+#include "XDDSP_FFT.h"
 
 
 
@@ -374,6 +375,95 @@ public:
     
     inPhaseOut.buffer(c, i) = buffer[c].tapOut(DelayLength);
     quadratureOut.buffer(c, i) = x;
+   }
+  }
+ }
+ 
+ // finishProcess is called after the block has been processed
+// void finishProcess()
+// {}
+};
+
+
+
+
+
+
+
+
+
+
+template <typename SignalIn, int FIRTapCount = 255>
+class ConvolutionHilbertFilter : public Component<ConvolutionHilbertFilter<SignalIn>>
+{
+ static_assert(FIRTapCount % 2 == 1, "FIRHilbertTransform: Tap Count must be odd");
+ 
+ ConvolutionFilter<SignalIn> filter;
+ std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
+
+
+ // Private data members here
+ std::array<SampleType, FIRTapCount> taps;
+ static constexpr SampleType alpha = 25.0/46.0;
+public:
+ static constexpr int DelayLength = FIRTapCount/2;
+ static constexpr int Count = SignalIn::Count;
+ 
+ SignalIn &signalIn;
+ 
+ // Specify your inputs as public members here
+ // Specify your outputs like this
+ Output<Count> inPhaseOut;
+ Connector<Count> quadratureOut;
+ 
+ ConvolutionHilbertFilter(Parameters &p, SignalIn _signalIn) :
+ filter(p, _signalIn),
+ signalIn(filter.signalIn),
+ inPhaseOut(p),
+ quadratureOut(filter.signalOut)
+ {
+  for (auto &b: buffer)
+  {
+   b.setMaximumLength(FIRTapCount);
+   b.reset();
+  }
+
+  taps.fill(0.0);
+  for (int i = 0, x = -DelayLength; i < FIRTapCount; i += 2, x += 2)
+  {
+   if (x != 0) taps[i] = 2./(M_PI*static_cast<SampleType>(x));
+  }
+  
+  applyWindowFunction(WindowFunction::CosineWindow(alpha), taps);
+  
+  filter.setImpulse(0, taps.data(), FIRTapCount);
+  filter.initialiseConvolution();
+ }
+
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  filter.reset();
+  inPhaseOut.reset();
+ }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+// int startProcess(int startPoint, int sampleCount)
+// { return std::min(sampleCount, StepSize); }
+
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  filter.process(startPoint, sampleCount);
+  
+  for (int c = 0; c < Count; ++c)
+  {
+   for (int i = startPoint, s = sampleCount; s--; ++i)
+   {
+    buffer[c].tapIn(signalIn(c, i));
+    inPhaseOut.buffer(c, i) = buffer[c].tapOut(DelayLength);
    }
   }
  }

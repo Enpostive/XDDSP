@@ -354,6 +354,17 @@ public:
   m = s - 1;
  }
  
+ static uint32_t nextPowerTwoMinusOne(uint32_t rs)
+ {
+  rs = rs - 1;
+  rs |= rs >> 1;
+  rs |= rs >> 2;
+  rs |= rs >> 4;
+  rs |= rs >> 8;
+  rs |= rs >> 16;
+  return rs;
+ }
+ 
  void setToNextPowerTwo(uint32_t rs)
  {
   static const int MultiplyDeBruijnBitPosition[32] =
@@ -362,15 +373,16 @@ public:
    8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
   };
 
-  rs = rs - 1;
-  rs |= rs >> 1;
-  rs |= rs >> 2;
-  rs |= rs >> 4;
-  rs |= rs >> 8;
-  rs |= rs >> 16;
-  m = rs;
-  b = MultiplyDeBruijnBitPosition[(uint32_t)(rs * 0x07C4ACDDU) >> 27];
-  s = rs + 1;
+  m = nextPowerTwoMinusOne(rs);
+  b = MultiplyDeBruijnBitPosition[(uint32_t)(m * 0x07C4ACDDU) >> 27];
+  s = m + 1;
+ }
+ 
+ static PowerSize fromNextPowerTwo(uint32_t rs)
+ {
+  PowerSize r;
+  r.setToNextPowerTwo(rs);
+  return r;
  }
 };
 
