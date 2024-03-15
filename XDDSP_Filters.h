@@ -370,7 +370,7 @@ public:
     for (int t = 0; t < FIRTapCount; t += 2)
     {
 //     x += buffer[c].tapOut(t)*taps[t];
-     x = std::fma(buffer[c].tapOut(t), taps[i], x);
+     x = std::fma(buffer[c].tapOut(t), taps[t], x);
     }
     
     inPhaseOut.buffer(c, i) = buffer[c].tapOut(DelayLength);
