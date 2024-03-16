@@ -926,7 +926,7 @@ public:
  void setImpulse(int index, T* data, unsigned int length)
  {
   dsp_assert(index >= 0 && index < Count);
-  samples[index].set = true;
+  samples[index].set = data != nullptr;
   samples[index].pointerToSample = data;
   samples[index].length = length;
  }
