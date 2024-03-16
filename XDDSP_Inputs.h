@@ -607,6 +607,65 @@ public:
 
 
 
+template <int ChannelCount = 2>
+class PluginInput : public Coupler<ChannelCount>
+{
+ std::array<float*, ChannelCount> floatInputs;
+ std::array<double*, ChannelCount> doubleInputs;
+ 
+ int length {0};
+ 
+protected:
+ virtual SampleType get(int channel, int index) override
+ {
+  dsp_assert(index >= 0 && index < length);
+  dsp_assert(channel >= 0 && channel < ChannelCount);
+  if (floatInputs[0]) return floatInputs[channel][index];
+  if (doubleInputs[0]) return doubleInputs[channel][index];
+
+  return 0.;
+ }
+
+public:
+ static constexpr int Count = ChannelCount;
+ 
+ PluginInput()
+ {
+  floatInputs.fill(nullptr);
+  doubleInputs.fill(nullptr);
+ }
+ 
+ PluginInput(const PluginInput &other)
+ {
+  floatInputs = other.floatInputs;
+  doubleInputs = other.doubleInputs;
+  length = other.length;
+ }
+ 
+ void connectFloats(const std::array<float*, ChannelCount> &p, int sampleCount)
+ {
+  floatInputs = p;
+  doubleInputs.fill(nullptr);
+  length = sampleCount;
+ }
+ 
+ void connectDoubles(const std::array<double*, ChannelCount> &p, int sampleCount)
+ {
+  floatInputs.fill(nullptr);
+  doubleInputs = p;
+  length = sampleCount;
+ }
+};
+
+
+
+
+
+
+
+
+
+
 }
 
 #endif /* XDDSP_Inputs_h */
