@@ -405,7 +405,7 @@ public:
  constexpr IntegerAndFraction(SampleType whole) :
  iP(trunc(whole)),
  fP(whole - iP),
- i(static_cast<int>(iP))
+ i(static_cast<IntType>(iP))
  {
   dsp_assert(!isnan(whole));
  }
