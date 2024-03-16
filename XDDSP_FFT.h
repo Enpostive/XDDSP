@@ -922,8 +922,7 @@ public:
   imp.assign(Count, ConvolutionEngine::ImpulseResponse());
  }
  
- template <typename T>
- void setImpulse(int index, T* data, unsigned int length)
+ void setImpulse(int index, SampleType* data, unsigned int length)
  {
   dsp_assert(index >= 0 && index < Count);
   samples[index].set = data != nullptr;
