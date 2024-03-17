@@ -552,7 +552,7 @@ struct KernelContainer
  
  unsigned int size() { return static_cast<unsigned int>(k.size()); }
  
- SampleType *getKernel(unsigned int index)
+ SampleType *get(unsigned int index)
  {
   dsp_assert(index >= 0 && index < k.size());
   return k[index].data();
@@ -565,27 +565,36 @@ struct KernelContainer
 
 class ConvolutionParameters
 {
- unsigned int _fftSize;
- unsigned int _segmentSize;
+ int iBS {256};
+ int dBS {256};
+  
+ int iFS;
+ int dFS;
+ 
+ bool dP {false};
  
 public:
  ConvolutionParameters()
  {
-  setFFTSize(256);
+  setParameters(iBS, dBS);
  }
  
- void setFFTSize(unsigned int fftSize)
+ void setParameters(int bufferSize, int fftHint)
  {
-  PowerSize fftPowerSize;
-  fftPowerSize.setToNextPowerTwo(fftSize);
+  iBS = PowerSize::nextPowerTwoMinusOne(bufferSize) + 1;
+  dBS = PowerSize::nextPowerTwoMinusOne(fftHint) + 1;
+  dBS = std::max(iBS, dBS);
   
-  _fftSize = fftPowerSize.size();
-  _segmentSize = fftPowerSize.size()/2;
+  dP = iBS != dBS;
+  iFS = 2*iBS;
+  dFS = 2*dBS;
  }
  
- unsigned int fftSize() const { return _fftSize; }
- 
- unsigned int segmentSize() const {return _segmentSize; }
+ int inputFFTSize() const { return iFS; }
+ int deferredFFTSize() const { return dFS; }
+ int inputSize() const { return iBS; }
+ int deferredSize() const { return dBS; }
+ bool deferredProcessing() const { return dP; }
 };
 
 
@@ -594,7 +603,8 @@ public:
 
 struct ImpulseResponse
 {
- KernelContainer impulseKernels;
+ KernelContainer inputKernels;
+ KernelContainer deferredKernels;
  unsigned int sampleCount;
 
  void setImpulseResponse(ConvolutionParameters &cp,
@@ -602,18 +612,48 @@ struct ImpulseResponse
                          unsigned int size)
  {
   sampleCount = size;
-  const unsigned int impulseKernCount = size / cp.segmentSize() + 1;
-  impulseKernels.setup(impulseKernCount, cp.fftSize());
-  
-  unsigned int c = 0;
-  const unsigned int copySize = cp.segmentSize();
-  for (int i = 0; i < impulseKernCount; ++i)
+  const unsigned int inputKernCount = cp.deferredSize() / cp.inputSize();
+  computeKernels(inputKernels,
+                 inputKernCount,
+                 cp.inputFFTSize(),
+                 cp.inputSize(),
+                 size,
+                 0,
+                 impulseSamples);
+
+  if (cp.deferredProcessing())
   {
-   impulseKernels.k[i].assign(cp.fftSize(), 0.);
-   unsigned int cs = std::min(copySize, size - c);
-   std::copy(impulseSamples + c, impulseSamples + c + cs, impulseKernels.getKernel(i));
-   fftDynamicSize(impulseKernels.getKernel(i), cp.fftSize());
-   c += copySize;
+   const unsigned int deferredKernCount = size / cp.deferredSize() + 1;
+   computeKernels(deferredKernels,
+                  deferredKernCount,
+                  cp.deferredFFTSize(),
+                  cp.deferredSize(),
+                  size,
+                  1,
+                  impulseSamples);
+  }
+  else deferredKernels.setup(0, 0);
+ }
+ 
+private:
+ void computeKernels(KernelContainer &k,
+                     unsigned int count,
+                     unsigned int fftSize,
+                     unsigned int segmentSize,
+                     unsigned int totalSize,
+                     unsigned int startPoint,
+                     const SampleType *impulseSamples)
+ {
+  k.setup(count, fftSize);
+  
+  unsigned int c = startPoint*segmentSize;
+  for (int i = startPoint; i < count; ++i)
+  {
+   k.k[i].assign(fftSize, 0.);
+   unsigned int cs = std::min(segmentSize, totalSize - c);
+   std::copy(impulseSamples + c, impulseSamples + c + cs, k.get(i));
+   fftDynamicSize(k.get(i), fftSize);
+   c += segmentSize;
   }
  }
 };
@@ -626,29 +666,47 @@ template <int ConnectorChannelCount>
 class ConvolutionEngine
 {
  ImpulseResponse *imp {nullptr};
- ConvolutionParameters &convParam;
+ ConvolutionParameters &cp;
  
  std::vector<SampleType> inputBuffer;
+ std::vector<SampleType> deferBuffer;
  std::vector<SampleType> procBuffer;
  std::vector<SampleType> olapBuffer;
  unsigned int olapC {0};
+ unsigned int deferC {0};
  PowerSize olapSize;
  
- void addVector(SampleType* r, SampleType* a, SampleType* b, unsigned int count)
+ void doConvolution(KernelContainer &k, 
+                    std::vector<SampleType> &samples,
+                    unsigned int fftSize,
+                    unsigned int segmentSize,
+                    int offset)
  {
-  for (int i = 0; i < count; ++i) r[i] = a[i] + b[i];
+  fftDynamicSize(samples, false);
+  
+  for (int i = 0; i < k.size(); ++i)
+  {
+   multiplyFFTs(procBuffer.data(),
+                samples.data(),
+                k.get(i),
+                fftSize);
+   ifftDynamicSize(procBuffer.data(), fftSize);
+   
+   unsigned int j;
+   unsigned int c = segmentSize*i;
+   unsigned int q = fftSize;
+   for (j = 0; j < q; j++, ++c)
+   {
+    olapBuffer[(olapC + c + offset) & olapSize.mask()] += procBuffer[j];
+   }
+  }
  }
- 
- void addVector(SampleType* r, SampleType *a, unsigned int count)
- {
-  addVector(r, r, a, count);
- }
- 
+  
 public:
  Connector<ConnectorChannelCount> signalIn;
  
  ConvolutionEngine(ConvolutionParameters &cp, Coupler<ConnectorChannelCount> &c) :
- convParam(cp),
+ cp(cp),
  signalIn(c)
  {}
  
@@ -659,11 +717,12 @@ public:
  
  void initialise()
  {
-  procBuffer.resize(convParam.fftSize());
-  inputBuffer.resize(convParam.fftSize());
+  procBuffer.resize(cp.deferredFFTSize());
+  inputBuffer.resize(cp.inputFFTSize());
+  deferBuffer.resize(cp.deferredFFTSize());
   if (imp)
   {
-   unsigned int overlapSize = convParam.segmentSize() + imp->sampleCount + convParam.fftSize();
+   unsigned int overlapSize = cp.deferredSize() + imp->sampleCount + cp.deferredFFTSize();
    olapSize.setToNextPowerTwo(overlapSize);
    olapBuffer.resize(olapSize.size());
   }
@@ -673,6 +732,8 @@ public:
  
  void reset()
  {
+  deferBuffer.assign(deferBuffer.size(), 0.);
+  deferC = 0;
   if (imp)
   {
    olapBuffer.assign(olapSize.size(), 0.);
@@ -687,32 +748,31 @@ public:
  {
   if (imp)
   {
-   dsp_assert(sampleCount <= convParam.segmentSize());
-   
    {
     unsigned int i = 0;
     for (; i < sampleCount; ++i) inputBuffer[i] = signalIn(channel, i + startPoint);
-    for (; i < convParam.fftSize(); ++i) inputBuffer[i] = 0.;
+    for (; i < cp.inputFFTSize(); ++i) inputBuffer[i] = 0.;
    }
    
-   fftDynamicSize(inputBuffer, false);
-   
-   for (int i = 0; i < imp->impulseKernels.size(); ++i)
+   if (cp.deferredProcessing())
    {
-    multiplyFFTs(procBuffer.data(),
-                 inputBuffer.data(),
-                 imp->impulseKernels.k[i].data(),
-                 convParam.fftSize());
-    ifftDynamicSize(procBuffer);
-    
-    unsigned int j;
-    unsigned int c = convParam.segmentSize()*i;
-    unsigned int q = convParam.fftSize();
-    for (j = 0; j < q; j++, ++c)
+    unsigned int i = 0;
+    for (; i < sampleCount && deferC < cp.deferredSize(); ++i, ++deferC)
     {
-     olapBuffer[(olapC + c) & olapSize.mask()] += procBuffer[j];
+     deferBuffer[deferC] = inputBuffer[i];
+    }
+    if (deferC == cp.deferredSize())
+    {
+     deferC = 0;
+     doConvolution(imp->deferredKernels, deferBuffer, cp.deferredFFTSize(), cp.deferredSize(), i);
+     for (; i < sampleCount && deferC < cp.deferredSize(); ++i, ++deferC)
+     {
+      deferBuffer[deferC] = inputBuffer[i];
+     }
     }
    }
+   
+   doConvolution(imp->inputKernels, inputBuffer, cp.inputFFTSize(), cp.inputSize(), 0);
    
    for (int i = 0; i < sampleCount; ++i)
    {
@@ -827,13 +887,12 @@ public:
   initialiseConvolution();
  }
  
- int getFFTSize() const { return cp.fftSize(); }
+ int getFFTSize() const { return cp.deferredFFTSize(); }
 
  void initialiseConvolution()
  {
   std::lock_guard<std::mutex> lock(mtx);
-  int fftSize = std::max(selectedFFTSize, 2*dsp.bufferSize());
-  cp.setFFTSize(fftSize);
+  cp.setParameters(dsp.bufferSize(), selectedFFTSize);
   
   initialised = false;
   if (!samples[0].set) return;
