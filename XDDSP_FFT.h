@@ -667,6 +667,8 @@ public:
    olapSize.setToNextPowerTwo(overlapSize);
    olapBuffer.resize(olapSize.size());
   }
+  
+  reset();
  }
  
  void reset()
