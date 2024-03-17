@@ -591,7 +591,7 @@ public:
   
   unsigned int biggerSize = std::max(mbs, is);
   unsigned int smallerSize = std::min(mbs, is);
-  unsigned int operativeSize = std::min(2*biggerSize, 8*smallerSize);
+  unsigned int operativeSize = std::min(2*biggerSize, 16*smallerSize);
   operativeSize = std::max(2*mbs, operativeSize);
   
   PowerSize fftPowerSize;
