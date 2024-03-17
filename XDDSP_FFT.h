@@ -565,7 +565,8 @@ struct KernelContainer
 
 class ConvolutionParameters
 {
- PowerSize blockPowerSize;
+ int maxBlockSize {64};
+ int impulseSize {0};
  unsigned int _fftSize;
  unsigned int _segmentSize;
  
@@ -580,15 +581,36 @@ public:
   setMaxBlockSize(maxBlockSize);
  }
  
- void setMaxBlockSize(int maxBlockSize)
+ void setFFTSize(int mbs, int is)
  {
-  blockPowerSize.setToNextPowerTwo(maxBlockSize);
-  _fftSize = 2*blockPowerSize.size();
-  _segmentSize = _fftSize - blockPowerSize.size();
+  mbs = std::min(2 << 24, mbs);
+  is = std::min(2 << 24, is);
+  
+  maxBlockSize = mbs;
+  impulseSize = is;
+  
+  int biggerSize = std::max(mbs, is);
+  int smallerSize = std::min(mbs, is);
+  int operativeSize = std::min(2*biggerSize, 8*smallerSize);
+  if (operativeSize == 0) operativeSize = 2*biggerSize;
+  
+  PowerSize fftPowerSize;
+  fftPowerSize.setToNextPowerTwo(operativeSize);
+  
+  _fftSize = fftPowerSize.size();
+  _segmentSize = fftPowerSize.size()/2;
  }
  
- int blockSize() const { return blockPowerSize.size(); }
+ void setImpulseSize(int size)
+ {
+  setFFTSize(maxBlockSize, size);
+ }
  
+ void setMaxBlockSize(int size)
+ {
+  setFFTSize(size, impulseSize);
+ }
+  
  unsigned int fftSize() const { return _fftSize; }
  
  unsigned int segmentSize() const {return _segmentSize; }
@@ -627,138 +649,8 @@ struct ImpulseResponse
 
 
 
-/*
-class ConvolutionEngine
-{
- ImpulseResponse *imp {nullptr};
- ConvolutionParameters &cp;
- KernelContainer inputKernels;
- 
- std::vector<SampleType> inputBuffer;
- std::vector<SampleType> accumBuffer;
- std::vector<SampleType> outputPreBuffer;
- std::vector<SampleType> outputBuffer;
- std::vector<SampleType> overlapBuffer;
- 
- unsigned int currentKernel;
- unsigned int inputDataPos;
- 
- void addVector(SampleType* r, SampleType* a, SampleType* b, unsigned int count)
- {
-  for (int i = 0; i < count; ++i) r[i] = a[i] + b[i];
- }
- 
- void accumulateVector(SampleType* r, SampleType *a, unsigned int count)
- {
-  addVector(r, r, a, count);
- }
- 
-public:
- ConvolutionEngine(ConvolutionParameters &p) : cp(p)
- {}
- 
- void setImpulseResponse(ImpulseResponse &impulse)
- {
-  imp = &impulse;
-  const unsigned int impulseKernCount = imp->impulseKernels.size();
-  const unsigned int inputKernCount =
-  (cp.blockSize() > 128) ? impulseKernCount : 3*impulseKernCount;
-  inputKernels.setup(inputKernCount, cp.fftSize());
-  reset();
- }
 
- void reset()
- {
-  inputBuffer.assign(cp.fftSize(), 0.);
-  outputPreBuffer.assign(cp.fftSize(), 0.);
-  accumBuffer.assign(cp.fftSize(), 0.);
-  outputBuffer.assign(cp.fftSize(), 0.);
-  overlapBuffer.assign(cp.fftSize(), 0.);
-  for (auto &kk : inputKernels.k)
-  {
-   kk.assign(cp.fftSize(), 0.);
-  }
-  currentKernel = 0;
-  inputDataPos = 0;
- }
- 
- void processSamples(SampleType *input,
-                     SampleType *output,
-                     unsigned int sampleCount)
- {
-  unsigned int numSamplesProcessed = 0;
-  unsigned int indexStep = inputKernels.size() / imp->impulseKernels.size();
-  
-  while (numSamplesProcessed < sampleCount)
-  {
-   const bool firstInputData = (inputDataPos == 0);
-   unsigned int numToProcess = std::min(sampleCount - numSamplesProcessed, cp.blockSize() - inputDataPos);
-   std::copy(input + numSamplesProcessed,
-             input + numSamplesProcessed + numToProcess,
-             inputBuffer.begin() + inputDataPos);
-   std::copy(inputBuffer.begin(),
-             inputBuffer.end(),
-             inputKernels.k[currentKernel].begin());
-   fftDynamicSize(inputKernels.k[currentKernel], false);
-   
-   if (firstInputData)
-   {
-    accumBuffer.assign(cp.fftSize(), 0.);
-    int index = currentKernel;
-    for (int i = 1; i < imp->impulseKernels.size(); ++i)
-    {
-     index += indexStep;
-     if (index > inputKernels.size()) index -= inputKernels.size();
-     std::copy(inputKernels.k[index].begin(),
-               inputKernels.k[index].end(),
-               outputPreBuffer.begin());
-     multiplyFFTs(outputPreBuffer.data(),
-                  imp->impulseKernels.getKernel(i), cp.fftSize());
-     accumulateVector(accumBuffer.data(), outputPreBuffer.data(), cp.fftSize());
-    }
-    
-    std::copy(accumBuffer.begin(), accumBuffer.end(), outputPreBuffer.begin());
-   }
-   
-   std::copy(outputPreBuffer.begin(), outputPreBuffer.end(), outputBuffer.begin());
-   std::copy(inputKernels.k[currentKernel].begin(),
-             inputKernels.k[currentKernel].end(),
-             accumBuffer.begin());
-   multiplyFFTs(accumBuffer.data(),
-                imp->impulseKernels.getKernel(0),
-                cp.fftSize());
-   accumulateVector(outputBuffer.data(), accumBuffer.data(), cp.fftSize());
-   ifftDynamicSize(outputBuffer);
-   
-   addVector(output + numSamplesProcessed,
-             outputBuffer.data() + inputDataPos,
-             overlapBuffer.data() + inputDataPos,
-             numToProcess);
-   
-   inputDataPos += numToProcess;
-   
-   if (inputDataPos == cp.blockSize())
-   {
-    inputBuffer.assign(cp.fftSize(), 0.);
-    inputDataPos = 0;
-    accumulateVector(outputBuffer.data() + cp.blockSize(),
-                     overlapBuffer.data() + cp.blockSize(),
-                     cp.fftSize() - 2*cp.blockSize());
-    for (int i = 0; i < (cp.fftSize() - cp.blockSize()); ++i)
-    {
-     overlapBuffer[i] = outputBuffer[i + cp.blockSize()];
-    }
-    currentKernel = (currentKernel > 0) ? currentKernel - 1 : inputKernels.size() - 1;
-   }
-   numSamplesProcessed += numToProcess;
-  }
- }
-};
-*/
-
-
-
-
+template <int ConnectorChannelCount>
 class ConvolutionEngine
 {
  ImpulseResponse *imp {nullptr};
@@ -781,8 +673,11 @@ class ConvolutionEngine
  }
  
 public:
- ConvolutionEngine(ConvolutionParameters &cp) :
- convParam(cp)
+ Connector<ConnectorChannelCount> signalIn;
+ 
+ ConvolutionEngine(ConvolutionParameters &cp, Coupler<ConnectorChannelCount> &c) :
+ convParam(cp),
+ signalIn(c)
  {}
  
  void setImpulseResponse(ImpulseResponse &impulse)
@@ -790,20 +685,29 @@ public:
   imp = &impulse;
  }
  
+ void initialise()
+ {
+  procBuffer.resize(convParam.fftSize());
+  inputBuffer.resize(convParam.fftSize());
+  if (imp)
+  {
+   unsigned int overlapSize = convParam.segmentSize() + imp->sampleCount + convParam.fftSize();
+   olapSize.setToNextPowerTwo(overlapSize);
+   olapBuffer.resize(olapSize.size());
+  }
+ }
+ 
  void reset()
  {
   if (imp)
   {
-   procBuffer.resize(convParam.fftSize());
-   inputBuffer.resize(convParam.fftSize());
-   unsigned int overlapSize = convParam.segmentSize() + imp->sampleCount + convParam.fftSize();
-   olapSize.setToNextPowerTwo(overlapSize);
    olapBuffer.assign(olapSize.size(), 0.);
    olapC = 0;
   }
  }
  
- void processSamples(SampleType *input,
+ void processSamples(int channel,
+                     int startPoint,
                      SampleType *output,
                      unsigned int sampleCount)
  {
@@ -811,7 +715,7 @@ public:
   {
    {
     unsigned int i = 0;
-    for (; i < sampleCount; ++i) inputBuffer[i] = input[i];
+    for (; i < sampleCount; ++i) inputBuffer[i] = signalIn(channel, i + startPoint);
     for (; i < convParam.fftSize(); ++i) inputBuffer[i] = 0.;
    }
    
@@ -880,8 +784,7 @@ private:
  
  std::array<ImpulseSample, Count> samples;
  std::vector<ConvolutionEngine::ImpulseResponse> imp;
- std::vector<ConvolutionEngine::ConvolutionEngine> eng;
- std::vector<SampleType> inputBuffer;
+ std::vector<ConvolutionEngine::ConvolutionEngine<Count>> eng;
  
 public:
  
@@ -902,7 +805,7 @@ public:
   updateBufferSize(p.bufferSize());
   for (int i = 0; i < Count; ++i)
   {
-   eng.emplace_back(cp);
+   eng.emplace_back(cp, signalIn);
   }
  }
  
@@ -932,7 +835,6 @@ public:
  
  virtual void updateBufferSize(int bs) override
  {
-  inputBuffer.resize(bs);
   cp.setMaxBlockSize(bs);
   initialiseConvolution();
  }
@@ -941,6 +843,7 @@ public:
 
  void initialiseConvolution()
  {
+  int largestImpuseSize {0};
   initialised = false;
   if (!samples[0].set) return;
   
@@ -950,12 +853,15 @@ public:
    {
     imp[i].setImpulseResponse(cp, samples[i].pointerToSample, samples[i].length);
     eng[i].setImpulseResponse(imp[i]);
+    largestImpuseSize = std::max(largestImpuseSize, samples[i].length);
    }
    else eng[i].setImpulseResponse(imp[0]);
   }
   
+  cp.setImpulseSize(largestImpuseSize);
+  for (auto &e: eng) e.initialise();
+  
   initialised = true;
-  for (auto &e : eng) e.reset();
  }
  
  // startProcess prepares the component for processing one block and returns the step
@@ -983,11 +889,8 @@ public:
   {
    for (int c = 0; c < Count; ++c)
    {
-    for (int i = startPoint, s = sampleCount; s--; ++i)
-    {
-     inputBuffer[i] = signalIn(c, i);
-    }
-    eng[c].processSamples(inputBuffer.data() + startPoint,
+    eng[c].processSamples(c,
+                          startPoint,
                           signalOut.buffer[c] + startPoint,
                           sampleCount);
    }
