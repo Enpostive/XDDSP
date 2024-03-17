@@ -763,6 +763,8 @@ private:
  std::vector<ConvolutionEngine::ImpulseResponse> imp;
  std::vector<ConvolutionEngine::ConvolutionEngine<Count>> eng;
  
+ std::mutex mtx;
+ 
 public:
  
  // Specify your inputs as public members here
@@ -790,12 +792,14 @@ public:
  // the component is disabled.
  void reset() override
  {
+  std::lock_guard<std::mutex> lock(mtx);
   for (auto &e : eng) e.reset();
   signalOut.reset();
  }
  
  void resetConvolution()
  {
+  std::lock_guard<std::mutex> lock(mtx);
   initialised = false;
   samples.fill(ImpulseSample());
   imp.clear();
@@ -827,6 +831,7 @@ public:
 
  void initialiseConvolution()
  {
+  std::lock_guard<std::mutex> lock(mtx);
   int fftSize = std::max(selectedFFTSize, 2*dsp.bufferSize());
   cp.setFFTSize(fftSize);
   
@@ -856,6 +861,7 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount) override
  {
+  std::lock_guard<std::mutex> lock(mtx);
   // If there are no kernels loaded, simply pass signal through
   if (!initialised)
   {
