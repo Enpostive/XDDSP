@@ -683,7 +683,7 @@ class ConvolutionEngine
                     unsigned int segmentSize,
                     int offset)
  {
-  fftDynamicSize(samples, false);
+  fftDynamicSize(samples.data(), fftSize, false);
   
   for (int i = 0; i < k.size(); ++i)
   {
@@ -763,6 +763,7 @@ public:
     }
     if (deferC == cp.deferredSize())
     {
+     std::fill(deferBuffer.begin() + cp.deferredSize(), deferBuffer.end(), 0.);
      deferC = 0;
      doConvolution(imp->deferredKernels, deferBuffer, cp.deferredFFTSize(), cp.deferredSize(), i);
      for (; i < sampleCount && deferC < cp.deferredSize(); ++i, ++deferC)
