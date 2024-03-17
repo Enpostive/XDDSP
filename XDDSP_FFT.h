@@ -565,56 +565,24 @@ struct KernelContainer
 
 class ConvolutionParameters
 {
- unsigned int maxBlockSize {64};
- unsigned int impSize {0};
  unsigned int _fftSize;
  unsigned int _segmentSize;
  
 public:
  ConvolutionParameters()
  {
-  setMaxBlockSize(64);
+  setFFTSize(256);
  }
  
- ConvolutionParameters(unsigned int maxBlockSize)
+ void setFFTSize(unsigned int fftSize)
  {
-  setMaxBlockSize(maxBlockSize);
- }
- 
- void setFFTSize(unsigned int mbs, unsigned int is)
- {
-  mbs = std::min(2u << 24, mbs);
-  is = std::min(2u << 24, is);
-  
-  maxBlockSize = mbs;
-  impSize = is;
-  
-  unsigned int biggerSize = std::max(mbs, is);
-  unsigned int smallerSize = std::min(mbs, is);
-  unsigned int operativeSize = std::min(2*biggerSize, 16*smallerSize);
-  operativeSize = std::max(2*mbs, operativeSize);
-  
   PowerSize fftPowerSize;
-  fftPowerSize.setToNextPowerTwo(operativeSize);
+  fftPowerSize.setToNextPowerTwo(fftSize);
   
   _fftSize = fftPowerSize.size();
   _segmentSize = fftPowerSize.size()/2;
  }
  
- void setImpulseSize(unsigned int size)
- {
-  setFFTSize(maxBlockSize, size);
- }
- 
- void setMaxBlockSize(unsigned int size)
- {
-  setFFTSize(size, impSize);
- }
- 
- unsigned int blockSize() const { return maxBlockSize; }
- 
- unsigned int impulseSize() const { return impSize; }
-  
  unsigned int fftSize() const { return _fftSize; }
  
  unsigned int segmentSize() const {return _segmentSize; }
@@ -717,6 +685,8 @@ public:
  {
   if (imp)
   {
+   dsp_assert(sampleCount <= convParam.segmentSize());
+   
    {
     unsigned int i = 0;
     for (; i < sampleCount; ++i) inputBuffer[i] = signalIn(channel, i + startPoint);
@@ -783,6 +753,7 @@ private:
   unsigned int length {0};
  };
  
+ int selectedFFTSize {256};
  Parameters &dsp;
  ConvolutionEngine::ConvolutionParameters cp;
  
@@ -839,17 +810,24 @@ public:
  
  virtual void updateBufferSize(int bs) override
  {
-  cp.setMaxBlockSize(bs);
   initialiseConvolution();
  }
 
  bool isInitlialised() const { return initialised; }
  
+ void setFFTHint(unsigned int hint)
+ {
+  selectedFFTSize = hint;
+  initialiseConvolution();
+ }
+ 
  int getFFTSize() const { return cp.fftSize(); }
 
  void initialiseConvolution()
  {
-  unsigned int largestImpuseSize {0};
+  int fftSize = std::max(selectedFFTSize, 2*dsp.bufferSize());
+  cp.setFFTSize(fftSize);
+  
   initialised = false;
   if (!samples[0].set) return;
   
@@ -859,12 +837,10 @@ public:
    {
     imp[i].setImpulseResponse(cp, samples[i].pointerToSample, samples[i].length);
     eng[i].setImpulseResponse(imp[i]);
-    largestImpuseSize = std::max(largestImpuseSize, samples[i].length);
    }
    else eng[i].setImpulseResponse(imp[0]);
   }
   
-  cp.setImpulseSize(largestImpuseSize);
   for (auto &e: eng) e.initialise();
   
   initialised = true;
