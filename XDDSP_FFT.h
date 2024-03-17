@@ -565,8 +565,8 @@ struct KernelContainer
 
 class ConvolutionParameters
 {
- int maxBlockSize {64};
- int impulseSize {0};
+ unsigned int maxBlockSize {64};
+ unsigned int impSize {0};
  unsigned int _fftSize;
  unsigned int _segmentSize;
  
@@ -576,23 +576,23 @@ public:
   setMaxBlockSize(64);
  }
  
- ConvolutionParameters(int maxBlockSize)
+ ConvolutionParameters(unsigned int maxBlockSize)
  {
   setMaxBlockSize(maxBlockSize);
  }
  
- void setFFTSize(int mbs, int is)
+ void setFFTSize(unsigned int mbs, unsigned int is)
  {
-  mbs = std::min(2 << 24, mbs);
-  is = std::min(2 << 24, is);
+  mbs = std::min(2u << 24, mbs);
+  is = std::min(2u << 24, is);
   
   maxBlockSize = mbs;
-  impulseSize = is;
+  impSize = is;
   
-  int biggerSize = std::max(mbs, is);
-  int smallerSize = std::min(mbs, is);
-  int operativeSize = std::min(2*biggerSize, 8*smallerSize);
-  if (operativeSize == 0) operativeSize = 2*biggerSize;
+  unsigned int biggerSize = std::max(mbs, is);
+  unsigned int smallerSize = std::min(mbs, is);
+  unsigned int operativeSize = std::min(2*biggerSize, 8*smallerSize);
+  operativeSize = std::max(2*mbs, operativeSize);
   
   PowerSize fftPowerSize;
   fftPowerSize.setToNextPowerTwo(operativeSize);
@@ -601,15 +601,19 @@ public:
   _segmentSize = fftPowerSize.size()/2;
  }
  
- void setImpulseSize(int size)
+ void setImpulseSize(unsigned int size)
  {
   setFFTSize(maxBlockSize, size);
  }
  
- void setMaxBlockSize(int size)
+ void setMaxBlockSize(unsigned int size)
  {
-  setFFTSize(size, impulseSize);
+  setFFTSize(size, impSize);
  }
+ 
+ unsigned int blockSize() const { return maxBlockSize; }
+ 
+ unsigned int impulseSize() const { return impSize; }
   
  unsigned int fftSize() const { return _fftSize; }
  
@@ -839,11 +843,13 @@ public:
   initialiseConvolution();
  }
 
- bool isInitlialised() { return initialised; }
+ bool isInitlialised() const { return initialised; }
+ 
+ int getFFTSize() const { return cp.fftSize(); }
 
  void initialiseConvolution()
  {
-  int largestImpuseSize {0};
+  unsigned int largestImpuseSize {0};
   initialised = false;
   if (!samples[0].set) return;
   
