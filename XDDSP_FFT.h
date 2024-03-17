@@ -612,7 +612,8 @@ struct ImpulseResponse
                          unsigned int size)
  {
   sampleCount = size;
-  const unsigned int inputKernCount = cp.deferredSize() / cp.inputSize();
+  const unsigned int inputKernCount = cp.deferredProcessing() ?
+  (cp.deferredSize() / cp.inputSize()) : (size/cp.inputSize() + 1);
   computeKernels(inputKernels,
                  inputKernCount,
                  cp.inputFFTSize(),
@@ -623,7 +624,7 @@ struct ImpulseResponse
 
   if (cp.deferredProcessing())
   {
-   const unsigned int deferredKernCount = size / cp.deferredSize() + 1;
+   const unsigned int deferredKernCount = size / cp.deferredSize();
    computeKernels(deferredKernels,
                   deferredKernCount,
                   cp.deferredFFTSize(),
@@ -647,7 +648,7 @@ private:
   k.setup(count, fftSize);
   
   unsigned int c = startPoint*segmentSize;
-  for (int i = startPoint; i < count; ++i)
+  for (int i = 0; i < count; ++i)
   {
    k.k[i].assign(fftSize, 0.);
    unsigned int cs = std::min(segmentSize, totalSize - c);
@@ -732,7 +733,6 @@ public:
  
  void reset()
  {
-  deferBuffer.assign(deferBuffer.size(), 0.);
   deferC = 0;
   if (imp)
   {
