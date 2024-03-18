@@ -10,6 +10,7 @@
 
 #include <cmath>
 #include <array>
+#include <thread>
 #include "XDDSP_Types.h"
 #include "XDDSP_Parameters.h"
 
@@ -669,36 +670,99 @@ class ConvolutionEngine
  ImpulseResponse *imp {nullptr};
  ConvolutionParameters &cp;
  
+ bool startDeferredProcess {false};
+ bool killDeferredProcess {false};
+ std::mutex dmux;
+ std::mutex amux;
+ std::condition_variable deferredProcessTrigger;
+ int procBufferInUse {0};
+ std::array<std::vector<SampleType>, 2> deferProc;
+ std::thread deferredProcThread;
+
  std::vector<SampleType> inputBuffer;
  std::vector<SampleType> deferBuffer;
  std::vector<SampleType> procBuffer;
  std::vector<SampleType> olapBuffer;
  unsigned int olapC {0};
  unsigned int deferC {0};
+ unsigned int deferOlapC {0};
  PowerSize olapSize;
  
- void doConvolution(KernelContainer &k, 
-                    std::vector<SampleType> &samples,
-                    unsigned int fftSize,
-                    unsigned int segmentSize,
-                    int offset)
+ void multiplyAndAccumulate(SampleType *input,
+                            SampleType *irKernel,
+                            SampleType *proc,
+                            unsigned int fftSize,
+                            unsigned int offset)
  {
-  fftDynamicSize(samples.data(), fftSize, false);
-  
-  for (int i = 0; i < k.size(); ++i)
+  multiplyFFTs(proc, input, irKernel, fftSize);
+  ifftDynamicSize(proc, fftSize);
+  unsigned int c = offset;
   {
-   multiplyFFTs(procBuffer.data(),
-                samples.data(),
-                k.get(i),
-                fftSize);
-   ifftDynamicSize(procBuffer.data(), fftSize);
-   
-   unsigned int j;
-   unsigned int c = segmentSize*i;
-   unsigned int q = fftSize;
-   for (j = 0; j < q; j++, ++c)
+   std::unique_lock lock(amux);
+   for (unsigned int j = 0; j < fftSize; j++, ++c)
    {
-    olapBuffer[(olapC + c + offset) & olapSize.mask()] += procBuffer[j];
+    olapBuffer[c & olapSize.mask()] += proc[j];
+   }
+  }
+ }
+ 
+ void doConvolution()
+ {
+  const unsigned int fftSize = cp.inputFFTSize();
+  const unsigned int segmentSize = cp.inputSize();
+  fftDynamicSize(inputBuffer.data(), fftSize, false);
+  
+  for (int i = 0; i < imp->inputKernels.size(); ++i)
+  {
+   multiplyAndAccumulate(inputBuffer.data(),
+                         imp->inputKernels.get(i),
+                         procBuffer.data(),
+                         fftSize,
+                         olapC + segmentSize*i);
+  }
+ }
+ 
+ void doDeferredConvolution(unsigned int offset)
+ {
+  {
+   std::unique_lock lock(dmux);
+   
+   std::fill(deferProc[procBufferInUse].begin() + cp.deferredSize(),
+             deferProc[procBufferInUse].end(),
+             0.);
+   fftDynamicSize(deferProc[procBufferInUse].data(), cp.deferredFFTSize(), false);
+   
+   multiplyAndAccumulate(deferProc[procBufferInUse].data(),
+                         imp->deferredKernels.get(0),
+                         deferBuffer.data(),
+                         cp.deferredFFTSize(),
+                         olapC + offset);
+   deferOlapC = olapC + offset;
+   procBufferInUse = 1 - procBufferInUse;
+   startDeferredProcess = true;
+  }
+  deferredProcessTrigger.notify_one();
+ }
+ 
+ void deferredProcessor()
+ {
+  std::unique_lock lock(dmux);
+  while (!killDeferredProcess)
+  {
+   deferredProcessTrigger.wait(lock, [&]() { return killDeferredProcess || startDeferredProcess; });
+
+   if (startDeferredProcess)
+   {
+    int pbu = 1 - procBufferInUse;
+    startDeferredProcess = false;
+    for (unsigned int i = 1; i < imp->deferredKernels.size(); ++i)
+    {
+     multiplyAndAccumulate(deferProc[pbu].data(),
+                           imp->deferredKernels.get(i),
+                           deferBuffer.data(),
+                           cp.deferredFFTSize(),
+                           deferOlapC + cp.deferredSize()*i);
+    }
    }
   }
  }
@@ -708,32 +772,57 @@ public:
  
  ConvolutionEngine(ConvolutionParameters &cp, Coupler<ConnectorChannelCount> &c) :
  cp(cp),
+ deferredProcThread([&]() {deferredProcessor();}),
  signalIn(c)
  {}
  
+ ConvolutionEngine(ConvolutionEngine &&rhs) :
+ cp(rhs.cp),
+ deferredProcThread([&]() {deferredProcessor();}),
+ signalIn(rhs.signalIn)
+ {}
+ 
+ ~ConvolutionEngine()
+ {
+  {
+   std::unique_lock lock(dmux);
+   killDeferredProcess = true;
+  }
+  deferredProcessTrigger.notify_one();
+  if (deferredProcThread.joinable()) deferredProcThread.join();
+ }
+ 
  void setImpulseResponse(ImpulseResponse &impulse)
  {
+  std::unique_lock lock(dmux);
   imp = &impulse;
  }
  
  void initialise()
  {
-  procBuffer.resize(cp.deferredFFTSize());
-  inputBuffer.resize(cp.inputFFTSize());
-  deferBuffer.resize(cp.deferredFFTSize());
-  if (imp)
   {
-   unsigned int overlapSize = cp.deferredSize() + imp->sampleCount + cp.deferredFFTSize();
-   olapSize.setToNextPowerTwo(overlapSize);
-   olapBuffer.resize(olapSize.size());
+   std::unique_lock lock(dmux);
+   procBuffer.resize(cp.deferredFFTSize());
+   inputBuffer.resize(cp.inputFFTSize());
+   deferBuffer.resize(cp.deferredFFTSize());
+   deferProc[0].resize(cp.deferredFFTSize());
+   deferProc[1].resize(cp.deferredFFTSize());
+   if (imp)
+   {
+    unsigned int overlapSize = cp.deferredSize() + imp->sampleCount + cp.deferredFFTSize();
+    olapSize.setToNextPowerTwo(overlapSize);
+    olapBuffer.resize(olapSize.size());
+   }
   }
-  
+
   reset();
  }
  
  void reset()
  {
+  std::unique_lock lock(dmux);
   deferC = 0;
+  procBufferInUse = 0;
   if (imp)
   {
    olapBuffer.assign(olapSize.size(), 0.);
@@ -759,21 +848,20 @@ public:
     unsigned int i = 0;
     for (; i < sampleCount && deferC < cp.deferredSize(); ++i, ++deferC)
     {
-     deferBuffer[deferC] = inputBuffer[i];
+     deferProc[procBufferInUse][deferC] = inputBuffer[i];
     }
     if (deferC == cp.deferredSize())
     {
-     std::fill(deferBuffer.begin() + cp.deferredSize(), deferBuffer.end(), 0.);
      deferC = 0;
-     doConvolution(imp->deferredKernels, deferBuffer, cp.deferredFFTSize(), cp.deferredSize(), i);
+     doDeferredConvolution(i);
      for (; i < sampleCount && deferC < cp.deferredSize(); ++i, ++deferC)
      {
-      deferBuffer[deferC] = inputBuffer[i];
+      deferProc[procBufferInUse][deferC] = inputBuffer[i];
      }
     }
    }
    
-   doConvolution(imp->inputKernels, inputBuffer, cp.inputFFTSize(), cp.inputSize(), 0);
+   doConvolution();
    
    for (int i = 0; i < sampleCount; ++i)
    {
