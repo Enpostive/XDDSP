@@ -555,6 +555,10 @@ struct KernelContainer
  
  SampleType *get(unsigned int index)
  {
+  if (index >= k.size())
+  {
+   this;
+  }
   dsp_assert(index >= 0 && index < k.size());
   return k[index].data();
  }
@@ -612,9 +616,13 @@ struct ImpulseResponse
                          const SampleType *impulseSamples,
                          unsigned int size)
  {
+  if (size < cp.deferredFFTSize()) cp.setParameters(cp.inputSize(), size/2);
   sampleCount = size;
-  const unsigned int inputKernCount = cp.deferredProcessing() ?
-  (cp.deferredSize() / cp.inputSize()) : (size/cp.inputSize() + 1);
+  unsigned int inputKernCount = (size/cp.inputSize() + 1);
+  if (cp.deferredProcessing() && cp.deferredSize()/cp.inputSize() < inputKernCount)
+  {
+   inputKernCount = cp.deferredSize()/cp.inputSize();
+  }
   computeKernels(inputKernels,
                  inputKernCount,
                  cp.inputFFTSize(),
