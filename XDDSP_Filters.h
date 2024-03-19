@@ -437,7 +437,7 @@ public:
   applyWindowFunction(WindowFunction::CosineWindow(alpha), taps);
   
   filter.setImpulse(0, taps.data(), FIRTapCount);
-  filter.setFFTHint(DelayLength);
+  filter.setFFTHint(FIRTapCount);
   filter.initialiseConvolution();
  }
 
