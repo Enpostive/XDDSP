@@ -660,8 +660,9 @@ private:
   for (int i = 0; i < count; ++i)
   {
    k.k[i].assign(fftSize, 0.);
-   unsigned int cs = std::min(segmentSize, totalSize - c);
-   std::copy(impulseSamples + c, impulseSamples + c + cs, k.get(i));
+   unsigned int start = std::min(c, totalSize - 1);
+   unsigned int cs = std::min(c + segmentSize, totalSize - 1);
+   if (start < cs) std::copy(impulseSamples + start, impulseSamples + cs, k.get(i));
    fftDynamicSize(k.get(i), fftSize);
    c += segmentSize;
   }
