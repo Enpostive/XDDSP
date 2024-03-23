@@ -555,10 +555,6 @@ struct KernelContainer
  
  SampleType *get(unsigned int index)
  {
-  if (index >= k.size())
-  {
-   this;
-  }
   dsp_assert(index >= 0 && index < k.size());
   return k[index].data();
  }
