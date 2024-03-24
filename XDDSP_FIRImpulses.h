@@ -50,14 +50,13 @@ SampleType sinc(SampleType x)
 class ImpulseBaseClass
 {
 protected:
- const SampleType length;
- 
- constexpr SampleType window(SampleType x)
- { return (x >= 0.) * (x <= length); }
+ const int length;
+ const int halfLength;
  
 public:
  ImpulseBaseClass (int length) :
- length(length)
+ length(length),
+ halfLength(length/2)
  { }
 };
 
@@ -73,8 +72,11 @@ public:
  f(normalisedFrequency)
  {}
  
- SampleType operator()(SampleType x)
- { return 2.*f*sinc(2.*f*x); }
+ SampleType operator()(int x)
+ {
+  x -= halfLength;
+  return 2.*f*sinc(2.*f*x);
+ }
 };
 
 
@@ -89,8 +91,12 @@ public:
  f(normalisedFrequency)
  {}
  
- SampleType operator()(SampleType x)
- { return 1. - 2.*f*sinc(2.*f*x); }
+ SampleType operator()(int x)
+ {
+  SampleType dirac = 1. * (x == halfLength);
+  x -= halfLength;
+  return dirac - 2.*f*sinc(2.*f*x);
+ }
 };
 
 
@@ -107,7 +113,10 @@ public:
  {}
  
  SampleType operator()(SampleType x)
- { return 2.*f1*sinc(2.*f1*x) - 2.*f2*sinc(2.*f2*x); }
+ {
+  x -= halfLength;
+  return 2.*f1*sinc(2.*f1*x) - 2.*f2*sinc(2.*f2*x);
+ }
 };
 
 
@@ -133,7 +142,7 @@ public:
 template <typename Impulse, typename T = SampleType>
 void generateImpulseResponse(Impulse impulse, T* data, int length)
 {
- for (int i = 0; i < length; ++i) data[i] = impulse(i - length/2);
+ for (int i = 0; i < length; ++i) data[i] = impulse(i);
 }
 
 template <typename Impulse, typename T, unsigned long length>
