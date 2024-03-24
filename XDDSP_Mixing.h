@@ -278,19 +278,9 @@ public:
 
 
 
-template <
-typename SignalIn,
-typename GainIn,
-typename PanIn,
-typename MixLaw = MixingLaws::EqualPowerLaw,
-int StepSize = IntegerMaximum>
-class MonoToStereoMixBus : Component<MonoToStereoMixBus<SignalIn, GainIn, PanIn, MixLaw, StepSize>, StepSize>
+template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
+class MonoToStereoMixBus : Component<MonoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
- static_assert(SignalIn::Count == 1,
-               "MonoToStereoMixBus only accepts mono signal inputs");
- static_assert(GainIn::Count == 1 && PanIn::Count == 1,
-               "MonoToStereoMixBus only accepts single channel control inputs");
- 
  const SampleType middleLevel;
  
 public:
@@ -325,7 +315,12 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
-  stereoOut.reset();
+  for (int i = startPoint, s = sampleCount; s--; ++i)
+  {
+   stereoOut(0, i) = 0.;
+   stereoOut(1, i) = 0.;
+  }
+
   for (MixCoupler &m: connections)
   {
    MixingLaws::MixWeights w = MixLaw::getWeights(m.panIn(sampleCount));
@@ -350,19 +345,9 @@ public:
 
 
 
-template <
-typename SignalIn,
-typename GainIn,
-typename PanIn,
-typename MixLaw = MixingLaws::EqualPowerLaw,
-int StepSize = IntegerMaximum>
-class StereoToStereoMixBus : Component<StereoToStereoMixBus<SignalIn, GainIn, PanIn, MixLaw, StepSize>, StepSize>
+template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
+class StereoToStereoMixBus : Component<StereoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
- static_assert(SignalIn::Count == 2,
-               "StereoToStereoMixBus only accepts stereo signal inputs");
- static_assert(GainIn::Count == 1 && PanIn::Count == 1,
-               "StereoToStereoMixBus only accepts single channel control inputs");
- 
  const SampleType middleLevel;
  
 public:
@@ -397,7 +382,12 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
-  stereoOut.reset();
+  for (int i = startPoint, s = sampleCount; s--; ++i)
+  {
+   stereoOut(0, i) = 0.;
+   stereoOut(1, i) = 0.;
+  }
+
   for (MixCoupler &m: connections)
   {
    MixingLaws::MixWeights w = MixLaw::getWeights(m.panIn(sampleCount));
