@@ -35,8 +35,8 @@ namespace FIRImpulses
 
 
 
-
-SampleType sinc(SampleType x)
+template <typename T>
+inline T sinc(T x)
 { return sin(M_PI*x)/(M_PI*x); }
 
 
