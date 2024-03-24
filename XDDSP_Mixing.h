@@ -279,7 +279,7 @@ public:
 
 
 template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
-class MonoToStereoMixBus : Component<MonoToStereoMixBus<MixLaw, StepSize>, StepSize>
+class MonoToStereoMixBus : public Component<MonoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
  const SampleType middleLevel;
  
@@ -353,7 +353,7 @@ public:
 
 
 template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
-class StereoToStereoMixBus : Component<StereoToStereoMixBus<MixLaw, StepSize>, StepSize>
+class StereoToStereoMixBus : public Component<StereoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
  const SampleType middleLevel;
  
