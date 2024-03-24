@@ -133,7 +133,7 @@ public:
 template <typename Impulse, typename T = SampleType>
 void generateImpulseResponse(Impulse impulse, T* data, int length)
 {
- for (int i = 0; i < length; ++i) data[i] = impulse(i);
+ for (int i = 0; i < length; ++i) data[i] = impulse(i - length/2);
 }
 
 template <typename Impulse, typename T, unsigned long length>
