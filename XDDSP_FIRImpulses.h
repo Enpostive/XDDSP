@@ -150,7 +150,7 @@ void generateImpulseResponse(Impulse impulse, std::array<T, length> &data)
 { generateImpulseResponse(impulse, data.data(), length); }
 
 template <typename Impulse, typename T>
-void geneateImpulseResponse(Impulse impulse, std::vector<T> &data)
+void generateImpulseResponse(Impulse impulse, std::vector<T> &data)
 { generateImpulseResponse(impulse, data.data(), data.size()); }
 
 
