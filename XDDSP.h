@@ -23,6 +23,7 @@
 #include "XDDSP_Oscillators.h"
 #include "XDDSP_PiecewiseEnvelopeData.h"
 #include "XDDSP_Envelopes.h"
+#include "XDDSP_FIRImpulses.h"
 #include "XDDSP_WindowFunctions.h"
 #include "XDDSP_FFT.h"
 #include "XDDSP_Analysis.h"
