@@ -322,8 +322,8 @@ public:
   
   for (int i = startPoint, s = sampleCount; s--; ++i)
   {
-   stereoOut(0, i) = 0.;
-   stereoOut(1, i) = 0.;
+   stereoOut.buffer(0, i) = 0.;
+   stereoOut.buffer(1, i) = 0.;
   }
 
   for (MixCoupler &m: connections)
@@ -396,8 +396,8 @@ public:
 
   for (int i = startPoint, s = sampleCount; s--; ++i)
   {
-   stereoOut(0, i) = 0.;
-   stereoOut(1, i) = 0.;
+   stereoOut.buffer(0, i) = 0.;
+   stereoOut.buffer(1, i) = 0.;
   }
 
   for (MixCoupler &m: connections)
