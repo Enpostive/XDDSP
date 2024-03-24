@@ -704,6 +704,353 @@ public:
 
 
 
+template <
+typename SignalIn,
+typename RiseIn,
+typename FallIn,
+int StepSize = INT_MAX>
+class ExponentialEnvelopeFollower : public Component<ExponentialEnvelopeFollower<SignalIn, RiseIn, FallIn, StepSize>>
+{
+public:
+ static constexpr int Count = SignalIn::Count;
+ static_assert(RiseIn::Count == FallIn::Count, "AttackIn and ReleaseIn channel counts must be equal");
+ static_assert(RiseIn::Count == 1 || RiseIn::Count == SignalIn::Count, "AttackIn channel count must be equal to SignalIn count or 1");
+ static constexpr int ControlCount = RiseIn::Count;
+ 
+private:
+ std::array<SampleType, Count> state;
+ 
+public:
+ 
+ // Specify your inputs as public members here
+ SignalIn signalIn;
+ RiseIn riseIn;
+ FallIn fallIn;
+ 
+ // Specify your outputs like this
+ Output<Count> envOut;
+ 
+ // Include a definition for each input in the constructor
+ ExponentialEnvelopeFollower(Parameters &p, SignalIn _signalIn, RiseIn _riseIn, FallIn _fallIn) :
+ signalIn(_signalIn),
+ riseIn(_riseIn),
+ fallIn(_fallIn),
+ envOut(p)
+ {}
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  state.fill(0.);
+  envOut.reset();
+ }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+// int startProcess(int startPoint, int sampleCount)
+// { return std::min(sampleCount, StepSize); }
+
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  // Attack and release times are measured in samples
+  SampleType riseCoeff = (riseIn(0, startPoint) > 2) ? expCoef(riseIn(0, startPoint)) : 0.;
+  SampleType fallCoeff = (fallIn(0, startPoint) > 2) ? expCoef(fallIn(0, startPoint)) : 0.;
+  
+  for (int c = 0; c < Count; ++c)
+  {
+   if (ControlCount > 1 && c > 0)
+   {
+    riseCoeff = (riseIn(c, 0) > startPoint) ? expCoef(riseIn(c, startPoint)) : 0.;
+    fallCoeff = (fallIn(c, 0) > startPoint) ? expCoef(fallIn(c, startPoint)) : 0.;
+   }
+   
+   for (int i = startPoint, s = sampleCount; s--; ++i)
+   {
+    const SampleType t = signalIn(c, i);
+    const SampleType coeff = (t > state[c])*riseCoeff + (t < state[c])*fallCoeff;
+    expTrack(state[c], t, coeff);
+    envOut(c, i) = state[c];
+   }
+  }
+ }
+ 
+ // finishProcess is called after the block has been processed
+// void finishProcess()
+// {}
+};
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+template <
+typename SignalIn,
+typename RiseIn,
+typename FallIn,
+int StepSize = INT_MAX>
+class LinearEnvelopeFollower : public Component<LinearEnvelopeFollower<SignalIn, RiseIn, FallIn, StepSize>>
+{
+public:
+ static constexpr int Count = SignalIn::Count;
+ static_assert(RiseIn::Count == FallIn::Count, "AttackIn and ReleaseIn channel counts must be equal");
+ static_assert(RiseIn::Count == 1 || RiseIn::Count == SignalIn::Count, "AttackIn channel count must be equal to SignalIn count or 1");
+ static constexpr int ControlCount = RiseIn::Count;
+ 
+private:
+ struct State
+ {
+  SampleType target {0.};
+  SampleType coeff {0.};
+  SampleType env {0.};
+ };
+ 
+ std::array<State, Count> state;
+ 
+public:
+ SampleType flux {0.00001};
+
+ // Specify your inputs as public members here
+ SignalIn signalIn;
+ RiseIn riseIn;
+ FallIn fallIn;
+
+ // Specify your outputs like this
+ Output<Count> envOut;
+ 
+ // Include a definition for each input in the constructor
+ LinearEnvelopeFollower(Parameters &p, SignalIn _signalIn, RiseIn _riseIn, FallIn _fallIn) :
+ signalIn(_signalIn),
+ riseIn(_riseIn),
+ fallIn(_fallIn),
+ envOut(p)
+ {}
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  state.fill(State());
+  envOut.reset();
+ }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+// int startProcess(int startPoint, int sampleCount)
+// { return std::min(sampleCount, StepSize); }
+
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  SampleType riseTime = fastMax(riseIn(0, startPoint), 1.);
+  SampleType fallTime = fastMax(fallIn(0, startPoint), 1.);
+  
+  for (int c = 0; c < Count; ++c)
+  {
+   if (ControlCount > 1 && c > 0)
+   {
+    riseTime = fastMax(riseIn(c, startPoint), 1.);
+    fallTime = fastMax(fallIn(c, startPoint), 1.);
+   }
+   
+   for (int i = startPoint, s = sampleCount; s--; ++i)
+   {
+    SampleType x = signalIn(c, i);
+    SampleType t = x - state[c].target;
+    if (fabs(t) > flux)
+    {
+     state[c].target = x;
+     t = x - state[c].env;
+     SampleType rampTime = (t > 0)*riseTime + (t <= 0)*fallTime;
+     state[c].coeff = t / rampTime;
+    }
+    
+    t = state[c].target - state[c].env;
+    state[c].env += fastBoundary(state[c].coeff, fastMin(t, 0.), fastMax(t, 0.));
+    envOut(c, i) = state[c].env;
+   }
+  }
+ }
+ 
+ // finishProcess is called after the block has been processed
+// void finishProcess()
+// {}
+};
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+template <typename SignalIn>
+class DynamicsProcessingGainSignal : public Component<DynamicsProcessingGainSignal<SignalIn>>
+{
+ // Private data members here
+ SampleType threshold;
+ SampleType knee;
+ SampleType ratioAbove;
+ SampleType ratioBelow;
+ SampleType makeup;
+ SampleType makeupLinear;
+ 
+ SampleType threshLinear;
+ SampleType lThresh;
+ SampleType hThresh;
+ SampleType recipDThresh;
+ 
+ bool pk;
+ 
+ SampleType maxGainLinear;
+ SampleType maxGain;
+ 
+public:
+ static constexpr int Count = SignalIn::Count;
+ 
+ // Specify your inputs as public members here
+ SignalIn signalIn;
+ 
+ // Specify your outputs like this
+ Output<Count> signalOut;
+ 
+ // Include a definition for each input in the constructor
+ DynamicsProcessingGainSignal(Parameters &p, SignalIn _signalIn) :
+ signalIn(_signalIn),
+ signalOut(p)
+ {
+  setThresholdAndKnee(-12., 0.);
+  setRatioAbove(2.);
+  setRatioBelow(1.);
+  setMakeup(0.);
+  setMaxGain(36);
+ }
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  signalOut.reset();
+ }
+ 
+ void setThresholdAndKnee(SampleType threshDB, SampleType kneeDB)
+ {
+  if (kneeDB < 0.) kneeDB = 0.;
+//  if (kneeDB > threshDB) kneeDB = threshDB;
+  
+  threshold = threshDB;
+  knee = kneeDB;
+  
+  threshLinear = dB2Linear(threshold);
+  lThresh = threshLinear / dB2Linear(knee);
+  hThresh = 2.0 * threshLinear - lThresh;
+  pk = (hThresh != lThresh);
+  recipDThresh = (hThresh == lThresh) ? 0. : (1. / (hThresh - lThresh));
+ }
+ 
+ void setThreshold(SampleType db)
+ {
+  setThresholdAndKnee(db, knee);
+ }
+ 
+ void setKnee(SampleType db)
+ {
+  setThresholdAndKnee(threshold, db);
+ }
+ 
+ SampleType getThreshold() const
+ { return threshold; }
+ 
+ SampleType getKnee() const
+ { return knee; }
+ 
+ void setRatioAbove(SampleType r)
+ { ratioAbove = (r == 0.) ? 0. : (1.0 / r); }
+
+ SampleType getRatioAbove() const
+ {
+  return (ratioAbove == 0.) ? 0. : 1./ratioAbove;
+ }
+ 
+ void setRatioBelow(SampleType r)
+ { ratioBelow = 1.0 / r; }
+ 
+ SampleType getRatioBelow() const
+ { return (ratioBelow == 0.) ? 0. : 1./ratioBelow; }
+ 
+ void setLimit()
+ { ratioAbove = 0.; }
+ 
+ void setMakeup(SampleType db)
+ { makeupLinear = dB2Linear(makeup = db); }
+ 
+ SampleType getMakeup() const
+ { return makeup; }
+ 
+ void setMaxGain(SampleType db)
+ { maxGainLinear = dB2Linear(maxGain = db); }
+ 
+ SampleType getMaxGain() const
+ { return maxGain; }
+ 
+ SampleType computeGainCurve(SampleType e)
+ {
+  SampleType ga, gb, d, c, s;
+  e = std::max(e, 0.0000001);
+
+  d = pk ? fastBoundary((e - lThresh)*recipDThresh, 0., 1.) : 1.*(e > lThresh);
+  s = lThresh - lThresh*d + threshLinear*d;
+  c = 1. - d + ratioAbove*d;
+  ga = c - (s*c - s)/e;
+  
+  d = pk ? fastBoundary((hThresh - e)*recipDThresh, 0., 1.) : 1.*(e < lThresh);
+  s = hThresh - hThresh*d + threshLinear*d;
+  c = 1. - d + ratioBelow*d;
+  gb = std::max(c - (s*c - s)/e, 0.);
+  
+  return fastBoundary(ga*gb*makeupLinear, 0., maxGainLinear);
+ }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+// int startProcess(int startPoint, int sampleCount)
+// { return std::min(sampleCount, StepSize); }
+
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  
+  for (int c = 0; c < Count; ++c)
+  {
+   for (int i = startPoint, s = sampleCount; s--; ++i)
+   {
+    signalOut.buffer(c, i) = computeGainCurve(signalIn(c, i));
+   }
+  }
+ }
+ 
+ // finishProcess is called after the block has been processed
+// void finishProcess()
+// {}
+};
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 }
 
 #endif /* XDDSP_Envelopes_h */
