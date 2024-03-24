@@ -908,6 +908,8 @@ class DynamicsProcessingGainSignal : public Component<DynamicsProcessingGainSign
  SampleType hThresh;
  SampleType recipDThresh;
  
+ SampleType channelLink;
+ 
  bool pk;
  
  SampleType maxGainLinear;
@@ -932,14 +934,13 @@ public:
   setRatioBelow(1.);
   setMakeup(0.);
   setMaxGain(36);
+  setChannelLink(1.);
  }
  
  // This function is responsible for clearing the output buffers to a default state when
  // the component is disabled.
  void reset()
- {
-  signalOut.reset();
- }
+ { signalOut.reset(); }
  
  void setThresholdAndKnee(SampleType threshDB, SampleType kneeDB)
  {
@@ -957,14 +958,10 @@ public:
  }
  
  void setThreshold(SampleType db)
- {
-  setThresholdAndKnee(db, knee);
- }
+ { setThresholdAndKnee(db, knee); }
  
  void setKnee(SampleType db)
- {
-  setThresholdAndKnee(threshold, db);
- }
+ { setThresholdAndKnee(threshold, db); }
  
  SampleType getThreshold() const
  { return threshold; }
@@ -976,9 +973,7 @@ public:
  { ratioAbove = (r == 0.) ? 0. : (1.0 / r); }
 
  SampleType getRatioAbove() const
- {
-  return (ratioAbove == 0.) ? 0. : 1./ratioAbove;
- }
+ { return (ratioAbove == 0.) ? 0. : 1./ratioAbove; }
  
  void setRatioBelow(SampleType r)
  { ratioBelow = 1.0 / r; }
@@ -1000,6 +995,12 @@ public:
  
  SampleType getMaxGain() const
  { return maxGain; }
+ 
+ void setChannelLink(SampleType link)
+ { channelLink = fastBoundary(link, 0., 1.); }
+ 
+ SampleType getChannelLink() const
+ { return channelLink; }
  
  SampleType computeGainCurve(SampleType e)
  {
@@ -1027,13 +1028,15 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
+  const MixingLaws::MixWeights mix = MixingLaws::LinearFadeLaw::getWeights(channelLink);
+  const SampleType cm = std::get<0>(mix);
+  const SampleType lm = std::get<1>(mix);
   
-  for (int c = 0; c < Count; ++c)
+  for (int i = startPoint, s = sampleCount; s--; ++i)
   {
-   for (int i = startPoint, s = sampleCount; s--; ++i)
-   {
-    signalOut.buffer(c, i) = computeGainCurve(signalIn(c, i));
-   }
+   SampleType link = 0.;
+   for (int c = 0; c < Count; ++c) link = fastMax(signalIn(c, i), link);
+   for (int c = 0; c < Count; ++c) signalOut.buffer(c, i) = computeGainCurve(cm*signalIn(c, i) + lm*link);
   }
  }
  
