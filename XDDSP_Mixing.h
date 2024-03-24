@@ -289,6 +289,8 @@ public:
   PConnector<1> signalIn;
   PConnector<1> gainIn;
   PConnector<1> panIn;
+  bool mute {false};
+  bool solo {false};
  };
  
  static constexpr int Count = 2;
@@ -315,6 +317,9 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
+  bool solo = false;
+  for (MixCoupler &m: connections) solo |= m.solo;
+  
   for (int i = startPoint, s = sampleCount; s--; ++i)
   {
    stereoOut(0, i) = 0.;
@@ -323,12 +328,14 @@ public:
 
   for (MixCoupler &m: connections)
   {
+   const SampleType gc = 1.*(solo ? m.solo : !m.mute);
+   
    MixingLaws::MixWeights w = MixLaw::getWeights(m.panIn(sampleCount));
    std::get<0>(w) *= middleLevel;
    std::get<1>(w) *= middleLevel;
    for (int i = startPoint, s = sampleCount; s--; ++i)
    {
-    SampleType g = m.signalIn(i)*m.gainIn(i);
+    const SampleType g = gc*m.signalIn(i)*m.gainIn(i);
     stereoOut.buffer(0, i) += g*std::get<0>(w);
     stereoOut.buffer(1, i) += g*std::get<1>(w);
    }
@@ -356,6 +363,8 @@ public:
   PConnector<2> signalIn;
   PConnector<1> gainIn;
   PConnector<1> panIn;
+  bool mute {false};
+  bool solo {false};
  };
  
  static constexpr int Count = 2;
@@ -382,6 +391,9 @@ public:
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
+  bool solo = false;
+  for (MixCoupler &m: connections) solo |= m.solo;
+
   for (int i = startPoint, s = sampleCount; s--; ++i)
   {
    stereoOut(0, i) = 0.;
@@ -390,12 +402,14 @@ public:
 
   for (MixCoupler &m: connections)
   {
+   const SampleType gc = 1.*(solo ? m.solo : !m.mute);
+   
    MixingLaws::MixWeights w = MixLaw::getWeights(m.panIn(sampleCount));
    std::get<0>(w) *= middleLevel;
    std::get<1>(w) *= middleLevel;
    for (int i = startPoint, s = sampleCount; s--; ++i)
    {
-    SampleType g = m.gainIn(i);
+    const SampleType g = gc*m.gainIn(i);
     stereoOut.buffer(0, i) += g*std::get<0>(w)*m.signalIn(0, i);
     stereoOut.buffer(1, i) += g*std::get<1>(w)*m.signalIn(1, i);
    }
