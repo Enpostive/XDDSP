@@ -137,6 +137,13 @@ template <typename WindowType, typename T, unsigned long length>
 void applyWindowFunction(WindowType window, std::array<T, length> &data)
 { applyWindowFunction(window, data.data(), data.size()); }
 
+template <typename WindowType, typename T>
+void applyWindowFunction(WindowType window, std::vector<T> &data)
+{ applyWindowFunction(window, data.data(), data.size()); }
+
+
+
+
 
 
 
