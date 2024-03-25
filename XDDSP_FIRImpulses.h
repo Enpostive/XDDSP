@@ -37,7 +37,7 @@ namespace FIRImpulses
 
 template <typename T>
 inline T sinc(T x)
-{ return sin(M_PI*x)/(M_PI*x); }
+{ return (x == 0.) ? 1. : sin(M_PI*x)/(M_PI*x); }
 
 
 
