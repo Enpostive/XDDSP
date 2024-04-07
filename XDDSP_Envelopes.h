@@ -771,7 +771,7 @@ public:
     const SampleType t = signalIn(c, i);
     const SampleType coeff = (t > state[c])*riseCoeff + (t < state[c])*fallCoeff;
     expTrack(state[c], t, coeff);
-    envOut(c, i) = state[c];
+    envOut.buffer(c, i) = state[c];
    }
   }
  }
@@ -873,7 +873,7 @@ public:
     
     t = state[c].target - state[c].env;
     state[c].env += fastBoundary(state[c].coeff, fastMin(t, 0.), fastMax(t, 0.));
-    envOut(c, i) = state[c].env;
+    envOut.buffer(c, i) = state[c].env;
    }
   }
  }
