@@ -118,6 +118,8 @@ class SignalProbe : public Component<SignalProbe<SignalIn>>
  std::array<SampleType, SignalIn::Count> maximumValue;
  std::array<SampleType, SignalIn::Count> minimumValue;
  std::array<SampleType, SignalIn::Count> instantaneousValue;
+ 
+ std::mutex mtx;
 public:
  static constexpr int Count = SignalIn::Count;
  
@@ -136,6 +138,8 @@ public:
  
  void reset()
  {
+  std::unique_lock lock(mtx);
+  
   maximumValue.fill(0.);
   minimumValue.fill(0.);
   instantaneousValue.fill(0.);
@@ -143,6 +147,8 @@ public:
  
  void stepProcess(int startPoint, int sampleCount)
  {
+  std::unique_lock lock(mtx);
+  
   for (int c = 0; c < Count; ++c)
   {
    instantaneousValue[c] = signalIn(c, startPoint);
@@ -155,19 +161,32 @@ public:
  }
  
  SampleType getMinimumValue(int channel)
- { return minimumValue[channel]; }
+ {
+  std::unique_lock lock(mtx);
+  return minimumValue[channel];
+ }
  
  SampleType getMaximumValue(int channel)
- { return maximumValue[channel]; }
+ {
+  std::unique_lock lock(mtx);
+  return maximumValue[channel];
+ }
  
  SampleType getAbsoluteMaximumValue(int channel)
- { return fastMax(fabs(minimumValue[channel]), fabs(maximumValue[channel])); }
+ { 
+  std::unique_lock lock(mtx);
+  return fastMax(fabs(minimumValue[channel]), fabs(maximumValue[channel]));
+ }
  
  SampleType getInstantValue(int channel)
- { return instantaneousValue[channel]; }
+ {
+  std::unique_lock lock(mtx);
+  return instantaneousValue[channel];
+ }
  
  SampleType probe(int channel)
  {
+  std::unique_lock lock(mtx);
   SampleType result = getAbsoluteMaximumValue(channel);
   minimumValue[channel] = maximumValue[channel] = 0.;
   return result;
@@ -175,6 +194,7 @@ public:
  
  SampleType probeSqrt(int channel)
  {
+  std::unique_lock lock(mtx);
   SampleType result = sqrt(maximumValue[channel]);
   minimumValue[channel] = maximumValue[channel] = 0.;
   return result;
