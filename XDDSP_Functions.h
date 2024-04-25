@@ -530,7 +530,8 @@ public:
   {
    --looplimit;
    mu = 3.*a*dd*dd + 2.*b*dd + c;
-   err = (f(dd) - p)/mu;
+   if (mu != 0) err = (f(dd) - p)/mu;
+   else err = 0.;
    ddd = dd + err;
    //   ddd = dd - (a*dd*dd*dd + b*dd*dd + c*dd + e - p)/mu;
    dd = ddd;
