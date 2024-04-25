@@ -213,13 +213,17 @@ public:
 // Set SquareInputSignal to 1 to have a squared signal average output, suitable for
 // calculating RMS
 template <typename SignalIn, int SquareInputSignal = 0>
-class SignalAverage : public Component<SignalAverage<SignalIn>>
+class SignalAverage : public Component<SignalAverage<SignalIn>>, public Parameters::ParameterListener
 {
  // Private data members here
+ Parameters &dspParam;
+ 
  std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
  std::array<SampleType, SignalIn::Count> accum;
  int windowSize;
  SampleType recWindowSize;
+ 
+ SampleType maxWindowSize;
 
 public:
  static constexpr int Count = SignalIn::Count;
@@ -232,40 +236,65 @@ public:
  
  // Include a definition for each input in the constructor
  SignalAverage(Parameters &p, SignalIn _signalIn) :
+ Parameters::ParameterListener(p),
+ dspParam(p),
  signalIn(_signalIn),
  signalOut(p)
  {
-  setWindowSize(32);
+  setWindowSize(1.);
   accum.fill(0.);
  }
  
- void setWindowSize(int _windowSize)
+ void setMaximumWindowSize(SampleType _maxWindowSize)
  {
-  windowSize = _windowSize;
-  recWindowSize = 1./static_cast<SampleType>(windowSize);
+  if (_maxWindowSize <= 0.) return;
+  maxWindowSize = _maxWindowSize;
+  int iMax = static_cast<int>(maxWindowSize*dspParam.sampleRate());
   for (auto &b : buffer)
   {
-   b.setMaximumLength(windowSize);
+   b.setMaximumLength(iMax);
+  }
+  reset();
+ }
+ 
+ virtual void updateSampleRate(double sr, double isr) override
+ {
+  int iMax = static_cast<int>(maxWindowSize*sr);
+  for (auto &b : buffer)
+  {
+   b.setMaximumLength(iMax);
+  }
+  reset();
+ }
+
+ void setWindowSize(SampleType _windowSize)
+ {
+  if (_windowSize <= 0) return;
+  _windowSize = fastMin(_windowSize, maxWindowSize);
+  _windowSize *= dspParam.sampleRate();
+  windowSize = static_cast<int>(_windowSize);
+  recWindowSize = 1./static_cast<SampleType>(windowSize);
+  for (int c = 0; c < Count; ++c)
+  {
+   accum[c] = 0.;
+   for (int i = 0; i < windowSize; ++i)
+   {
+    accum[c] += buffer[c].tapOut(i);
+   }
   }
  }
  
  // This function is responsible for clearing the output buffers to a default state when
  // the component is disabled.
- void reset()
+ void reset() override
  {
   accum.fill(0.);
   for (auto &b : buffer) b.reset();
   signalOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- int startProcess(int startPoint, int sampleCount)
- { return sampleCount; }
- // { return std::min(sampleCount, StepSize); }
- 
  // stepProcess is called repeatedly with the start point incremented by step size
- void stepProcess(int startPoint, int sampleCount)
+ void stepProcess(int startPoint, int sampleCount) override
  {
   for (int c = 0; c < Count; ++c)
   {
@@ -279,10 +308,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
- void finishProcess()
- {}
 };
 
 
