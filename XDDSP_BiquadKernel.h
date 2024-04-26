@@ -365,10 +365,10 @@ public:
 
 class BiquadFilterKernel
 {
- SampleType d1;
- SampleType d2;
- SampleType d3;
- SampleType d4;
+ SampleType d1 {0.};
+ SampleType d2 {0.};
+ SampleType d3 {0.};
+ SampleType d4 {0.};
 public:
  void reset()
  {
