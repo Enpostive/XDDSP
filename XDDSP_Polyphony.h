@@ -187,7 +187,7 @@ public:
 
 
 template <int OutputCount, int RampLengthms = 5>
-class MIDIScheduler : public Component<MIDIScheduler<RampLengthms>>, public Parameters::ParameterListener
+class MIDIScheduler : public Component<MIDIScheduler<OutputCount, RampLengthms>>, public Parameters::ParameterListener
 {
  SampleType smoothFactor;
  
