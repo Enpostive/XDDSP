@@ -67,6 +67,7 @@ private:
  int m {LowPass};
  SampleType cF {22000.};
  SampleType qF {0.7};
+ SampleType gn {0.};
  SampleType g {0.};
  bool invert {false};
  bool cascade {false};
@@ -211,6 +212,7 @@ private:
  
  void calculateGain(SampleType gain)
  {
+  gn = gain;
   g = powf(10.0, fabs(gain) / 20.0);
   invert = gain < 0.0;
  }
@@ -334,6 +336,21 @@ public:
   a1 = _a1;
   a2 = _a2;
  }
+ 
+ int getFilterMode()
+ { return m; }
+ 
+ SampleType getFrequencyHz()
+ { return cF; }
+ 
+ SampleType getQFactor()
+ { return qF; }
+ 
+ SampleType getGain()
+ { return gn; }
+ 
+ bool isCascade()
+ { return cascade; }
  
  std::complex<double> filterResponseAtHz(SampleType hz)
  {
