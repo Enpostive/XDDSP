@@ -63,7 +63,7 @@ public:
  
  void reset()
  {
-  for (auto& b : buffer) b.reset();
+  for (auto& b : buffer) b.reset(0.);
   signalOut.reset();
  }
  
@@ -127,7 +127,7 @@ public:
  
  void reset()
  {
-  for (auto& b : buffer) b.reset();
+  for (auto& b : buffer) b.reset(0.);
   for (auto& t : tapOut) t.reset();
  }
  
@@ -195,7 +195,7 @@ public:
  
  void reset()
  {
-  for (auto& b : buffer) b.reset();
+  for (auto& b : buffer) b.reset(0.);
   signalOut.reset();
  }
  
@@ -264,7 +264,7 @@ public:
  
  void reset()
  {
-  for (auto& b : buffer) b.reset();
+  for (auto& b : buffer) b.reset(0.);
   signalOut.reset();
  }
  

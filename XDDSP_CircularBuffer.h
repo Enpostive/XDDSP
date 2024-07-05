@@ -46,7 +46,7 @@ class CircularBuffer
 public:
  CircularBuffer()
  {
-  reset();
+  reset(0.);
  }
  
  uint32_t getSize() const { return Size.size(); }
@@ -56,9 +56,9 @@ public:
   // Ignored but defined to enable it to compile in place with the other classes
  }
  
- void reset()
+ void reset(T fill)
  {
-  buffer.fill(0.);
+  buffer.fill(fill);
   bc = 0;
  }
  
@@ -111,12 +111,12 @@ public:
  void setMaximumLength(uint32_t s)
  {
   size.setToNextPowerTwo(s);
-  reset();
+  buffer.resize(s);
  }
  
- void reset()
+ void reset(T fill)
  {
-  buffer.assign(size.size(), 0.);
+  buffer.assign(size.size(), fill);
   bc = 0;
  }
  
@@ -172,7 +172,7 @@ public:
  {
   size = s;
   
-  buffer.assign(size, 0.);
+  buffer.resize(size);
   
   // Guarantee that only enough memory for the buffer is actually allocated in most
   // circumstances
@@ -181,9 +181,9 @@ public:
   bc = 0;
  }
  
- void reset()
+ void reset(T fill)
  {
-  buffer.assign(size, 0.);
+  buffer.assign(size, fill);
   bc = 0;
  }
  

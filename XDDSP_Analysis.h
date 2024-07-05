@@ -86,7 +86,7 @@ public:
  {
   accum = 0.;
   count = 0;
-  buffer.reset();
+  buffer.reset(0.);
  }
  
  int getBlockCount() const

@@ -347,7 +347,7 @@ public:
  // the component is disabled.
  void reset()
  {
-  for (auto &b: buffer) b.reset();
+  for (auto &b: buffer) b.reset(0.);
   inPhaseOut.reset();
   quadratureOut.reset();
  }
@@ -425,7 +425,7 @@ public:
   for (auto &b: buffer)
   {
    b.setMaximumLength(FIRTapCount);
-   b.reset();
+   b.reset(0.);
   }
 
   taps.fill(0.0);

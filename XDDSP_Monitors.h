@@ -289,7 +289,7 @@ public:
  void reset() override
  {
   accum.fill(0.);
-  for (auto &b : buffer) b.reset();
+  for (auto &b : buffer) b.reset(0.);
   signalOut.reset();
  }
  
