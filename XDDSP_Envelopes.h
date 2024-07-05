@@ -1054,6 +1054,358 @@ public:
  
  
  
+template <typename SignalIn>
+class PiecewiseEnvelopeFinder : public Component<PiecewiseEnvelopeFinder<SignalIn>>, public Parameters::ParameterListener
+{
+public:
+ static constexpr int Count = SignalIn::Count;
+
+ struct Maxima
+ {
+  SampleType amp;
+  int time;
+ };
+
+private:
+ Parameters &dspParam;
+ const SampleType zeroThreshold;
+
+
+ // Audio buffers
+ std::array<DynamicCircularBuffer<>, Count> buffer;
+ 
+
+
+ // Maxima buffers
+ std::array<DynamicCircularBuffer<Maxima>, Count> maxima;
+// std::array<int, Count> zeroMaximaCount;
+ int currentMaximaBufferSize {128};
+ 
+ void initMaximaBuffer()
+ {
+  for (auto &m: maxima) m.setMaximumLength(currentMaximaBufferSize);
+  resetMaximaBuffer();
+ }
+ 
+ void resetMaximaBuffer()
+ {
+  for (int c = 0; c < Count; ++c)
+  {
+   maxima[c].reset(Maxima());
+   for (int i = currentMaximaBufferSize; i > 0; --i)
+   {
+    maxima[c].tapIn({zeroThreshold, i*clumpingLength});
+   }
+  }
+ }
+
+ void advanceMaximaBuffers(int advanceAmount)
+ {
+  for (auto &m: maxima)
+  {
+   for (int i = 0; i < currentMaximaBufferSize; ++i)
+   {
+    m.tapOut(i).time += advanceAmount;
+   }
+  }
+ }
+ 
+ void insertMaximaInSlotBefore(int c, Maxima m)
+ {
+  Maxima t = maxima[c].tapOut(0);
+  maxima[c].tapOut(0) = m;
+  maxima[c].tapIn(t);
+ }
+ 
+ void validateCurrentSegment(int c)
+ {
+  Maxima start = maxima[c].tapOut(1);
+  Maxima end = maxima[c].tapOut(0);
+  SampleType max = fabs(buffer[c].tapOut(end.time));
+  bool valid = true;
+  for (int i = end.time + 1; i < start.time; ++i)
+  {
+   const SampleType s = fabs(buffer[c].tapOut(i));
+   max = std::max(max, s);
+   if (getEnvelopeAtTime(c, i) < s) valid = false;
+  }
+  if (!valid)
+  {
+   if (end.amp < max) maxima[c].tapOut(0).amp = max;
+   if (start.amp < max) maxima[c].tapOut(1).amp = max;
+  }
+ }
+ 
+ void insertMaximaAtEnd(int c, Maxima m)
+ {
+  // If we are inserting a new maxima, that means we are committing the previous one as well
+  // So we validate the envelope and elevate the points if required
+  validateCurrentSegment(c);
+  maxima[c].tapIn(m);
+ }
+ 
+ void moveMaximaAtEnd(int c, Maxima m)
+ {
+  maxima[c].tapOut(0) = m;
+ }
+ 
+ SampleType slopeFromMaxima(const Maxima &test, int c, int index)
+ {
+  SampleType da = test.amp - maxima[c].tapOut(index).amp;
+  SampleType dt = maxima[c].tapOut(index).time - test.time;
+  return da/dt;
+ }
+ 
+ bool newSlopeNotLessThanLastSlope(const Maxima &test, int c)
+ {
+  return slopeFromMaxima(maxima[c].tapOut(0), c, 1) < slopeFromMaxima(test, c, 1);
+ }
+ 
+ 
+
+ // Local parameters
+ SampleType lengthOfBufferSeconds {0.5};
+ SampleType clumpingFrequency {200.};
+ 
+ // Processing variables
+ int clumpingLength;
+ int lengthBufferSamples;
+ std::array<int, Count> validPoint;
+
+public:
+ // Const accessors to buffers to allow for visualisation
+ const std::array<DynamicCircularBuffer<>, Count> &audioBuffer {buffer};
+ const std::array<DynamicCircularBuffer<Maxima>, Count> &maximaBuffer {maxima};
+ 
+ // Specify your inputs as public members here
+ SignalIn signalIn;
+ 
+ // Include a definition for each input in the constructor
+ PiecewiseEnvelopeFinder(Parameters &p, SignalIn _signalIn) :
+ Parameters::ParameterListener(p),
+ dspParam(p),
+ zeroThreshold(dB2Linear(-80.)),
+ signalIn(_signalIn)
+ {
+  updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
+  initMaximaBuffer();
+  validPoint.fill(0);
+ }
+ 
+ SampleType getEnvelopeAtTime(int c, int t)
+ {
+  int i = 0;
+  while (i < currentMaximaBufferSize && maxima[c].tapOut(i).time < t) ++i;
+  if (i == currentMaximaBufferSize) return maxima[c].tapOut(i - 1).amp;
+  if (i == 0 && maxima[c].tapOut(0).time >= t) return maxima[c].tapOut(0).amp;
+//  SampleType da = maxima[c].tapOut(i).amp - maxima[c].tapOut(i - 1).amp;
+//  SampleType dt = maxima[c].tapOut(i).time - maxima[c].tapOut(i - 1).time;
+//  SampleType slope = da/dt;
+  SampleType slope = slopeFromMaxima(maxima[c].tapOut(i), c, i - 1);
+  SampleType df = maxima[c].tapOut(i - 1).time - t;
+  return maxima[c].tapOut(i - 1).amp + slope*df;
+ }
+ 
+ void updateSampleRate(double sr, double isr) override
+ {
+  int d = static_cast<int>(ceil(sr*lengthOfBufferSeconds));
+  for (auto &b: buffer) b.setMaximumLength(d);
+  
+  lengthBufferSamples = buffer[0].getSize();
+  clumpingLength = static_cast<int>(sr/clumpingFrequency);
+ }
+ 
+ void setLengthOfBuffer(SampleType seconds)
+ {
+  lengthOfBufferSeconds = seconds;
+  updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
+ }
+ 
+ void setClumpingFrequency(SampleType hz)
+ {
+  hz = std::max(10., std::min(500., hz));
+  clumpingFrequency = hz;
+  clumpingLength = static_cast<int>(dspParam.sampleRate()/clumpingFrequency);
+ }
+ 
+ void setMaximaBufferSize(int size)
+ {
+  currentMaximaBufferSize = size;
+  initMaximaBuffer();
+ }
+ 
+ void setZeroThreshold(SampleType zero)
+ { zeroThreshold = zero; }
+ 
+ void setZeroThresholdDb(SampleType db)
+ { setZeroThreshold(dB2Linear(db)); }
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset() override
+ {
+  setLengthOfBuffer(lengthOfBufferSeconds);
+  resetMaximaBuffer();
+  for (auto &b : buffer)
+  {
+   b.reset(0.);
+  }
+  validPoint.fill(0);
+ }
+ 
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount) override
+ {
+  advanceMaximaBuffers(sampleCount);
+  for (auto &v: validPoint) v += sampleCount;
+  for (int c = 0; c < Count; ++c)
+  {
+   for (int i = startPoint, s = sampleCount; s--; ++i) buffer[c].tapIn(signalIn(c, i));
+   // Each maxima point lines up with a zero crossing!
+   // Start at the last maxima point
+   // Seek forward one clumping distance
+   // but keep going until we find at least two zero crossings
+   // keep track of the maximum sample amplitude, and the locations of the
+   // zero crossings before and after
+   // We are assuming that the buffer is going to be long enough to contain at least two zero crossings
+   // We are expecting to not find two zero crossings and in that instance we need to wait for more audio
+   bool breakCycle = false;
+   while (!breakCycle && validPoint[c] > clumpingLength)
+   {
+    int firstZeroCrossingFound = -1;
+    int lastZeroCrossingFound = -1;
+    int n = validPoint[c];
+    int clumpEnd = n - clumpingLength;
+    SampleType maxAmp = fabs(buffer[c].tapOut(n));
+    SampleType firstMax = maxAmp;
+    int maxTime = n;
+    SampleType sgn = signum(buffer[c].tapOut(n));
+    bool startWithZero = maxAmp < zeroThreshold;
+    int zeroes = 0;
+    int crossingsFound = 0;
+    bool stop = clumpEnd < 0;
+    while (!stop)
+    {
+     n--;
+     if (n < 0) stop = true;
+     else
+     {
+      SampleType now = buffer[c].tapOut(n);
+      if (startWithZero && fabs(now) < zeroThreshold)
+      {
+       zeroes++;
+       if (zeroes > clumpingLength) stop = true;
+      }
+      SampleType nsgn = signum(now);
+      if (nsgn != sgn)
+      {
+       sgn = nsgn;
+       if (firstZeroCrossingFound == -1) firstZeroCrossingFound = n;
+       lastZeroCrossingFound = n;
+       ++crossingsFound;
+      }
+      SampleType nabs = std::max(fabs(now), zeroThreshold);
+      if (nabs > maxAmp)
+      {
+       maxAmp = nabs;
+       maxTime = n;
+       if (firstZeroCrossingFound == -1) firstMax = maxAmp;
+      }
+      if (crossingsFound > 1 && n < clumpEnd) stop = true;
+     }
+    }
+    
+    int mm1Time = maxima[c].tapOut(0).time; // Last maxima time
+    int mm2Time = maxima[c].tapOut(1).time; // Maxima before last time
+    SampleType mm1Amp = maxima[c].tapOut(0).amp; // Last maxima amp
+    
+    if (startWithZero && zeroes > clumpingLength)
+    {
+     insertMaximaAtEnd(c, {zeroThreshold, n});
+     validPoint[c] = n;
+    }
+    else if (crossingsFound == 2)
+    {
+     // The two crossing case is simple enough.
+     // Choose the bigger maximum and place a maxima point
+     maxAmp = std::max(maxAmp, firstMax);
+     n = firstZeroCrossingFound;
+     Maxima nm = {maxAmp, n};
+     if (!startWithZero &&
+         newSlopeNotLessThanLastSlope(nm, c) &&
+         abs(mm1Time - n) < clumpingLength)
+     {
+      moveMaximaAtEnd(c, nm);
+     }
+     else if (maxAmp > mm1Amp || abs(mm1Time - n) > clumpingLength)
+     {
+      insertMaximaAtEnd(c, {maxAmp, n});
+     }
+     if (validPoint[c] == n) breakCycle = true;
+     validPoint[c] = n;
+    }
+    else if (crossingsFound > 2)
+    {
+     // In this case we have to find the crossing again to place the maxima
+     // point correctly
+     n = maxTime;
+     sgn = signum(buffer[c].tapOut(n));
+     if (n < lastZeroCrossingFound)
+     {
+      // if the new maximum is beyond the last zero crossing found, then put the maxima there
+      n = lastZeroCrossingFound;
+     }
+     else if (maxAmp <= mm1Amp)
+     {
+      // if the new maximum is smaller than or equal to the previous one, look for the next crossing
+      while (n > 0 && sgn == signum(buffer[c].tapOut(--n)) && signum(buffer[c].tapOut(n)) != 0.);
+     }
+     else if (n > firstZeroCrossingFound)
+     {
+      // if the new maximum is before the first zero crossing found, then put the maxima there
+      n = firstZeroCrossingFound;
+     }
+     else
+     {
+      // otherwise, look for the previous one
+      while (sgn == signum(buffer[c].tapOut(++n)) && signum(buffer[c].tapOut(n)) != 0.);
+      --n;
+     }
+     if (!startWithZero &&
+         newSlopeNotLessThanLastSlope({maxAmp, n}, c) &&
+         abs(mm1Time - n) < clumpingLength &&
+         abs(mm1Time - mm2Time) < clumpingLength)
+     {
+      // If we didn't start with zero, the new maxima is within clumping distance
+      // and the maxima before the last than is less than a clumping distance away from the last
+      // then we move the last maxima to the new position instead of adding a new one
+      moveMaximaAtEnd(c, {maxAmp, n});
+     }
+     else if (//maxAmp >= maxima[c].tapOut(0).amp ||
+              abs(mm1Time - n) > clumpingLength)
+     {
+      // If the new maxima is higher than or equal to the last one, or is more than a clumping length away
+      // add a new maxima
+      insertMaximaAtEnd(c, {maxAmp, n});
+     }
+     if (validPoint[c] == n) breakCycle = true;
+     validPoint[c] = n;
+    }
+    else breakCycle = true;
+   }
+  }
+ }
+};
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 }
 
 #endif /* XDDSP_Envelopes_h */
