@@ -1053,7 +1053,9 @@ public:
  
  
  
- 
+/*
+ A component for finding a piecewise envelope that will fit over the input signal. The input signal must be an audio signal with no DC offset. The best case is for the signal to contain as little low frequency content as possible, however low frequency content can easily be handled as long as the buffer length is appropriate and you don't mind a little latency!
+*/
 template <typename SignalIn>
 class PiecewiseEnvelopeFinder : public Component<PiecewiseEnvelopeFinder<SignalIn>>, public Parameters::ParameterListener
 {
@@ -1064,174 +1066,504 @@ public:
  {
   SampleType amp;
   int time;
+  
+  operator bool() const
+  { return time != -1; }
+  
+  void invalidate()
+  { time = -1; }
  };
 
 private:
+ 
+ struct MaximaRegion
+ {
+  SampleType amp {0.};
+  int time {-1}; // -1 here invalidates all following regions
+  int prevZeroCrossing {-1};
+  int endOfRegion {-1}; // -1 here indicates that this region is still growing
+  
+  MaximaRegion() {}
+  
+  MaximaRegion(SampleType a, int t, int prev, int end = -1)
+  : amp(a), time(t), prevZeroCrossing(prev), endOfRegion(end)
+  {}
+  
+  Maxima maximaAtTop() const
+  {
+   dsp_assert(time != -1);
+   return {amp, time};
+  }
+  
+  Maxima maximaAtZeroCrossing() const
+  {
+   dsp_assert(time != -1);
+   return {amp, prevZeroCrossing};
+  }
+  
+  Maxima maximaAtEndOfRegion() const
+  {
+   dsp_assert(time != -1);
+   return {amp, endOfRegion};
+  }
+  
+  int length() const
+  { return endOfRegion - prevZeroCrossing; }
+  
+  operator bool() const
+  { return time != -1; }
+  
+  void invalidate()
+  { time = -1; }
+ };
+ 
  Parameters &dspParam;
- const SampleType zeroThreshold;
 
 
  // Audio buffers
  std::array<DynamicCircularBuffer<>, Count> buffer;
  
-
-
  // Maxima buffers
- std::array<DynamicCircularBuffer<Maxima>, Count> maxima;
-// std::array<int, Count> zeroMaximaCount;
- int currentMaximaBufferSize {128};
+ std::array<DynamicCircularBuffer<Maxima>, Count> envMaxima;
+ int currentEnvMaximaBufferSize {512};
+ std::array<DynamicCircularBuffer<MaximaRegion>, Count> regions;
  
- void initMaximaBuffer()
+ // Local parameters
+ SampleType clumpingFrequency {200.};
+ SampleType zeroThreshold;
+ SampleType risingSlopeMultiplier {0.5};
+ SampleType fallingSlopeMultiplier {0.125};
+ SampleType bigJumpFraction {1./4.};
+ SampleType maximumRegionLengthSeconds {0.1};
+
+ // Processing variables
+ int clumpingLength;
+ int lengthBufferSamples;
+ int lengthRegionBuffer;
+ std::array<int, Count> lastRegionProcessed;
+ SampleType clumpingSlope;
+ SampleType fallingSlope;
+ SampleType risingSlope;
+ int maximumRegionSize;
+ int envSamplePoint;
+
+ Maxima& maxima(int c, int i)
+ { return envMaxima[c].tapOut(i); }
+ 
+ MaximaRegion& region(int c, int i)
+ { return regions[c].tapOut(i); }
+
+ void initEnvelopeMaximaBuffer()
  {
-  for (auto &m: maxima) m.setMaximumLength(currentMaximaBufferSize);
-  resetMaximaBuffer();
+  for (auto &m: envMaxima) m.setMaximumLength(currentEnvMaximaBufferSize);
+  resetEnvelopeMaximaBuffer();
  }
  
- void resetMaximaBuffer()
+ void resetEnvelopeMaximaBuffer()
  {
   for (int c = 0; c < Count; ++c)
   {
-   maxima[c].reset(Maxima());
-   for (int i = currentMaximaBufferSize; i > 0; --i)
+   envMaxima[c].reset(Maxima());
+   for (int i = currentEnvMaximaBufferSize; i > 0; --i)
    {
-    maxima[c].tapIn({zeroThreshold, i*clumpingLength});
+    envMaxima[c].tapIn({zeroThreshold, i*clumpingLength});
    }
+  }
+ }
+ 
+ void initAndResetRegions()
+ {
+  lengthRegionBuffer = lengthBufferSamples;
+  for (int c = 0; c < Count; ++c)
+  {
+   regions[c].setMaximumLength(lengthRegionBuffer);
+   // Insert one record invalidating all prior records
+   regions[c].tapIn({zeroThreshold, -1, -1, -1});
   }
  }
 
  void advanceMaximaBuffers(int advanceAmount)
  {
-  for (auto &m: maxima)
+  for (auto &m: envMaxima)
   {
-   for (int i = 0; i < currentMaximaBufferSize; ++i)
+   int i = 0;
+   bool stillInBuffer = true;
+   while (i < currentEnvMaximaBufferSize && stillInBuffer)
    {
+    // Before we incrememt, do the test to see if were still in the buffer
+    stillInBuffer = (m.tapOut(i).time < lengthBufferSamples);
+    // We still want to increment the first maxima that has left the buffer
     m.tapOut(i).time += advanceAmount;
+    // and then we invalidate the next maxima
+    ++i;
    }
+   if (i < currentEnvMaximaBufferSize) m.tapOut(i).invalidate();
   }
- }
- 
- void insertMaximaInSlotBefore(int c, Maxima m)
- {
-  Maxima t = maxima[c].tapOut(0);
-  maxima[c].tapOut(0) = m;
-  maxima[c].tapIn(t);
- }
- 
- void validateCurrentSegment(int c)
- {
-  Maxima start = maxima[c].tapOut(1);
-  Maxima end = maxima[c].tapOut(0);
-  SampleType max = fabs(buffer[c].tapOut(end.time));
-  bool valid = true;
-  for (int i = end.time + 1; i < start.time; ++i)
+  
+  for (auto &m: regions)
   {
-   const SampleType s = fabs(buffer[c].tapOut(i));
-   max = std::max(max, s);
-   if (getEnvelopeAtTime(c, i) < s) valid = false;
-  }
-  if (!valid)
-  {
-   if (end.amp < max) maxima[c].tapOut(0).amp = max;
-   if (start.amp < max) maxima[c].tapOut(1).amp = max;
+   int i = 0;
+   // We only advance the maxima records up to the length of the buffer
+   // Any records that come after that are invalidated instead
+   while (m.tapOut(i).time != -1)
+   {
+    MaximaRegion &r = m.tapOut(i);
+    r.time += advanceAmount;
+    r.prevZeroCrossing += advanceAmount;
+    r.endOfRegion += advanceAmount;
+    if (r.endOfRegion >= lengthBufferSamples) r.invalidate();
+    else ++i;
+   }
   }
  }
  
  void insertMaximaAtEnd(int c, Maxima m)
  {
-  // If we are inserting a new maxima, that means we are committing the previous one as well
-  // So we validate the envelope and elevate the points if required
-  validateCurrentSegment(c);
-  maxima[c].tapIn(m);
+  if (m.amp < zeroThreshold) m.amp = zeroThreshold;
+  envMaxima[c].tapIn(m);
+ }
+
+ void insertEnvelopeMaximaInSlotBefore(int c, Maxima m, int index = 0)
+ {
+  // Inserts a maxima at the slot before the index
+  // Insert it at the end normally
+  envMaxima[c].tapIn(m);
+  // Then use swaps to bubble it down the buffer into the correct place
+  for (int i = 0; i <= index; ++i)
+  {
+   std::swap(maxima(c, i), maxima(c, i + 1));
+  }
  }
  
- void moveMaximaAtEnd(int c, Maxima m)
+ int findZeroCrossingBefore(int c, int n)
  {
-  maxima[c].tapOut(0) = m;
+  SampleType sgn = signum(buffer[c].tapOut(n));
+  while (++n < lengthBufferSamples &&
+         sgn == signum(buffer[c].tapOut(n)));
+  --n;
+  return n;
  }
  
- SampleType slopeFromMaxima(const Maxima &test, int c, int index)
+ int findZeroCrossingAfter(int c, int n)
  {
-  SampleType da = test.amp - maxima[c].tapOut(index).amp;
-  SampleType dt = maxima[c].tapOut(index).time - test.time;
+  SampleType sgn = signum(buffer[c].tapOut(n));
+  while (n > 0 &&
+         sgn == signum(buffer[c].tapOut(--n)));
+  return n;
+ }
+ 
+ std::pair<SampleType, int> findMaximumAmplitudeInBuffer(int c, int start, int end)
+ {
+  SampleType max = fabs(buffer[c].tapOut(start));
+  int time = start;
+  for (int i = start + 1; i < end; ++i)
+  {
+   SampleType s = fabs(buffer[c].tapOut(i));
+   if (s > max)
+   {
+    max = s;
+    time = i;
+   }
+  }
+  
+  return {max, time};
+ }
+ 
+ std::pair<bool, SampleType> validateArbitrarySegment(const Maxima &start,
+                                                      const Maxima &end,
+                                                      int c)
+ {
+  SampleType max = fabs(buffer[c].tapOut(end.time));
+  bool valid = end.amp > fabs(buffer[c].tapOut(end.time));
+  for (int i = end.time + 1; i <= start.time; ++i)
+  {
+   const SampleType s = fabs(buffer[c].tapOut(i));
+   const SampleType e = interpolatePointBetweenArbitraryMaxima(start, end, i);
+   max = std::max(s, max);
+   if (e <= s) valid = false;
+  }
+  
+  return {valid, max};
+ }
+ 
+ bool quickValidateArbitrarySegment(const Maxima &start,
+                                    const Maxima &end,
+                                    int c)
+ {
+  auto [valid, max] = validateArbitrarySegment(start, end, c);
+  return valid;
+ }
+ 
+ SampleType timeToReachAmplitudeAtSlope(SampleType deltaAmp, SampleType slope)
+ {
+  return deltaAmp/slope;
+ }
+ 
+ SampleType slopeBetweenArbitraryMaxima(const Maxima &start, const Maxima &end)
+ {
+  if (start.time == end.time) return 0.;
+  SampleType da = end.amp - start.amp;
+  SampleType dt = start.time - end.time;
   return da/dt;
  }
  
- bool newSlopeNotLessThanLastSlope(const Maxima &test, int c)
+ SampleType slopeFromMaxima(const Maxima &m, int c, int index)
  {
-  return slopeFromMaxima(maxima[c].tapOut(0), c, 1) < slopeFromMaxima(test, c, 1);
+  return slopeBetweenArbitraryMaxima(maxima(c, index), m);
+ }
+ 
+ SampleType slopeOnEnvelopeEndingAtIndex(int c, int index)
+ {
+  return slopeBetweenArbitraryMaxima(maxima(c, index), maxima(c, index + 1));
+ }
+ 
+ SampleType interpolatePointAlongSlopeFromArbitraryMaxima(const Maxima &m, SampleType slope, int t)
+ {
+  SampleType df = m.time - t;
+  SampleType x = m.amp + slope*df;
+  return x;
+ }
+ 
+ SampleType interpolatePointBetweenArbitraryMaxima(const Maxima &start,
+                                                   const Maxima &end,
+                                                   int t)
+ {
+  SampleType slope = slopeBetweenArbitraryMaxima(start, end);
+  return interpolatePointAlongSlopeFromArbitraryMaxima(end, slope, t);
+ }
+ 
+ SampleType interpolatePointFromMaxima(const Maxima &test, int c, int index, int t)
+ {
+  SampleType slope = slopeFromMaxima(test, c, index);
+  return interpolatePointAlongSlopeFromArbitraryMaxima(maxima(c, index), slope, t);
+ }
+ 
+ void sanitiseSegmentRecursive(int c, const Maxima &start, const Maxima &end, int endIndex, int recursion = 5)
+ {
+  if (recursion == 0) return;
+  if (start.time == end.time) return;
+  int maxTime = start.time - 1;
+  SampleType s = fabs(buffer[c].tapOut(maxTime));
+  SampleType maxSlope = slopeBetweenArbitraryMaxima(start, {s, maxTime});
+  bool valid = s <= interpolatePointBetweenArbitraryMaxima(start, end, maxTime);
+  for (int i = start.time - 2; i > end.time; --i)
+  {
+   s = fabs(buffer[c].tapOut(i));
+   SampleType slope = slopeBetweenArbitraryMaxima(start, {s, i});
+   if (slope > maxSlope)
+   {
+    maxSlope = slope;
+    maxTime = i;
+   }
+   if (s > interpolatePointBetweenArbitraryMaxima(start, end, i))
+   {
+    valid = false;
+   }
+  }
+  
+  if (!valid)
+  {
+   s = fabs(buffer[c].tapOut(maxTime));
+   Maxima n = {s, maxTime};
+   sanitiseSegmentRecursive(c, start, n, endIndex, recursion - 1);
+   insertEnvelopeMaximaInSlotBefore(c, n, endIndex);
+   sanitiseSegmentRecursive(c, n, end, endIndex, recursion - 1);
+  }
+ }
+ 
+ void sanitiseSegment(int c, int startIndex, int endIndex)
+ {
+  Maxima start = maxima(c, startIndex);
+  Maxima end = maxima(c, endIndex);
+  sanitiseSegmentRecursive(c, start, end, endIndex);
+ }
+ 
+ void calculateClumpingTimes(double sr, double isr)
+ {
+  clumpingLength = static_cast<int>(sr/clumpingFrequency);
+  clumpingSlope = 0.5*clumpingFrequency*M_PI*isr;
+ }
+ 
+ int findNextRegionBoundary(int c, int t)
+ {
+  int zx = findZeroCrossingAfter(c, t);
+  int ml = t - maximumRegionSize;
+  return std::max(zx, ml);
+ }
+ 
+ void findNewRegions(int c)
+ {
+  int t = region(c, 0).endOfRegion;
+  if (t == -1) t = maxima(c, 0).time + 1;
+  int nt = findNextRegionBoundary(c, t);
+  
+  while (nt > 0)
+  {
+   // There is a zero crossing, let's create a new region for it then look for another
+   auto [max, time] = findMaximumAmplitudeInBuffer(c, nt, t);
+   regions[c].tapIn(MaximaRegion(max, time, t, nt));
+   ++lastRegionProcessed[c];
+   t = nt;
+   nt = findNextRegionBoundary(c, t);
+  }
+ }
+ 
+ SampleType slopeFromArbitraryMaximaToRegion(int c, const Maxima &m, int index)
+ {
+  MaximaRegion &mr = region(c, index);
+  dsp_assert(mr);
+  dsp_assert(mr.endOfRegion < m.time);
+  SampleType slopeToPrev = slopeBetweenArbitraryMaxima(m, mr.maximaAtZeroCrossing());
+  SampleType slopeToNext = slopeBetweenArbitraryMaxima(m, mr.maximaAtEndOfRegion());
+  if (mr.prevZeroCrossing > m.time) return slopeToNext;
+  return (region(c, index).amp > m.amp ? slopeToPrev : slopeToNext);
+ }
+ 
+ std::tuple<int, SampleType, SampleType> findNextMaximaCandidates(int c)
+ {
+  Maxima &lastMaxima = maxima(c, 0);
+  int index = lastRegionProcessed[c] - 1;
+  dsp_assert(region(c, index));
+  int maxSlopeIndex = index;
+  int maxIndex = index;
+  SampleType maxAmp = region(c, index).amp;
+  SampleType maxSlope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
+  if (region(c, index).amp > lastMaxima.amp &&
+      region(c, index).prevZeroCrossing == lastMaxima.time)
+  {
+   // We have found ourselves butted up against a higher region. This is a special case where the last
+   // maxima gets moved up instead of adding another maxima
+   // So we should straight away return the first region we find and detect this case in the main loop
+   return {maxSlopeIndex, maxSlope, maxAmp};
+  }
+  if (lastRegionProcessed[c] == 2 && region(c, 1).length() >= clumpingLength)
+  {
+   // There are 2 regions and the first one is longer than the clumping length
+   // This is a special case
+   index = 0;
+   SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
+   if (slope > maxSlope)
+   {
+    maxSlope = slope;
+    maxSlopeIndex = index;
+   }
+   if (region(c, index).amp > maxAmp)
+   {
+    maxIndex = index;
+    maxAmp = region(c, index).amp;
+   }
+  }
+  else
+  {
+   --index;
+   while (index >= 0 && lastMaxima.time - region(c, index).prevZeroCrossing < clumpingLength)
+   {
+    SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
+    if (slope > maxSlope)
+    {
+     maxSlope = slope;
+     maxSlopeIndex = index;
+    }
+    if (region(c, index).amp > maxAmp)
+    {
+     maxIndex = index;
+     maxAmp = region(c, index).amp;
+    }
+    --index;
+   }
+  }
+
+  return {maxSlopeIndex, maxSlope, maxAmp};
  }
  
  
-
- // Local parameters
- SampleType lengthOfBufferSeconds {0.5};
- SampleType clumpingFrequency {200.};
  
- // Processing variables
- int clumpingLength;
- int lengthBufferSamples;
- std::array<int, Count> validPoint;
-
+ 
+ 
 public:
- // Const accessors to buffers to allow for visualisation
+ // Const accessors to allow for visualisation and read-only access to the maxima points
  const std::array<DynamicCircularBuffer<>, Count> &audioBuffer {buffer};
- const std::array<DynamicCircularBuffer<Maxima>, Count> &maximaBuffer {maxima};
- 
+ const std::array<DynamicCircularBuffer<Maxima>, Count> &maximaBuffer {envMaxima};
+ const std::array<DynamicCircularBuffer<MaximaRegion>, Count> &regionBuffer {regions};
+ const SampleType &currentClumpingFrequency {clumpingFrequency};
+ const SampleType &ZeroThreshold {zeroThreshold};
+ const int &envelopePropagationDelay {envSamplePoint};
+  
  // Specify your inputs as public members here
  SignalIn signalIn;
+ 
+ // Outputs
+ Output<Count> envOut;
  
  // Include a definition for each input in the constructor
  PiecewiseEnvelopeFinder(Parameters &p, SignalIn _signalIn) :
  Parameters::ParameterListener(p),
  dspParam(p),
  zeroThreshold(dB2Linear(-80.)),
- signalIn(_signalIn)
+ signalIn(_signalIn),
+ envOut(p)
  {
   updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
-  initMaximaBuffer();
-  validPoint.fill(0);
+  initEnvelopeMaximaBuffer();
+  lastRegionProcessed.fill(0);
  }
  
  SampleType getEnvelopeAtTime(int c, int t)
  {
   int i = 0;
-  while (i < currentMaximaBufferSize && maxima[c].tapOut(i).time < t) ++i;
-  if (i == currentMaximaBufferSize) return maxima[c].tapOut(i - 1).amp;
-  if (i == 0 && maxima[c].tapOut(0).time >= t) return maxima[c].tapOut(0).amp;
-//  SampleType da = maxima[c].tapOut(i).amp - maxima[c].tapOut(i - 1).amp;
-//  SampleType dt = maxima[c].tapOut(i).time - maxima[c].tapOut(i - 1).time;
-//  SampleType slope = da/dt;
-  SampleType slope = slopeFromMaxima(maxima[c].tapOut(i), c, i - 1);
-  SampleType df = maxima[c].tapOut(i - 1).time - t;
-  return maxima[c].tapOut(i - 1).amp + slope*df;
+  while (i < currentEnvMaximaBufferSize &&
+         maxima(c, i) &&
+         maxima(c, i).time < t) ++i;
+  if (i == currentEnvMaximaBufferSize || !maxima(c, i)) return maxima(c, i - 1).amp;
+  if (i == 0 && maxima(c, 0).time >= t) return maxima(c, 0).amp;
+  return interpolatePointFromMaxima(maxima(c, i), c, i - 1, t);
  }
  
  void updateSampleRate(double sr, double isr) override
  {
-  int d = static_cast<int>(ceil(sr*lengthOfBufferSeconds));
-  for (auto &b: buffer) b.setMaximumLength(d);
-  
+  maximumRegionSize = static_cast<int>(ceil(maximumRegionLengthSeconds*sr));
+  envSamplePoint = 2.*maximumRegionSize;
+  int calculatedBufferSize = 3*maximumRegionSize;
+  for (auto &b: buffer)
+  {
+   b.setMaximumLength(calculatedBufferSize);
+   b.reset(0.);
+  }
   lengthBufferSamples = buffer[0].getSize();
-  clumpingLength = static_cast<int>(sr/clumpingFrequency);
+  calculateClumpingTimes(sr, isr);
+  resetEnvelopeMaximaBuffer();
+  initAndResetRegions();
  }
  
- void setLengthOfBuffer(SampleType seconds)
+ // Set the maximum region length to contain at least a full cycle of the selected
+ // clumping frequency, or longer if you don't mind a bit of latency or you
+ // plan on changing the clumping frequency to a lower value without reset.
+ void setMaximumLengthOfRegion(SampleType seconds)
  {
-  lengthOfBufferSeconds = seconds;
+  maximumRegionLengthSeconds = seconds;
   updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
  }
  
  void setClumpingFrequency(SampleType hz)
  {
-  hz = std::max(10., std::min(500., hz));
+  hz = std::max(10., std::min(1000., hz));
   clumpingFrequency = hz;
-  clumpingLength = static_cast<int>(dspParam.sampleRate()/clumpingFrequency);
+  calculateClumpingTimes(dspParam.sampleRate(), dspParam.sampleInterval());
  }
  
- void setMaximaBufferSize(int size)
+ void setRisingSlopeMultiplier(SampleType m)
+ { risingSlopeMultiplier = boundary(m, SampleType(0.001), SampleType(1.)); }
+ 
+ void setFallingSlopeMultiplier(SampleType m)
+ { fallingSlopeMultiplier = boundary(m, SampleType(0.001), SampleType(1.)); }
+ 
+ void setBigJumpDetectionThreshold(SampleType frac)
+ { bigJumpFraction = boundary(frac, SampleType(0.), SampleType(1.)); }
+ 
+ void setEnvelopeMaximaBufferSize(int size)
  {
-  currentMaximaBufferSize = size;
-  initMaximaBuffer();
+  currentEnvMaximaBufferSize = size;
+  initEnvelopeMaximaBuffer();
  }
  
  void setZeroThreshold(SampleType zero)
@@ -1244,154 +1576,142 @@ public:
  // the component is disabled.
  void reset() override
  {
-  setLengthOfBuffer(lengthOfBufferSeconds);
-  resetMaximaBuffer();
+  setMaximumLengthOfRegion(maximumRegionLengthSeconds);
+  resetEnvelopeMaximaBuffer();
   for (auto &b : buffer)
   {
    b.reset(0.);
   }
-  validPoint.fill(0);
+  lastRegionProcessed.fill(0);
+  envOut.reset();
  }
  
+ int startProcess(int startPoint, int sampleCount) override
+ { return std::min(sampleCount, clumpingLength); }
+
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount) override
  {
+  fallingSlope = clumpingSlope*fallingSlopeMultiplier;
+  risingSlope = clumpingSlope*risingSlopeMultiplier;
   advanceMaximaBuffers(sampleCount);
-  for (auto &v: validPoint) v += sampleCount;
   for (int c = 0; c < Count; ++c)
   {
+   // Fill the audio buffer up to the current sample
    for (int i = startPoint, s = sampleCount; s--; ++i) buffer[c].tapIn(signalIn(c, i));
-   // Each maxima point lines up with a zero crossing!
-   // Start at the last maxima point
-   // Seek forward one clumping distance
-   // but keep going until we find at least two zero crossings
-   // keep track of the maximum sample amplitude, and the locations of the
-   // zero crossings before and after
-   // We are assuming that the buffer is going to be long enough to contain at least two zero crossings
-   // We are expecting to not find two zero crossings and in that instance we need to wait for more audio
-   bool breakCycle = false;
-   while (!breakCycle && validPoint[c] > clumpingLength)
+
+   findNewRegions(c);
+   
+   while (lastRegionProcessed[c] > 0 &&
+          region(c, lastRegionProcessed[c]).length() == maximumRegionSize)
    {
-    int firstZeroCrossingFound = -1;
-    int lastZeroCrossingFound = -1;
-    int n = validPoint[c];
-    int clumpEnd = n - clumpingLength;
-    SampleType maxAmp = fabs(buffer[c].tapOut(n));
-    SampleType firstMax = maxAmp;
-    int maxTime = n;
-    SampleType sgn = signum(buffer[c].tapOut(n));
-    bool startWithZero = maxAmp < zeroThreshold;
-    int zeroes = 0;
-    int crossingsFound = 0;
-    bool stop = clumpEnd < 0;
-    while (!stop)
+    Maxima &m = maxima(c, 0);
+    MaximaRegion &mr = region(c, lastRegionProcessed[c]);
+    dsp_assert(m.time >= mr.prevZeroCrossing);
+    if (m.time == mr.prevZeroCrossing) m.amp = mr.amp;
+    else if (m.time > mr.prevZeroCrossing) insertMaximaAtEnd(c, mr.maximaAtZeroCrossing());
+    --lastRegionProcessed[c];
+   }
+
+   while (maxima(c, 0).time > clumpingLength && lastRegionProcessed[c] > 1)
+   {
+    Maxima *lastMaxima = &maxima(c, 0);
+    auto [__msi, __ms, __ma] = findNextMaximaCandidates(c);
+    int maxSlopeIndex = __msi;
+    SampleType maxSlope = __ms;
+    SampleType maxAmp = __ma;
+    
+    MaximaRegion &maxSlopeRegion = region(c, maxSlopeIndex);
+    
+    if (maxSlopeRegion.amp > lastMaxima->amp &&
+        maxSlopeRegion.prevZeroCrossing == lastMaxima->time)
     {
-     n--;
-     if (n < 0) stop = true;
-     else
-     {
-      SampleType now = buffer[c].tapOut(n);
-      if (startWithZero && fabs(now) < zeroThreshold)
-      {
-       zeroes++;
-       if (zeroes > clumpingLength) stop = true;
-      }
-      SampleType nsgn = signum(now);
-      if (nsgn != sgn)
-      {
-       sgn = nsgn;
-       if (firstZeroCrossingFound == -1) firstZeroCrossingFound = n;
-       lastZeroCrossingFound = n;
-       ++crossingsFound;
-      }
-      SampleType nabs = std::max(fabs(now), zeroThreshold);
-      if (nabs > maxAmp)
-      {
-       maxAmp = nabs;
-       maxTime = n;
-       if (firstZeroCrossingFound == -1) firstMax = maxAmp;
-      }
-      if (crossingsFound > 1 && n < clumpEnd) stop = true;
-     }
+     // We have found ourselves butted up against a higher region. This is a special case where the last
+     // maxima gets moved up instead of adding another maxima
+     // Here is where we detect this case in the main loop
+     *lastMaxima = maxSlopeRegion.maximaAtZeroCrossing();
+     lastMaxima = &maxima(c, 1);
+    }
+    else if (maxSlope > 0.)
+    {
+     insertMaximaAtEnd(c, maxSlopeRegion.maximaAtZeroCrossing());
+     lastRegionProcessed[c] = maxSlopeIndex + 1;
+    }
+    else
+    {
+     insertMaximaAtEnd(c, maxSlopeRegion.maximaAtEndOfRegion());
+     lastRegionProcessed[c] = maxSlopeIndex;
     }
     
-    int mm1Time = maxima[c].tapOut(0).time; // Last maxima time
-    int mm2Time = maxima[c].tapOut(1).time; // Maxima before last time
-    SampleType mm1Amp = maxima[c].tapOut(0).amp; // Last maxima amp
-    
-    if (startWithZero && zeroes > clumpingLength)
+    Maxima &newMaxima = maxima(c, 0);
+    SampleType slope = slopeBetweenArbitraryMaxima(*lastMaxima, newMaxima);
+    if (lastMaxima->amp < maxAmp*bigJumpFraction)
     {
-     insertMaximaAtEnd(c, {zeroThreshold, n});
-     validPoint[c] = n;
-    }
-    else if (crossingsFound == 2)
-    {
-     // The two crossing case is simple enough.
-     // Choose the bigger maximum and place a maxima point
-     maxAmp = std::max(maxAmp, firstMax);
-     n = firstZeroCrossingFound;
-     Maxima nm = {maxAmp, n};
-     if (!startWithZero &&
-         newSlopeNotLessThanLastSlope(nm, c) &&
-         abs(mm1Time - n) < clumpingLength)
+     int dt = static_cast<int>(floor((maxAmp - maxSlopeRegion.amp)/clumpingSlope));
+     // We have moved the maxima to a new location and we don't know what region
+     // it's landed in. So we need to figure that out
+     newMaxima.amp = maxAmp;
+     newMaxima.time -= dt;
+     int t = 0;
+     while (region(c, t) &&
+            region(c, t).endOfRegion < newMaxima.time) ++t;
+     if (t > 0 && region(c, t).endOfRegion > newMaxima.time) --t;
+     dsp_assert(t >= 0);
+     dsp_assert((t > 0) ? region(c, t - 1).endOfRegion < newMaxima.time : true);
+     lastRegionProcessed[c] = t;
+     slope = slopeBetweenArbitraryMaxima(*lastMaxima, newMaxima);
+     if (slope < clumpingSlope)
      {
-      moveMaximaAtEnd(c, nm);
-     }
-     else if (maxAmp > mm1Amp || abs(mm1Time - n) > clumpingLength)
-     {
-      insertMaximaAtEnd(c, {maxAmp, n});
-     }
-     if (validPoint[c] == n) breakCycle = true;
-     validPoint[c] = n;
-    }
-    else if (crossingsFound > 2)
-    {
-     // In this case we have to find the crossing again to place the maxima
-     // point correctly
-     n = maxTime;
-     sgn = signum(buffer[c].tapOut(n));
-     if (n < lastZeroCrossingFound)
-     {
-      // if the new maximum is beyond the last zero crossing found, then put the maxima there
-      n = lastZeroCrossingFound;
-     }
-     else if (maxAmp <= mm1Amp)
-     {
-      // if the new maximum is smaller than or equal to the previous one, look for the next crossing
-      while (n > 0 && sgn == signum(buffer[c].tapOut(--n)) && signum(buffer[c].tapOut(n)) != 0.);
-     }
-     else if (n > firstZeroCrossingFound)
-     {
-      // if the new maximum is before the first zero crossing found, then put the maxima there
-      n = firstZeroCrossingFound;
+      // Not steep enough, carefully move the last maxima so that no excursions occur
+      SampleType lowestDesiredLevel = ((lastMaxima->time - newMaxima.time < clumpingLength) ?
+                                       lastMaxima->amp :
+                                       zeroThreshold);
+      t = newMaxima.time;
+      Maxima m;
+      bool valid;
+      do
+      {
+       ++t;
+       m = {interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, t), t};
+       valid = quickValidateArbitrarySegment(*lastMaxima, m, c);
+      } while (m.amp > lowestDesiredLevel &&
+               valid);
+      --t;
+      m = {interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, t), t};
+      insertEnvelopeMaximaInSlotBefore(c, m);
      }
      else
      {
-      // otherwise, look for the previous one
-      while (sgn == signum(buffer[c].tapOut(++n)) && signum(buffer[c].tapOut(n)) != 0.);
-      --n;
+      // Too steep, move the last maxima up to soften the slope, no need to worry
+      // about excursions
+      lastMaxima->amp = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, lastMaxima->time);
      }
-     if (!startWithZero &&
-         newSlopeNotLessThanLastSlope({maxAmp, n}, c) &&
-         abs(mm1Time - n) < clumpingLength &&
-         abs(mm1Time - mm2Time) < clumpingLength)
-     {
-      // If we didn't start with zero, the new maxima is within clumping distance
-      // and the maxima before the last than is less than a clumping distance away from the last
-      // then we move the last maxima to the new position instead of adding a new one
-      moveMaximaAtEnd(c, {maxAmp, n});
-     }
-     else if (//maxAmp >= maxima[c].tapOut(0).amp ||
-              abs(mm1Time - n) > clumpingLength)
-     {
-      // If the new maxima is higher than or equal to the last one, or is more than a clumping length away
-      // add a new maxima
-      insertMaximaAtEnd(c, {maxAmp, n});
-     }
-     if (validPoint[c] == n) breakCycle = true;
-     validPoint[c] = n;
     }
-    else breakCycle = true;
+    else if (slope > risingSlope)
+    {
+     int i = 1;
+     do
+     {
+      lastMaxima = &maxima(c, i);
+      SampleType q = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, risingSlope, lastMaxima->time);
+      if (lastMaxima->amp < q) lastMaxima->amp = q;
+      ++i;
+     } while (lastMaxima->time - newMaxima.time < clumpingLength);
+    }
+    else if (slope < -fallingSlope)
+    {
+     newMaxima.amp = interpolatePointAlongSlopeFromArbitraryMaxima(*lastMaxima, -fallingSlope, newMaxima.time);
+    }
+   }
+   int i = startPoint;
+   int s = sampleCount;
+   int t = envSamplePoint + sampleCount;
+   while (s--)
+   {
+    SampleType env = getEnvelopeAtTime(c, t);
+    envOut.buffer(c, i) = env;
+    ++i;
+    --t;
    }
   }
  }

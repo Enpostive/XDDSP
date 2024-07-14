@@ -105,7 +105,10 @@ typedef std::function<SampleType (SampleType)> WaveformFunction;
 inline void dsp_assert(bool condition)
 {
 #ifdef DEBUG
- if (!condition) throw std::runtime_error("Assertion failed");
+ if (!condition)
+ {
+  throw std::runtime_error("Assertion failed");
+ }
 #endif
 }
 */
