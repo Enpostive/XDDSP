@@ -197,6 +197,17 @@ inline int lowestBitSet(uint32_t word)
 
 
 
+// Some static function definitions that are quite handy
+
+int recursiveBinarySearch(int start, int end, std::function<bool (int)> f);
+
+
+
+
+
+
+
+
 
 
 /*

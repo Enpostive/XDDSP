@@ -256,4 +256,24 @@ double BLEPLookup::BLAMPTable[66] =
 
 
 
+int recursiveBinarySearch(int start, int end, std::function<bool (int)> f)
+{
+ if (start > end) return recursiveBinarySearch(end, start, f);
+ if (start == end) return start;
+ if (start + 1 == end) return f(start) ? end : start;
+ int mid = (start + end)/2;
+ return (f(mid) ?
+         recursiveBinarySearch(mid, end, f) :
+         recursiveBinarySearch(start, mid, f));
+}
+
+
+
+
+
+
+
+
+
+
 }

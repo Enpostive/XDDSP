@@ -1081,7 +1081,7 @@ private:
   SampleType amp {0.};
   int time {-1}; // -1 here invalidates all following regions
   int prevZeroCrossing {-1};
-  int endOfRegion {-1}; // -1 here indicates that this region is still growing
+  int endOfRegion {-1};
   
   MaximaRegion() {}
   
@@ -1089,22 +1089,10 @@ private:
   : amp(a), time(t), prevZeroCrossing(prev), endOfRegion(end)
   {}
   
-  Maxima maximaAtTop() const
+  operator Maxima() const
   {
    dsp_assert(time != -1);
    return {amp, time};
-  }
-  
-  Maxima maximaAtZeroCrossing() const
-  {
-   dsp_assert(time != -1);
-   return {amp, prevZeroCrossing};
-  }
-  
-  Maxima maximaAtEndOfRegion() const
-  {
-   dsp_assert(time != -1);
-   return {amp, endOfRegion};
   }
   
   int length() const
@@ -1131,9 +1119,9 @@ private:
  // Local parameters
  SampleType clumpingFrequency {200.};
  SampleType zeroThreshold;
- SampleType risingSlopeMultiplier {0.5};
- SampleType fallingSlopeMultiplier {0.125};
- SampleType bigJumpFraction {1./4.};
+ SampleType risingSlopeMultiplier {0.25};
+ SampleType fallingSlopeMultiplier {0.05};
+ SampleType bigJumpFraction {1./2.};
  SampleType maximumRegionLengthSeconds {0.1};
 
  // Processing variables
@@ -1269,6 +1257,7 @@ private:
   return {max, time};
  }
  
+/*
  std::pair<bool, SampleType> validateArbitrarySegment(const Maxima &start,
                                                       const Maxima &end,
                                                       int c)
@@ -1285,12 +1274,21 @@ private:
   
   return {valid, max};
  }
+*/
  
  bool quickValidateArbitrarySegment(const Maxima &start,
                                     const Maxima &end,
                                     int c)
  {
-  auto [valid, max] = validateArbitrarySegment(start, end, c);
+  bool valid = true;
+  int i = end.time;
+  while (valid && i <= start.time)
+  {
+   const SampleType s = fabs(buffer[c].tapOut(i));
+   const SampleType e = interpolatePointBetweenArbitraryMaxima(start, end, i);
+   valid = e > s;
+   ++i;
+  }
   return valid;
  }
  
@@ -1412,34 +1410,27 @@ private:
  {
   MaximaRegion &mr = region(c, index);
   dsp_assert(mr);
-  dsp_assert(mr.endOfRegion < m.time);
-  SampleType slopeToPrev = slopeBetweenArbitraryMaxima(m, mr.maximaAtZeroCrossing());
-  SampleType slopeToNext = slopeBetweenArbitraryMaxima(m, mr.maximaAtEndOfRegion());
-  if (mr.prevZeroCrossing > m.time) return slopeToNext;
-  return (region(c, index).amp > m.amp ? slopeToPrev : slopeToNext);
+  dsp_assert(mr.time < m.time);
+  return slopeBetweenArbitraryMaxima(m, mr);
  }
  
- std::tuple<int, SampleType, SampleType> findNextMaximaCandidates(int c)
+ std::tuple<int, SampleType, int, SampleType> findNextMaximaCandidates(int c)
  {
   Maxima &lastMaxima = maxima(c, 0);
   int index = lastRegionProcessed[c] - 1;
   dsp_assert(region(c, index));
   int maxSlopeIndex = index;
-  int maxIndex = index;
   SampleType maxAmp = region(c, index).amp;
+  int maxAmpIndex = index;
   SampleType maxSlope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
-  if (region(c, index).amp > lastMaxima.amp &&
-      region(c, index).prevZeroCrossing == lastMaxima.time)
-  {
-   // We have found ourselves butted up against a higher region. This is a special case where the last
-   // maxima gets moved up instead of adding another maxima
-   // So we should straight away return the first region we find and detect this case in the main loop
-   return {maxSlopeIndex, maxSlope, maxAmp};
-  }
+  
+  // If the next maxima is above then return it straight away
+//  if (maxSlope > 0.) return {maxSlopeIndex, maxSlope, maxAmpIndex, maxAmp};
+  
+  // If there are 2 regions and the first one is longer than the clumping length
+  // This is a special case where we need to pick a region as the bigger one and go with it
   if (lastRegionProcessed[c] == 2 && region(c, 1).length() >= clumpingLength)
   {
-   // There are 2 regions and the first one is longer than the clumping length
-   // This is a special case
    index = 0;
    SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
    if (slope > maxSlope)
@@ -1449,16 +1440,20 @@ private:
    }
    if (region(c, index).amp > maxAmp)
    {
-    maxIndex = index;
+    maxAmpIndex = index;
     maxAmp = region(c, index).amp;
    }
   }
   else
   {
    --index;
-   while (index >= 0 && lastMaxima.time - region(c, index).prevZeroCrossing < clumpingLength)
+   while (index >= 0 && lastMaxima.time - region(c, index).time < clumpingLength)
    {
     SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
+    
+    // We keep searching until we reach a slope that is rising
+    // if (slope > 0.) return {maxSlopeIndex, maxSlope, maxAmp};
+    
     if (slope > maxSlope)
     {
      maxSlope = slope;
@@ -1466,14 +1461,14 @@ private:
     }
     if (region(c, index).amp > maxAmp)
     {
-     maxIndex = index;
+     maxAmpIndex = index;
      maxAmp = region(c, index).amp;
     }
     --index;
    }
   }
 
-  return {maxSlopeIndex, maxSlope, maxAmp};
+  return {maxSlopeIndex, maxSlope, maxAmpIndex, maxAmp};
  }
  
  
@@ -1608,100 +1603,89 @@ public:
     Maxima &m = maxima(c, 0);
     MaximaRegion &mr = region(c, lastRegionProcessed[c]);
     dsp_assert(m.time >= mr.prevZeroCrossing);
-    if (m.time == mr.prevZeroCrossing) m.amp = mr.amp;
-    else if (m.time > mr.prevZeroCrossing) insertMaximaAtEnd(c, mr.maximaAtZeroCrossing());
+    insertMaximaAtEnd(c, mr);
+    sanitiseSegment(c, 3, 2);
     --lastRegionProcessed[c];
    }
 
    while (maxima(c, 0).time > clumpingLength && lastRegionProcessed[c] > 1)
    {
     Maxima *lastMaxima = &maxima(c, 0);
-    auto [__msi, __ms, __ma] = findNextMaximaCandidates(c);
+    auto [__msi, __ms, __mai, __ma] = findNextMaximaCandidates(c);
     int maxSlopeIndex = __msi;
     SampleType maxSlope = __ms;
+    int maxAmpIndex = __mai;
     SampleType maxAmp = __ma;
     
     MaximaRegion &maxSlopeRegion = region(c, maxSlopeIndex);
+    MaximaRegion &maxAmpRegion = region(c, maxAmpIndex);
     
-    if (maxSlopeRegion.amp > lastMaxima->amp &&
-        maxSlopeRegion.prevZeroCrossing == lastMaxima->time)
-    {
-     // We have found ourselves butted up against a higher region. This is a special case where the last
-     // maxima gets moved up instead of adding another maxima
-     // Here is where we detect this case in the main loop
-     *lastMaxima = maxSlopeRegion.maximaAtZeroCrossing();
-     lastMaxima = &maxima(c, 1);
-    }
-    else if (maxSlope > 0.)
-    {
-     insertMaximaAtEnd(c, maxSlopeRegion.maximaAtZeroCrossing());
-     lastRegionProcessed[c] = maxSlopeIndex + 1;
-    }
-    else
-    {
-     insertMaximaAtEnd(c, maxSlopeRegion.maximaAtEndOfRegion());
-     lastRegionProcessed[c] = maxSlopeIndex;
-    }
+    insertMaximaAtEnd(c, maxSlopeRegion);
     
     Maxima &newMaxima = maxima(c, 0);
-    SampleType slope = slopeBetweenArbitraryMaxima(*lastMaxima, newMaxima);
-    if (lastMaxima->amp < maxAmp*bigJumpFraction)
+//    lastMaxima = &maxima(c, 1);
+    if (newMaxima.amp > lastMaxima->amp &&
+        maxima(c, 2).amp > lastMaxima->amp &&
+        maxima(c, 2).time - newMaxima.time < 2*clumpingLength)
     {
-     int dt = static_cast<int>(floor((maxAmp - maxSlopeRegion.amp)/clumpingSlope));
-     // We have moved the maxima to a new location and we don't know what region
-     // it's landed in. So we need to figure that out
-     newMaxima.amp = maxAmp;
-     newMaxima.time -= dt;
-     int t = 0;
-     while (region(c, t) &&
-            region(c, t).endOfRegion < newMaxima.time) ++t;
-     if (t > 0 && region(c, t).endOfRegion > newMaxima.time) --t;
-     dsp_assert(t >= 0);
-     dsp_assert((t > 0) ? region(c, t - 1).endOfRegion < newMaxima.time : true);
-     lastRegionProcessed[c] = t;
-     slope = slopeBetweenArbitraryMaxima(*lastMaxima, newMaxima);
-     if (slope < clumpingSlope)
+     lastMaxima->amp = interpolatePointBetweenArbitraryMaxima(maxima(c, 2), newMaxima, lastMaxima->time);
+     lastRegionProcessed[c] = maxSlopeIndex;
+    }
+    else if (bigJumpFraction*maxAmp > lastMaxima->amp)
+    {
+     SampleType midJump = 0.5*(maxAmp + lastMaxima->amp);
+     int dt = timeToReachAmplitudeAtSlope(maxAmp - lastMaxima->amp, clumpingSlope);
+     if (dt > 0)
      {
-      // Not steep enough, carefully move the last maxima so that no excursions occur
-      SampleType lowestDesiredLevel = ((lastMaxima->time - newMaxima.time < clumpingLength) ?
-                                       lastMaxima->amp :
-                                       zeroThreshold);
-      t = newMaxima.time;
-      Maxima m;
-      bool valid;
-      do
+      int time = recursiveBinarySearch(maxAmpRegion.time, (lastMaxima->time - dt - 1), [&](int x)
       {
-       ++t;
-       m = {interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, t), t};
-       valid = quickValidateArbitrarySegment(*lastMaxima, m, c);
-      } while (m.amp > lowestDesiredLevel &&
-               valid);
-      --t;
-      m = {interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, t), t};
-      insertEnvelopeMaximaInSlotBefore(c, m);
+       Maxima end {maxAmp, x};
+       Maxima start {midJump, x + dt};
+       return !(quickValidateArbitrarySegment(*lastMaxima, start, c) &&
+               quickValidateArbitrarySegment(start, end, c));
+      });
+      Maxima end {maxAmp, time};
+      Maxima start {midJump, time + dt};
+      newMaxima = maxAmpRegion;
+      insertEnvelopeMaximaInSlotBefore(c, start);
+      insertEnvelopeMaximaInSlotBefore(c, end);
+//      sanitiseSegment(c, 4, 3);
+//      sanitiseSegment(c, 3, 2);
+      lastRegionProcessed[c] = maxAmpIndex;
+//      lastRegionProcessed[c] = maxSlopeIndex;
      }
      else
      {
-      // Too steep, move the last maxima up to soften the slope, no need to worry
-      // about excursions
-      lastMaxima->amp = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, clumpingSlope, lastMaxima->time);
+      lastRegionProcessed[c] = maxSlopeIndex;
      }
     }
-    else if (slope > risingSlope)
+    else if (maxSlope > risingSlope)
     {
      int i = 1;
+     SampleType x;
      do
      {
-      lastMaxima = &maxima(c, i);
-      SampleType q = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, risingSlope, lastMaxima->time);
-      if (lastMaxima->amp < q) lastMaxima->amp = q;
+      Maxima &m = maxima(c, i);
+      if (m.time - newMaxima.time > clumpingLength) break;
+      x = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, risingSlope, m.time);
+      if (x < m.amp) break;
+      m.amp = x;
       ++i;
-     } while (lastMaxima->time - newMaxima.time < clumpingLength);
+     } while (true);
+     lastRegionProcessed[c] = maxSlopeIndex;
     }
-    else if (slope < -fallingSlope)
+    else if (maxSlope < -fallingSlope)
     {
-     newMaxima.amp = interpolatePointAlongSlopeFromArbitraryMaxima(*lastMaxima, -fallingSlope, newMaxima.time);
+     newMaxima.amp = interpolatePointAlongSlopeFromArbitraryMaxima(*lastMaxima,
+                                                                   -fallingSlope,
+                                                                   newMaxima.time);
+     lastRegionProcessed[c] = maxSlopeIndex;
     }
+    else
+    {
+     lastRegionProcessed[c] = maxSlopeIndex;
+    }
+    sanitiseSegment(c, 3, 2);
    }
    int i = startPoint;
    int s = sampleCount;
