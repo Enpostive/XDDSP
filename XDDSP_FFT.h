@@ -13,6 +13,7 @@
 #include <thread>
 #include "XDDSP_Types.h"
 #include "XDDSP_Parameters.h"
+#include "XDDSP_Functions.h"
 
 
 
@@ -478,28 +479,28 @@ void calculateMagnitudes(T* data, unsigned long n)
 
 
 
-/*
- template <typename T, unsigned long n>
- T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
- {
- constexpr unsigned long nHalved = n/2;
+
+template <typename T>
+T autoCorrelateDynamicSizeHalved(T *data, unsigned long n)
+{
+ unsigned long nHalved = n/2;
  
- fftStaticSize(data);
+ fftDynamicSize(data, n);
  
  // Multiply by conjugate
  for (unsigned long i = 0; i < nHalved; ++i)
  {
- data[i] = data[i]*data[i] + data[data.size() - i - 1]*data[data.size() - i - 1];
- data[data.size() - i - 1] = 0.;
+  data[i] = data[i]*data[i] + data[n - i - 1]*data[n - i - 1];
+  data[n - i - 1] = 0.;
  }
  data[0] = data[1] = 0.;
- ifftStaticSize(data);
+ ifftDynamicSize(data, n);
  
  T norm = data[0];
  if (norm > 0.) norm = 1./norm;
  for (unsigned long i = 0; i < nHalved; ++i)
  {
- data[i] = data[i]*norm;
+  data[i] = data[i]*norm;
  }
  
  unsigned long maxima = 1;
@@ -513,20 +514,109 @@ void calculateMagnitudes(T* data, unsigned long n)
  
  if (maxima < nHalved - 1)
  {
- T maxima1;
- XDDSP::IntersectionEstimator<T> intersect;
- intersect.setSampleValues(data[maxima - 2],
- data[maxima - 1],
- data[maxima],
- data[maxima + 1]);
- 
- intersect.calculateStationaryPoints(fMaxima, maxima1);
- fMaxima = maxima + maxima1 - 2.;
+  T maxima1;
+  XDDSP::IntersectionEstimator intersect;
+  intersect.setSampleValues(data[maxima - 2],
+                            data[maxima - 1],
+                            data[maxima],
+                            data[maxima + 1]);
+  
+  intersect.calculateStationaryPoints(fMaxima, maxima1);
+  fMaxima = maxima + maxima1 - 2.;
  }
  
  return fMaxima;
+}
+
+
+template <typename T, unsigned long n>
+T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
+{
+ return autoCorrelateDynamicSizeHalved(data.data(), n);
+}
+
+template <typename T>
+T autoCorrelateDynamicSizeHalved(std::vector<T> &data)
+{
+ return autoCorrelateDynamicSizeHalved(data.data(), data.size());
+}
+
+
+template <unsigned long SampleLength>
+class AutoCorrelator
+{
+ Parameters &dspParam;
+ std::array<SampleType, 2*SampleLength> buffer;
+ 
+public:
+ AutoCorrelator(Parameters &p) : dspParam(p)
+ {}
+ 
+ SampleType autoCorrelate(SampleType *data, unsigned long length)
+ {
+  if (length > SampleLength) length = SampleLength;
+
+  std::copy(data, data + length, buffer.begin());
+  std::fill(buffer.begin() + length, buffer.end(), 0.);
+  applyWindowFunction(WindowFunction::Gauss(length, 0.3), buffer.data(), length);
+  SampleType a = autoCorrelateStaticSizeHalved(buffer);
+  if (a > 0) a = dspParam.sampleRate()/a;
+  return a;
  }
- */
+ 
+ template <unsigned long n>
+ SampleType autoCorrelate(std::array<SampleType, n> &data)
+ { return autoCorrelate(data.data(), n); }
+ 
+ SampleType autoCorrelate(std::vector<SampleType> &data)
+ { return autoCorrelate(data.data(), data.size()); }
+};
+
+
+
+
+
+
+
+
+
+
+class DynamicAutoCorrelator
+{
+ Parameters &dspParam;
+ unsigned long sampleLength {0};
+ std::vector<SampleType> buffer;
+ 
+public:
+ DynamicAutoCorrelator(Parameters &p) : dspParam(p)
+ {}
+ 
+ void setBufferSize(unsigned long bufferSize)
+ {
+  sampleLength = bufferSize;
+  buffer.resize(2*bufferSize, 0.);
+ }
+ 
+ SampleType autoCorrelate(SampleType *data, unsigned long length)
+ {
+  if (length > sampleLength) length = sampleLength;
+
+
+  std::copy(data, data + length, buffer.begin());
+  std::fill(buffer.begin() + length, buffer.end(), 0.);
+  applyWindowFunction(WindowFunction::Gauss(length, 0.3), buffer.data(), length);
+  SampleType a = autoCorrelateDynamicSizeHalved(buffer);
+  if (a > 0) a = dspParam.sampleRate()/a;
+  return a;
+ }
+ 
+ template <unsigned long n>
+ SampleType autoCorrelate(std::array<SampleType, n> &data)
+ { return autoCorrelate(data.data(), n); }
+ 
+ SampleType autoCorrelate(std::vector<SampleType> &data)
+ { return autoCorrelate(data.data(), data.size()); }
+};
 
 
 

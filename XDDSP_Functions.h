@@ -359,7 +359,7 @@ public:
  
  void setBits(int bits)
  {
-  dsp_assert(bits >= 0 && bits < 31);
+  dsp_assert(bits >= 0 && bits < 33);
   b = bits;
   s = 1 << b;
   m = s - 1;

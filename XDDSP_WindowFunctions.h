@@ -57,6 +57,10 @@ public:
  { return window(x); }
 };
 
+
+
+
+
 class Triangle : public Rectangle
 {
 public:
@@ -67,6 +71,10 @@ public:
  constexpr SampleType operator()(SampleType x)
  { return (1. - fabs((x - length/2.)/(length/2.)))*window(x); }
 };
+
+
+
+
 
 class Welch : public Rectangle
 {
@@ -79,6 +87,10 @@ public:
  { return (1. - sqr(fabs((x - length/2.)/(length/2.))))*window(x); }
 };
 
+
+
+
+
 class Sine : public Rectangle
 {
 public:
@@ -90,6 +102,10 @@ public:
  { return (sin(M_PI*x/length))*window(x); }
 };
 
+
+
+
+
 class CosineWindow : public Rectangle
 {
  SampleType a0, a1;
@@ -100,6 +116,24 @@ public:
   
  constexpr SampleType operator()(SampleType x)
  { return (a0 + a1*cos(2.*M_PI*x/length))*window(x); }
+};
+
+
+
+
+
+class Gauss : public Rectangle
+{
+ SampleType param;
+ 
+public:
+ Gauss(SampleType length, SampleType param = 0.5) :
+ Rectangle(length),
+ param(param)
+ {}
+  
+ constexpr SampleType operator()(SampleType x)
+ { return (exp(-0.5*sqr(((2.*x/length) - 1.)/param)))*window(x); }
 };
 
 /*
@@ -128,9 +162,9 @@ public:
 
 
 template <typename WindowType, typename T = SampleType>
-void applyWindowFunction(WindowType window, T* data, unsigned int length)
+void applyWindowFunction(WindowType window, T* data, unsigned long length)
 {
- for (int i = 0; i < length; ++i) data[i] *= window(i);
+ for (unsigned long i = 0; i < length; ++i) data[i] *= window(i);
 }
 
 template <typename WindowType, typename T, unsigned long length>

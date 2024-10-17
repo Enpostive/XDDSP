@@ -114,7 +114,7 @@ public:
 
 
 template <int ChannelCount, int Channel, int OutputChannelCount = 1>
-class ChannelPicker : public Coupler<ChannelCount>
+class ChannelPicker : public Coupler<OutputChannelCount>
 {
  Coupler<ChannelCount> &connection;
  

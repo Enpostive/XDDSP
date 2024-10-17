@@ -432,9 +432,12 @@ class LoopCounter : public Component<LoopCounter<StartIn, EndIn, SpeedIn>>
 {
  static_assert(StartIn::Count == EndIn::Count && StartIn::Count == SpeedIn::Count, "LoopSignal expects all control signals to have the same channel count");
  // Private data members here
- std::array<SampleType, StartIn::Count> counter;
+ std::array<SampleType, StartIn::Count> _counter;
 public:
  static constexpr int Count = StartIn::Count;
+ 
+ // Read only access to internal counter
+ const std::array<SampleType, StartIn::Count> &currentCount {_counter};
  
  // Specify your inputs as public members here
  StartIn startIn;
@@ -451,19 +454,22 @@ public:
  speedIn(_speedIn),
  counterOut(p)
  {
-  counter.fill(0.);
+  _counter.fill(0.);
  }
  
  // This function is responsible for clearing the output buffers to a default state when
  // the component is disabled.
  void reset()
  {
-  counter.fill(0.);
+  _counter.fill(0.);
   counterOut.reset();
  }
  
- void setCounter(SampleType _counter)
- { counter = _counter;}
+ void setCounter(SampleType counter)
+ { _counter.fill(counter); }
+ 
+ void setCounter(int channel, SampleType counter)
+ { _counter[channel] = counter; }
  
  void stepProcess(int startPoint, int sampleCount)
  {
@@ -471,9 +477,12 @@ public:
   {
    for (int i = startPoint, s = sampleCount; s--; ++i)
    {
-    counter[c] += speedIn(c, i);
-    counter[c] =- (endIn(c, i) - startIn(c, i))*(counter[c] >= endIn(c, i));
-    counterOut.buffer(c, i) = counter[c];
+    _counter[c] += speedIn(c, i);
+//    _counter[c] += (endIn(c, i) - startIn(c, i))*(_counter[c] <= startIn(c, i));
+//    _counter[c] -= (endIn(c, i) - startIn(c, i))*(_counter[c] >= endIn(c, i));
+    if (_counter[c] <= startIn(c, i)) _counter[c] += (endIn(c, i) - startIn(c, i));
+    if (_counter[c] >= endIn(c, i)) _counter[c] -= (endIn(c, i) - startIn(c, i));
+    counterOut.buffer(c, i) = _counter[c];
    }
   }
  }
