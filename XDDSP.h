@@ -87,6 +87,11 @@ public:
   }
  }
  
+ // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
+ // components can use 'setNextTrigger' to set a trigger point
+// void triggerprocess(int triggerPoint)
+// {}
+
  // finishProcess is called after the block has been processed
 // void finishProcess()
 // {}

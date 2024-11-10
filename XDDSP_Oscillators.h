@@ -266,20 +266,20 @@ public:
  {
   SampleType ppStep = frequencyIn(startPoint)*dspParam.sampleInterval();
   SampleType pwi = pulseWidthIn(startPoint);
-  SampleType epwi = boundary(pwi, ppStep, 1. - ppStep);
+  SampleType epwi = boundary(pwi, ppStep, static_cast<SampleType>(1.) - ppStep);
   for (int c = 0; c < Count; ++c)
   {
    if (Count > 1)
    {
     ppStep = fastBoundary(frequencyIn(c, startPoint)*dspParam.sampleInterval(), 0., 0.5);
     pwi = pulseWidthIn(c, startPoint);
-    epwi = boundary(pwi, ppStep, 1. - ppStep);
+    epwi = boundary(pwi, ppStep, static_cast<SampleType>(1.) - ppStep);
    }
    for (int i = startPoint, s = sampleCount; s--; ++i)
    {
     ppStep = fastBoundary(frequencyIn(c, i)*dspParam.sampleInterval(), 0., 0.5);
     
-    SampleType epwi = boundary(pwi, ppStep, 1. - ppStep);
+    SampleType epwi = boundary(pwi, ppStep, static_cast<SampleType>(1.) - ppStep);
     SampleType fracState = epwi - phase[c];
     int state = signum(fracState);
     if (state != 0 && prevState[c] != 0 && state != prevState[c])

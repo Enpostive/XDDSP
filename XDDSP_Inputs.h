@@ -543,6 +543,9 @@ public:
   buffer[channel] = ptr;
  }
  
+ std::size_t length()
+ { return bufferSize + 1; }
+ 
  void setLength(std::size_t lengthSamples)
  {
   bufferSize = lengthSamples - 1;

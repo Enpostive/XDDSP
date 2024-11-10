@@ -118,7 +118,10 @@ public:
 
 
 
-template <int SignalCount = 1>
+// Simply ramp from the current level to a new target level over a set time
+// This is designed so that it can be swapped in place of a ControlConstant in
+// most cases (no function support)
+template <int SignalCount = 1, int DefaultRamp = 0>
 class RampTo : public Component<RampTo<SignalCount>>
 {
  // Private data members here
@@ -135,34 +138,41 @@ class RampTo : public Component<RampTo<SignalCount>>
   
   void set(SampleType target, int time, int length)
   {
-   start = ramp;
-   end = target;
-   delta = (end - start)/static_cast<SampleType>(length);
-   rampLength = length;
-   rampTime = -abs(time);
+   if (length == 0)
+   {
+    ramp = end = target;
+    rampTime = rampLength = 0;
+   }
+   else
+   {
+    start = ramp;
+    end = target;
+    delta = (end - start)/static_cast<SampleType>(length);
+    rampLength = length;
+    rampTime = -abs(time);
+   }
   }
   
   void setTo(SampleType target)
   {
-   ramp = end = target;
-   rampTime = rampLength = 0;
+   set(target, 0, DefaultRamp);
   }
   
   SampleType doStep()
   {
-   if (rampTime < 0)
+   if (rampTime >= rampLength)
+   {
+    ramp = end;
+   }
+   else if (rampTime < 0)
    {
     ramp = start;
     ++rampTime;
    }
-   else if (rampTime < rampLength)
+   else
    {
     ramp = start + static_cast<SampleType>(rampTime)*delta;
     ++rampTime;
-   }
-   else
-   {
-    ramp = end;
    }
    
    return ramp;
@@ -198,10 +208,29 @@ public:
   ramps[channel].setTo(target);
  }
  
+ void setControl(SampleType target)
+ {
+  for (auto &r: ramps) r.setTo(target);
+ }
+ 
+ SampleType getControl(int channel)
+ {
+  dsp_assert(channel >= 0 && channel < Count);
+  return ramps[channel].end;
+ }
+ 
+ SampleType getControl()
+ { return getControl(0); }
+
  void setRamp(int channel, int time, int length, SampleType target)
  {
   dsp_assert(channel >= 0 && channel < Count);
   ramps[channel].set(target, time, length);
+ }
+ 
+ void setRamp(int time, int length, SampleType target)
+ {
+  for (auto &r: ramps) r.set(target, time, length);
  }
  
  // stepProcess is called repeatedly with the start point incremented by step size
@@ -1005,7 +1034,7 @@ public:
  SampleType computeGainCurve(SampleType e)
  {
   SampleType ga, gb, d, c, s;
-  e = std::max(e, 0.0000001);
+  e = std::max(e, static_cast<SampleType>(0.0000001));
 
   d = pk ? fastBoundary((e - lThresh)*recipDThresh, 0., 1.) : 1.*(e > lThresh);
   s = lThresh - lThresh*d + threshLinear*d;
@@ -1015,7 +1044,7 @@ public:
   d = pk ? fastBoundary((hThresh - e)*recipDThresh, 0., 1.) : 1.*(e < lThresh);
   s = hThresh - hThresh*d + threshLinear*d;
   c = 1. - d + ratioBelow*d;
-  gb = std::max(c - (s*c - s)/e, 0.);
+  gb = std::max(c - (s*c - s)/e, static_cast<SampleType>(0.));
   
   return fastBoundary(ga*gb*makeupLinear, 0., maxGainLinear);
  }
@@ -1541,7 +1570,7 @@ public:
  
  void setClumpingFrequency(SampleType hz)
  {
-  hz = std::max(10., std::min(1000., hz));
+  hz = std::max(static_cast<SampleType>(10.), std::min(static_cast<SampleType>(1000.), hz));
   clumpingFrequency = hz;
   calculateClumpingTimes(dspParam.sampleRate(), dspParam.sampleInterval());
  }

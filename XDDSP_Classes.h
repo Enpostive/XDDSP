@@ -257,11 +257,31 @@ public:
 
 class ComponentBaseClass
 {
+ bool enabled {true};
+
+protected:
+ int samplesToNextTrigger = -1;
+ 
+ void setNextTrigger(int point)
+ {
+  samplesToNextTrigger = point;
+ }
+
 public:
  virtual ~ComponentBaseClass() {}
+
+ bool isEnabled() { return enabled; }
+ 
+ void setEnabled(bool e)
+ {
+  enabled = e;
+  if (!enabled) reset();
+ }
+
  virtual void reset() = 0;
  virtual int startProcess(int startPoint, int sampleCount) = 0;
  virtual void stepProcess(int startPoint, int sampleCount) = 0;
+ virtual void triggerProcess(int triggerPoint) = 0;
  virtual void finishProcess() = 0;
  virtual void process(int startPoint, int sampleCount) = 0;
 };
@@ -279,8 +299,7 @@ template <class Derived, int StepSize = INT_MAX>
 class Component : public ComponentBaseClass
 {
  Derived &THIS;
- bool enabled {true};
- 
+
 public:
  Component() :
  THIS(static_cast<Derived&>(*this))
@@ -290,43 +309,64 @@ public:
  // the component is disabled.
  void reset()
  {}
- 
+
  // startProcess prepares the component for processing one block and returns the step
  // size. By default, it returns the entire sampleCount as one big step.
  int startProcess(int startPoint, int sampleCount)
  { return std::min(sampleCount, StepSize); }
-
+ 
  // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
+ {}
+ 
+ // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
+ // components can use 'setNextTrigger' to set a trigger point
+ void triggerProcess(int triggerPoint)
  {}
  
  // finishProcess is called after all the blocks have been processed
  void finishProcess()
  {}
- 
- bool isEnabled() { return enabled; }
- 
- void setEnabled(bool e)
- {
-  enabled = e;
-  if (!enabled) THIS.reset();
- }
- 
+  
  void process(int startPoint, int sampleCount)
  {
-  if (enabled)
+  if (isEnabled())
   {
    int currentPoint = startPoint;
    int stepSize = THIS.startProcess(startPoint, sampleCount);
-   
-   while (stepSize < sampleCount)
+   bool triggerActive = samplesToNextTrigger > -1;
+   int samplesToProcessNow = (triggerActive ?
+                              std::min(sampleCount, samplesToNextTrigger) :
+                              sampleCount);
+
+   do
    {
-    THIS.stepProcess(currentPoint, stepSize);
-    currentPoint += stepSize;
-    sampleCount -= stepSize;
+    while (stepSize < samplesToProcessNow)
+    {
+     THIS.stepProcess(currentPoint, stepSize);
+     currentPoint += stepSize;
+     sampleCount -= stepSize;
+     samplesToProcessNow -= stepSize;
+     if (triggerActive) samplesToNextTrigger -= stepSize;
+    }
+    
+    if (triggerActive && samplesToNextTrigger < stepSize)
+    {
+     stepProcess(currentPoint, samplesToNextTrigger);
+     currentPoint += samplesToNextTrigger;
+     sampleCount -= samplesToNextTrigger;
+     samplesToNextTrigger = -1;
+     THIS.triggerProcess(currentPoint);
+     triggerActive = samplesToNextTrigger > -1;
+     samplesToProcessNow = (triggerActive ?
+                            std::min(sampleCount, samplesToNextTrigger) :
+                            sampleCount);
+    }
    }
-   
+   while (samplesToProcessNow < sampleCount);
+    
    THIS.stepProcess(currentPoint, sampleCount);
+   if (triggerActive) samplesToNextTrigger -= sampleCount;
    THIS.finishProcess();
   }
  }

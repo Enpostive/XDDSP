@@ -50,30 +50,33 @@ inline T clip(T x, T limit)
 
 inline SampleType fastMax(SampleType a, SampleType b)
 {
- a -= b;
+/* a -= b;
  a += fabs(a);
  a *= 0.5;
  a += b;
- return a;
+ return a;*/
+ return std::max(a, b);
 }
 
 inline SampleType fastMin(SampleType a, SampleType b)
 {
- a = b - a;
+/* a = b - a;
  a += fabs(a);
  a *= 0.5;
  a = b - a;
- return a;
+ return a;*/
+ return std::min(a, b);
 }
 
 inline SampleType fastBoundary(SampleType x, SampleType min, SampleType max)
 {
- SampleType x1 = fabs(x - min);
+/* SampleType x1 = fabs(x - min);
  SampleType x2 = fabs(x - max);
  x = x1 + (min + max);
  x -= x2;
  x *= 0.5;
- return x;
+ return x;*/
+ return boundary(x, min, max);
 }
 
 inline SampleType fastClip(SampleType x, SampleType limit)

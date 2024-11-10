@@ -152,10 +152,10 @@ public:
    {
     SampleType sum = 0.;
     for (auto &j : components) sum += j.signalOut(c, i);
-    if (isnan(sum))
-    {
-     ;
-    }
+//    if (isnan(sum))
+//    {
+//     ;
+//    }
     sumOut.buffer(c, i) = sum;
    }
   }
@@ -322,8 +322,8 @@ class MIDIPoly : public Parameters::ParameterListener
    if (!noteOn) retrigger = true;
    for (auto voice: voiceComponents)
    {
-    if (lastNote > 0) voice->noteIn.setControl(0, lastNote);
-    voice->noteIn.setRamp(0, 0, portTime, note);
+    if (lastNote > 0) voice->noteIn.setControl(lastNote);
+    voice->noteIn.setRamp(0, portTime, note);
     voice->velocityIn.setControl(onVel);
     if (retrigger)
     {
