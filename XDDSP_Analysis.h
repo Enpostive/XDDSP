@@ -72,7 +72,7 @@ public:
   updateSampleRate(p.sampleRate(), p.sampleInterval());
  }
  
- void updateSampleRate(SampleType sr, SampleType isr) override
+ virtual void updateSampleRate(double sr, double isr) override
  {
   blockInterval = 0.1*sr;
   blockLength = 4*blockInterval;
@@ -87,6 +87,7 @@ public:
   accum = 0.;
   count = 0;
   buffer.reset(0.);
+  blocks.clear();
  }
  
  int getBlockCount() const

@@ -111,7 +111,7 @@ public:
  void setMaximumLength(uint32_t s)
  {
   size.setToNextPowerTwo(s);
-  buffer.resize(s);
+  buffer.resize(size.size());
  }
  
  void reset(T fill)

@@ -688,7 +688,7 @@ public:
  {
   auto it = schedule.begin();
   while (it != schedule.end() &&
-         (it->samplePosition < samplePosition ||
+         (it->samplePosition <= samplePosition ||
           (it->note == note &&
            it->velocity < velocity)))
   {
