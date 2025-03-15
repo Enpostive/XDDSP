@@ -31,7 +31,7 @@ namespace XDDSP
 #ifdef XDDSP2_SAMPLETYPE
 typedef XDDSP2_SAMPLETYPE SampleType;
 #else
-typedef double SampleType;
+typedef float SampleType;
 #endif
 
 
