@@ -723,6 +723,7 @@ public:
    if (ns > s) ns = s;
    if (ns > 0)
    {
+    parallelProcess(i, ns);
     voiceArray.process(i, ns);
     s -= ns;
     i += ns;
@@ -734,7 +735,11 @@ public:
    }
   }
   
-  if (s > 0) voiceArray.process(i, s);
+  if (s > 0)
+  {
+   parallelProcess(i, s);
+   voiceArray.process(i, s);
+  }
   
   purgeInactiveVoices();
  }
@@ -746,6 +751,9 @@ public:
    sch.samplePosition -= sampleCount;
   }
  }
+
+ virtual void parallelProcess(int startPoint, int sampleCount)
+ {}
 };
 
 
