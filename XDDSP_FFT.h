@@ -863,9 +863,10 @@ class ConvolutionEngine
  }
   
 public:
- Connector<ConnectorChannelCount> signalIn;
+ PConnector<ConnectorChannelCount> signalIn;
  
- ConvolutionEngine(ConvolutionParameters &cp, Coupler<ConnectorChannelCount> &c) :
+ template<typename Source>
+ ConvolutionEngine(ConvolutionParameters &cp, Coupler<Source, ConnectorChannelCount> &c) :
  cp(cp),
  deferredProcThread([&]() {deferredProcessor();}),
  signalIn(c)

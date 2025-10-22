@@ -152,10 +152,6 @@ public:
    {
     SampleType sum = 0.;
     for (auto &j : components) sum += j.signalOut(c, i);
-//    if (isnan(sum))
-//    {
-//     ;
-//    }
     sumOut.buffer(c, i) = sum;
    }
   }

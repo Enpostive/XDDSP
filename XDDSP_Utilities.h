@@ -497,61 +497,6 @@ public:
 
 
 
-template <typename GainIn, typename OffsetIn>
-class ModulationController : public Component<ModulationController<GainIn, OffsetIn>>, public ModulationCoordinator
-{
- static_assert(GainIn::Count == 1 && OffsetIn::Count == 1, "ModulationController expects controls with single channels");
- 
- // Private data members here
- Parameters &dspParam;
- ModulationSource *source {nullptr};
- 
-public:
- // Specify your inputs as public members here
- GainIn gainIn;
- OffsetIn offsetIn;
- 
- // Specify your outputs like this
- // No outputs
- 
- // Include a definition for each input in the constructor
- ModulationController(Parameters &p, GainIn _signalIn, OffsetIn _offsetIn) :
- ModulationCoordinator(p),
- dspParam(p),
- gainIn(_signalIn),
- offsetIn(_offsetIn)
- {}
- 
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
- void reset()
- {
- }
- 
- void stepProcess(int startPoint, int sampleCount)
- {
-  for (int i = startPoint, s = sampleCount; s--; ++i)
-  {
-   SampleType m = (source) ? gainIn(i)*(*source)(i) + offsetIn(i) : 0.;
-   addSignal(i, m);
-  }
- }
- 
- void selectSource(int index)
- {
-  source = dspParam.getModulationSource(index);
- }
-};
-
-
-
-
-
-
-
-
-
-
 template <typename TopIn, typename BottomIn, typename SwitchIn>
 class TopBottomSwitch : public Component<TopBottomSwitch<TopIn, BottomIn, SwitchIn>>
 {

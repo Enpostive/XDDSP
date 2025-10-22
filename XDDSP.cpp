@@ -77,23 +77,6 @@ namespace XDDSP {
 
 
 
-void Parameters::clearModulationBuffers()
-{
- for (auto& md: modDestinations)
- {
-  if (md.input) md.input->modulationSignal.reset();
- }
-}
-
-
-
-
-
-
-
-
-
-
 bool RandomNumberBuffer::noiseBufferValid {false};
 std::array<XDDSP::SampleType, XDDSP::RandomNumberBuffer::NoiseBufferSize.size()> RandomNumberBuffer::noiseBuffer;
 int RandomNumberBuffer::r {0};

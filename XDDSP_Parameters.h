@@ -22,24 +22,10 @@ namespace XDDSP
 
 
 
-class ModulationSource;
-class ModulationDestination;
-
-
-
-
-
-
-
-
 /*
  The Parameters class contains all the information about the DSP process.
  If every component refers to the same Parameters instance then only one
  instance needs to be maintained.
- 
- This class contains an index of modulation sources. During initialisation, the modulation
- section keeps a stack of component names. As each source or destination is registered,
- the stack is used to give that registration a complete name.
  
  This class can be extended to contain other DSP parameters that are specific to
  the process being modelled, such as the cutoff point of a filter.
@@ -122,22 +108,6 @@ private:
   return result;
  }
  
- struct ModSource
- {
-  std::string name;
-  ModulationSource* output;
- };
- 
- std::vector<ModSource> modSources;
- 
- struct ModDestination
- {
-  std::string name;
-  ModulationDestination* input;
- };
- 
- std::vector<ModDestination> modDestinations;
- 
  void updateSampleRate()
  {
   for (auto &l: listeners) l->updateSampleRate(sr, isr);
@@ -158,10 +128,7 @@ protected:
  
 public:
  Parameters()
- {
-  registerModulationSource(nullptr, "None");
-  registerModulationDestination(nullptr, "None");
- }
+ {}
  
  virtual ~Parameters()
  {}
@@ -253,38 +220,6 @@ public:
  
  unsigned int getSampleOffset() const
  { return sampleOffset; }
- 
- void enterModulatedComponent(const std::string &name)
- { componentNameStack.push_back(name); }
- 
- void exitModulatedComponent()
- { componentNameStack.pop_back(); }
- 
- void registerModulationSource(ModulationSource *ms, const std::string &name)
- { modSources.push_back({.name = formCompleteName(name), .output = ms}); }
- 
- void registerModulationDestination(ModulationDestination *md, const std::string &name)
- { modDestinations.push_back({.name = formCompleteName(name), .input = md}); }
- 
- int getModulationSourcesCount() const
- { return (int)modSources.size(); }
- 
- std::string getModulationSourceName(int index) const
- { return modSources.at(index).name; }
- 
- ModulationSource* getModulationSource(int index) const
- { return modSources.at(index).output; }
- 
- int getModulationDestinationsCount() const
- { return (int)modDestinations.size(); }
- 
- std::string getModulationDestinationName(int index) const
- { return modDestinations.at(index).name; }
- 
- ModulationDestination* getModulationDestination(int index) const
- { return modDestinations.at(index).input; }
- 
- void clearModulationBuffers();
 };
 
 

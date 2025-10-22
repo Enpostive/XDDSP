@@ -33,22 +33,18 @@ constexpr int IntegerMaximum = INT_MAX;
 
 
 
-template <int ChannelCount = 1>
+template <typename Derived, int ChannelCount = 1>
 class Coupler
 {
-protected:
- virtual SampleType get(int channel, int index) = 0;
- 
+#define THIS static_cast<Derived*>(this)
 public:
  static constexpr int Count = ChannelCount;
  
- virtual ~Coupler() {}
- 
  SampleType operator()(int channel, int index)
- { return get(channel, index); }
+ { return THIS->get(channel, index); }
 
  SampleType operator()(int index)
- { return get(0, index); }
+ { return THIS->get(0, index); }
  
  template <typename T>
  void fastTransfer(const std::array<T*, Count> &p, int transferSize)
@@ -57,10 +53,11 @@ public:
   {
    for (int i = 0; i < transferSize; ++i)
    {
-    p[c][i] = get(c, i);
+    p[c][i] = THIS->get(c, i);
    }
   }
  }
+#undef THIS
 };
 
 
@@ -73,7 +70,7 @@ public:
 
 
 template <int BufferCount>
-class OutputBuffer : public Parameters::ParameterListener
+class OutputBuffer final : public Parameters::ParameterListener
 {
  Parameters& dspParam;
  
@@ -128,19 +125,18 @@ public:
 
 
 template <int OutputCount = 1>
-class Output : public Coupler<OutputCount>
+class Output final : public Coupler<Output<OutputCount>, OutputCount>
 {
-protected:
- virtual SampleType get(int channel, int index) override
- {
-  return buffer(channel, index);
- }
- 
 public:
  static constexpr int Count = OutputCount;
  
  OutputBuffer<Count> buffer;
  
+ SampleType get(int channel, int index)
+ {
+  return buffer(channel, index);
+ }
+
  explicit Output(Parameters &p) :
  buffer(p)
  {}
@@ -152,105 +148,6 @@ public:
  void reset()
  { buffer.reset(); }
 };
-
-
-
-
-
-
-
-
-
-
-class ModulationSource : public Coupler<1>
-{
- Coupler<1> &connection;
- 
-protected:
- SampleType get(int channel, int index)
- { return connection(channel, index); }
- 
-public:
- explicit ModulationSource(Coupler<1> &connection)
- : connection(connection)
- {}
- 
- ModulationSource(const ModulationSource &rhs)
- : connection(rhs.connection)
- {}
- 
- SampleType operator()(int channel, int index)
- { return connection(channel, index); }
- 
- SampleType operator()(int index)
- { return connection(index); }
-};
-
-
-
-
-
-
-
-
-
-
-class ModulationCoordinator;
-
-class ModulationDestination : public Coupler<1>
-{
- friend class ModulationCoordinator;
- friend class Parameters;
- 
- OutputBuffer<1> modulationSignal;
- 
-protected:
- virtual SampleType get(int channel, int index) override
- { return range.fastBoundary(modulationSignal(channel, index)); }
-
-public:
- static constexpr int Count = 1;
- MinMax<> range {-1., 1.};
- 
- ModulationDestination(Parameters &p) :
- modulationSignal(p)
- {}
- 
- ModulationDestination(const ModulationDestination& rhs) :
- modulationSignal(rhs.modulationSignal)
- {}
-};
-
-class ModulationCoordinator
-{
- Parameters &dspParam;
- ModulationDestination *d {nullptr};
- 
-protected:
- explicit ModulationCoordinator(Parameters &p) :
- dspParam(p)
- {}
- 
- void addSignal(int index, SampleType signal)
- {
-  if (d)
-  {
-   d->modulationSignal(0, index) += signal;
-  }
- }
- 
-public:
- void selectDestination(int index)
- {
-  d = dspParam.getModulationDestination(index);
- }
-};
-
-
-
-
-
-
 
 
 
