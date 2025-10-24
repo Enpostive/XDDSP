@@ -427,6 +427,80 @@ public:
 
 
 
+template <typename StartIn, typename EndIn, typename SpeedIn, int StepSize = INT_MAX>
+class Counter : public Component<Counter<StartIn, EndIn, SpeedIn, StepSize>>
+{
+ static_assert(StartIn::Count == EndIn::Count && StartIn::Count == SpeedIn::Count, "Counter expects all control signals to have the same channel count");
+ // Private data members here
+ std::array<SampleType, StartIn::Count> _counter;
+public:
+ static constexpr int Count = StartIn::Count;
+ 
+ // Read only access to internal counter
+ const std::array<SampleType, StartIn::Count> &currentCount {_counter};
+ 
+ // Specify your inputs as public members here
+ StartIn startIn;
+ EndIn endIn;
+ SpeedIn speedIn;
+ 
+ // Specify your outputs like this
+ Output<Count> counterOut;
+ 
+ // Include a definition for each input in the constructor
+ Counter(Parameters &p, StartIn _startIn, EndIn _endIn, SpeedIn _speedIn) :
+ startIn(_startIn),
+ endIn(_endIn),
+ speedIn(_speedIn),
+ counterOut(p)
+ {
+  _counter.fill(0.);
+ }
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
+ {
+  _counter.fill(0.);
+  counterOut.reset();
+ }
+ 
+ void setCounter(SampleType counter)
+ { _counter.fill(counter); }
+ 
+ void setCounter(int channel, SampleType counter)
+ { _counter[channel] = counter; }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
+ int startProcess(int startPoint, int sampleCount)
+ { return std::min(sampleCount, StepSize); }
+
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  for (int c = 0; c < Count; ++c)
+  {
+   SampleType speed = speedIn(c, 0);
+   for (int i = startPoint, s = sampleCount; s--; ++i)
+   {
+    _counter[c] += speed;
+    if (_counter[c] < startIn(c, i)) _counter[c] = startIn(c, i);
+    if (_counter[c] > endIn(c, i)) _counter[c] = endIn(c, i);
+    counterOut.buffer(c, i) = _counter[c];
+   }
+  }
+ }
+};
+
+
+
+
+
+
+
+
+
+
 template <typename StartIn, typename EndIn, typename SpeedIn>
 class LoopCounter : public Component<LoopCounter<StartIn, EndIn, SpeedIn>>
 {
