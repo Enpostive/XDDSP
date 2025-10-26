@@ -315,6 +315,9 @@ public:
  AudioPropertiesInput(Parameters &p) : dspParam(p)
  {}
  
+ AudioPropertiesInput(Parameters &p, SampleType _m) : dspParam(p), multiplier(_m)
+ {}
+ 
  AudioPropertiesInput(const AudioPropertiesInput<TimeMode> &rhs) :
  dspParam(rhs.dspParam),
  multiplier(rhs.multiplier)
