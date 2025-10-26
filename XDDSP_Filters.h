@@ -414,7 +414,7 @@ public:
  // Specify your inputs as public members here
  // Specify your outputs like this
  Output<Count> inPhaseOut;
- Connector<decltype(filter.signalOut), Count> quadratureOut;
+ Connector<decltype(filter.signalOut)> quadratureOut;
  
  ConvolutionHilbertFilter(Parameters &p, SignalIn _signalIn) :
  filter(p, _signalIn),

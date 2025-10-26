@@ -215,21 +215,21 @@ public:
  NoiseGenerator<Count> shotNoise;
  NoiseGenerator<Count> jnNoise;
  
- SignalDelta<Connector<SignalIn, Count>> snAmp;
+ SignalDelta<Connector<SignalIn>> snAmp;
  
  SimpleGain<
- Connector<decltype(shotNoise), Count>,
- Connector<decltype(snAmp),Count>
+ Connector<decltype(shotNoise)>,
+ Connector<decltype(snAmp)>
  > shotNoiseModulator;
  
  SimpleGain<
- Connector<decltype(shotNoiseModulator.signalOut), Count>,
+ Connector<decltype(shotNoiseModulator.signalOut)>,
  ControlConstant<>
  > shotNoiseAtten;
  
  SimpleGain<
- Connector<decltype(jnNoise.noiseOut), Count>,
- Connector<SignalIn, Count>
+ Connector<decltype(jnNoise.noiseOut)>,
+ Connector<SignalIn>
  > jnNoiseModulator;
  
  SimpleGain<
@@ -240,12 +240,12 @@ public:
  Sum<2, Count> noiseMix;
  
  SimpleGain<
- Connector<decltype(noiseMix), Count>,
+ Connector<decltype(noiseMix)>,
  ControlConstant<>
  > noiseLevel;
  
  // Specify your outputs like this
- Connector<decltype(noiseLevel.signalOut), Count> signalOut;
+ Connector<decltype(noiseLevel.signalOut)> signalOut;
  // Output<Count> signalOut;
  
  AnalogNoiseSimulator(Parameters &p, SignalIn _signalIn) :

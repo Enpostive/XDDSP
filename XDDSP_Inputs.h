@@ -43,8 +43,8 @@ namespace XDDSP
 
 
 
-template <typename Source, int ChannelCount = 1>
-class Connector final : public Coupler<Connector<Source, ChannelCount>, ChannelCount>
+template <typename Source>
+class Connector final : public Coupler<Connector<Source>, Source::Count>
 {
  Source &connection;
  
@@ -52,19 +52,14 @@ public:
  SampleType get(int channel, int index)
  { return connection(channel, index); }
  
- static constexpr int Count = ChannelCount;
- 
  Connector(Source &_connection) :
  connection(_connection)
  {}
  
- Connector(const Connector<Source, ChannelCount> &rhs):
+ Connector(const Connector<Source> &rhs):
  connection(rhs.connection)
  {}
 };
-
-template <typename S>
-Connector(S& src) -> Connector<S, S::Count>;
 
 
 
