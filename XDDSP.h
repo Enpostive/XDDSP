@@ -28,7 +28,7 @@
 #include "XDDSP_FFT.h"
 #include "XDDSP_Analysis.h"
 #include "XDDSP_Polyphony.h"
-
+#include "XDDSP_Global.h"
 
 
 

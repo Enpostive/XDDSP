@@ -5,229 +5,57 @@
 //  Created by Adam Jackson on 1/6/2022.
 //
 
-#include "XDDSP.h"
+/*
+ This file will not compile. It simply contains useful code templates which can be copy-pasted into the library to extend it
+ */
+
 
 
 /*
  Plugin DSP Component Template
  
  Here is a neat little template for a component to encapsulate an entire DSP network
+*/
+class PluginDSP : public Component<PluginDSP>
+{
+ // Private data members here
+public:
+ static constexpr int Count = 2;
  
- class PluginDSP : public Component<PluginDSP>
+ PluginInput<Count> signalIn;
+ Output<Count> signalOut;
+ 
+ PluginDSP(Parameters &p) :
+ signalOut(p)
+ {}
+ 
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
+ void reset()
  {
-  // Private data members here
- public:
-  static constexpr int Count = 2;
-  
-  PluginInput<Count> signalIn;
-  Output<Count> signalOut;
-  
-  PluginDSP(Parameters &p) :
-  signalOut(p)
-  {}
-  
-  // This function is responsible for clearing the output buffers to a default state when
-  // the component is disabled.
-  void reset()
-  {
-   signalOut.reset();
-  }
-  
-  // startProcess prepares the component for processing one block and returns the step
-  // size. By default, it returns the entire sampleCount as one big step.
+  signalOut.reset();
+ }
+ 
+ // startProcess prepares the component for processing one block and returns the step
+ // size. By default, it returns the entire sampleCount as one big step.
  // int startProcess(int startPoint, int sampleCount)
  // { return std::min(sampleCount, StepSize); }
-
-  // stepProcess is called repeatedly with the start point incremented by step size
-  void stepProcess(int startPoint, int sampleCount)
+ 
+ // stepProcess is called repeatedly with the start point incremented by step size
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  for (int c = 0; c < Count; ++c)
   {
-   for (int c = 0; c < Count; ++c)
+   for (int i = startPoint, s = sampleCount; s--; ++i)
    {
-    for (int i = startPoint, s = sampleCount; s--; ++i)
-    {
-     // DSP work done here
-    }
+    // DSP work done here
    }
   }
-  
-  // finishProcess is called after the block has been processed
+ }
+ 
+ // finishProcess is called after the block has been processed
  // void finishProcess()
  // {}
- };
- */
-
-
-
-
-
-
-
-
-
-
-
-namespace XDDSP {
-
-
-
-
-
-
-
-
-
-
-bool RandomNumberBuffer::noiseBufferValid {false};
-std::array<XDDSP::SampleType, XDDSP::RandomNumberBuffer::NoiseBufferSize.size()> RandomNumberBuffer::noiseBuffer;
-int RandomNumberBuffer::r {0};
-
-
-
-
-
-
-
-
-
-
-double BLEPLookup::BLEPTable[66] =
-{
- -0.99999901845185568,
- -0.99879081635780542,
- -0.99512009351894414,
- -0.98875581667595602,
- -0.97905555669450716,
- -0.96465986178480411,
- -0.94326905543892114,
- -0.91168775207479069,
- -0.86625536371289113,
- -0.80363516447624617,
- -0.72178169832959593,
- -0.62081492000348859,
- -0.50353377066927774,
- -0.37539507059714189,
- -0.24392826179774529,
- -0.11770342162933448,
- -0.0050761769027751445,
- 0.087025857595663017,
- 0.15403823528705973,
- 0.19425734134374628,
- 0.20884859471207337,
- 0.20141406032523251,
- 0.17724645045436863,
- 0.14243617400903022,
- 0.1029985652077724,
- 0.064156794542319706,
- 0.029864823246329549,
- 0.0025981041770900544,
- -0.016610364654204974,
- -0.027946503342160933,
- -0.032479530152672152,
- -0.031790186489821723,
- -0.027626226826803553,
- -0.021628474115903008,
- -0.015148660941404997,
- -0.0091599463315860506,
- -0.0042470502357059474,
- -0.00065367692036232125,
- 0.0016370236914743054,
- 0.0028111722199321678,
- 0.0031390804932387661,
- 0.0029070631731132101,
- 0.002370736887797873,
- 0.0017295330899264622,
- 0.0011188594922717239,
- 0.00061485125932190035,
- 0.00024635054577601986,
- 0.0000095583913491812672,
- -0.0001179811135241008,
- -0.00016605097137482338,
- -0.00016388340624673862,
- -0.00013564746998227637,
- -0.000098686521070166083,
- -0.000063663697895456422,
- -0.000035788065087576452,
- -0.000016444326416697203,
- -0.0000047630618194607519,
- 0.0000011261041132919141,
- 0.0000032453513341872986,
- 0.0000032977659644872402,
- 0.0000024887881232376529,
- 0.0000015365445142306699,
- 0.00000077807460598772873,
- 0.00000030247064106648386,
- 0,
- 0
-};
-
-double BLEPLookup::BLAMPTable[66] =
-{
- 0,
- -0.24142547955582203,
- -0.45139955397978576,
- -0.60795665695239631,
- -0.7014947744819402,
- -0.73333221619881372,
- -0.71303277448326541,
- -0.65516267631574565,
- -0.57607634551475639,
- -0.49118853419041553,
- -0.41301500370373456,
- -0.35008686734028904,
- -0.30669171584470567,
- -0.28328465269012093,
- -0.2773511029173843,
- -0.28448857567121538,
- -0.29949778352360612,
- -0.31732228180325661,
- -0.33373676272239211,
- -0.345745292539759,
- -0.35170291019616862,
- -0.35121146798723168,
- -0.34486131908347101,
- -0.33389540913732885,
- -0.31986463349605554,
- -0.30432725860573062,
- -0.28862527660172771,
- -0.27375074190494447,
- -0.26029816674278805,
- -0.24848880410926205,
- -0.23824107013183646,
- -0.22926855318380571,
- -0.22118063345745212,
- -0.21357121905021087,
- -0.2060853644442974,
- -0.19845982720831815,
- -0.19053862701018504,
- -0.18226816940220614,
- -0.17367834967987617,
- -0.16485641566154807,
- -0.15591958912176179,
- -0.14699095589372713,
- -0.13818136096523828,
- -0.12957834250294131,
- -0.12124165018218423,
- -0.11320471817179327,
- -0.10547860553828634,
- -0.098059029345620594,
- -0.090932986768362631,
- -0.084084645207255642,
- -0.077499691326435874,
- -0.071167921758037905,
- -0.065084206425846239,
- -0.059248137279281507,
- -0.053663081448826797,
- -0.048334358961466463,
- -0.043267978424473115,
- -0.038469300666535165,
- -0.033942138290160885,
- -0.029688391928718475,
- -0.025707747965077261,
- -0.021997989425592945,
- -0.018555292110575626,
- -0.015374494618099097,
- 0,
- 0
 };
 
 
@@ -239,24 +67,5 @@ double BLEPLookup::BLAMPTable[66] =
 
 
 
-int recursiveBinarySearch(int start, int end, std::function<bool (int)> f)
-{
- if (start > end) return recursiveBinarySearch(end, start, f);
- if (start == end) return start;
- if (start + 1 == end) return f(start) ? end : start;
- int mid = (start + end)/2;
- return (f(mid) ?
-         recursiveBinarySearch(mid, end, f) :
-         recursiveBinarySearch(start, mid, f));
-}
 
 
-
-
-
-
-
-
-
-
-}
