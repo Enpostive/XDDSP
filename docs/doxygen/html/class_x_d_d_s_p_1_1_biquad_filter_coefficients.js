@@ -1,0 +1,26 @@
+var class_x_d_d_s_p_1_1_biquad_filter_coefficients =
+[
+    [ "BiquadFilterCoefficients", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a37896c2f0615624b9bb090e11e784419", null ],
+    [ "calculateMagnitudeResponseAtHz", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a7b55df7aac7e6a788564a212c6590957", null ],
+    [ "filterResponseAtHz", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ac592c3940894adf377cc2f169eeb1547", null ],
+    [ "getFilterMode", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a20f4656b7806782e0de771fb777883bd", null ],
+    [ "getFrequencyHz", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#aaf3259d0ab129fd1ba529190ad1be4c2", null ],
+    [ "getGain", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a8e904036662acd1df9b2be79b441eaf3", null ],
+    [ "getQFactor", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a5a523e145d3e15e9ff06050a418edbea", null ],
+    [ "isCascade", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#abd74077a3f33018e1d3499a6051742da", null ],
+    [ "setAllFilterParams", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ac2bb2f31d6a056d5870bf53c137fe6c8", null ],
+    [ "setAllPassFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#abab4f7cb65191341c678285c04e020c0", null ],
+    [ "setBandPassFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a78cc28d5194d32f10e151a69a2cbe9de", null ],
+    [ "setCascade", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a50788227ced0bdeebd690aaabe87f5c7", null ],
+    [ "setCustomFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ab0c4da6e8216b057a7a374a6bdbcec74", null ],
+    [ "setFilterMode", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#aaa58a4f0b3f7b19f306f14b2410e2475", null ],
+    [ "setFrequency", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ad29104fa2b7a35a156523fff9eee0f5a", null ],
+    [ "setGain", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a4d0a1a9b6b4d28371fb0caa06f7d565c", null ],
+    [ "setHighPassFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a33a6ecb3d6c0aca31bbce67f186adaf6", null ],
+    [ "setLowPassFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#af57793bc9c0f4c626e301326c6fb9994", null ],
+    [ "setNotchFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a597b7b088ba6610b4aaf69384e3eff2a", null ],
+    [ "setParametricFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a4240c95280e433353fe2b9e41e904c93", null ],
+    [ "setPassingFilterParameters", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#aca3058a72dee8bc3c28aa3a0c1f46ec8", null ],
+    [ "setQFactor", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ad373fbf6915603a09e15cd2dc29c9fc4", null ],
+    [ "setShelvingFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a23a8e781d787ba41e498c150bfb1fa47", null ]
+];

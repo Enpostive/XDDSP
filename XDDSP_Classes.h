@@ -23,7 +23,6 @@ namespace XDDSP
 
 
 
-
 constexpr int IntegerMaximum = INT_MAX;
 
 
@@ -32,7 +31,14 @@ constexpr int IntegerMaximum = INT_MAX;
 
 
 
-
+/**
+ * @brief A template class which encapsulates the connection paradigm
+ * 
+ * This is a CRTP base class for all connector types. This template expects one method called 'get' to be defined in the derived class. 'get' is used by the methods defined here to retrieve the requested input
+ * 
+ * @tparam Derived The derived class 
+ * @tparam ChannelCount The number of channels the coupler needs to support
+ */
 template <typename Derived, int ChannelCount = 1>
 class Coupler
 {
@@ -40,12 +46,32 @@ class Coupler
 public:
  static constexpr int Count = ChannelCount;
  
+ /**
+  * @brief Retrieve one sample from the specified channel
+  * 
+  * @param channel The selected channel
+  * @param index The index of the sample to get
+  * @return SampleType The sample at the index in that channel is returned
+  */
  SampleType operator()(int channel, int index)
  { return THIS->get(channel, index); }
 
+ /**
+  * @brief Retrieve one sample from channel 0
+  * 
+  * @param index The index of the sample to get
+  * @return SampleType The sample at the index in that channel is returned
+  */
  SampleType operator()(int index)
  { return THIS->get(0, index); }
  
+ /**
+  * @brief Copies 'transferSize' number of samples from each channel into the buffers pointed to by 'p'
+  * 
+  * @tparam T The datatype of the destination buffer, is usually inferred from the parameter
+  * @param p An array of pointers to buffers
+  * @param transferSize The number of samples to copy per channel
+  */
  template <typename T>
  void fastTransfer(const std::array<T*, Count> &p, int transferSize)
  {
@@ -69,6 +95,12 @@ public:
 
 
 
+/**
+ * @brief An implementation of a buffer to be used to store output data from a DSP process.
+ *        Instead of inheriting the coupler code above, a similar interface is presented which returns references to the samples requested, enabling them to be written by DSP code
+ * 
+ * @tparam BufferCount The number of channels to support
+ */
 template <int BufferCount>
 class OutputBuffer final : public Parameters::ParameterListener
 {
@@ -124,6 +156,11 @@ public:
 
 
 
+/**
+ * @brief An output which encapsulates an output buffer inside a coupler so that it can be readily connected to by other components
+ * 
+ * @tparam OutputCount The number of output channels to provide
+ */
 template <int OutputCount = 1>
 class Output final : public Coupler<Output<OutputCount>, OutputCount>
 {
@@ -132,6 +169,13 @@ public:
  
  OutputBuffer<Count> buffer;
  
+ /**
+  * @brief Is called from the Coupler base class to fetch the actual sample from the buffer
+  * 
+  * @param channel The selected channel
+  * @param index The index of the sample to get
+  * @return SampleType The sample at the index in that channel is returned
+  */
  SampleType get(int channel, int index)
  {
   return buffer(channel, index);
@@ -152,6 +196,19 @@ public:
 
 
 
+
+
+
+
+
+
+/**
+ * @brief A foundational base class for the CRTP base class to inherit from.
+ *        Pointers of this type can point to any component class which enables component containers to work.
+ * 
+ * The application programmer should only know about this class where polymorphic pointers are concerned.
+ * 
+ */
 class ComponentBaseClass
 {
  bool enabled {true};
@@ -159,6 +216,12 @@ class ComponentBaseClass
 protected:
  int samplesToNextTrigger = -1;
  
+ /**
+  * @brief Set the Next Trigger object
+  *        A component can use this->setNextTrigger(time) to set the number of samples in the future to trigger. Only one trigger is kept, subsequent calls override the previous calls.
+  * 
+  * @param point The number of samples in the future to wait until triggering. Use -1 to cancel the trigger
+  */
  void setNextTrigger(int point)
  {
   samplesToNextTrigger = point;
@@ -167,8 +230,19 @@ protected:
 public:
  virtual ~ComponentBaseClass() {}
 
+ /**
+  * @brief Returns whether the component is enabled. If the component is disabled, the inner process loop is not run when process is called.
+  * 
+  * @return true if the parameter is enabled
+  * @return false otherwise
+  */
  bool isEnabled() { return enabled; }
  
+ /**
+  * @brief Sets whether the component is enabled or not
+  * 
+  * @param e Pass true to enable the device, false otherwise
+  */
  void setEnabled(bool e)
  {
   enabled = e;
@@ -192,6 +266,13 @@ public:
 
 
 
+/**
+ * @brief A CRTP component template which encapsulates the implementation of the process loop logic.
+ *        A component process loop is split up into 4 parts: reset, start, step and finish. Reset is called as required by the application to reset the component. The start code is called once at the start of each process buffer to process. The step code is called repeatedly to do the actual processing. The finish code is called after the last step call. The process loop can also interrupt itself at a pre-determined time to call a trigger.
+ * 
+ * @tparam Derived 
+ * @tparam StepSize 
+ */
 template <class Derived, int StepSize = INT_MAX>
 class Component : public ComponentBaseClass
 {
@@ -202,29 +283,54 @@ public:
  THIS(static_cast<Derived&>(*this))
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
+ /**
+  * @brief This can be implemented to contain the code used to reset the component to a default known state.
+  * 
+  */
  void reset()
  {}
 
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
+ /**
+  * @brief This can be implemented to return a step size to use.
+  *        It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.
+  * 
+  * @param startPoint The location of the first sample to process
+  * @param sampleCount The number of samples to process this time
+  * @return int 
+  */
  int startProcess(int startPoint, int sampleCount)
  { return std::min(sampleCount, StepSize); }
  
- // stepProcess is called repeatedly with the start point incremented by step size
+ /**
+  * @brief Is called repeatedly by Component::process with the start point incremented by step size. The actual DSP processing code lives here.
+  * 
+  * @param startPoint The location of the first sample to process
+  * @param sampleCount The number of samples to process this time
+  */
  void stepProcess(int startPoint, int sampleCount)
  {}
  
- // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
- // components can use 'setNextTrigger' to set a trigger point
+ /**
+  * @brief Is called when a trigger point is reached.
+  * 
+  * @param triggerPoint The loation in the buffer where the trigger was set.
+  */
  void triggerProcess(int triggerPoint)
  {}
  
- // finishProcess is called after all the blocks have been processed
+ /**
+  * @brief Is called after all the blocks have been processed
+  * 
+  */
  void finishProcess()
  {}
   
+ /**
+  * @brief **This is the main entry point of the component**. This method should be called after all the input sources have been processed.
+  * 
+  * @param startPoint The location of the first sample to process
+  * @param sampleCount The number of samples to process this time
+  */
  void process(int startPoint, int sampleCount)
  {
   if (isEnabled())

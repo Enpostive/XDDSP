@@ -8,6 +8,7 @@
 #ifndef XDDSP_BiquadKernel_h
 #define XDDSP_BiquadKernel_h
 
+#include "XDDSP_Functions.h"
 #include "XDDSP_Parameters.h"
 #include <complex>
 #include <tuple>
@@ -43,10 +44,15 @@ class BiquadFilterPublicInterface;
 
 
 
+/**
+ * @brief Holds the state of configuration for a biquad filter.
+ * 
+ * This class takes the commands to configure the filter and contains the coefficients that are used by the filter implementation.
+ */
 class BiquadFilterCoefficients : public Parameters::ParameterListener
 {
 public:
- enum
+ enum FilterTypes
  {
   LowPass,
   HighPass,
@@ -218,6 +224,11 @@ private:
  }
  
 public:
+ /**
+  * @brief Construct a new Biquad Filter Coefficients object
+  * 
+  * @param p The parameters object
+  */
  BiquadFilterCoefficients(Parameters &p) :
  Parameters::ParameterListener(p),
  dspParam(p)
@@ -230,6 +241,12 @@ public:
   setCoefficients();
  }
  
+ /**
+  * @brief Set just the frequency and quality of the filter without changing the mode.
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setPassingFilterParameters(SampleType freq, SampleType q)
  {
   cF = freq;
@@ -237,36 +254,73 @@ public:
   setCoefficients();
  }
  
+ /**
+  * @brief Configure a low pass filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setLowPassFilter(SampleType freq, SampleType q)
  {
   m = LowPass;
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Configure a high pass filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setHighPassFilter(SampleType freq, SampleType q)
  {
   m = HighPass;
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Configure a band pass filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setBandPassFilter(SampleType freq, SampleType q)
  {
   m = BandPass;
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Configure a notch filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setNotchFilter(SampleType freq, SampleType q)
  {
   m = Notch;
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Configure an all pass filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  */
  void setAllPassFilter(SampleType freq, SampleType q)
  {
   m = AllPass;
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Set all filter parameters without changing the mode
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  * @param gain The gain in dB to be applied by the filter in the active region.
+  */
  void setAllFilterParams(SampleType freq,
                          SampleType q,
                          SampleType gain)
@@ -275,6 +329,13 @@ public:
   setPassingFilterParameters(freq, q);
  }
  
+ /**
+  * @brief Configure a parametric filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  * @param gain The gain in dB to be applied by the filter in the active region.
+  */
  void setParametricFilter(SampleType freq,
                           SampleType q,
                           SampleType gain)
@@ -283,6 +344,14 @@ public:
   setAllFilterParams(freq, q, gain);
  }
  
+ /**
+  * @brief Configure a shelf filter
+  * 
+  * @param freq The centre frequency of the active region of the filter in Hz.
+  * @param q The quality parameter of the filter.
+  * @param gain The gain in dB to be applied by the filter in the active region.
+  * @param highShelf Set as true for a high shelf filter, or false for a low shelf.
+  */
  void setShelvingFilter(SampleType freq,
                         SampleType q,
                         SampleType gain,
@@ -293,36 +362,70 @@ public:
   setAllFilterParams(freq, q, gain);
  }
  
+ /**
+  * @brief Set the mode of the filter without changing any of the filter parameters. See FilterTypes.
+  * 
+  * @param mode 
+  */
  void setFilterMode(int mode)
  {
   m = mode;
   setCoefficients();
  }
  
+ /**
+  * @brief Set just the centre frequency of the active region of the filter.
+  * 
+  * @param freq The new frequency in Hz.
+  */
  void setFrequency(SampleType freq)
  {
   cF = freq;
   setCoefficients();
  }
  
+ /**
+  * @brief Set just the quality factor of the filter.
+  * 
+  * @param q The new quality factor.
+  */
  void setQFactor(SampleType q)
  {
   qF = q;
   setCoefficients();
  }
  
+ /**
+  * @brief Set just the gain of the filter.
+  * 
+  * @param g The new gain in dB.
+  */
  void setGain(SampleType g)
  {
   calculateGain(g);
   setCoefficients();
  }
  
+ /**
+  * @brief Enable or disable a cascade of two biquad filters with the same parameters.
+  * 
+  * @param casc Set as true for two biquad filters in series, or false for a single biquad filter.
+  */
  void setCascade(bool casc)
  {
   cascade = casc;
   setCoefficients();
  }
  
+ /**
+  * @brief Set a custom filter.
+  * 
+  * @param _b0 
+  * @param _b1 
+  * @param _b2 
+  * @param _a1 
+  * @param _a2 
+  */
  void setCustomFilter(double _b0,
                       double _b1,
                       double _b2,
@@ -337,21 +440,53 @@ public:
   a2 = _a2;
  }
  
+ /**
+  * @brief Get the mode of the filter. See FilterTypes.
+  * 
+  * @return int The current filter mode.
+  */
  int getFilterMode()
  { return m; }
  
+ /**
+  * @brief Get the current frequency setting.
+  * 
+  * @return SampleType The current frequency setting in Hz.
+  */
  SampleType getFrequencyHz()
  { return cF; }
  
+ /**
+  * @brief Get the current quality factor setting.
+  * 
+  * @return SampleType The current quality factor setting.
+  */
  SampleType getQFactor()
  { return qF; }
  
+ /**
+  * @brief Get the current gain setting in dB.
+  * 
+  * @return SampleType The current gain setting in dB.
+  */
  SampleType getGain()
  { return gn; }
  
+ /**
+  * @brief Get the state of the cascade setting.
+  * 
+  * @return true Cascade is enabled.
+  * @return false Cascade is disabled.
+  */
  bool isCascade()
  { return cascade; }
  
+ /**
+  * @brief Calculate the frequency response of the filter at some frequency.
+  * 
+  * @param hz The frequency to calculate for.
+  * @return std::complex<double> A complex number representing the amplitude and phase response of the filter.
+  */
  std::complex<double> filterResponseAtHz(SampleType hz)
  {
   const double w = 2.*M_PI*hz*dspParam.sampleInterval();
@@ -365,6 +500,12 @@ public:
   return result;
  }
  
+ /**
+  * @brief Calculate the amplitude response of the filter at some frequency.
+  * 
+  * @param hz The frequency to calculate for.
+  * @return SampleType The response of the frequency as a multiplier (use linear2dB to convert to decibels).
+  */
  SampleType calculateMagnitudeResponseAtHz(SampleType hz)
  {
   return std::abs(filterResponseAtHz(hz));
@@ -380,6 +521,11 @@ public:
 
 
 
+/**
+ * @brief A simple biquad filter implementation.
+ *        This is not a component. For pre-built components which use this filter, see StaticBiquad and DynamicBiquad.
+ * 
+ */
 class BiquadFilterKernel
 {
  SampleType d1 {0.};
@@ -387,11 +533,23 @@ class BiquadFilterKernel
  SampleType d3 {0.};
  SampleType d4 {0.};
 public:
+
+ /**
+  * @brief Reset the filter.
+  * 
+  */
  void reset()
  {
   d1 = d2 = d3 = d4 = 0.;
  }
  
+ /**
+  * @brief Process one sample of input, using the supplied coefficients.
+  * 
+  * @param coeff The coefficients object to use.
+  * @param xn The input sample.
+  * @return SampleType The output sample.
+  */
  SampleType process(const BiquadFilterCoefficients &coeff, SampleType xn)
  {
   SampleType s, t;
@@ -438,6 +596,10 @@ public:
 
 
 
+/**
+ * @brief A convenient class that can be used to expose the BiquadCoefficients filter response calculators without exposing the configurators.
+ * 
+ */
 class BiquadFilterPublicInterface
 {
  BiquadFilterCoefficients &coeff;
@@ -446,11 +608,23 @@ public:
  coeff(_coeff)
  {}
  
+ /**
+  * @brief Calculate the frequency response of the filter at some frequency.
+  * 
+  * @param hz The frequency to calculate for.
+  * @return std::complex<double> A complex number representing the amplitude and phase response of the filter.
+  */
  std::complex<double> filterResponseAtHz(SampleType hz)
  {
   return coeff.filterResponseAtHz(hz);
  }
  
+ /**
+  * @brief Calculate the amplitude response of the filter at some frequency.
+  * 
+  * @param hz The frequency to calculate for.
+  * @return SampleType The response of the frequency as a multiplier (use linear2dB to convert to decibels).
+  */
  SampleType calculateMagnitudeResponseAtHz(SampleType hz)
  {
   return coeff.calculateMagnitudeResponseAtHz(hz);

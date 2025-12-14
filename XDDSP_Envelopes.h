@@ -32,13 +32,18 @@ namespace XDDSP
 
 
 
-// StepSize can be increased if StartIn and EndIn are constants
+/**
+ * @brief A component for generating ramp signals.
+ * 
+ * @tparam StartIn Couples to the signal specifying the start point of the ramp.
+ * @tparam EndIn Couples to the signal specifying the end point of the ramp.
+ * @tparam StepSize An optional parameter to change the step size. The ramp is updated at the beginning of each step. Default 16, or change it to be MAX_INT if you are using constant start and end signals.
+ */
 template <typename StartIn, typename EndIn, int StepSize = 16>
 class Ramp : public Component<Ramp<StartIn, EndIn>, StepSize>
 {
  static_assert(StartIn::Count == EndIn::Count, "Ramp requires both control signals to have the same number of channels");
  
- // Private data members here
  int rampTime;
  int rampLength;
  
@@ -52,21 +57,17 @@ public:
  // Specify your outputs like this
  Output<Count> rampOut;
  
- // Include a definition for each input in the constructor
  Ramp(Parameters &p, StartIn _startIn, EndIn _endIn) :
  startIn(_startIn),
  endIn(_endIn),
  rampOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   rampOut.reset();
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)
@@ -98,10 +99,16 @@ public:
  }
  
  /*
-  If time < 0 then ramp counts down time samples until the ramp starts
-  If 0 <= time <= length then the ramp starts from time and counts up to length
-  If time > length then the ramp stops at the end and holds
   */
+
+  /**
+   * @brief Set the current ramp time.
+   * 
+   * Use this method to trigger ramps to start. If time < 0 then Ramp counts down samples until the ramp starts. If 0 <= time <= length then Ramp starts from time and counts up to length. If time > length then Ramp stops at the end and holds.
+   * 
+   * @param time The time parameter.
+   * @param length The length parameter.
+   */
  void setRampTime(int time, int length)
  {
   rampTime = time;
@@ -118,9 +125,14 @@ public:
 
 
 
-// Simply ramp from the current level to a new target level over a set time
-// This is designed so that it can be swapped in place of a ControlConstant in
-// most cases (no function support)
+/**
+ * @brief A component for ramping from a current value to a new value.
+ * 
+ * This is designed so that it can be swapped in place of a ControlConstant in most cases (no modifier support)
+ *
+ * @tparam SignalCount The number of channels to make available.
+ * @tparam DefaultRamp The length of a ramp in samples if no ramp time is specified.
+ */
 template <int SignalCount = 1, int DefaultRamp = 0>
 class RampTo : public Component<RampTo<SignalCount>>
 {
@@ -190,50 +202,83 @@ public:
  // Specify your outputs like this
  Output<Count> rampOut;
  
- // Include a definition for each input in the constructor
  RampTo(Parameters &p) :
  rampOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   rampOut.reset();
  }
  
+ /**
+  * @brief Start a default ramp to the target value.
+  * 
+  * @param channel The channel to start ramping.
+  * @param target The target value for the ramp to end.
+  */
  void setControl(int channel, SampleType target)
  {
   dsp_assert(channel >= 0 && channel < Count);
   ramps[channel].setTo(target);
  }
  
+ /**
+  * @brief Start a default ramp to the target value on all channels.
+  * 
+  * @param target The target value for the ramp to end.
+  */
  void setControl(SampleType target)
  {
   for (auto &r: ramps) r.setTo(target);
  }
  
+ /**
+  * @brief Get the target value for the ramp on one channel.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The target value for the ramp.
+  */
  SampleType getControl(int channel)
  {
   dsp_assert(channel >= 0 && channel < Count);
   return ramps[channel].end;
  }
  
+ /**
+  * @brief Get the target value for the ramp on channel 0.
+  * 
+  * @return SampleType The target value for the ramp.
+  */
  SampleType getControl()
  { return getControl(0); }
 
+ /**
+  * @brief Start a ramp on one channel.
+  * 
+  * @param channel The channel to ramp.
+  * @param time The time to wait before starting the ramp.
+  * @param length The length of the ramp.
+  * @param target The target value of the ramp.
+  */
  void setRamp(int channel, int time, int length, SampleType target)
  {
   dsp_assert(channel >= 0 && channel < Count);
   ramps[channel].set(target, time, length);
  }
  
+ /**
+  * @brief Start a ramp on all channel.
+  * 
+  * @param time The time to wait before starting the ramp.
+  * @param length The length of the ramp.
+  * @param target The target value of the ramp.
+  */
  void setRamp(int time, int length, SampleType target)
  {
   for (auto &r: ramps) r.set(target, time, length);
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)
@@ -255,6 +300,15 @@ public:
 
 
 
+/**
+ * @brief A component for generating ADSR envelopes.
+ * 
+ * @tparam AttackTimeSamples Couples to the signal specifying the attack time in samples. Only one channel is allowed.
+ * @tparam DecayTimeSamples Couples to the signal specifying the decay time in samples. Only one channel is allowed.
+ * @tparam SustainLevel Couples to the signal to use for the sustain level. Only one channel is allowed.
+ * @tparam ReleaseTimeSamples Couples to the release time in samples. Only one channel is allowed.
+ * @tparam StepSize The step size to use if the attack, delay or release samples are dynamic. Only one channel is allowed.
+ */
 template <
 typename AttackTimeSamples,
 typename DecayTimeSamples,
@@ -283,7 +337,6 @@ StepSize>, StepSize>
   STATE_Release
  };
  
- // Private data members here
  Parameters &dsp;
  
  SampleType env {0.};
@@ -304,16 +357,13 @@ StepSize>, StepSize>
 public:
  static constexpr int Count = 1;
  
- // Specify your inputs as public members here
  AttackTimeSamples attackTimeSamples;
  DecayTimeSamples decayTimeSamples;
  SustainLevel sustainLevel;
  ReleaseTimeSamples releaseTimeSamples;
  
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
  ADSRGenerator(Parameters &p,
                AttackTimeSamples _attackTimeSamples,
                DecayTimeSamples _decayTimeSamples,
@@ -327,20 +377,12 @@ public:
  envOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   envReset();
   envOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)
@@ -417,6 +459,10 @@ public:
   }
  }
  
+ /**
+  * @brief Triggers the envelope.
+  * 
+  */
  void triggerEnvelope()
  {
   state = STATE_Attack;
@@ -424,6 +470,10 @@ public:
   stateTime = 0;
  }
  
+ /**
+  * @brief Releases the envelope.
+  * 
+  */
  void releaseEnvelope()
  {
   if (state != STATE_Inactive)
@@ -433,6 +483,12 @@ public:
   }
  }
  
+ /**
+  * @brief Returns true if the envelope is active.
+  * 
+  * @return true Envelope is active.
+  * @return false Envelope is inactive.
+  */
  bool envelopeActive()
  { return state != STATE_Inactive; }
 };
@@ -445,45 +501,49 @@ public:
 
 
 
+
+/**
+ * @brief This component outputs an Attack-Release envelope controlled by the time input.
+ * 
+ * The time signal controls the envelope. The signal should rise between 0 and 1 for the intended duration of the envelope. The RampIn and RampOut signals control the fraction of the total time that each ramp lasts for.
+ * 
+ * @tparam TimeIn Couples to the time input. The envelope becomes active when the time signal is between 0 and 1.
+ * @tparam RampIn Couples to the signal which controls ramp in.
+ * @tparam RampOut Couples to the signal which controls ramp out.
+ * @tparam StepSize Controls how often the ramp signal is updated. Leave at the default for static signals.
+ */
 template <
-typename SignalIn,
+typename TimeIn,
 typename RampIn,
 typename RampOut,
 int StepSize = IntegerMaximum
 >
-class Trapezoid : public Component<Trapezoid<SignalIn, RampIn, RampOut, StepSize>, StepSize>
+class Trapezoid : public Component<Trapezoid<TimeIn, RampIn, RampOut, StepSize>, StepSize>
 {
  static_assert(RampIn::Count == RampOut::Count, "Trapezoid expects RampIn and RampOut to have same channel count");
- static_assert(RampIn::Count == SignalIn::Count || RampIn::Count == 1, "Trapezoid expects one channel for controls, or one channel per signal input");
+ static_assert(RampIn::Count == TimeIn::Count || RampIn::Count == 1, "Trapezoid expects one channel for controls, or one channel per signal input");
  
- // Private data members here
-public:
- static constexpr int Count = SignalIn::Count;
+ public:
+ static constexpr int Count = TimeIn::Count;
  
- // Specify your inputs as public members here
- SignalIn signalIn;
+ TimeIn timeIn;
  RampIn rampIn;
  RampOut rampOut;
  
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
- Trapezoid(Parameters &p, SignalIn _signalIn, RampIn _rampIn, RampOut _rampOut) :
- signalIn(_signalIn),
+ Trapezoid(Parameters &p, TimeIn _timeIn, RampIn _rampIn, RampOut _rampOut) :
+ timeIn(_timeIn),
  rampIn(_rampIn),
  rampOut(_rampOut),
  envOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   envOut.reset();
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   SampleType rIn = rampIn(startPoint);
@@ -501,7 +561,7 @@ public:
    }
    for (int i = startPoint, s = sampleCount; s--; ++i)
    {
-    SampleType x = signalIn(c, i);
+    SampleType x = timeIn(c, i);
     SampleType ri = recRampIn*fastBoundary(x, 0., rIn);
     SampleType ro = recRampOut*fastBoundary(1. - x, 0., rOut);
     envOut.buffer(c, i) = ri*ro;
@@ -518,41 +578,51 @@ public:
 
 
 
-template <typename PositionIn, typename PiecewiseData>
-class PiecewiseEnvelopeSampler : public Component<PiecewiseEnvelopeSampler<PositionIn, PiecewiseData>>
+
+/**
+ * @brief Samples a piecewise envelope, using an input to control what part of the envelope is sampled.
+ * 
+ * The module connects to an XDDSP::PiecewiseEnvelopeData to get the information for the envelope.
+ * 
+ * @tparam PositionIn Couples to a position input.
+ */
+template <typename PositionIn>
+class PiecewiseEnvelopeSampler : public Component<PiecewiseEnvelopeSampler<PositionIn>>
 {
- // Private data members here
- PiecewiseData *envData {nullptr};
+ PiecewiseEnvelopeData *envData {nullptr};
  
 public:
  static constexpr int Count = PositionIn::Count;
  
- // Specify your inputs as public members here
  PositionIn positionIn;
  
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
  PiecewiseEnvelopeSampler(Parameters &p, PositionIn _positionIn) :
  positionIn(_positionIn),
  envOut(p)
  {}
  
- void connect(PiecewiseData &data)
+ /**
+  * @brief Connect a XDDSP::PiecewiseEnvelopeData object
+  * 
+  * @param data The XDDSP::PiecewiseEnvelopeData to connect to.
+  */
+ void connect(PiecewiseEnvelopeData &data)
  { envData = &data; }
  
+ /**
+  * @brief Disconnect the PiecewiseData object.
+  * 
+  */
  void disconnect()
  { envData = nullptr; }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   envOut.reset();
  }
   
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   if (envData == nullptr) return;
@@ -575,8 +645,13 @@ public:
 
 
 
-template <typename PiecewiseData>
-class PiecewiseEnvelope : public Component<PiecewiseEnvelope<PiecewiseData>>
+/**
+ * @brief Run a piecewise envelope.
+ * 
+ * The module connects to an XDDSP::PiecewiseEnvelopeData object and plays back the envelope.
+ * 
+ */
+class PiecewiseEnvelope : public Component<PiecewiseEnvelope>
 {
  enum
  {
@@ -590,7 +665,7 @@ class PiecewiseEnvelope : public Component<PiecewiseEnvelope<PiecewiseData>>
  
  // Private data members here
  Parameters &dspParam;
- PiecewiseData *envData {nullptr};
+ PiecewiseEnvelopeData *envData {nullptr};
  SampleType position {0.};
  int activeMode {ActiveModeReleased};
  SampleType loopEndPosition {0.};
@@ -600,25 +675,28 @@ class PiecewiseEnvelope : public Component<PiecewiseEnvelope<PiecewiseData>>
 public:
  static constexpr int Count = 1;
  
- // No Inputs
- 
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
  PiecewiseEnvelope(Parameters &p) :
  dspParam(p),
  envOut(p)
  {}
  
- void connect(PiecewiseData &data)
+ /**
+  * @brief Connect a XDDSP::PiecewiseEnvelopeData object
+  * 
+  * @param data The XDDSP::PiecewiseEnvelopeData to connect to.
+  */
+ void connect(PiecewiseEnvelopeData &data)
  { envData = &data; }
  
+ /**
+  * @brief Disconnect the PiecewiseData object.
+  * 
+  */
  void disconnect()
  { envData = nullptr; }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   activeMode = ActiveModeInactive;
@@ -626,6 +704,10 @@ public:
   envOut.reset();
  }
  
+ /**
+  * @brief Start the envelope.
+  * 
+  */
  void triggerEnvelope()
  {
   if (envData)
@@ -647,20 +729,34 @@ public:
   position = 0.;
  }
  
+ /**
+  * @brief Release the envelope
+  * 
+  */
  void releaseEnvelope()
  {
   activeMode = ActiveModeReleased;
  }
  
+ /**
+  * @brief Returns true if the envelope is active.
+  * 
+  * @return true Envelope is active.
+  * @return false Envelope is inactive.
+  */
  bool envelopeActive()
  {
   return activeMode != ActiveModeInactive;
  }
  
+ /**
+  * @brief Return the current playback position of the envelope.
+  * 
+  * @return SampleType The current position of the envelope.
+  */
  SampleType currentPosition()
  { return position; }
   
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   if (envData == nullptr) return;
@@ -718,10 +814,6 @@ public:
     break;
   }
  }
- 
- // finishProcess is called after the block has been processed
- // void finishProcess()
- // {}
 };
 
 
@@ -733,6 +825,16 @@ public:
 
 
 
+/**
+ * @brief Creates an exponential envelope signal from an input signal.
+ * 
+ * Attack and release times are expected in samples.
+ * 
+ * @tparam SignalIn Couples to the input signal.
+ * @tparam RiseIn Couples to the signal controlling the rise time.
+ * @tparam FallIn Couples to the signal controlling the fall time.
+ * @tparam StepSize Control how often the rise/fall times are updated. Leave at default for static signals.
+ */
 template <
 typename SignalIn,
 typename RiseIn,
@@ -751,15 +853,12 @@ private:
  
 public:
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  RiseIn riseIn;
  FallIn fallIn;
  
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
  ExponentialEnvelopeFollower(Parameters &p, SignalIn _signalIn, RiseIn _riseIn, FallIn _fallIn) :
  signalIn(_signalIn),
  riseIn(_riseIn),
@@ -767,23 +866,14 @@ public:
  envOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   state.fill(0.);
   envOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
-  // Attack and release times are measured in samples
   SampleType riseCoeff = (riseIn(0, startPoint) > 2) ? expCoef(riseIn(0, startPoint)) : 0.;
   SampleType fallCoeff = (fallIn(0, startPoint) > 2) ? expCoef(fallIn(0, startPoint)) : 0.;
   
@@ -804,10 +894,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  
@@ -818,7 +904,17 @@ public:
  
  
  
- 
+
+/**
+ * @brief Creates a linear envelope signal from an input signal.
+ * 
+ * Attack and release times are expected in samples.
+ * 
+ * @tparam SignalIn Couples to the input signal.
+ * @tparam RiseIn Couples to the signal controlling the rise time.
+ * @tparam FallIn Couples to the signal controlling the fall time.
+ * @tparam StepSize Control how often the rise/fall times are updated. Leave at default for static signals.
+ */
 template <
 typename SignalIn,
 typename RiseIn,
@@ -845,15 +941,12 @@ private:
 public:
  SampleType flux {0.00001};
 
- // Specify your inputs as public members here
  SignalIn signalIn;
  RiseIn riseIn;
  FallIn fallIn;
 
- // Specify your outputs like this
  Output<Count> envOut;
  
- // Include a definition for each input in the constructor
  LinearEnvelopeFollower(Parameters &p, SignalIn _signalIn, RiseIn _riseIn, FallIn _fallIn) :
  signalIn(_signalIn),
  riseIn(_riseIn),
@@ -861,20 +954,12 @@ public:
  envOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   state.fill(State());
   envOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   SampleType riseTime = fastMax(riseIn(0, startPoint), 1.);
@@ -906,10 +991,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  
@@ -920,11 +1001,17 @@ public:
  
  
  
- 
+
+/**
+ * @brief Takes an envelope signal as input and produces a gain signal for dynamics control.
+ * 
+ * This component produces a gain signal in response to an envelope signal, according to the specified dynamics settings.
+ * 
+ * @tparam SignalIn Couples with the input signal.
+ */
 template <typename SignalIn>
 class DynamicsProcessingGainSignal : public Component<DynamicsProcessingGainSignal<SignalIn>>
 {
- // Private data members here
  SampleType threshold;
  SampleType knee;
  SampleType ratioAbove;
@@ -947,13 +1034,10 @@ class DynamicsProcessingGainSignal : public Component<DynamicsProcessingGainSign
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  DynamicsProcessingGainSignal(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),
  signalOut(p)
@@ -966,11 +1050,15 @@ public:
   setChannelLink(1.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  { signalOut.reset(); }
  
+ /**
+  * @brief Set the threshold and knee settings together.
+  * 
+  * @param threshDB New threshold.
+  * @param kneeDB New knee.
+  */
  void setThresholdAndKnee(SampleType threshDB, SampleType kneeDB)
  {
   if (kneeDB < 0.) kneeDB = 0.;
@@ -986,51 +1074,133 @@ public:
   recipDThresh = (hThresh == lThresh) ? 0. : (1. / (hThresh - lThresh));
  }
  
+ /**
+  * @brief Set just the threshold setting.
+  * 
+  * @param db New threshold.
+  */
  void setThreshold(SampleType db)
  { setThresholdAndKnee(db, knee); }
  
+ /**
+  * @brief Set just the knee setting.
+  * 
+  * @param db New knee.
+  */
  void setKnee(SampleType db)
  { setThresholdAndKnee(threshold, db); }
  
+ /**
+  * @brief Get the threshold setting.
+  * 
+  * @return SampleType Current threhold setting in decibels.
+  */
  SampleType getThreshold() const
  { return threshold; }
  
+ /**
+  * @brief Get the knee setting.
+  * 
+  * @return SampleType Current knee setting in decibels.
+  */
  SampleType getKnee() const
  { return knee; }
  
+ /**
+  * @brief Set the ratio to apply to the gain setting when the envelope goes above the threshold.
+  * 
+  * @param r New ratio
+  */
  void setRatioAbove(SampleType r)
  { ratioAbove = (r == 0.) ? 0. : (1.0 / r); }
 
+ /**
+  * @brief Get the ratio being applied to the gain setting when the envelope goes above the threshold.
+  * 
+  * @return SampleType The current ratio setting.
+  */
  SampleType getRatioAbove() const
  { return (ratioAbove == 0.) ? 0. : 1./ratioAbove; }
  
+ /**
+  * @brief Set the ratio to apply to the gain setting when the envelope goes below the threshold.
+  * 
+  * @param r New ratio
+  */
  void setRatioBelow(SampleType r)
  { ratioBelow = 1.0 / r; }
  
+ /**
+  * @brief Get the ratio being applied to the gain setting when the envelope goes below the threshold.
+  * 
+  * @return SampleType The current ratio setting.
+  */
  SampleType getRatioBelow() const
  { return (ratioBelow == 0.) ? 0. : 1./ratioBelow; }
  
+ /**
+  * @brief Configure the dynamics processor as a limiter.
+  * 
+  */
  void setLimit()
  { ratioAbove = 0.; }
  
+ /**
+  * @brief Set the makeup gain in dB.
+  * 
+  * @param db The makeup gain to be added to the gain signal.
+  */
  void setMakeup(SampleType db)
  { makeupLinear = dB2Linear(makeup = db); }
  
+ /**
+  * @brief Get the makeup gain in dB.
+  * 
+  * @return SampleType The current makeup gain.
+  */
  SampleType getMakeup() const
  { return makeup; }
  
+ /**
+  * @brief Set a limit on the maximum amount of gain allowed to be applied.
+  * 
+  * @param db Maximum gain in dB.
+  */
  void setMaxGain(SampleType db)
  { maxGainLinear = dB2Linear(maxGain = db); }
  
+ /**
+  * @brief Get the current limit on the maximum amount of gain allowed to be applied.
+  * 
+  * @return SampleType Maximm gain in dB.
+  */
  SampleType getMaxGain() const
  { return maxGain; }
  
+ /**
+  * @brief Set the channel link factor.
+  * 
+  * @param link A number between 0 and 1 where 0 is full stereo and 1 is completely linked.
+  */
  void setChannelLink(SampleType link)
  { channelLink = fastBoundary(link, 0., 1.); }
  
+ /**
+  * @brief Get the current setting of the channel link factor.
+  * 
+  * @return SampleType The current channel link factor.
+  */
  SampleType getChannelLink() const
  { return channelLink; }
  
+ /**
+  * @brief Caclulate the gain curve for a given envelope input.
+  * 
+  * This code is exposed so that interface widgets can graph the gain curve accurately using the same code used to do the actual gain reduction.
+  * 
+  * @param e Envelope input to calculate.
+  * @return SampleType Resulting gain value.
+  */
  SampleType computeGainCurve(SampleType e)
  {
   SampleType ga, gb, d, c, s;
@@ -1049,12 +1219,6 @@ public:
   return fastBoundary(ga*gb*makeupLinear, 0., maxGainLinear);
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   const MixingLaws::MixWeights mix = MixingLaws::LinearFadeLaw::getWeights(channelLink);
@@ -1068,10 +1232,6 @@ public:
    for (int c = 0; c < Count; ++c) signalOut.buffer(c, i) = computeGainCurve(cm*signalIn(c, i) + lm*link);
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  
@@ -1082,663 +1242,7 @@ public:
  
  
  
-/*
- A component for finding a piecewise envelope that will fit over the input signal. The input signal must be an audio signal with no DC offset. The best case is for the signal to contain as little low frequency content as possible, however low frequency content can easily be handled as long as the buffer length is appropriate and you don't mind a little latency!
-*/
-template <typename SignalIn>
-class PiecewiseEnvelopeFinder : public Component<PiecewiseEnvelopeFinder<SignalIn>>, public Parameters::ParameterListener
-{
-public:
- static constexpr int Count = SignalIn::Count;
 
- struct Maxima
- {
-  SampleType amp;
-  int time;
-  
-  operator bool() const
-  { return time != -1; }
-  
-  void invalidate()
-  { time = -1; }
- };
-
-private:
- 
- struct MaximaRegion
- {
-  SampleType amp {0.};
-  int time {-1}; // -1 here invalidates all following regions
-  int prevZeroCrossing {-1};
-  int endOfRegion {-1};
-  
-  MaximaRegion() {}
-  
-  MaximaRegion(SampleType a, int t, int prev, int end = -1)
-  : amp(a), time(t), prevZeroCrossing(prev), endOfRegion(end)
-  {}
-  
-  operator Maxima() const
-  {
-   dsp_assert(time != -1);
-   return {amp, time};
-  }
-  
-  int length() const
-  { return endOfRegion - prevZeroCrossing; }
-  
-  operator bool() const
-  { return time != -1; }
-  
-  void invalidate()
-  { time = -1; }
- };
- 
- Parameters &dspParam;
-
-
- // Audio buffers
- std::array<DynamicCircularBuffer<>, Count> buffer;
- 
- // Maxima buffers
- std::array<DynamicCircularBuffer<Maxima>, Count> envMaxima;
- int currentEnvMaximaBufferSize {512};
- std::array<DynamicCircularBuffer<MaximaRegion>, Count> regions;
- 
- // Local parameters
- SampleType clumpingFrequency {200.};
- SampleType zeroThreshold;
- SampleType risingSlopeMultiplier {0.25};
- SampleType fallingSlopeMultiplier {0.05};
- SampleType bigJumpFraction {1./2.};
- SampleType maximumRegionLengthSeconds {0.1};
-
- // Processing variables
- int clumpingLength;
- int lengthBufferSamples;
- int lengthRegionBuffer;
- std::array<int, Count> lastRegionProcessed;
- SampleType clumpingSlope;
- SampleType fallingSlope;
- SampleType risingSlope;
- int maximumRegionSize;
- int envSamplePoint;
-
- Maxima& maxima(int c, int i)
- { return envMaxima[c].tapOut(i); }
- 
- MaximaRegion& region(int c, int i)
- { return regions[c].tapOut(i); }
-
- void initEnvelopeMaximaBuffer()
- {
-  for (auto &m: envMaxima) m.setMaximumLength(currentEnvMaximaBufferSize);
-  resetEnvelopeMaximaBuffer();
- }
- 
- void resetEnvelopeMaximaBuffer()
- {
-  for (int c = 0; c < Count; ++c)
-  {
-   envMaxima[c].reset(Maxima());
-   for (int i = currentEnvMaximaBufferSize; i > 0; --i)
-   {
-    envMaxima[c].tapIn({zeroThreshold, i*clumpingLength});
-   }
-  }
- }
- 
- void initAndResetRegions()
- {
-  lengthRegionBuffer = lengthBufferSamples;
-  for (int c = 0; c < Count; ++c)
-  {
-   regions[c].setMaximumLength(lengthRegionBuffer);
-   // Insert one record invalidating all prior records
-   regions[c].tapIn({zeroThreshold, -1, -1, -1});
-  }
- }
-
- void advanceMaximaBuffers(int advanceAmount)
- {
-  for (auto &m: envMaxima)
-  {
-   int i = 0;
-   bool stillInBuffer = true;
-   while (i < currentEnvMaximaBufferSize && stillInBuffer)
-   {
-    // Before we incrememt, do the test to see if were still in the buffer
-    stillInBuffer = (m.tapOut(i).time < lengthBufferSamples);
-    // We still want to increment the first maxima that has left the buffer
-    m.tapOut(i).time += advanceAmount;
-    // and then we invalidate the next maxima
-    ++i;
-   }
-   if (i < currentEnvMaximaBufferSize) m.tapOut(i).invalidate();
-  }
-  
-  for (auto &m: regions)
-  {
-   int i = 0;
-   // We only advance the maxima records up to the length of the buffer
-   // Any records that come after that are invalidated instead
-   while (m.tapOut(i).time != -1)
-   {
-    MaximaRegion &r = m.tapOut(i);
-    r.time += advanceAmount;
-    r.prevZeroCrossing += advanceAmount;
-    r.endOfRegion += advanceAmount;
-    if (r.endOfRegion >= lengthBufferSamples) r.invalidate();
-    else ++i;
-   }
-  }
- }
- 
- void insertMaximaAtEnd(int c, Maxima m)
- {
-  if (m.amp < zeroThreshold) m.amp = zeroThreshold;
-  envMaxima[c].tapIn(m);
- }
-
- void insertEnvelopeMaximaInSlotBefore(int c, Maxima m, int index = 0)
- {
-  // Inserts a maxima at the slot before the index
-  // Insert it at the end normally
-  envMaxima[c].tapIn(m);
-  // Then use swaps to bubble it down the buffer into the correct place
-  for (int i = 0; i <= index; ++i)
-  {
-   std::swap(maxima(c, i), maxima(c, i + 1));
-  }
- }
- 
- int findZeroCrossingBefore(int c, int n)
- {
-  SampleType sgn = signum(buffer[c].tapOut(n));
-  while (++n < lengthBufferSamples &&
-         sgn == signum(buffer[c].tapOut(n)));
-  --n;
-  return n;
- }
- 
- int findZeroCrossingAfter(int c, int n)
- {
-  SampleType sgn = signum(buffer[c].tapOut(n));
-  while (n > 0 &&
-         sgn == signum(buffer[c].tapOut(--n)));
-  return n;
- }
- 
- std::pair<SampleType, int> findMaximumAmplitudeInBuffer(int c, int start, int end)
- {
-  SampleType max = fabs(buffer[c].tapOut(start));
-  int time = start;
-  for (int i = start + 1; i < end; ++i)
-  {
-   SampleType s = fabs(buffer[c].tapOut(i));
-   if (s > max)
-   {
-    max = s;
-    time = i;
-   }
-  }
-  
-  return {max, time};
- }
- 
-/*
- std::pair<bool, SampleType> validateArbitrarySegment(const Maxima &start,
-                                                      const Maxima &end,
-                                                      int c)
- {
-  SampleType max = fabs(buffer[c].tapOut(end.time));
-  bool valid = end.amp > fabs(buffer[c].tapOut(end.time));
-  for (int i = end.time + 1; i <= start.time; ++i)
-  {
-   const SampleType s = fabs(buffer[c].tapOut(i));
-   const SampleType e = interpolatePointBetweenArbitraryMaxima(start, end, i);
-   max = std::max(s, max);
-   if (e <= s) valid = false;
-  }
-  
-  return {valid, max};
- }
-*/
- 
- bool quickValidateArbitrarySegment(const Maxima &start,
-                                    const Maxima &end,
-                                    int c)
- {
-  bool valid = true;
-  int i = end.time;
-  while (valid && i <= start.time)
-  {
-   const SampleType s = fabs(buffer[c].tapOut(i));
-   const SampleType e = interpolatePointBetweenArbitraryMaxima(start, end, i);
-   valid = e > s;
-   ++i;
-  }
-  return valid;
- }
- 
- SampleType timeToReachAmplitudeAtSlope(SampleType deltaAmp, SampleType slope)
- {
-  return deltaAmp/slope;
- }
- 
- SampleType slopeBetweenArbitraryMaxima(const Maxima &start, const Maxima &end)
- {
-  if (start.time == end.time) return 0.;
-  SampleType da = end.amp - start.amp;
-  SampleType dt = start.time - end.time;
-  return da/dt;
- }
- 
- SampleType slopeFromMaxima(const Maxima &m, int c, int index)
- {
-  return slopeBetweenArbitraryMaxima(maxima(c, index), m);
- }
- 
- SampleType slopeOnEnvelopeEndingAtIndex(int c, int index)
- {
-  return slopeBetweenArbitraryMaxima(maxima(c, index), maxima(c, index + 1));
- }
- 
- SampleType interpolatePointAlongSlopeFromArbitraryMaxima(const Maxima &m, SampleType slope, int t)
- {
-  SampleType df = m.time - t;
-  SampleType x = m.amp + slope*df;
-  return x;
- }
- 
- SampleType interpolatePointBetweenArbitraryMaxima(const Maxima &start,
-                                                   const Maxima &end,
-                                                   int t)
- {
-  SampleType slope = slopeBetweenArbitraryMaxima(start, end);
-  return interpolatePointAlongSlopeFromArbitraryMaxima(end, slope, t);
- }
- 
- SampleType interpolatePointFromMaxima(const Maxima &test, int c, int index, int t)
- {
-  SampleType slope = slopeFromMaxima(test, c, index);
-  return interpolatePointAlongSlopeFromArbitraryMaxima(maxima(c, index), slope, t);
- }
- 
- void sanitiseSegmentRecursive(int c, const Maxima &start, const Maxima &end, int endIndex, int recursion = 5)
- {
-  if (recursion == 0) return;
-  if (start.time == end.time) return;
-  int maxTime = start.time - 1;
-  SampleType s = fabs(buffer[c].tapOut(maxTime));
-  SampleType maxSlope = slopeBetweenArbitraryMaxima(start, {s, maxTime});
-  bool valid = s <= interpolatePointBetweenArbitraryMaxima(start, end, maxTime);
-  for (int i = start.time - 2; i > end.time; --i)
-  {
-   s = fabs(buffer[c].tapOut(i));
-   SampleType slope = slopeBetweenArbitraryMaxima(start, {s, i});
-   if (slope > maxSlope)
-   {
-    maxSlope = slope;
-    maxTime = i;
-   }
-   if (s > interpolatePointBetweenArbitraryMaxima(start, end, i))
-   {
-    valid = false;
-   }
-  }
-  
-  if (!valid)
-  {
-   s = fabs(buffer[c].tapOut(maxTime));
-   Maxima n = {s, maxTime};
-   sanitiseSegmentRecursive(c, start, n, endIndex, recursion - 1);
-   insertEnvelopeMaximaInSlotBefore(c, n, endIndex);
-   sanitiseSegmentRecursive(c, n, end, endIndex, recursion - 1);
-  }
- }
- 
- void sanitiseSegment(int c, int startIndex, int endIndex)
- {
-  Maxima start = maxima(c, startIndex);
-  Maxima end = maxima(c, endIndex);
-  sanitiseSegmentRecursive(c, start, end, endIndex);
- }
- 
- void calculateClumpingTimes(double sr, double isr)
- {
-  clumpingLength = static_cast<int>(sr/clumpingFrequency);
-  clumpingSlope = 0.5*clumpingFrequency*M_PI*isr;
- }
- 
- int findNextRegionBoundary(int c, int t)
- {
-  int zx = findZeroCrossingAfter(c, t);
-  int ml = t - maximumRegionSize;
-  return std::max(zx, ml);
- }
- 
- void findNewRegions(int c)
- {
-  int t = region(c, 0).endOfRegion;
-  if (t == -1) t = maxima(c, 0).time + 1;
-  int nt = findNextRegionBoundary(c, t);
-  
-  while (nt > 0)
-  {
-   // There is a zero crossing, let's create a new region for it then look for another
-   auto [max, time] = findMaximumAmplitudeInBuffer(c, nt, t);
-   regions[c].tapIn(MaximaRegion(max, time, t, nt));
-   ++lastRegionProcessed[c];
-   t = nt;
-   nt = findNextRegionBoundary(c, t);
-  }
- }
- 
- SampleType slopeFromArbitraryMaximaToRegion(int c, const Maxima &m, int index)
- {
-  MaximaRegion &mr = region(c, index);
-  dsp_assert(mr);
-  dsp_assert(mr.time < m.time);
-  return slopeBetweenArbitraryMaxima(m, mr);
- }
- 
- std::tuple<int, SampleType, int, SampleType> findNextMaximaCandidates(int c)
- {
-  Maxima &lastMaxima = maxima(c, 0);
-  int index = lastRegionProcessed[c] - 1;
-  dsp_assert(region(c, index));
-  int maxSlopeIndex = index;
-  SampleType maxAmp = region(c, index).amp;
-  int maxAmpIndex = index;
-  SampleType maxSlope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
-  
-  // If the next maxima is above then return it straight away
-//  if (maxSlope > 0.) return {maxSlopeIndex, maxSlope, maxAmpIndex, maxAmp};
-  
-  // If there are 2 regions and the first one is longer than the clumping length
-  // This is a special case where we need to pick a region as the bigger one and go with it
-  if (lastRegionProcessed[c] == 2 && region(c, 1).length() >= clumpingLength)
-  {
-   index = 0;
-   SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
-   if (slope > maxSlope)
-   {
-    maxSlope = slope;
-    maxSlopeIndex = index;
-   }
-   if (region(c, index).amp > maxAmp)
-   {
-    maxAmpIndex = index;
-    maxAmp = region(c, index).amp;
-   }
-  }
-  else
-  {
-   --index;
-   while (index >= 0 && lastMaxima.time - region(c, index).time < clumpingLength)
-   {
-    SampleType slope = slopeFromArbitraryMaximaToRegion(c, lastMaxima, index);
-    
-    // We keep searching until we reach a slope that is rising
-    // if (slope > 0.) return {maxSlopeIndex, maxSlope, maxAmp};
-    
-    if (slope > maxSlope)
-    {
-     maxSlope = slope;
-     maxSlopeIndex = index;
-    }
-    if (region(c, index).amp > maxAmp)
-    {
-     maxAmpIndex = index;
-     maxAmp = region(c, index).amp;
-    }
-    --index;
-   }
-  }
-
-  return {maxSlopeIndex, maxSlope, maxAmpIndex, maxAmp};
- }
- 
- 
- 
- 
- 
-public:
- // Const accessors to allow for visualisation and read-only access to the maxima points
- const std::array<DynamicCircularBuffer<>, Count> &audioBuffer {buffer};
- const std::array<DynamicCircularBuffer<Maxima>, Count> &maximaBuffer {envMaxima};
- const std::array<DynamicCircularBuffer<MaximaRegion>, Count> &regionBuffer {regions};
- const SampleType &currentClumpingFrequency {clumpingFrequency};
- const SampleType &ZeroThreshold {zeroThreshold};
- const int &envelopePropagationDelay {envSamplePoint};
-  
- // Specify your inputs as public members here
- SignalIn signalIn;
- 
- // Outputs
- Output<Count> envOut;
- 
- // Include a definition for each input in the constructor
- PiecewiseEnvelopeFinder(Parameters &p, SignalIn _signalIn) :
- Parameters::ParameterListener(p),
- dspParam(p),
- zeroThreshold(dB2Linear(-80.)),
- signalIn(_signalIn),
- envOut(p)
- {
-  updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
-  initEnvelopeMaximaBuffer();
-  lastRegionProcessed.fill(0);
- }
- 
- SampleType getEnvelopeAtTime(int c, int t)
- {
-  int i = 0;
-  while (i < currentEnvMaximaBufferSize &&
-         maxima(c, i) &&
-         maxima(c, i).time < t) ++i;
-  if (i == currentEnvMaximaBufferSize || !maxima(c, i)) return maxima(c, i - 1).amp;
-  if (i == 0 && maxima(c, 0).time >= t) return maxima(c, 0).amp;
-  return interpolatePointFromMaxima(maxima(c, i), c, i - 1, t);
- }
- 
- void updateSampleRate(double sr, double isr) override
- {
-  maximumRegionSize = static_cast<int>(ceil(maximumRegionLengthSeconds*sr));
-  envSamplePoint = 2.*maximumRegionSize;
-  int calculatedBufferSize = 3*maximumRegionSize;
-  for (auto &b: buffer)
-  {
-   b.setMaximumLength(calculatedBufferSize);
-   b.reset(0.);
-  }
-  lengthBufferSamples = buffer[0].getSize();
-  calculateClumpingTimes(sr, isr);
-  resetEnvelopeMaximaBuffer();
-  initAndResetRegions();
- }
- 
- // Set the maximum region length to contain at least a full cycle of the selected
- // clumping frequency, or longer if you don't mind a bit of latency or you
- // plan on changing the clumping frequency to a lower value without reset.
- void setMaximumLengthOfRegion(SampleType seconds)
- {
-  maximumRegionLengthSeconds = seconds;
-  updateSampleRate(dspParam.sampleRate(), dspParam.sampleInterval());
- }
- 
- void setClumpingFrequency(SampleType hz)
- {
-  hz = std::max(static_cast<SampleType>(10.), std::min(static_cast<SampleType>(1000.), hz));
-  clumpingFrequency = hz;
-  calculateClumpingTimes(dspParam.sampleRate(), dspParam.sampleInterval());
- }
- 
- void setRisingSlopeMultiplier(SampleType m)
- { risingSlopeMultiplier = boundary(m, SampleType(0.001), SampleType(1.)); }
- 
- void setFallingSlopeMultiplier(SampleType m)
- { fallingSlopeMultiplier = boundary(m, SampleType(0.001), SampleType(1.)); }
- 
- void setBigJumpDetectionThreshold(SampleType frac)
- { bigJumpFraction = boundary(frac, SampleType(0.), SampleType(1.)); }
- 
- void setEnvelopeMaximaBufferSize(int size)
- {
-  currentEnvMaximaBufferSize = size;
-  initEnvelopeMaximaBuffer();
- }
- 
- void setZeroThreshold(SampleType zero)
- { zeroThreshold = zero; }
- 
- void setZeroThresholdDb(SampleType db)
- { setZeroThreshold(dB2Linear(db)); }
- 
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
- void reset() override
- {
-  setMaximumLengthOfRegion(maximumRegionLengthSeconds);
-  resetEnvelopeMaximaBuffer();
-  for (auto &b : buffer)
-  {
-   b.reset(0.);
-  }
-  lastRegionProcessed.fill(0);
-  envOut.reset();
- }
- 
- int startProcess(int startPoint, int sampleCount) override
- { return std::min(sampleCount, clumpingLength); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
- void stepProcess(int startPoint, int sampleCount) override
- {
-  fallingSlope = clumpingSlope*fallingSlopeMultiplier;
-  risingSlope = clumpingSlope*risingSlopeMultiplier;
-  advanceMaximaBuffers(sampleCount);
-  for (int c = 0; c < Count; ++c)
-  {
-   // Fill the audio buffer up to the current sample
-   for (int i = startPoint, s = sampleCount; s--; ++i) buffer[c].tapIn(signalIn(c, i));
-
-   findNewRegions(c);
-   
-   while (lastRegionProcessed[c] > 0 &&
-          region(c, lastRegionProcessed[c]).length() == maximumRegionSize)
-   {
-    Maxima &m = maxima(c, 0);
-    MaximaRegion &mr = region(c, lastRegionProcessed[c]);
-    dsp_assert(m.time >= mr.prevZeroCrossing);
-    insertMaximaAtEnd(c, mr);
-    sanitiseSegment(c, 3, 2);
-    --lastRegionProcessed[c];
-   }
-
-   while (maxima(c, 0).time > clumpingLength && lastRegionProcessed[c] > 1)
-   {
-    Maxima *lastMaxima = &maxima(c, 0);
-    auto [__msi, __ms, __mai, __ma] = findNextMaximaCandidates(c);
-    int maxSlopeIndex = __msi;
-    SampleType maxSlope = __ms;
-    int maxAmpIndex = __mai;
-    SampleType maxAmp = __ma;
-    
-    MaximaRegion &maxSlopeRegion = region(c, maxSlopeIndex);
-    MaximaRegion &maxAmpRegion = region(c, maxAmpIndex);
-    
-    insertMaximaAtEnd(c, maxSlopeRegion);
-    
-    Maxima &newMaxima = maxima(c, 0);
-//    lastMaxima = &maxima(c, 1);
-    if (newMaxima.amp > lastMaxima->amp &&
-        maxima(c, 2).amp > lastMaxima->amp &&
-        maxima(c, 2).time - newMaxima.time < 2*clumpingLength)
-    {
-     lastMaxima->amp = interpolatePointBetweenArbitraryMaxima(maxima(c, 2), newMaxima, lastMaxima->time);
-     lastRegionProcessed[c] = maxSlopeIndex;
-    }
-    else if (bigJumpFraction*maxAmp > lastMaxima->amp)
-    {
-     SampleType midJump = 0.5*(maxAmp + lastMaxima->amp);
-     int dt = timeToReachAmplitudeAtSlope(maxAmp - lastMaxima->amp, clumpingSlope);
-     if (dt > 0)
-     {
-      int time = recursiveBinarySearch(maxAmpRegion.time, (lastMaxima->time - dt - 1), [&](int x)
-      {
-       Maxima end {maxAmp, x};
-       Maxima start {midJump, x + dt};
-       return !(quickValidateArbitrarySegment(*lastMaxima, start, c) &&
-               quickValidateArbitrarySegment(start, end, c));
-      });
-      Maxima end {maxAmp, time};
-      Maxima start {midJump, time + dt};
-      newMaxima = maxAmpRegion;
-      insertEnvelopeMaximaInSlotBefore(c, start);
-      insertEnvelopeMaximaInSlotBefore(c, end);
-//      sanitiseSegment(c, 4, 3);
-//      sanitiseSegment(c, 3, 2);
-      lastRegionProcessed[c] = maxAmpIndex;
-//      lastRegionProcessed[c] = maxSlopeIndex;
-     }
-     else
-     {
-      lastRegionProcessed[c] = maxSlopeIndex;
-     }
-    }
-    else if (maxSlope > risingSlope)
-    {
-     int i = 1;
-     SampleType x;
-     do
-     {
-      Maxima &m = maxima(c, i);
-      if (m.time - newMaxima.time > clumpingLength) break;
-      x = interpolatePointAlongSlopeFromArbitraryMaxima(newMaxima, risingSlope, m.time);
-      if (x < m.amp) break;
-      m.amp = x;
-      ++i;
-     } while (true);
-     lastRegionProcessed[c] = maxSlopeIndex;
-    }
-    else if (maxSlope < -fallingSlope)
-    {
-     newMaxima.amp = interpolatePointAlongSlopeFromArbitraryMaxima(*lastMaxima,
-                                                                   -fallingSlope,
-                                                                   newMaxima.time);
-     lastRegionProcessed[c] = maxSlopeIndex;
-    }
-    else
-    {
-     lastRegionProcessed[c] = maxSlopeIndex;
-    }
-    sanitiseSegment(c, 3, 2);
-   }
-   int i = startPoint;
-   int s = sampleCount;
-   int t = envSamplePoint + sampleCount;
-   while (s--)
-   {
-    SampleType env = getEnvelopeAtTime(c, t);
-    envOut.buffer(c, i) = env;
-    ++i;
-    --t;
-   }
-  }
- }
-};
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
 }
 
 #endif /* XDDSP_Envelopes_h */

@@ -32,6 +32,10 @@ namespace XDDSP
 
 
 
+  /**
+   * @brief Implements a listener which is notified of changes to a piecewise envelope.
+   * 
+   */
 class PiecewiseEnvelopeListener
 {
 public:
@@ -41,8 +45,10 @@ public:
  // Used to trigger repaints on editors
  virtual void piecewiseEnvelopeChanged() {}
  
- // Used to notify audio hosts when changes are completed, for undo purposes
+ // Called when changes are about to be made
  virtual void piecewiseEnvelopeBeginChange() {}
+
+ // Called when changes have been made
  virtual void piecewiseEnvelopeEndChange() {}
 };
 
@@ -55,6 +61,12 @@ public:
 
 
 
+/**
+ * @brief A class containing a data structure to describe a piecewise envelope and code to synthesise the envelope.
+ * 
+ * @tparam MaxPoints The maximum number of points allowed.
+ * @tparam CurveResolution The number of individual segments a curve is divided up into.
+ */
 template <unsigned int MaxPoints = 10, int CurveResolution = 5>
 class PiecewiseEnvelopeData
 {
@@ -175,21 +187,45 @@ private:
  
 public:
  
- 
+ /**
+  * @brief Add a listener to the list of listeners to be alerted when a change is made to this envelope.
+  * 
+  * @param l The listener to add.
+  */
  void addListener(PiecewiseEnvelopeListener *l)
  {
   listeners.emplace_back(l);
  }
  
+ /**
+  * @brief Remove a listener from the list of listeners.
+  * 
+  * @param l The listener to remove.
+  */
  void removeListener(PiecewiseEnvelopeListener *l)
  {
   auto it = std::find(listeners.begin(), listeners.end(), l);
   if (it != listeners.end()) listeners.erase(it);
  }
  
+ /**
+  * @brief Return the number of points currently being used to describe the envelope.
+  * 
+  * @return int The number of points.
+  */
  int getPointCount() const
  { return pointCount; }
  
+ /**
+  * @brief Get a point from the structure
+  * 
+  * @param index The index of the point.
+  * @param time The time of the point is returned back though this parameter.
+  * @param value The value of the point is returned back though this parameter.
+  * @param curve The curve setting of the point is returned back though this parameter.
+  * @return true Returned if the point exists.
+  * @return false Returned if no such point exists.
+  */
  bool getPoint(int index, SampleType &time, SampleType &value, SampleType &curve)
  {
   if (index < 0 || index >= pointCount) return false;
@@ -200,6 +236,10 @@ public:
   return true;
  }
  
+ /**
+  * @brief Remove all points from the structure.
+  * 
+  */
  void clearPoints()
  {
   pointCount = 0;
@@ -207,7 +247,16 @@ public:
   sendUpdateMessage();
  }
  
- // Returns the index of the new point
+ /**
+  * @brief Adds a new point to the structure and returns the new index of that point.
+  * 
+  * The points are always kept in time order. Adding a new point might push points that are already in the list further up the list.
+  * 
+  * @param time The time of the new point.
+  * @param value The value of the new point.
+  * @param curve The curve of the new point.
+  * @return int The index of the new point.
+  */
  int addPoint(SampleType time, SampleType value, SampleType curve)
  {
   int index = doAddPoint(time, value, curve);
@@ -225,6 +274,11 @@ public:
   return index;
  }
  
+ /**
+  * @brief Remove the point at some index.
+  * 
+  * @param index The index of the point to remove.
+  */
  void removePoint(int index)
  {
   doRemovePoint(index);
@@ -241,10 +295,27 @@ public:
   sendUpdateMessage();
  }
  
+ /**
+  * @brief Enable or disable constrained edits.
+  * 
+  * When a point change is requested, the change may or may not be constrained, depending on this setting. When set to true, points cannot be moved to go before the point before it or after the point after it. When set to false, the points are reordered as necessary to keep the points in time order.
+  * 
+  * @param ce The constrain edits flag.
+  */
  void setConstrainEdits(bool ce)
  { constrainEdits = ce; }
  
- // Returns the new index of the point, calling code should check to see if it changes
+ /**
+  * @brief Change a point on the curve.
+  * 
+  * When a point change is requested, the change may or may not be constrained, depending on the setting given in PiecewiseEnvelopeData::setContrainEdits. When set to true, points cannot be moved to go before the point before it or after the point after it. When set to false, the points are reordered as necessary to keep the points in time order. The index of the changed point might change, so the caller is returned the index of the point after chages are made.
+  * 
+  * @param index The index of the point to change.
+  * @param time The new time of the point.
+  * @param value The new value of the point.
+  * @param curve The new curve of the point.
+  * @return int The new index of the point, or the old one if the index didn't change.
+  */
  int changePoint(int index, SampleType time, SampleType value, SampleType curve)
  {
   if (constrainEdits)
@@ -280,7 +351,12 @@ public:
   return index;
  }
  
- // Doesn't return the new index, because the index never changes
+ /**
+  * @brief Change just the curve of a point.
+  * 
+  * @param index Index of the point to change.
+  * @param curve The new curve setting.
+  */
  void changePointCurve(int index, SampleType curve)
  {
   points[index].curve = curve;
@@ -288,12 +364,23 @@ public:
   sendUpdateMessage();
  }
  
+ /**
+  * @brief Get the length of the envelope.
+  * 
+  * @return SampleType The time position of the last point in the envelope.
+  */
  SampleType getEnvelopeLength()
  {
   if (pointCount == 0) return 0.;
   return points[pointCount - 1].time;
  }
  
+ /**
+  * @brief Calculate an envelope value at any given time.
+  * 
+  * @param sampleTime Time value to find the envelope value for.
+  * @return SampleType The calculated envelope value.
+  */
  SampleType resolveRandomPoint(SampleType sampleTime)
  {
   if (pointCount == 0) return 0.;
@@ -320,31 +407,63 @@ public:
               points[point].samples[lineSample + 1]);
  }
  
+ /**
+  * @brief Get the loop start point index.
+  * 
+  * @return int The index of the start loop point.
+  */
  int getLoopStartPoint()
  { return loopStartPoint; }
  
+ /**
+  * @brief Get the loop end point index.
+  * 
+  * @return int The index of the end loop point.
+  */
  int getLoopEndPoint()
  { return loopEndPoint; }
  
+ /**
+  * @brief Get the time of the start of the loop.
+  * 
+  * @return SampleType The time of the start of the loop.
+  */
  SampleType getLoopStartTime()
  {
   if (loopStartPoint == -1) return 0.;
   return points[loopStartPoint].time;
  }
  
+ /**
+  * @brief Get the time of the end of the loop.
+  * 
+  * @return SampleType The time of the end of the loop.
+  */
  SampleType getLoopEndTime()
  {
   if (loopEndPoint == -1) return 0.;
   return points[loopEndPoint].time;
  }
  
+ /**
+  * @brief Test if the loop start point and loop end point are the same point.
+  * 
+  * @return true If the loop start point and loop end point are the same point.
+  * @return false If the loop start and loop end points are different.
+  */
  bool isLoopSustainPoint()
  { return (loopStartPoint == loopEndPoint) && (loopStartPoint > -1); }
  
- // Calling setLoopPoint once will set a sustain point
- // Calling two times with different indexes will set a start and end loop point
- // Calling after setting a loop will change the loop end point or start point
- // depending on if index < loopStartPoint
+ /**
+  * @brief Set a loop point.
+  * 
+  * Calling setLoopPoint once will set a sustain point
+  * Calling two times with different indexes will set a start and end loop point
+  * Calling after setting a loop will change the loop end point or start point
+  * depending on if index < loopStartPoint
+  * 
+  * @param index 
+  */
  void setLoopPoint(int index)
  {
   if (index < 0 || index > (pointCount - 1)) return;
@@ -357,12 +476,21 @@ public:
   sendUpdateMessage();
  }
  
+ /**
+  * @brief Clear the loop points.
+  * 
+  */
  void clearLoopPoints()
  {
   clearLoop();
   sendUpdateMessage();
  }
  
+ /**
+  * @brief Create a string representation that can be used to restore the state of the piecewise envelope.
+  * 
+  * @return std::string The string representation of the envelope.
+  */
  std::string saveStateToString()
  {
   std::string state = std::to_string(pointCount);
@@ -378,6 +506,13 @@ public:
   return state;
  }
  
+ /**
+  * @brief Restore the state of the envelope from a save string.
+  * 
+  * @param state The state to restore the envelope to.
+  * @return true If successful.
+  * @return false If a failure occurred. The state of the envelope might be undefined.
+  */
  bool loadStateFromString(const std::string &state)
  {
   auto str = state.c_str();
@@ -416,6 +551,10 @@ public:
   return true;
  }
  
+ /**
+  * @brief Can be called to indicate that a change is about to be made.
+  * 
+  */
  void beginEdit()
  {
   for (auto &l : listeners)
@@ -424,6 +563,10 @@ public:
   }
  }
  
+ /**
+  * @brief Can be called to indicate that a change was just completed.
+  * 
+  */
  void endEdit()
  {
   for (auto &l : listeners)

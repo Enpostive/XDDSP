@@ -34,6 +34,11 @@ namespace XDDSP
 
 
 
+  /**
+   * @brief A class encapsulating the logic to perform lookups in the Band-Limited stEP and Band-Limited rAMP tables.
+   * 
+   * Only hermite interpolation is supported.
+   */
 class BLEPLookup
 {
 public:
@@ -64,11 +69,23 @@ private:
  }
  
 public:
+ /**
+  * @brief Return a band-limited step sample.
+  * 
+  * @param sn Time since the step.
+  * @return SampleType The sample.
+  */
  static SampleType lookupStep(double sn)
  {
   return lookup(BLEPTable, sn, -1.);
  }
  
+ /**
+  * @brief Return a band-limited ramp sample.
+  * 
+  * @param sn Time since the ramp started.
+  * @return SampleType The sample.
+  */
  static SampleType lookupRamp(double sn)
  {
   return lookup(BLAMPTable, sn, 0.);
@@ -84,6 +101,10 @@ public:
 
 
 
+/**
+ * @brief Objects of this class can be used to trigger and buffer the samples for band limited steps and ramps. These are useful for synthesizing band-limited oscillators and band-limited distortion algorithms.
+ * 
+ */
 class BLEPGenerator
 {
  static constexpr unsigned int BLEPSize = BLEPLookup::BLEPSize.size();
@@ -104,6 +125,12 @@ public:
   blepc = 0;
  }
  
+ /**
+  * @brief Generate a BLEP and add it into the BLEP buffer.
+  * 
+  * @param gain The magnitude of the BLEP.
+  * @param bc The time since the BLEP started, in samples. This is expected to be between 0 and 1.
+  */
  void applyBLEP(SampleType gain, SampleType bc)
  {
   int cc = blepc;
@@ -115,6 +142,12 @@ public:
   }
  }
  
+ /**
+  * @brief Generate a BLAMP and add it into the BLEP buffer.
+  * 
+  * @param gain The magnitude of the BLAMP.
+  * @param bc The time since the BLAMP started, in samples. This is expected to be between 0 and 1.
+  */
  void applyBLAMP(SampleType gain, SampleType bc)
  {
   int cc = blepc;
@@ -126,6 +159,11 @@ public:
   }
  }
  
+ /**
+  * @brief Get the next sample in the BLEP buffer and advance the buffer once.
+  * 
+  * @return SampleType The next BLEP buffer sample.
+  */
  SampleType getNextBLEPSample()
  {
   SampleType t = blepBuffer[blepc];

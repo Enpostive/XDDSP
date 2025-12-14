@@ -30,7 +30,13 @@ namespace XDDSP
 
 
 
-// Delay times are in samples and are rounded to the nearest sample without interpolation
+/**
+ * @brief A simple delay component with no iterpolation.
+ * 
+ * @tparam SignalIn Couples to a signal to be delayed. The signal can have as many channels as you like.
+ * @tparam DelayTimeIn Couples to the delay time input. Only one channel is allowed. The delay time is measured in samples and bounds checking is performed.
+ * @tparam BufferType Either CircularBuffer, DynamicCircularBuffer or ModulusCircularBuffer, depending on your requirements.
+ */
 template <
 typename SignalIn,
 typename DelayTimeIn,
@@ -47,14 +53,15 @@ public Component<LowQualityDelay<SignalIn, DelayTimeIn, BufferType>>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
+ // The input signal
  SignalIn signalIn;
+
+ // The delay time signal
  DelayTimeIn delayTimeIn;
  
- // Specify your outputs like this
+ // The delayed signal output.
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  LowQualityDelay(Parameters &p, SignalIn signalIn, DelayTimeIn delayTimeIn) :
  signalIn(signalIn),
  delayTimeIn(delayTimeIn),
@@ -67,6 +74,13 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the maximum delay time on the underlying buffer objects.
+  * 
+  * If the component was compiled using the CircularBuffer class, this call is ignored.
+  * 
+  * @param maxDelay The new maximum delay time.
+  */
  void setMaximumDelayTime(uint32_t maxDelay)
  {
   for (auto& b : buffer) b.setMaximumLength(maxDelay);
@@ -95,7 +109,13 @@ public:
 
 
 
-// Delay times are in samples and are rounded to the nearest sample without interpolation
+/**
+ * @brief A simple delay with multiple taps
+ * 
+ * @tparam SignalIn Couples to a signal to be delayed. The signal can have as many channels as you like.
+ * @tparam DelayTimeIn Couples to the delay time input. An output is created for each channel in this coupler. The delay time is measured in samples and bounds checking is performed.
+ * @tparam BufferType Either CircularBuffer, DynamicCircularBuffer or ModulusCircularBuffer, depending on your requirements.
+ */
 template <
 typename SignalIn,
 typename DelayTimeIn,
@@ -104,21 +124,21 @@ typename BufferType = DynamicCircularBuffer<>
 class MultiTapDelay :
 public Component<MultiTapDelay<SignalIn, DelayTimeIn, BufferType>>
 {
- // Private data members here
  std::array<BufferType, SignalIn::Count> buffer;
  
 public:
  static constexpr int CountChannels = SignalIn::Count;
  static constexpr int CountTaps = DelayTimeIn::Count;
  
- // Specify your inputs as public members here
+ // The input signal to be delayed.
  SignalIn signalIn;
+
+ // The delay time signal.
  DelayTimeIn delayTimeIn;
  
- // Specify your outputs like this
+ // The delayed signal outputs.
  std::array<Output<CountChannels>, CountTaps> tapOut;
  
- // Include a definition for each input in the constructor
  MultiTapDelay(Parameters &p, SignalIn signalIn, DelayTimeIn delayTimeIn) :
  signalIn(signalIn),
  delayTimeIn(delayTimeIn),
@@ -131,6 +151,13 @@ public:
   for (auto& t : tapOut) t.reset();
  }
  
+ /**
+  * @brief Set the maximum delay time on the underlying buffer objects.
+  * 
+  * If the component was compiled using the CircularBuffer class, this call is ignored.
+  * 
+  * @param maxDelay The new maximum delay time.
+  */
  void setMaximumDelayTime(uint32_t maxDelay)
  {
   for (auto& b : buffer) b.setMaximumLength(maxDelay);
@@ -162,7 +189,13 @@ public:
 
 
 
-// Delay times are in samples. Linear interpolation is used between samples
+/**
+ * @brief A simple delay component with linear interpolation.
+ * 
+ * @tparam SignalIn Couples to a signal to be delayed. The signal can have as many channels as you like.
+ * @tparam DelayTimeIn Couples to the delay time input. Only one channel is allowed. The delay time is measured in samples and bounds checking is performed.
+ * @tparam BufferType Either CircularBuffer, DynamicCircularBuffer or ModulusCircularBuffer, depending on your requirements.
+ */
 template <
 typename SignalIn,
 typename DelayTimeIn,
@@ -179,14 +212,15 @@ public Component<MediumQualityDelay<SignalIn, DelayTimeIn, BufferType>>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
+ // The input signal to be delayed.
  SignalIn signalIn;
+ 
+ // The delay time signal.
  DelayTimeIn delayTimeIn;
  
- // Specify your outputs like this
+ // The delayed signal output.
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  MediumQualityDelay(Parameters &p, SignalIn signalIn, DelayTimeIn delayTimeIn) :
  signalIn(signalIn),
  delayTimeIn(delayTimeIn),
@@ -199,6 +233,13 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the maximum delay time on the underlying buffer objects.
+  * 
+  * If the component was compiled using the CircularBuffer class, this call is ignored.
+  * 
+  * @param maxDelay The new maximum delay time.
+  */
  void setMaximumDelayTime(uint32_t maxDelay)
  {
   for (auto& b : buffer) b.setMaximumLength(maxDelay);
@@ -231,7 +272,13 @@ public:
 
 
 
-// Delay times are in samples. Hermite interpolation is used between samples
+/**
+ * @brief A simple delay component with hermite interpolation.
+ * 
+ * @tparam SignalIn Couples to a signal to be delayed. The signal can have as many channels as you like.
+ * @tparam DelayTimeIn Couples to the delay time input. Only one channel is allowed. The delay time is measured in samples and bounds checking is performed.
+ * @tparam BufferType Either CircularBuffer, DynamicCircularBuffer or ModulusCircularBuffer, depending on your requirements.
+ */
 template <
 typename SignalIn,
 typename DelayTimeIn,
@@ -242,20 +289,20 @@ public Component<HighQualityDelay<SignalIn, DelayTimeIn, BufferType>>
 {
  static_assert(DelayTimeIn::Count == 1, "HighQualityDelay expects a delay time input with a single channel");
  
- // Private data members here
  std::array<BufferType, SignalIn::Count> buffer;
  
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
+ // The input signal to be delayed
  SignalIn signalIn;
+ 
+ // The delay time signal.
  DelayTimeIn delayTimeIn;
  
- // Specify your outputs like this
+ // The delayed signal output.
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  HighQualityDelay(Parameters &p, SignalIn signalIn, DelayTimeIn delayTimeIn) :
  signalIn(signalIn),
  delayTimeIn(delayTimeIn),
@@ -268,6 +315,13 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the maximum delay time on the underlying buffer objects.
+  * 
+  * If the component was compiled using the CircularBuffer class, this call is ignored.
+  * 
+  * @param maxDelay The new maximum delay time.
+  */
  void setMaximumDelayTime(uint32_t maxDelay)
  {
   for (auto& b : buffer) b.setMaximumLength(maxDelay);

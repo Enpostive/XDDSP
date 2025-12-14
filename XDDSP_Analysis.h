@@ -36,6 +36,13 @@ namespace XDDSP
 
 
 
+  /**
+   * @brief Measures RMS levels and reports the overall loudness as described in the LUFS standard.
+   *        This component only does the block splitting and RMS measurement parts of the standard. A k-Weighted filter is required to be placed before this component in the signal chain to obtain an actual dBLUFS measurement.
+   * 
+   * @tparam SignalIn Couples to the input signal.
+   * @tparam ReserveSize The size to reserve for the first memory allocation.
+   */
 template <typename SignalIn, unsigned long ReserveSize = 32768>
 class LUFSBlockCollector : public Component<LUFSBlockCollector<SignalIn>>, public Parameters::ParameterListener
 {
@@ -56,13 +63,18 @@ class LUFSBlockCollector : public Component<LUFSBlockCollector<SignalIn>>, publi
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
+ /**
+  * @brief The input signal
+  * 
+  */
  SignalIn signalIn;
  
- // Specify your outputs like this
- // This component has no outputs
- 
- // Include a definition for each input in the constructor
+ /**
+  * @brief Construct a new LUFSBlockCollector object
+  * 
+  * @param p The Parameters object
+  * @param _signalIn A coupler to connect the input signal. The coupler is copy constructed into the object.
+  */
  LUFSBlockCollector(Parameters &p, SignalIn _signalIn) :
  Parameters::ParameterListener(p),
  signalIn(_signalIn)
@@ -80,8 +92,6 @@ public:
   buffer.setMaximumLength(blockLength);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset() override
  {
   accum = 0.;
@@ -90,9 +100,19 @@ public:
   blocks.clear();
  }
  
+ /**
+  * @brief Get the number of blocks recorded by the component.
+  * 
+  * @return int The number of blocks.
+  */
  int getBlockCount() const
  { return blocks.size(); }
  
+ /**
+  * @brief Calculate the RMS of the last block recorded.
+  * 
+  * @return SampleType The RMS in decibels.
+  */
  SampleType getLastBlock() const
  {
   std::lock_guard lock(mux);
@@ -100,6 +120,11 @@ public:
   return 0.;
  }
  
+ /**
+  * @brief Perform the LUFS calculations and report the perceived loudness of the input so far.
+  * 
+  * @return SampleType The perceived loudness of the input in decibels.
+  */
  SampleType integrateBlocks() const
  {
   {
@@ -143,12 +168,7 @@ public:
   return thresh;
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
+
  void stepProcess(int startPoint, int sampleCount) override
  {
   std::lock_guard lock(mux);
@@ -172,10 +192,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
- // void finishProcess()
- // {}
 };
 
 

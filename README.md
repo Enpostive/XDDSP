@@ -20,7 +20,5 @@ At this early stage, my code is not readable or well commented. I will be creati
 
 I will be attempting to structure the code so that this repository can be included as a sub-repository in other projects easily.
 
-Your project just needs to compile and link XDDSP.cpp and include the XDDSP.h header file
-
-    #include "[path_to_library]/XDDSP.h"
+Your project just needs to include the XDDSP.h header file and use the XDDSP_GLOBAL macro in one place to include the optional global data structures used by some of the code.
 
