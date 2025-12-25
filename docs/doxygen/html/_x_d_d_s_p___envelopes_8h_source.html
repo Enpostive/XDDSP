@@ -115,7 +115,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>XDDSP</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_x_d_d_s_p.html">XDDSP</a></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
@@ -296,7 +296,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_ramp_to.html#a44631f621d5f7bc218711e394a47dba7">  220</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_ramp_to.html#a44631f621d5f7bc218711e394a47dba7">setControl</a>(<span class="keywordtype">int</span> channel, SampleType target)</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> {</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  dsp_assert(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  <a class="code hl_function" href="namespace_x_d_d_s_p.html#a70350ab317997473442253182bda40ef">dsp_assert</a>(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>  ramps[channel].setTo(target);</div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> }</div>
 </div>
@@ -311,7 +311,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00242" data-start="{" data-end="}">
 <div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_ramp_to.html#ac036537fd85237119906805bb74b509e">  242</a></span> SampleType <a class="code hl_function" href="class_x_d_d_s_p_1_1_ramp_to.html#ac036537fd85237119906805bb74b509e">getControl</a>(<span class="keywordtype">int</span> channel)</div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  dsp_assert(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  <a class="code hl_function" href="namespace_x_d_d_s_p.html#a70350ab317997473442253182bda40ef">dsp_assert</a>(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  <span class="keywordflow">return</span> ramps[channel].end;</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> }</div>
 </div>
@@ -324,7 +324,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00264" data-start="{" data-end="}">
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_ramp_to.html#a3d28f6d61ec7ccd1bdd81413cece612c">  264</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_ramp_to.html#a3d28f6d61ec7ccd1bdd81413cece612c">setRamp</a>(<span class="keywordtype">int</span> channel, <span class="keywordtype">int</span> time, <span class="keywordtype">int</span> length, SampleType target)</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> {</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  dsp_assert(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  <a class="code hl_function" href="namespace_x_d_d_s_p.html#a70350ab317997473442253182bda40ef">dsp_assert</a>(channel &gt;= 0 &amp;&amp; channel &lt; Count);</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  ramps[channel].set(target, time, length);</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> }</div>
 </div>
@@ -601,8 +601,8 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i)</div>
 <div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>   {</div>
 <div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>    SampleType x = timeIn(c, i);</div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>    SampleType ri = recRampIn*fastBoundary(x, 0., rIn);</div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    SampleType ro = recRampOut*fastBoundary(1. - x, 0., rOut);</div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>    SampleType ri = recRampIn*<a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(x, 0., rIn);</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    SampleType ro = recRampOut*<a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(1. - x, 0., rOut);</div>
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>    envOut.buffer(c, i) = ri*ro;</div>
 <div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>   }</div>
 <div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>  }</div>
@@ -887,22 +887,22 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00875" data-start="{" data-end="}">
 <div class="line"><a id="l00875" name="l00875"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_exponential_envelope_follower.html#a2cff650036223a5d55eaf69b306e5004">  875</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_exponential_envelope_follower.html#a2cff650036223a5d55eaf69b306e5004">stepProcess</a>(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount)</div>
 <div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span> {</div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>  SampleType riseCoeff = (riseIn(0, startPoint) &gt; 2) ? expCoef(riseIn(0, startPoint)) : 0.;</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>  SampleType fallCoeff = (fallIn(0, startPoint) &gt; 2) ? expCoef(fallIn(0, startPoint)) : 0.;</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>  SampleType riseCoeff = (riseIn(0, startPoint) &gt; 2) ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#ae86a3e6c2cb74bff4444cbca9fdbebc8">expCoef</a>(riseIn(0, startPoint)) : 0.;</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>  SampleType fallCoeff = (fallIn(0, startPoint) &gt; 2) ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#ae86a3e6c2cb74bff4444cbca9fdbebc8">expCoef</a>(fallIn(0, startPoint)) : 0.;</div>
 <div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>  </div>
 <div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c)</div>
 <div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>  {</div>
 <div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>   <span class="keywordflow">if</span> (ControlCount &gt; 1 &amp;&amp; c &gt; 0)</div>
 <div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>   {</div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    riseCoeff = (riseIn(c, 0) &gt; startPoint) ? expCoef(riseIn(c, startPoint)) : 0.;</div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    fallCoeff = (fallIn(c, 0) &gt; startPoint) ? expCoef(fallIn(c, startPoint)) : 0.;</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    riseCoeff = (riseIn(c, 0) &gt; startPoint) ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#ae86a3e6c2cb74bff4444cbca9fdbebc8">expCoef</a>(riseIn(c, startPoint)) : 0.;</div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    fallCoeff = (fallIn(c, 0) &gt; startPoint) ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#ae86a3e6c2cb74bff4444cbca9fdbebc8">expCoef</a>(fallIn(c, startPoint)) : 0.;</div>
 <div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>   }</div>
 <div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>   </div>
 <div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i)</div>
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>   {</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>    <span class="keyword">const</span> SampleType t = signalIn(c, i);</div>
 <div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    <span class="keyword">const</span> SampleType coeff = (t &gt; state[c])*riseCoeff + (t &lt; state[c])*fallCoeff;</div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>    expTrack(state[c], t, coeff);</div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>    <a class="code hl_function" href="namespace_x_d_d_s_p.html#aa44bb322023297302d2a7d1be3e79751">expTrack</a>(state[c], t, coeff);</div>
 <div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>    envOut.buffer(c, i) = state[c];</div>
 <div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>   }</div>
 <div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>  }</div>
@@ -971,15 +971,15 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="foldopen" id="foldopen00963" data-start="{" data-end="}">
 <div class="line"><a id="l00963" name="l00963"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_linear_envelope_follower.html#aa80e63f7db1276b5504f73e6922ea4d8">  963</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_linear_envelope_follower.html#aa80e63f7db1276b5504f73e6922ea4d8">stepProcess</a>(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount)</div>
 <div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span> {</div>
-<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>  SampleType riseTime = fastMax(riseIn(0, startPoint), 1.);</div>
-<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>  SampleType fallTime = fastMax(fallIn(0, startPoint), 1.);</div>
+<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span>  SampleType riseTime = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(riseIn(0, startPoint), 1.);</div>
+<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span>  SampleType fallTime = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(fallIn(0, startPoint), 1.);</div>
 <div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span>  </div>
 <div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c)</div>
 <div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>  {</div>
 <div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>   <span class="keywordflow">if</span> (ControlCount &gt; 1 &amp;&amp; c &gt; 0)</div>
 <div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>   {</div>
-<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>    riseTime = fastMax(riseIn(c, startPoint), 1.);</div>
-<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    fallTime = fastMax(fallIn(c, startPoint), 1.);</div>
+<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>    riseTime = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(riseIn(c, startPoint), 1.);</div>
+<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    fallTime = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(fallIn(c, startPoint), 1.);</div>
 <div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>   }</div>
 <div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>   </div>
 <div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i)</div>
@@ -995,7 +995,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>    }</div>
 <div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>    </div>
 <div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    t = state[c].target - state[c].env;</div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    state[c].env += fastBoundary(state[c].coeff, fastMin(t, 0.), fastMax(t, 0.));</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    state[c].env += <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(state[c].coeff, <a class="code hl_function" href="namespace_x_d_d_s_p.html#abf6c7288a1dc9d8d759f9569085b9bad">fastMin</a>(t, 0.), <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(t, 0.));</div>
 <div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>    envOut.buffer(c, i) = state[c].env;</div>
 <div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>   }</div>
 <div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>  }</div>
@@ -1069,8 +1069,8 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>  threshold = threshDB;</div>
 <div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>  knee = kneeDB;</div>
 <div class="line"><a id="l01069" name="l01069"></a><span class="lineno"> 1069</span>  </div>
-<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>  threshLinear = dB2Linear(threshold);</div>
-<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>  lThresh = threshLinear / dB2Linear(knee);</div>
+<div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span>  threshLinear = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(threshold);</div>
+<div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>  lThresh = threshLinear / <a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(knee);</div>
 <div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span>  hThresh = 2.0 * threshLinear - lThresh;</div>
 <div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>  pk = (hThresh != lThresh);</div>
 <div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>  recipDThresh = (hThresh == lThresh) ? 0. : (1. / (hThresh - lThresh));</div>
@@ -1124,7 +1124,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span> </div>
 <div class="foldopen" id="foldopen01153" data-start="{" data-end="}">
 <div class="line"><a id="l01153" name="l01153"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a9603aebfc18727c873172ef9e5885cdb"> 1153</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a9603aebfc18727c873172ef9e5885cdb">setMakeup</a>(SampleType db)</div>
-<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span> { makeupLinear = dB2Linear(makeup = db); }</div>
+<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span> { makeupLinear = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(makeup = db); }</div>
 </div>
 <div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span> </div>
 <div class="foldopen" id="foldopen01161" data-start="{" data-end="}">
@@ -1134,7 +1134,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span> </div>
 <div class="foldopen" id="foldopen01169" data-start="{" data-end="}">
 <div class="line"><a id="l01169" name="l01169"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b14de1d1921c25e006d651b5ac9230c"> 1169</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b14de1d1921c25e006d651b5ac9230c">setMaxGain</a>(SampleType db)</div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span> { maxGainLinear = dB2Linear(maxGain = db); }</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span> { maxGainLinear = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(maxGain = db); }</div>
 </div>
 <div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span> </div>
 <div class="foldopen" id="foldopen01177" data-start="{" data-end="}">
@@ -1144,7 +1144,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span> </div>
 <div class="foldopen" id="foldopen01185" data-start="{" data-end="}">
 <div class="line"><a id="l01185" name="l01185"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b183444e4bdc8a3b2be3bb79e7475bc"> 1185</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b183444e4bdc8a3b2be3bb79e7475bc">setChannelLink</a>(SampleType link)</div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span> { channelLink = fastBoundary(link, 0., 1.); }</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span> { channelLink = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(link, 0., 1.); }</div>
 </div>
 <div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span> </div>
 <div class="foldopen" id="foldopen01193" data-start="{" data-end="}">
@@ -1158,17 +1158,17 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>  SampleType ga, gb, d, c, s;</div>
 <div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>  e = std::max(e, <span class="keyword">static_cast&lt;</span>SampleType<span class="keyword">&gt;</span>(0.0000001));</div>
 <div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span> </div>
-<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>  d = pk ? fastBoundary((e - lThresh)*recipDThresh, 0., 1.) : 1.*(e &gt; lThresh);</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>  d = pk ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>((e - lThresh)*recipDThresh, 0., 1.) : 1.*(e &gt; lThresh);</div>
 <div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>  s = lThresh - lThresh*d + threshLinear*d;</div>
 <div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>  c = 1. - d + ratioAbove*d;</div>
 <div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>  ga = c - (s*c - s)/e;</div>
 <div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>  </div>
-<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>  d = pk ? fastBoundary((hThresh - e)*recipDThresh, 0., 1.) : 1.*(e &lt; lThresh);</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>  d = pk ? <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>((hThresh - e)*recipDThresh, 0., 1.) : 1.*(e &lt; lThresh);</div>
 <div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>  s = hThresh - hThresh*d + threshLinear*d;</div>
 <div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>  c = 1. - d + ratioBelow*d;</div>
 <div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>  gb = std::max(c - (s*c - s)/e, <span class="keyword">static_cast&lt;</span>SampleType<span class="keyword">&gt;</span>(0.));</div>
 <div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>  </div>
-<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>  <span class="keywordflow">return</span> fastBoundary(ga*gb*makeupLinear, 0., maxGainLinear);</div>
+<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(ga*gb*makeupLinear, 0., maxGainLinear);</div>
 <div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span> }</div>
 </div>
 <div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span> </div>
@@ -1182,7 +1182,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i)</div>
 <div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>  {</div>
 <div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>   SampleType link = 0.;</div>
-<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c) link = fastMax(signalIn(c, i), link);</div>
+<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c) link = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(signalIn(c, i), link);</div>
 <div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c) signalOut.buffer(c, i) = <a class="code hl_function" href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#aa45ec46578102b6be30d7a07874f57ce">computeGainCurve</a>(cm*signalIn(c, i) + lm*link);</div>
 <div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>  }</div>
 <div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span> }</div>
@@ -1205,7 +1205,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_a_d_s_r_generator_html_a068883d7941804c17160ca967a5581a8"><div class="ttname"><a href="class_x_d_d_s_p_1_1_a_d_s_r_generator.html#a068883d7941804c17160ca967a5581a8">XDDSP::ADSRGenerator::envelopeActive</a></div><div class="ttdeci">bool envelopeActive()</div><div class="ttdoc">Returns true if the envelope is active.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:492</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_a_d_s_r_generator_html_a3a952e2006eb272c99aae3c6ddbe15b5"><div class="ttname"><a href="class_x_d_d_s_p_1_1_a_d_s_r_generator.html#a3a952e2006eb272c99aae3c6ddbe15b5">XDDSP::ADSRGenerator::triggerEnvelope</a></div><div class="ttdeci">void triggerEnvelope()</div><div class="ttdoc">Triggers the envelope.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:466</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_a_d_s_r_generator_html_abc69c3c13df3c76794b2d3e50badcf94"><div class="ttname"><a href="class_x_d_d_s_p_1_1_a_d_s_r_generator.html#abc69c3c13df3c76794b2d3e50badcf94">XDDSP::ADSRGenerator::releaseEnvelope</a></div><div class="ttdeci">void releaseEnvelope()</div><div class="ttdoc">Releases the envelope.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:477</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_component_html_a7fb7ab876decfdd94c1ba3dd9f167545"><div class="ttname"><a href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; ADSRGenerator&lt; AttackTimeSamples, DecayTimeSamples, SustainLevel, ReleaseTimeSamples, IntegerMaximum &gt;, IntegerMaximum &gt;::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:290</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_component_html_a7fb7ab876decfdd94c1ba3dd9f167545"><div class="ttname"><a href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; ADSRGenerator&lt; AttackTimeSamples, DecayTimeSamples, SustainLevel, ReleaseTimeSamples, IntegerMaximum &gt;, IntegerMaximum &gt;::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:294</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_dynamics_processing_gain_signal_html_a336d074776a6992cd79c60d183eacc2b"><div class="ttname"><a href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a336d074776a6992cd79c60d183eacc2b">XDDSP::DynamicsProcessingGainSignal::getKnee</a></div><div class="ttdeci">SampleType getKnee() const</div><div class="ttdoc">Get the knee setting.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:1106</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_dynamics_processing_gain_signal_html_a5b14de1d1921c25e006d651b5ac9230c"><div class="ttname"><a href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b14de1d1921c25e006d651b5ac9230c">XDDSP::DynamicsProcessingGainSignal::setMaxGain</a></div><div class="ttdeci">void setMaxGain(SampleType db)</div><div class="ttdoc">Set a limit on the maximum amount of gain allowed to be applied.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:1169</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_dynamics_processing_gain_signal_html_a5b183444e4bdc8a3b2be3bb79e7475bc"><div class="ttname"><a href="class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html#a5b183444e4bdc8a3b2be3bb79e7475bc">XDDSP::DynamicsProcessingGainSignal::setChannelLink</a></div><div class="ttdeci">void setChannelLink(SampleType link)</div><div class="ttdoc">Set the channel link factor.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:1185</div></div>
@@ -1230,7 +1230,7 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_linear_envelope_follower_html_a0fce1031452a230d1b31c6bd9614aee0"><div class="ttname"><a href="class_x_d_d_s_p_1_1_linear_envelope_follower.html#a0fce1031452a230d1b31c6bd9614aee0">XDDSP::LinearEnvelopeFollower::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">This can be implemented to contain the code used to reset the component to a default known state.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:957</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_linear_envelope_follower_html_aa80e63f7db1276b5504f73e6922ea4d8"><div class="ttname"><a href="class_x_d_d_s_p_1_1_linear_envelope_follower.html#aa80e63f7db1276b5504f73e6922ea4d8">XDDSP::LinearEnvelopeFollower::stepProcess</a></div><div class="ttdeci">void stepProcess(int startPoint, int sampleCount)</div><div class="ttdoc">Is called repeatedly by Component::process with the start point incremented by step size....</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:963</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_output_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_output.html">XDDSP::Output</a></div><div class="ttdoc">An output which encapsulates an output buffer inside a coupler so that it can be readily connected to...</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:166</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a></div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:34</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a></div><div class="ttdoc">An object which encapsulates all of the basic parameters of a DSP network.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:35</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_data_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope_data.html">XDDSP::PiecewiseEnvelopeData</a></div><div class="ttdoc">A class containing a data structure to describe a piecewise envelope and code to synthesise the envel...</div><div class="ttdef"><b>Definition</b> XDDSP_PiecewiseEnvelopeData.h:72</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_html_a07cea5582725d7e65a567cc3e314ee24"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope.html#a07cea5582725d7e65a567cc3e314ee24">XDDSP::PiecewiseEnvelope::connect</a></div><div class="ttdeci">void connect(PiecewiseEnvelopeData &amp;data)</div><div class="ttdoc">Connect a XDDSP::PiecewiseEnvelopeData object.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:690</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_html_a1aab31859c145b1109d47021e64c0156"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope.html#a1aab31859c145b1109d47021e64c0156">XDDSP::PiecewiseEnvelope::stepProcess</a></div><div class="ttdeci">void stepProcess(int startPoint, int sampleCount)</div><div class="ttdoc">Is called repeatedly by Component::process with the start point incremented by step size....</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:760</div></div>
@@ -1257,6 +1257,14 @@ $(function(){initNavTree('_x_d_d_s_p___envelopes_8h_source.html','',''); });
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_ramp_to_html_af02732a5d2778c4d29802ad9d47b54f8"><div class="ttname"><a href="class_x_d_d_s_p_1_1_ramp_to.html#af02732a5d2778c4d29802ad9d47b54f8">XDDSP::RampTo::getControl</a></div><div class="ttdeci">SampleType getControl()</div><div class="ttdoc">Get the target value for the ramp on channel 0.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:253</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_trapezoid_html_aaf8a61e8ad2b3d0ad59367fd469a1d92"><div class="ttname"><a href="class_x_d_d_s_p_1_1_trapezoid.html#aaf8a61e8ad2b3d0ad59367fd469a1d92">XDDSP::Trapezoid::stepProcess</a></div><div class="ttdeci">void stepProcess(int startPoint, int sampleCount)</div><div class="ttdoc">Is called repeatedly by Component::process with the start point incremented by step size....</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:547</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_trapezoid_html_afebcbdfbac540964d261d7f4b9c9e406"><div class="ttname"><a href="class_x_d_d_s_p_1_1_trapezoid.html#afebcbdfbac540964d261d7f4b9c9e406">XDDSP::Trapezoid::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">This can be implemented to contain the code used to reset the component to a default known state.</div><div class="ttdef"><b>Definition</b> XDDSP_Envelopes.h:542</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html"><div class="ttname"><a href="namespace_x_d_d_s_p.html">XDDSP</a></div><div class="ttdef"><b>Definition</b> XDDSP_Analysis.h:28</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a13c3f9f1228f7211d9b338ce2a832858"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">XDDSP::fastBoundary</a></div><div class="ttdeci">SampleType fastBoundary(SampleType x, SampleType min, SampleType max)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of clamping a sample between between ...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:113</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a28800de13ab70bf12e6fb48746ca32b7"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">XDDSP::fastMax</a></div><div class="ttdeci">SampleType fastMax(SampleType a, SampleType b)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of computing the maximum between two ...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:74</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a4fc7aa4ea6fd39f42da645a95cd445bd"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">XDDSP::dB2Linear</a></div><div class="ttdeci">SampleType dB2Linear(SampleType dB)</div><div class="ttdoc">Convert a dB sample (measurement, gain etc.) to a linear sample.</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:155</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a70350ab317997473442253182bda40ef"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a70350ab317997473442253182bda40ef">XDDSP::dsp_assert</a></div><div class="ttdeci">void dsp_assert(bool condition)</div><div class="ttdoc">A static global method to enable assertion checking in debug builds.</div><div class="ttdef"><b>Definition</b> XDDSP_Types.h:109</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_aa44bb322023297302d2a7d1be3e79751"><div class="ttname"><a href="namespace_x_d_d_s_p.html#aa44bb322023297302d2a7d1be3e79751">XDDSP::expTrack</a></div><div class="ttdeci">void expTrack(SampleType &amp;value, SampleType target, SampleType factor)</div><div class="ttdoc">A quick method which takes a variable passed by reference and decays it towards the target at the giv...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:284</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_abf6c7288a1dc9d8d759f9569085b9bad"><div class="ttname"><a href="namespace_x_d_d_s_p.html#abf6c7288a1dc9d8d759f9569085b9bad">XDDSP::fastMin</a></div><div class="ttdeci">SampleType fastMin(SampleType a, SampleType b)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of computing the smaller of two sampl...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:93</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_ae86a3e6c2cb74bff4444cbca9fdbebc8"><div class="ttname"><a href="namespace_x_d_d_s_p.html#ae86a3e6c2cb74bff4444cbca9fdbebc8">XDDSP::expCoef</a></div><div class="ttdeci">SampleType expCoef(SampleType samples)</div><div class="ttdoc">Calculate an exponential decay coefficient that drops to 1% within a certain number of samples.</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:259</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

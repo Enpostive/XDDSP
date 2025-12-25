@@ -92,13 +92,18 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_poly_synth_parameters.html','','cl
   <div class="headertitle"><div class="title">XDDSP::PolySynthParameters Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>An extension of <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> that contains extra parameters suitable for a MIDI polyphonic synthesiser.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___polyphony_8h_source.html">XDDSP_Polyphony.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::PolySynthParameters:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_x_d_d_s_p_1_1_poly_synth_parameters.png" usemap="#XDDSP_3A_3APolySynthParameters_map" alt=""/>
   <map id="XDDSP_3A_3APolySynthParameters_map" name="XDDSP_3A_3APolySynthParameters_map">
-<area href="class_x_d_d_s_p_1_1_parameters.html" alt="XDDSP::Parameters" shape="rect" coords="0,0,182,24"/>
+<area href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network." alt="XDDSP::Parameters" shape="rect" coords="0,0,182,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -111,57 +116,58 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MIDILookup</b> = <a 
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a29756f23ae71dc83773363e8f4c7a7f7" id="r_a29756f23ae71dc83773363e8f4c7a7f7"><td class="memItemLeft" align="right" valign="top"><a id="a29756f23ae71dc83773363e8f4c7a7f7" name="a29756f23ae71dc83773363e8f4c7a7f7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setTuning</b> (SampleType a)</td></tr>
-<tr class="memitem:ad3477adde8183b500986b36ccc7afe87" id="r_ad3477adde8183b500986b36ccc7afe87"><td class="memItemLeft" align="right" valign="top"><a id="ad3477adde8183b500986b36ccc7afe87" name="ad3477adde8183b500986b36ccc7afe87"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPitchBendRange</b> (int pbr)</td></tr>
-<tr class="memitem:a189650a0b1360c1c759cc1a3816db5d3" id="r_a189650a0b1360c1c759cc1a3816db5d3"><td class="memItemLeft" align="right" valign="top"><a id="a189650a0b1360c1c759cc1a3816db5d3" name="a189650a0b1360c1c759cc1a3816db5d3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setGlissando</b> (bool g)</td></tr>
-<tr class="memitem:aebcbf5d1726bed7bca1ce5d1983f2f8a" id="r_aebcbf5d1726bed7bca1ce5d1983f2f8a"><td class="memItemLeft" align="right" valign="top"><a id="aebcbf5d1726bed7bca1ce5d1983f2f8a" name="aebcbf5d1726bed7bca1ce5d1983f2f8a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setLegato</b> (bool l)</td></tr>
-<tr class="memitem:adb40eb20ec4ba68ba3ac5649cb773cee" id="r_adb40eb20ec4ba68ba3ac5649cb773cee"><td class="memItemLeft" align="right" valign="top"><a id="adb40eb20ec4ba68ba3ac5649cb773cee" name="adb40eb20ec4ba68ba3ac5649cb773cee"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPortamenteauTime</b> (SampleType t)</td></tr>
-<tr class="memitem:a255e058a621d8504eaa844e491a8a04c" id="r_a255e058a621d8504eaa844e491a8a04c"><td class="memItemLeft" align="right" valign="top"><a id="a255e058a621d8504eaa844e491a8a04c" name="a255e058a621d8504eaa844e491a8a04c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pitchBendRange</b> () const</td></tr>
-<tr class="memitem:a6e973e1ef454d8e492eabcb0727db85f" id="r_a6e973e1ef454d8e492eabcb0727db85f"><td class="memItemLeft" align="right" valign="top"><a id="a6e973e1ef454d8e492eabcb0727db85f" name="a6e973e1ef454d8e492eabcb0727db85f"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>portamenteauTime</b> () const</td></tr>
-<tr class="memitem:ab8f6e0c7de3c44cd19601d5fcb8dd855" id="r_ab8f6e0c7de3c44cd19601d5fcb8dd855"><td class="memItemLeft" align="right" valign="top"><a id="ab8f6e0c7de3c44cd19601d5fcb8dd855" name="ab8f6e0c7de3c44cd19601d5fcb8dd855"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>portTimeSamples</b> () const</td></tr>
-<tr class="memitem:af7161201f0f4067390f1950b93e33f27" id="r_af7161201f0f4067390f1950b93e33f27"><td class="memItemLeft" align="right" valign="top"><a id="af7161201f0f4067390f1950b93e33f27" name="af7161201f0f4067390f1950b93e33f27"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>legato</b> () const</td></tr>
-<tr class="memitem:a8f286c5dcb602560ae49ecb8424da01a" id="r_a8f286c5dcb602560ae49ecb8424da01a"><td class="memItemLeft" align="right" valign="top"><a id="a8f286c5dcb602560ae49ecb8424da01a" name="a8f286c5dcb602560ae49ecb8424da01a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>glissando</b> () const</td></tr>
+<tr class="memitem:ad3477adde8183b500986b36ccc7afe87" id="r_ad3477adde8183b500986b36ccc7afe87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3477adde8183b500986b36ccc7afe87">setPitchBendRange</a> (int pbr)</td></tr>
+<tr class="memdesc:ad3477adde8183b500986b36ccc7afe87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the amount of pitch bend in response to pitch bend commands.  <br /></td></tr>
+<tr class="memitem:a189650a0b1360c1c759cc1a3816db5d3" id="r_a189650a0b1360c1c759cc1a3816db5d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a189650a0b1360c1c759cc1a3816db5d3">setGlissando</a> (bool g)</td></tr>
+<tr class="memdesc:a189650a0b1360c1c759cc1a3816db5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable glissando.  <br /></td></tr>
+<tr class="memitem:aebcbf5d1726bed7bca1ce5d1983f2f8a" id="r_aebcbf5d1726bed7bca1ce5d1983f2f8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebcbf5d1726bed7bca1ce5d1983f2f8a">setLegato</a> (bool l)</td></tr>
+<tr class="memdesc:aebcbf5d1726bed7bca1ce5d1983f2f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable legato.  <br /></td></tr>
+<tr class="memitem:adb40eb20ec4ba68ba3ac5649cb773cee" id="r_adb40eb20ec4ba68ba3ac5649cb773cee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb40eb20ec4ba68ba3ac5649cb773cee">setPortamenteauTime</a> (SampleType t)</td></tr>
+<tr class="memdesc:adb40eb20ec4ba68ba3ac5649cb773cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the time spent bending between notes in legato or glissando modes.  <br /></td></tr>
+<tr class="memitem:a255e058a621d8504eaa844e491a8a04c" id="r_a255e058a621d8504eaa844e491a8a04c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a255e058a621d8504eaa844e491a8a04c">pitchBendRange</a> () const</td></tr>
+<tr class="memdesc:a255e058a621d8504eaa844e491a8a04c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current pitch bend range setting.  <br /></td></tr>
+<tr class="memitem:a6e973e1ef454d8e492eabcb0727db85f" id="r_a6e973e1ef454d8e492eabcb0727db85f"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e973e1ef454d8e492eabcb0727db85f">portamenteauTime</a> () const</td></tr>
+<tr class="memdesc:a6e973e1ef454d8e492eabcb0727db85f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current portamenteau time in seconds.  <br /></td></tr>
+<tr class="memitem:ab8f6e0c7de3c44cd19601d5fcb8dd855" id="r_ab8f6e0c7de3c44cd19601d5fcb8dd855"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8f6e0c7de3c44cd19601d5fcb8dd855">portTimeSamples</a> () const</td></tr>
+<tr class="memdesc:ab8f6e0c7de3c44cd19601d5fcb8dd855"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current portamenteau time in samples.  <br /></td></tr>
+<tr class="memitem:af7161201f0f4067390f1950b93e33f27" id="r_af7161201f0f4067390f1950b93e33f27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7161201f0f4067390f1950b93e33f27">legato</a> () const</td></tr>
+<tr class="memdesc:af7161201f0f4067390f1950b93e33f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current legato setting.  <br /></td></tr>
+<tr class="memitem:a8f286c5dcb602560ae49ecb8424da01a" id="r_a8f286c5dcb602560ae49ecb8424da01a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f286c5dcb602560ae49ecb8424da01a">glissando</a> () const</td></tr>
+<tr class="memdesc:a8f286c5dcb602560ae49ecb8424da01a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current glissando setting.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_parameters"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_parameters')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a></td></tr>
-<tr class="memitem:a99a65beaa6968ea0ec2636325301e90c inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a99a65beaa6968ea0ec2636325301e90c"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSampleRate</b> (double newsr)</td></tr>
-<tr class="memitem:a1293245de556757f819c4d52179e24de inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a1293245de556757f819c4d52179e24de"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b> () const</td></tr>
-<tr class="memitem:a7369dcd69a0b11e42cde6e1e9cdb8263 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a7369dcd69a0b11e42cde6e1e9cdb8263"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSampleInterval</b> (double newisr)</td></tr>
-<tr class="memitem:a8ec98237861c0b5499a486c22fc7506d inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a8ec98237861c0b5499a486c22fc7506d"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>sampleInterval</b> () const</td></tr>
-<tr class="memitem:ad48ed9fba40257d8fe0730f5026485e0 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ad48ed9fba40257d8fe0730f5026485e0"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBufferSize</b> (int newbs)</td></tr>
-<tr class="memitem:a98cee80a745a644447d0860f5d3ece0a inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a98cee80a745a644447d0860f5d3ece0a"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToms</b> (double samples) const</td></tr>
-<tr class="memitem:ae3831879772676275f9361dd5af0f8df inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ae3831879772676275f9361dd5af0f8df"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>msToSamples</b> (double ms) const</td></tr>
-<tr class="memitem:a8392a7b9bdd5e1e0a5f07a78673ef5d7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a8392a7b9bdd5e1e0a5f07a78673ef5d7"><td class="memItemLeft" align="right" valign="top">
-int&#160;</td><td class="memItemRight" valign="bottom"><b>bufferSize</b> () const</td></tr>
-<tr class="memitem:a939bc6c7e889f2d50d9db216895c75ff inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a939bc6c7e889f2d50d9db216895c75ff"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setTransportInformation</b> (double tempo, double ppq, double seconds)</td></tr>
-<tr class="memitem:aa5c1b9b333cd6e253c35d71aa21079b5 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aa5c1b9b333cd6e253c35d71aa21079b5"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setTransportInformation</b> (Parameters &amp;p)</td></tr>
+<tr class="memitem:a99a65beaa6968ea0ec2636325301e90c inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a99a65beaa6968ea0ec2636325301e90c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a99a65beaa6968ea0ec2636325301e90c">setSampleRate</a> (double newsr)</td></tr>
+<tr class="memdesc:a99a65beaa6968ea0ec2636325301e90c inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the sample rate of the signal process.  <br /></td></tr>
+<tr class="memitem:a1293245de556757f819c4d52179e24de inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a1293245de556757f819c4d52179e24de"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a1293245de556757f819c4d52179e24de">sampleRate</a> () const</td></tr>
+<tr class="memdesc:a1293245de556757f819c4d52179e24de inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current sample rate.  <br /></td></tr>
+<tr class="memitem:a7369dcd69a0b11e42cde6e1e9cdb8263 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a7369dcd69a0b11e42cde6e1e9cdb8263"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a7369dcd69a0b11e42cde6e1e9cdb8263">setSampleInterval</a> (double newisr)</td></tr>
+<tr class="memdesc:a7369dcd69a0b11e42cde6e1e9cdb8263 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the sample rate by specifying a sample interval.  <br /></td></tr>
+<tr class="memitem:a8ec98237861c0b5499a486c22fc7506d inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a8ec98237861c0b5499a486c22fc7506d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a8ec98237861c0b5499a486c22fc7506d">sampleInterval</a> () const</td></tr>
+<tr class="memdesc:a8ec98237861c0b5499a486c22fc7506d inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current sample interval.  <br /></td></tr>
+<tr class="memitem:ad48ed9fba40257d8fe0730f5026485e0 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ad48ed9fba40257d8fe0730f5026485e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#ad48ed9fba40257d8fe0730f5026485e0">setBufferSize</a> (int newbs)</td></tr>
+<tr class="memdesc:ad48ed9fba40257d8fe0730f5026485e0 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the buffer size that can be expected by the network.  <br /></td></tr>
+<tr class="memitem:a98cee80a745a644447d0860f5d3ece0a inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a98cee80a745a644447d0860f5d3ece0a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a98cee80a745a644447d0860f5d3ece0a">samplesToms</a> (double samples) const</td></tr>
+<tr class="memdesc:a98cee80a745a644447d0860f5d3ece0a inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert samples to milliseconds using the current sample rate.  <br /></td></tr>
+<tr class="memitem:ae3831879772676275f9361dd5af0f8df inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ae3831879772676275f9361dd5af0f8df"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#ae3831879772676275f9361dd5af0f8df">msToSamples</a> (double ms) const</td></tr>
+<tr class="memdesc:ae3831879772676275f9361dd5af0f8df inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert miliseconds to samples using the current sample rate.  <br /></td></tr>
+<tr class="memitem:a8392a7b9bdd5e1e0a5f07a78673ef5d7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a8392a7b9bdd5e1e0a5f07a78673ef5d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a8392a7b9bdd5e1e0a5f07a78673ef5d7">bufferSize</a> () const</td></tr>
+<tr class="memdesc:a8392a7b9bdd5e1e0a5f07a78673ef5d7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current buffer size.  <br /></td></tr>
+<tr class="memitem:a939bc6c7e889f2d50d9db216895c75ff inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_a939bc6c7e889f2d50d9db216895c75ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#a939bc6c7e889f2d50d9db216895c75ff">setTransportInformation</a> (double tempo, double ppq, double seconds)</td></tr>
+<tr class="memdesc:a939bc6c7e889f2d50d9db216895c75ff inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the transport information.  <br /></td></tr>
+<tr class="memitem:aa5c1b9b333cd6e253c35d71aa21079b5 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aa5c1b9b333cd6e253c35d71aa21079b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#aa5c1b9b333cd6e253c35d71aa21079b5">setTransportInformation</a> (Parameters &amp;p)</td></tr>
+<tr class="memdesc:aa5c1b9b333cd6e253c35d71aa21079b5 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the transport information from another <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> object.  <br /></td></tr>
 <tr class="memitem:ae9ba29d0e8021bde5dd6e07a597c206c inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ae9ba29d0e8021bde5dd6e07a597c206c"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clearTransportInformation</b> ()</td></tr>
-<tr class="memitem:aaf1eef39514064bf7eb17132f1c57468 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aaf1eef39514064bf7eb17132f1c57468"><td class="memItemLeft" align="right" valign="top">
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>getTransportInformation</b> (double &amp;tempo, double &amp;ppq, double &amp;seconds) const</td></tr>
-<tr class="memitem:af4001a70be33ed38442371258327e47a inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_af4001a70be33ed38442371258327e47a"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getTempo</b> () const</td></tr>
-<tr class="memitem:aa6c3878d25a8bd2bbe4b03eb31ac2215 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aa6c3878d25a8bd2bbe4b03eb31ac2215"><td class="memItemLeft" align="right" valign="top">
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getSamplePosition</b> () const</td></tr>
-<tr class="memitem:ac6be5a11dba28b76e71d1aca332ab85d inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ac6be5a11dba28b76e71d1aca332ab85d"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSampleOffset</b> (unsigned int offset)</td></tr>
-<tr class="memitem:ab169e62420842f22ad4d87a3e6fbcf86 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ab169e62420842f22ad4d87a3e6fbcf86"><td class="memItemLeft" align="right" valign="top">
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>getSampleOffset</b> () const</td></tr>
+<tr class="memdesc:ae9ba29d0e8021bde5dd6e07a597c206c inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the flag which indicates that transport information is valid. <br /></td></tr>
+<tr class="memitem:aaf1eef39514064bf7eb17132f1c57468 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aaf1eef39514064bf7eb17132f1c57468"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#aaf1eef39514064bf7eb17132f1c57468">getTransportInformation</a> (double &amp;tempo, double &amp;ppq, double &amp;seconds) const</td></tr>
+<tr class="memdesc:aaf1eef39514064bf7eb17132f1c57468 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the most recent transport information notification.  <br /></td></tr>
+<tr class="memitem:af4001a70be33ed38442371258327e47a inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_af4001a70be33ed38442371258327e47a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#af4001a70be33ed38442371258327e47a">getTempo</a> () const</td></tr>
+<tr class="memdesc:af4001a70be33ed38442371258327e47a inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current song tempo.  <br /></td></tr>
+<tr class="memitem:aa6c3878d25a8bd2bbe4b03eb31ac2215 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_aa6c3878d25a8bd2bbe4b03eb31ac2215"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#aa6c3878d25a8bd2bbe4b03eb31ac2215">getSamplePosition</a> () const</td></tr>
+<tr class="memdesc:aa6c3878d25a8bd2bbe4b03eb31ac2215 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current song position in samples, using the current sample rate.  <br /></td></tr>
+<tr class="memitem:ac6be5a11dba28b76e71d1aca332ab85d inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ac6be5a11dba28b76e71d1aca332ab85d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#ac6be5a11dba28b76e71d1aca332ab85d">setSampleOffset</a> (unsigned int offset)</td></tr>
+<tr class="memdesc:ac6be5a11dba28b76e71d1aca332ab85d inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set an offset to add to the song position reports.  <br /></td></tr>
+<tr class="memitem:ab169e62420842f22ad4d87a3e6fbcf86 inherit pub_methods_class_x_d_d_s_p_1_1_parameters" id="r_ab169e62420842f22ad4d87a3e6fbcf86"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html#ab169e62420842f22ad4d87a3e6fbcf86">getSampleOffset</a> () const</td></tr>
+<tr class="memdesc:ab169e62420842f22ad4d87a3e6fbcf86 inherit pub_methods_class_x_d_d_s_p_1_1_parameters"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set an offset to add to the song position reports.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -177,6 +183,285 @@ static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>Built
 <tr class="memitem:a7ca41044d90a2d110bc3fb7fd82cfff6 inherit pro_methods_class_x_d_d_s_p_1_1_parameters" id="r_a7ca41044d90a2d110bc3fb7fd82cfff6"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCustomParameter</b> (int category, int index)</td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>An extension of <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> that contains extra parameters suitable for a MIDI polyphonic synthesiser. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a8f286c5dcb602560ae49ecb8424da01a" name="a8f286c5dcb602560ae49ecb8424da01a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f286c5dcb602560ae49ecb8424da01a">&#9670;&#160;</a></span>glissando()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool XDDSP::PolySynthParameters::glissando </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current glissando setting. </p>
+<dl class="section return"><dt>Returns</dt><dd>true Glissando enabled. </dd>
+<dd>
+false Glissando disabled. </dd></dl>
+
+</div>
+</div>
+<a id="af7161201f0f4067390f1950b93e33f27" name="af7161201f0f4067390f1950b93e33f27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7161201f0f4067390f1950b93e33f27">&#9670;&#160;</a></span>legato()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool XDDSP::PolySynthParameters::legato </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current legato setting. </p>
+<dl class="section return"><dt>Returns</dt><dd>true Legato enabled. </dd>
+<dd>
+false Legato disabled. </dd></dl>
+
+</div>
+</div>
+<a id="a255e058a621d8504eaa844e491a8a04c" name="a255e058a621d8504eaa844e491a8a04c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a255e058a621d8504eaa844e491a8a04c">&#9670;&#160;</a></span>pitchBendRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int XDDSP::PolySynthParameters::pitchBendRange </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current pitch bend range setting. </p>
+<dl class="section return"><dt>Returns</dt><dd>int The pitch bend in semitones. </dd></dl>
+
+</div>
+</div>
+<a id="a6e973e1ef454d8e492eabcb0727db85f" name="a6e973e1ef454d8e492eabcb0727db85f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e973e1ef454d8e492eabcb0727db85f">&#9670;&#160;</a></span>portamenteauTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType XDDSP::PolySynthParameters::portamenteauTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current portamenteau time in seconds. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The current portamenteau time in seconds. </dd></dl>
+
+</div>
+</div>
+<a id="ab8f6e0c7de3c44cd19601d5fcb8dd855" name="ab8f6e0c7de3c44cd19601d5fcb8dd855"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8f6e0c7de3c44cd19601d5fcb8dd855">&#9670;&#160;</a></span>portTimeSamples()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int XDDSP::PolySynthParameters::portTimeSamples </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the current portamenteau time in samples. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The current portamenteau time in samples. </dd></dl>
+
+</div>
+</div>
+<a id="a189650a0b1360c1c759cc1a3816db5d3" name="a189650a0b1360c1c759cc1a3816db5d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a189650a0b1360c1c759cc1a3816db5d3">&#9670;&#160;</a></span>setGlissando()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PolySynthParameters::setGlissando </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>g</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable or disable glissando. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">g</td><td>True to enable, false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aebcbf5d1726bed7bca1ce5d1983f2f8a" name="aebcbf5d1726bed7bca1ce5d1983f2f8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebcbf5d1726bed7bca1ce5d1983f2f8a">&#9670;&#160;</a></span>setLegato()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PolySynthParameters::setLegato </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>l</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable or disable legato. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>True to enable, false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3477adde8183b500986b36ccc7afe87" name="ad3477adde8183b500986b36ccc7afe87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3477adde8183b500986b36ccc7afe87">&#9670;&#160;</a></span>setPitchBendRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PolySynthParameters::setPitchBendRange </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>pbr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the amount of pitch bend in response to pitch bend commands. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pbr</td><td><a class="el" href="class_x_d_d_s_p_1_1_maximum.html" title="A component which takes multiple signals and outputs the signal which has the highest level.">Maximum</a> pitch bend in semitones. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adb40eb20ec4ba68ba3ac5649cb773cee" name="adb40eb20ec4ba68ba3ac5649cb773cee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb40eb20ec4ba68ba3ac5649cb773cee">&#9670;&#160;</a></span>setPortamenteauTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PolySynthParameters::setPortamenteauTime </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the time spent bending between notes in legato or glissando modes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Portamenteau time in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___polyphony_8h_source.html">XDDSP_Polyphony.h</a></li>
 </ul>
@@ -193,7 +478,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCustomParameter
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_poly_synth_parameters.html">PolySynthParameters</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_poly_synth_parameters.html">PolySynthParameters</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_convolution_filter.html','','class
   <div class="headertitle"><div class="title">XDDSP::ConvolutionFilter&lt; SignalIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component for performing convolution on an input signal.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___f_f_t_8h_source.html">XDDSP_FFT.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::ConvolutionFilter&lt; SignalIn &gt;:</div>
 <div class="dyncontent">
@@ -99,7 +104,7 @@ Inheritance diagram for XDDSP::ConvolutionFilter&lt; SignalIn &gt;:</div>
   <img src="class_x_d_d_s_p_1_1_convolution_filter.png" usemap="#XDDSP_3A_3AConvolutionFilter_3C_20SignalIn_20_3E_map" alt=""/>
   <map id="XDDSP_3A_3AConvolutionFilter_3C_20SignalIn_20_3E_map" name="XDDSP_3A_3AConvolutionFilter_3C_20SignalIn_20_3E_map">
 <area href="class_x_d_d_s_p_1_1_component.html" alt="XDDSP::Component&lt; ConvolutionFilter&lt; SignalIn &gt; &gt;" shape="rect" coords="0,56,313,80"/>
-<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="323,56,636,80"/>
+<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object." alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="323,56,636,80"/>
 <area href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to..." alt="XDDSP::ComponentBaseClass" shape="rect" coords="0,0,313,24"/>
   </map>
 </div></div>
@@ -112,17 +117,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a213f98fb70efb4fcad8f784fac03a902"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:a5a662845c9f51e1100baaa666c08862d" id="r_a5a662845c9f51e1100baaa666c08862d"><td class="memItemLeft" align="right" valign="top"><a id="a5a662845c9f51e1100baaa666c08862d" name="a5a662845c9f51e1100baaa666c08862d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetConvolution</b> ()</td></tr>
-<tr class="memitem:a3547636bf444f76735f99d463b38b361" id="r_a3547636bf444f76735f99d463b38b361"><td class="memItemLeft" align="right" valign="top"><a id="a3547636bf444f76735f99d463b38b361" name="a3547636bf444f76735f99d463b38b361"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setImpulse</b> (int index, SampleType *data, unsigned int length)</td></tr>
+<tr class="memdesc:a5a662845c9f51e1100baaa666c08862d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the convolution engines, unload the impulse response samples and bypass the component. <br /></td></tr>
+<tr class="memitem:a3547636bf444f76735f99d463b38b361" id="r_a3547636bf444f76735f99d463b38b361"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3547636bf444f76735f99d463b38b361">setImpulse</a> (int index, SampleType *data, unsigned int length)</td></tr>
+<tr class="memdesc:a3547636bf444f76735f99d463b38b361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the impulse response data for one channel.  <br /></td></tr>
 <tr class="memitem:af331668aa8c4dfbba940d8eb0b57bedc" id="r_af331668aa8c4dfbba940d8eb0b57bedc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af331668aa8c4dfbba940d8eb0b57bedc">updateBufferSize</a> (int bs) override</td></tr>
-<tr class="memitem:a52d7dcb1c939226b0bd0de4bcfca015c" id="r_a52d7dcb1c939226b0bd0de4bcfca015c"><td class="memItemLeft" align="right" valign="top"><a id="a52d7dcb1c939226b0bd0de4bcfca015c" name="a52d7dcb1c939226b0bd0de4bcfca015c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isInitlialised</b> () const</td></tr>
-<tr class="memitem:aa1342b748e937f95dadd15a1c8ec8124" id="r_aa1342b748e937f95dadd15a1c8ec8124"><td class="memItemLeft" align="right" valign="top"><a id="aa1342b748e937f95dadd15a1c8ec8124" name="aa1342b748e937f95dadd15a1c8ec8124"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFFTHint</b> (unsigned int hint)</td></tr>
-<tr class="memitem:a54e32ab6433a1d4f7a412f1a04eda9fa" id="r_a54e32ab6433a1d4f7a412f1a04eda9fa"><td class="memItemLeft" align="right" valign="top"><a id="a54e32ab6433a1d4f7a412f1a04eda9fa" name="a54e32ab6433a1d4f7a412f1a04eda9fa"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getFFTSize</b> () const</td></tr>
-<tr class="memitem:a72566e00c2d15e6ae0363c49035a6c63" id="r_a72566e00c2d15e6ae0363c49035a6c63"><td class="memItemLeft" align="right" valign="top"><a id="a72566e00c2d15e6ae0363c49035a6c63" name="a72566e00c2d15e6ae0363c49035a6c63"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initialiseConvolution</b> ()</td></tr>
+<tr class="memdesc:af331668aa8c4dfbba940d8eb0b57bedc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the buffer size.  <br /></td></tr>
+<tr class="memitem:a52d7dcb1c939226b0bd0de4bcfca015c" id="r_a52d7dcb1c939226b0bd0de4bcfca015c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52d7dcb1c939226b0bd0de4bcfca015c">isInitlialised</a> () const</td></tr>
+<tr class="memdesc:a52d7dcb1c939226b0bd0de4bcfca015c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the convolution engine is fully initialised.  <br /></td></tr>
+<tr class="memitem:aa1342b748e937f95dadd15a1c8ec8124" id="r_aa1342b748e937f95dadd15a1c8ec8124"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1342b748e937f95dadd15a1c8ec8124">setFFTHint</a> (unsigned int hint)</td></tr>
+<tr class="memdesc:aa1342b748e937f95dadd15a1c8ec8124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a hint for the FFT size to be used by the convolution engine.  <br /></td></tr>
+<tr class="memitem:a54e32ab6433a1d4f7a412f1a04eda9fa" id="r_a54e32ab6433a1d4f7a412f1a04eda9fa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54e32ab6433a1d4f7a412f1a04eda9fa">getFFTSize</a> () const</td></tr>
+<tr class="memdesc:a54e32ab6433a1d4f7a412f1a04eda9fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current size of the FFT chunk being used by the convolution engine.  <br /></td></tr>
+<tr class="memitem:a72566e00c2d15e6ae0363c49035a6c63" id="r_a72566e00c2d15e6ae0363c49035a6c63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72566e00c2d15e6ae0363c49035a6c63">initialiseConvolution</a> ()</td></tr>
+<tr class="memdesc:a72566e00c2d15e6ae0363c49035a6c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare for convolution.  <br /></td></tr>
 <tr class="memitem:ad9d264a42dd701a22f960da16588ff9a" id="r_ad9d264a42dd701a22f960da16588ff9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9d264a42dd701a22f960da16588ff9a">stepProcess</a> (int startPoint, int sampleCount) override</td></tr>
 <tr class="memdesc:ad9d264a42dd701a22f960da16588ff9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; ConvolutionFilter&lt; SignalIn &gt; &gt;</a></td></tr>
@@ -140,12 +147,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>initialiseConvolution
 <tr class="memitem:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class" id="r_a15b536e90f03eaa4c18bfe37d07370d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#a15b536e90f03eaa4c18bfe37d07370d5">setEnabled</a> (bool e)</td></tr>
 <tr class="memdesc:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether the component is enabled or not.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a></td></tr>
-<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>ParameterListener</b> (Parameters &amp;p)</td></tr>
-<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSampleRate</b> (double sr, double isr)</td></tr>
-<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCustomParameter</b> (int category, int index)</td></tr>
+<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a26d1f9d7e8b523a290bfdc81794b42d9">ParameterListener</a> (Parameters &amp;p)</td></tr>
+<tr class="memdesc:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object.">ParameterListener</a> object and add this as a listener.  <br /></td></tr>
+<tr class="memitem:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_af1e818d978468f5a85eb1d49fa5fdfe7"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ParameterListener</b> ()</td></tr>
+<tr class="memdesc:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Parameter Listener object and remove this from the listeners list. <br /></td></tr>
+<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#abf0c32c9a053315ed00cfd95712d4733">updateSampleRate</a> (double sr, double isr)</td></tr>
+<tr class="memdesc:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the sample rate.  <br /></td></tr>
+<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a932121d85708e6573b87dbf7d90d2b78">updateCustomParameter</a> (int category, int index)</td></tr>
+<tr class="memdesc:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to any custom parameter.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -168,7 +178,110 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn&gt;<br />
+class XDDSP::ConvolutionFilter&lt; SignalIn &gt;</div><p>A component for performing convolution on an input signal. </p>
+<p>This component can handle mono or multi-channel impulse responses. Upon construction, the convolution engine starts multiple threads to perform background processing on signal data. These threads are automatically stopped upon destruction of the component, however they currently wait on the stopping thread indefinitely, so a stuck thread might result in a hang.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to the input signal. Can have as many channels as you like. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a54e32ab6433a1d4f7a412f1a04eda9fa" name="a54e32ab6433a1d4f7a412f1a04eda9fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54e32ab6433a1d4f7a412f1a04eda9fa">&#9670;&#160;</a></span>getFFTSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_x_d_d_s_p_1_1_convolution_filter.html">XDDSP::ConvolutionFilter</a>&lt; SignalIn &gt;::getFFTSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the current size of the FFT chunk being used by the convolution engine. </p>
+<dl class="section return"><dt>Returns</dt><dd>int The current size of the FFT chunk being used by the convolution engine. It may or may not be equal to the FFT hint provided. </dd></dl>
+
+</div>
+</div>
+<a id="a72566e00c2d15e6ae0363c49035a6c63" name="a72566e00c2d15e6ae0363c49035a6c63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72566e00c2d15e6ae0363c49035a6c63">&#9670;&#160;</a></span>initialiseConvolution()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_filter.html">XDDSP::ConvolutionFilter</a>&lt; SignalIn &gt;::initialiseConvolution </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Prepare for convolution. </p>
+<p>Call this method after setting all convolution parameters and loading the impulse response data. This must be called again if new impulse response data is loaded. It is automatically called whenever the buffer size or fft hints are changed. </p>
+
+</div>
+</div>
+<a id="a52d7dcb1c939226b0bd0de4bcfca015c" name="a52d7dcb1c939226b0bd0de4bcfca015c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52d7dcb1c939226b0bd0de4bcfca015c">&#9670;&#160;</a></span>isInitlialised()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_x_d_d_s_p_1_1_convolution_filter.html">XDDSP::ConvolutionFilter</a>&lt; SignalIn &gt;::isInitlialised </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether the convolution engine is fully initialised. </p>
+<p>When the engine is fully initialised then convolution happens, otherwise this component will feed its input straight into its output.</p>
+<dl class="section return"><dt>Returns</dt><dd>true If it is initialised. </dd>
+<dd>
+false If it is not initialised. </dd></dl>
+
+</div>
+</div>
 <a id="a213f98fb70efb4fcad8f784fac03a902" name="a213f98fb70efb4fcad8f784fac03a902"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a213f98fb70efb4fcad8f784fac03a902">&#9670;&#160;</a></span>reset()</h2>
 
@@ -195,8 +308,92 @@ template&lt;typename SignalIn&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; ConvolutionFilter&lt; SignalIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="aa1342b748e937f95dadd15a1c8ec8124" name="aa1342b748e937f95dadd15a1c8ec8124"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1342b748e937f95dadd15a1c8ec8124">&#9670;&#160;</a></span>setFFTHint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_filter.html">XDDSP::ConvolutionFilter</a>&lt; SignalIn &gt;::setFFTHint </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>hint</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set a hint for the FFT size to be used by the convolution engine. </p>
+<p>The convolution engine uses FFT to speed up the convolution algorithm. Some systems may perform better with smaller or larger FFT size chunks. This method provides a way to set the FFT size in order to find the optimal size. Calling this will cause the engine to be reinitialised immediately.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hint</td><td>A hint for the convolution engine about what might be the optimal size for the FFT. This can be any number, and the convolution engine might ignore the value. It is internally rounded to a power of 2. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3547636bf444f76735f99d463b38b361" name="a3547636bf444f76735f99d463b38b361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3547636bf444f76735f99d463b38b361">&#9670;&#160;</a></span>setImpulse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_filter.html">XDDSP::ConvolutionFilter</a>&lt; SignalIn &gt;::setImpulse </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the impulse response data for one channel. </p>
+<p>Set the impulse response samples with this method first, then call <a class="el" href="#a72566e00c2d15e6ae0363c49035a6c63" title="Prepare for convolution.">ConvolutionFilter::initialiseConvolution</a> to load the impulse response samples into the convolution engine. You must load a sample into index 0 at a minimum otherwise initialisation will fail. Each index corresponds to a channel (ie. left/right/other). If any indexes are left empty, that channel is loaded with the sample in index 0 at initialisation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index to load this sample into. There is one index for each channel. </td></tr>
+    <tr><td class="paramname">data</td><td>A pointer to the sample data. </td></tr>
+    <tr><td class="paramname">length</td><td>The length of the sample data. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -267,7 +464,16 @@ template&lt;typename SignalIn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a>.</p>
+<p>Get notified of an update to the buffer size. </p>
+<p>Your class should override this method with its own method to be updated with buffer size changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bs</td><td>The new buffer size. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a08798bf96e26f72768c42821535e5374">XDDSP::Parameters::ParameterListener</a>.</p>
 
 </div>
 </div>
@@ -287,7 +493,7 @@ template&lt;typename SignalIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_convolution_filter.html">ConvolutionFilter</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_convolution_filter.html">ConvolutionFilter</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

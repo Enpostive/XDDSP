@@ -92,28 +92,308 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution
   <div class="headertitle"><div class="title">XDDSP::ConvolutionEngine::ConvolutionEngine&lt; ConnectorChannelCount &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>An internal class which encapsulates a convolution engine for one signal.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___f_f_t_8h_source.html">XDDSP_FFT.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1e69f6168bb2b1be0726258eb899c66c" id="r_a1e69f6168bb2b1be0726258eb899c66c"><td class="memTemplParams" colspan="2"><a id="a1e69f6168bb2b1be0726258eb899c66c" name="a1e69f6168bb2b1be0726258eb899c66c"></a>
-template&lt;typename Source&gt; </td></tr>
-<tr class="memitem:a1e69f6168bb2b1be0726258eb899c66c template"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>ConvolutionEngine</b> (<a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_parameters.html">ConvolutionParameters</a> &amp;cp, <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a>&lt; Source, ConnectorChannelCount &gt; &amp;c)</td></tr>
-<tr class="memitem:a087afe37e524c8b99ed95920f30f52e4" id="r_a087afe37e524c8b99ed95920f30f52e4"><td class="memItemLeft" align="right" valign="top"><a id="a087afe37e524c8b99ed95920f30f52e4" name="a087afe37e524c8b99ed95920f30f52e4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ConvolutionEngine</b> (ConvolutionEngine &amp;&amp;rhs)</td></tr>
-<tr class="memitem:a030ba1d9186e8cc9d0b7fb6bc9214f22" id="r_a030ba1d9186e8cc9d0b7fb6bc9214f22"><td class="memItemLeft" align="right" valign="top"><a id="a030ba1d9186e8cc9d0b7fb6bc9214f22" name="a030ba1d9186e8cc9d0b7fb6bc9214f22"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setImpulseResponse</b> (<a class="el" href="struct_x_d_d_s_p_1_1_convolution_engine_1_1_impulse_response.html">ImpulseResponse</a> &amp;impulse)</td></tr>
-<tr class="memitem:acfc03d50226dda67953c7d2ad6c5f573" id="r_acfc03d50226dda67953c7d2ad6c5f573"><td class="memItemLeft" align="right" valign="top"><a id="acfc03d50226dda67953c7d2ad6c5f573" name="acfc03d50226dda67953c7d2ad6c5f573"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initialise</b> ()</td></tr>
-<tr class="memitem:a1fe3b6558144b419f1bd679ca0fc0502" id="r_a1fe3b6558144b419f1bd679ca0fc0502"><td class="memItemLeft" align="right" valign="top"><a id="a1fe3b6558144b419f1bd679ca0fc0502" name="a1fe3b6558144b419f1bd679ca0fc0502"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
-<tr class="memitem:a338d1761796779fc2eac813318891231" id="r_a338d1761796779fc2eac813318891231"><td class="memItemLeft" align="right" valign="top"><a id="a338d1761796779fc2eac813318891231" name="a338d1761796779fc2eac813318891231"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>processSamples</b> (int channel, int startPoint, SampleType *output, unsigned int sampleCount)</td></tr>
+<tr class="memitem:a1e69f6168bb2b1be0726258eb899c66c" id="r_a1e69f6168bb2b1be0726258eb899c66c"><td class="memTemplParams" colspan="2">template&lt;typename Source&gt; </td></tr>
+<tr class="memitem:a1e69f6168bb2b1be0726258eb899c66c template"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e69f6168bb2b1be0726258eb899c66c">ConvolutionEngine</a> (<a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_parameters.html">ConvolutionParameters</a> &amp;cp, <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a>&lt; Source, ConnectorChannelCount &gt; &amp;c)</td></tr>
+<tr class="memdesc:a1e69f6168bb2b1be0726258eb899c66c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Convolution Engine object.  <br /></td></tr>
+<tr class="memitem:a087afe37e524c8b99ed95920f30f52e4" id="r_a087afe37e524c8b99ed95920f30f52e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a087afe37e524c8b99ed95920f30f52e4">ConvolutionEngine</a> (ConvolutionEngine &amp;&amp;rhs)</td></tr>
+<tr class="memdesc:a087afe37e524c8b99ed95920f30f52e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a copy of a Convolution Engine object.  <br /></td></tr>
+<tr class="memitem:ab33ca15cdcf294a4d1e185df20cd6de3" id="r_ab33ca15cdcf294a4d1e185df20cd6de3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab33ca15cdcf294a4d1e185df20cd6de3">~ConvolutionEngine</a> ()</td></tr>
+<tr class="memdesc:ab33ca15cdcf294a4d1e185df20cd6de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the processing thread, then destroy the Convolution Engine object.  <br /></td></tr>
+<tr class="memitem:a030ba1d9186e8cc9d0b7fb6bc9214f22" id="r_a030ba1d9186e8cc9d0b7fb6bc9214f22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a030ba1d9186e8cc9d0b7fb6bc9214f22">setImpulseResponse</a> (<a class="el" href="struct_x_d_d_s_p_1_1_convolution_engine_1_1_impulse_response.html">ImpulseResponse</a> &amp;impulse)</td></tr>
+<tr class="memdesc:a030ba1d9186e8cc9d0b7fb6bc9214f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Impulse Response object.  <br /></td></tr>
+<tr class="memitem:acfc03d50226dda67953c7d2ad6c5f573" id="r_acfc03d50226dda67953c7d2ad6c5f573"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfc03d50226dda67953c7d2ad6c5f573">initialise</a> ()</td></tr>
+<tr class="memdesc:acfc03d50226dda67953c7d2ad6c5f573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the convolution engine.  <br /></td></tr>
+<tr class="memitem:a1fe3b6558144b419f1bd679ca0fc0502" id="r_a1fe3b6558144b419f1bd679ca0fc0502"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe3b6558144b419f1bd679ca0fc0502">reset</a> ()</td></tr>
+<tr class="memdesc:a1fe3b6558144b419f1bd679ca0fc0502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the convolution engine.  <br /></td></tr>
+<tr class="memitem:a338d1761796779fc2eac813318891231" id="r_a338d1761796779fc2eac813318891231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a338d1761796779fc2eac813318891231">processSamples</a> (int channel, int startPoint, SampleType *output, unsigned int sampleCount)</td></tr>
+<tr class="memdesc:a338d1761796779fc2eac813318891231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process some samples from the input.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a22bf39f668fa4e67296d0fdbaf548cec" id="r_a22bf39f668fa4e67296d0fdbaf548cec"><td class="memItemLeft" align="right" valign="top"><a id="a22bf39f668fa4e67296d0fdbaf548cec" name="a22bf39f668fa4e67296d0fdbaf548cec"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_p_connector.html">PConnector</a>&lt; ConnectorChannelCount &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalIn</b></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;int ConnectorChannelCount&gt;<br />
+class XDDSP::ConvolutionEngine::ConvolutionEngine&lt; ConnectorChannelCount &gt;</div><p>An internal class which encapsulates a convolution engine for one signal. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ConnectorChannelCount</td><td>The expected channel count of the input signal. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1e69f6168bb2b1be0726258eb899c66c" name="a1e69f6168bb2b1be0726258eb899c66c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e69f6168bb2b1be0726258eb899c66c">&#9670;&#160;</a></span>ConvolutionEngine() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<div class="memtemplate">
+template&lt;typename Source&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::ConvolutionEngine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_parameters.html">ConvolutionParameters</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>cp</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a>&lt; Source, ConnectorChannelCount &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Convolution Engine object. </p>
+<p>The convolution engine starts a thread upon construction. The thread waits on an internal structure for data to process.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Source</td><td>The source of the connection, inferred from the parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cp</td><td>The convolution parameters object. </td></tr>
+    <tr><td class="paramname">c</td><td>The coupler to take input from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a087afe37e524c8b99ed95920f30f52e4" name="a087afe37e524c8b99ed95920f30f52e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087afe37e524c8b99ed95920f30f52e4">&#9670;&#160;</a></span>ConvolutionEngine() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::ConvolutionEngine </td>
+          <td>(</td>
+          <td class="paramtype">ConvolutionEngine&lt; ConnectorChannelCount &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a copy of a Convolution Engine object. </p>
+<p>The convolution engine starts a thread upon construction. The thread waits on an internal structure for data to process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>The other object to copy from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab33ca15cdcf294a4d1e185df20cd6de3" name="ab33ca15cdcf294a4d1e185df20cd6de3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab33ca15cdcf294a4d1e185df20cd6de3">&#9670;&#160;</a></span>~ConvolutionEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::~<a class="el" href="#a1e69f6168bb2b1be0726258eb899c66c">ConvolutionEngine</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop the processing thread, then destroy the Convolution Engine object. </p>
+<p>Currently, this object waits for the processing thread to finish with no time out. TODO: Add a timeout for the process thread wait. </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="acfc03d50226dda67953c7d2ad6c5f573" name="acfc03d50226dda67953c7d2ad6c5f573"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfc03d50226dda67953c7d2ad6c5f573">&#9670;&#160;</a></span>initialise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::initialise </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialise the convolution engine. </p>
+<p>Initialises and resets the convolution engine. This needs to be called whenever any of the convolution parameters are changed. </p>
+
+</div>
+</div>
+<a id="a338d1761796779fc2eac813318891231" name="a338d1761796779fc2eac813318891231"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a338d1761796779fc2eac813318891231">&#9670;&#160;</a></span>processSamples()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::processSamples </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>startPoint</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType *</td>          <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>sampleCount</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Process some samples from the input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>Which channel to process. </td></tr>
+    <tr><td class="paramname">startPoint</td><td>The start point in the channel. </td></tr>
+    <tr><td class="paramname">output</td><td>A pointer to an output buffer. </td></tr>
+    <tr><td class="paramname">sampleCount</td><td>How many samples to process. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1fe3b6558144b419f1bd679ca0fc0502" name="a1fe3b6558144b419f1bd679ca0fc0502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe3b6558144b419f1bd679ca0fc0502">&#9670;&#160;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::reset </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset the convolution engine. </p>
+<p>Performs a quick reset. Call this to clear the internal buffers and reset the convolution process, without doing all the extra work needed when convolution parameters are changed. </p>
+
+</div>
+</div>
+<a id="a030ba1d9186e8cc9d0b7fb6bc9214f22" name="a030ba1d9186e8cc9d0b7fb6bc9214f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a030ba1d9186e8cc9d0b7fb6bc9214f22">&#9670;&#160;</a></span>setImpulseResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int ConnectorChannelCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">XDDSP::ConvolutionEngine::ConvolutionEngine</a>&lt; ConnectorChannelCount &gt;::setImpulseResponse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_x_d_d_s_p_1_1_convolution_engine_1_1_impulse_response.html">ImpulseResponse</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>impulse</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Impulse Response object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">impulse</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___f_f_t_8h_source.html">XDDSP_FFT.h</a></li>
 </ul>
@@ -130,7 +410,7 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><b>ConvolutionEngine</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">ConvolutionEngine</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="namespace_x_d_d_s_p_1_1_convolution_engine.html">ConvolutionEngine</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html">ConvolutionEngine</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

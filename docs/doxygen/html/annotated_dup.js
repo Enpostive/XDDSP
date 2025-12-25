@@ -1,25 +1,25 @@
 var annotated_dup =
 [
-    [ "XDDSP", null, [
-      [ "ConvolutionEngine", null, [
-        [ "KernelContainer", "struct_x_d_d_s_p_1_1_convolution_engine_1_1_kernel_container.html", null ],
+    [ "XDDSP", "namespace_x_d_d_s_p.html", [
+      [ "ConvolutionEngine", "namespace_x_d_d_s_p_1_1_convolution_engine.html", [
+        [ "KernelContainer", "struct_x_d_d_s_p_1_1_convolution_engine_1_1_kernel_container.html", "struct_x_d_d_s_p_1_1_convolution_engine_1_1_kernel_container" ],
         [ "ConvolutionParameters", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_parameters.html", null ],
         [ "ImpulseResponse", "struct_x_d_d_s_p_1_1_convolution_engine_1_1_impulse_response.html", null ],
-        [ "ConvolutionEngine", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html", null ]
+        [ "ConvolutionEngine", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine" ]
       ] ],
-      [ "FIRImpulses", null, [
+      [ "FIRImpulses", "namespace_x_d_d_s_p_1_1_f_i_r_impulses.html", [
         [ "ImpulseBaseClass", "class_x_d_d_s_p_1_1_f_i_r_impulses_1_1_impulse_base_class.html", null ],
         [ "LowPass", "class_x_d_d_s_p_1_1_f_i_r_impulses_1_1_low_pass.html", null ],
         [ "HighPass", "class_x_d_d_s_p_1_1_f_i_r_impulses_1_1_high_pass.html", null ],
         [ "BandPass", "class_x_d_d_s_p_1_1_f_i_r_impulses_1_1_band_pass.html", null ]
       ] ],
-      [ "MixingLaws", null, [
+      [ "MixingLaws", "namespace_x_d_d_s_p_1_1_mixing_laws.html", [
         [ "LinearFadeLaw", "struct_x_d_d_s_p_1_1_mixing_laws_1_1_linear_fade_law.html", null ],
         [ "EqualPowerLaw", "struct_x_d_d_s_p_1_1_mixing_laws_1_1_equal_power_law.html", null ],
         [ "FullMiddleLaw", "struct_x_d_d_s_p_1_1_mixing_laws_1_1_full_middle_law.html", null ]
       ] ],
-      [ "WindowFunction", null, [
-        [ "Rectangle", "class_x_d_d_s_p_1_1_window_function_1_1_rectangle.html", null ],
+      [ "WindowFunction", "namespace_x_d_d_s_p_1_1_window_function.html", [
+        [ "Rectangle", "class_x_d_d_s_p_1_1_window_function_1_1_rectangle.html", "class_x_d_d_s_p_1_1_window_function_1_1_rectangle" ],
         [ "Triangle", "class_x_d_d_s_p_1_1_window_function_1_1_triangle.html", null ],
         [ "Welch", "class_x_d_d_s_p_1_1_window_function_1_1_welch.html", null ],
         [ "Sine", "class_x_d_d_s_p_1_1_window_function_1_1_sine.html", null ],
@@ -36,7 +36,7 @@ var annotated_dup =
       [ "DynamicCircularBuffer", "class_x_d_d_s_p_1_1_dynamic_circular_buffer.html", "class_x_d_d_s_p_1_1_dynamic_circular_buffer" ],
       [ "ModulusCircularBuffer", "class_x_d_d_s_p_1_1_modulus_circular_buffer.html", "class_x_d_d_s_p_1_1_modulus_circular_buffer" ],
       [ "Coupler", "class_x_d_d_s_p_1_1_coupler.html", "class_x_d_d_s_p_1_1_coupler" ],
-      [ "OutputBuffer", "class_x_d_d_s_p_1_1_output_buffer.html", null ],
+      [ "OutputBuffer", "class_x_d_d_s_p_1_1_output_buffer.html", "class_x_d_d_s_p_1_1_output_buffer" ],
       [ "Output", "class_x_d_d_s_p_1_1_output.html", "class_x_d_d_s_p_1_1_output" ],
       [ "ComponentBaseClass", "class_x_d_d_s_p_1_1_component_base_class.html", "class_x_d_d_s_p_1_1_component_base_class" ],
       [ "Component", "class_x_d_d_s_p_1_1_component.html", "class_x_d_d_s_p_1_1_component" ],
@@ -54,8 +54,8 @@ var annotated_dup =
       [ "ExponentialEnvelopeFollower", "class_x_d_d_s_p_1_1_exponential_envelope_follower.html", "class_x_d_d_s_p_1_1_exponential_envelope_follower" ],
       [ "LinearEnvelopeFollower", "class_x_d_d_s_p_1_1_linear_envelope_follower.html", "class_x_d_d_s_p_1_1_linear_envelope_follower" ],
       [ "DynamicsProcessingGainSignal", "class_x_d_d_s_p_1_1_dynamics_processing_gain_signal.html", "class_x_d_d_s_p_1_1_dynamics_processing_gain_signal" ],
-      [ "AutoCorrelator", "class_x_d_d_s_p_1_1_auto_correlator.html", null ],
-      [ "DynamicAutoCorrelator", "class_x_d_d_s_p_1_1_dynamic_auto_correlator.html", null ],
+      [ "AutoCorrelator", "class_x_d_d_s_p_1_1_auto_correlator.html", "class_x_d_d_s_p_1_1_auto_correlator" ],
+      [ "DynamicAutoCorrelator", "class_x_d_d_s_p_1_1_dynamic_auto_correlator.html", "class_x_d_d_s_p_1_1_dynamic_auto_correlator" ],
       [ "ConvolutionFilter", "class_x_d_d_s_p_1_1_convolution_filter.html", "class_x_d_d_s_p_1_1_convolution_filter" ],
       [ "OnePoleAveragingFilter", "class_x_d_d_s_p_1_1_one_pole_averaging_filter.html", "class_x_d_d_s_p_1_1_one_pole_averaging_filter" ],
       [ "StaticBiquad", "class_x_d_d_s_p_1_1_static_biquad.html", "class_x_d_d_s_p_1_1_static_biquad" ],
@@ -64,13 +64,13 @@ var annotated_dup =
       [ "FIRHilbertTransform", "class_x_d_d_s_p_1_1_f_i_r_hilbert_transform.html", "class_x_d_d_s_p_1_1_f_i_r_hilbert_transform" ],
       [ "ConvolutionHilbertFilter", "class_x_d_d_s_p_1_1_convolution_hilbert_filter.html", "class_x_d_d_s_p_1_1_convolution_hilbert_filter" ],
       [ "IIRHilbertApproximator", "class_x_d_d_s_p_1_1_i_i_r_hilbert_approximator.html", "class_x_d_d_s_p_1_1_i_i_r_hilbert_approximator" ],
-      [ "MinMax", "class_x_d_d_s_p_1_1_min_max.html", null ],
+      [ "MinMax", "class_x_d_d_s_p_1_1_min_max.html", "class_x_d_d_s_p_1_1_min_max" ],
       [ "LogarithmicScale", "class_x_d_d_s_p_1_1_logarithmic_scale.html", null ],
-      [ "PowerSize", "class_x_d_d_s_p_1_1_power_size.html", null ],
-      [ "IntegerAndFraction", "class_x_d_d_s_p_1_1_integer_and_fraction.html", null ],
+      [ "PowerSize", "class_x_d_d_s_p_1_1_power_size.html", "class_x_d_d_s_p_1_1_power_size" ],
+      [ "IntegerAndFraction", "class_x_d_d_s_p_1_1_integer_and_fraction.html", "class_x_d_d_s_p_1_1_integer_and_fraction" ],
       [ "LinearEstimator", "class_x_d_d_s_p_1_1_linear_estimator.html", null ],
-      [ "IntersectionEstimator", "class_x_d_d_s_p_1_1_intersection_estimator.html", null ],
-      [ "LookupTable", "class_x_d_d_s_p_1_1_lookup_table.html", null ],
+      [ "IntersectionEstimator", "class_x_d_d_s_p_1_1_intersection_estimator.html", "class_x_d_d_s_p_1_1_intersection_estimator" ],
+      [ "LookupTable", "class_x_d_d_s_p_1_1_lookup_table.html", "class_x_d_d_s_p_1_1_lookup_table" ],
       [ "Connector", "class_x_d_d_s_p_1_1_connector.html", null ],
       [ "PConnector", "class_x_d_d_s_p_1_1_p_connector.html", "class_x_d_d_s_p_1_1_p_connector" ],
       [ "ChannelPicker", "class_x_d_d_s_p_1_1_channel_picker.html", "class_x_d_d_s_p_1_1_channel_picker" ],
@@ -86,8 +86,8 @@ var annotated_dup =
       [ "SamplePlaybackHead", "class_x_d_d_s_p_1_1_sample_playback_head.html", "class_x_d_d_s_p_1_1_sample_playback_head" ],
       [ "BufferReader", "class_x_d_d_s_p_1_1_buffer_reader.html", "class_x_d_d_s_p_1_1_buffer_reader" ],
       [ "PluginInput", "class_x_d_d_s_p_1_1_plugin_input.html", "class_x_d_d_s_p_1_1_plugin_input" ],
-      [ "LinkwitzRileyFilterCoefficients", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients.html", null ],
-      [ "LinkwitzRileyFilterKernel", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel.html", null ],
+      [ "LinkwitzRileyFilterCoefficients", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients.html", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients" ],
+      [ "LinkwitzRileyFilterKernel", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel.html", "class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel" ],
       [ "Crossfader", "class_x_d_d_s_p_1_1_crossfader.html", "class_x_d_d_s_p_1_1_crossfader" ],
       [ "Panner", "class_x_d_d_s_p_1_1_panner.html", "class_x_d_d_s_p_1_1_panner" ],
       [ "StereoPanner", "class_x_d_d_s_p_1_1_stereo_panner.html", "class_x_d_d_s_p_1_1_stereo_panner" ],
@@ -97,21 +97,21 @@ var annotated_dup =
       [ "SignalProbe", "class_x_d_d_s_p_1_1_signal_probe.html", "class_x_d_d_s_p_1_1_signal_probe" ],
       [ "SignalAverage", "class_x_d_d_s_p_1_1_signal_average.html", "class_x_d_d_s_p_1_1_signal_average" ],
       [ "InterfaceBuffer", "class_x_d_d_s_p_1_1_interface_buffer.html", "class_x_d_d_s_p_1_1_interface_buffer" ],
-      [ "RandomNumberBuffer", "class_x_d_d_s_p_1_1_random_number_buffer.html", null ],
+      [ "RandomNumberBuffer", "class_x_d_d_s_p_1_1_random_number_buffer.html", "class_x_d_d_s_p_1_1_random_number_buffer" ],
       [ "NoiseGenerator", "class_x_d_d_s_p_1_1_noise_generator.html", "class_x_d_d_s_p_1_1_noise_generator" ],
       [ "PinkNoiseGenerator", "class_x_d_d_s_p_1_1_pink_noise_generator.html", "class_x_d_d_s_p_1_1_pink_noise_generator" ],
-      [ "AnalogNoiseSimulator", "class_x_d_d_s_p_1_1_analog_noise_simulator.html", null ],
+      [ "AnalogNoiseSimulator", "class_x_d_d_s_p_1_1_analog_noise_simulator.html", "class_x_d_d_s_p_1_1_analog_noise_simulator" ],
       [ "FuncOscillator", "class_x_d_d_s_p_1_1_func_oscillator.html", "class_x_d_d_s_p_1_1_func_oscillator" ],
-      [ "BandLimitedSawOscillator", "class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html", null ],
-      [ "BandLimitedSquareOscillator", "class_x_d_d_s_p_1_1_band_limited_square_oscillator.html", null ],
-      [ "BandLimitedTriangleOscillator", "class_x_d_d_s_p_1_1_band_limited_triangle_oscillator.html", null ],
+      [ "BandLimitedSawOscillator", "class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html", "class_x_d_d_s_p_1_1_band_limited_saw_oscillator" ],
+      [ "BandLimitedSquareOscillator", "class_x_d_d_s_p_1_1_band_limited_square_oscillator.html", "class_x_d_d_s_p_1_1_band_limited_square_oscillator" ],
+      [ "BandLimitedTriangleOscillator", "class_x_d_d_s_p_1_1_band_limited_triangle_oscillator.html", "class_x_d_d_s_p_1_1_band_limited_triangle_oscillator" ],
       [ "Parameters", "class_x_d_d_s_p_1_1_parameters.html", "class_x_d_d_s_p_1_1_parameters" ],
       [ "PiecewiseEnvelopeListener", "class_x_d_d_s_p_1_1_piecewise_envelope_listener.html", null ],
       [ "PiecewiseEnvelopeData", "class_x_d_d_s_p_1_1_piecewise_envelope_data.html", "class_x_d_d_s_p_1_1_piecewise_envelope_data" ],
-      [ "PolySynthParameters", "class_x_d_d_s_p_1_1_poly_synth_parameters.html", null ],
+      [ "PolySynthParameters", "class_x_d_d_s_p_1_1_poly_synth_parameters.html", "class_x_d_d_s_p_1_1_poly_synth_parameters" ],
       [ "SummingArray", "class_x_d_d_s_p_1_1_summing_array.html", "class_x_d_d_s_p_1_1_summing_array" ],
       [ "MIDIScheduler", "class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html", "class_x_d_d_s_p_1_1_m_i_d_i_scheduler" ],
-      [ "MIDIPoly", "class_x_d_d_s_p_1_1_m_i_d_i_poly.html", null ],
+      [ "MIDIPoly", "class_x_d_d_s_p_1_1_m_i_d_i_poly.html", "class_x_d_d_s_p_1_1_m_i_d_i_poly" ],
       [ "MixDown", "class_x_d_d_s_p_1_1_mix_down.html", "class_x_d_d_s_p_1_1_mix_down" ],
       [ "SimpleGain", "class_x_d_d_s_p_1_1_simple_gain.html", "class_x_d_d_s_p_1_1_simple_gain" ],
       [ "Rectifier", "class_x_d_d_s_p_1_1_rectifier.html", "class_x_d_d_s_p_1_1_rectifier" ],

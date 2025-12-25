@@ -92,18 +92,124 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_integer_and_fraction.html','','cla
   <div class="headertitle"><div class="title">XDDSP::IntegerAndFraction&lt; IntType &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class encapsulating the best algorithm for splitting a sample into its integer and fraction components.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4c385a971974ae81ff6880b61872314f" id="r_a4c385a971974ae81ff6880b61872314f"><td class="memItemLeft" align="right" valign="top"><a id="a4c385a971974ae81ff6880b61872314f" name="a4c385a971974ae81ff6880b61872314f"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>IntegerAndFraction</b> (SampleType whole)</td></tr>
-<tr class="memitem:aef180c9b1507ab8a84211c5d542b5b4a" id="r_aef180c9b1507ab8a84211c5d542b5b4a"><td class="memItemLeft" align="right" valign="top"><a id="aef180c9b1507ab8a84211c5d542b5b4a" name="aef180c9b1507ab8a84211c5d542b5b4a"></a>
-constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>intPart</b> () const</td></tr>
-<tr class="memitem:ac48a2f39ce6c9fbf52b9867fd54af518" id="r_ac48a2f39ce6c9fbf52b9867fd54af518"><td class="memItemLeft" align="right" valign="top"><a id="ac48a2f39ce6c9fbf52b9867fd54af518" name="ac48a2f39ce6c9fbf52b9867fd54af518"></a>
-constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>fracPart</b> () const</td></tr>
-<tr class="memitem:ae402fb46848bda0775ead8874904180d" id="r_ae402fb46848bda0775ead8874904180d"><td class="memItemLeft" align="right" valign="top"><a id="ae402fb46848bda0775ead8874904180d" name="ae402fb46848bda0775ead8874904180d"></a>
-constexpr IntType&#160;</td><td class="memItemRight" valign="bottom"><b>intRep</b> () const</td></tr>
+<tr class="memdesc:a4c385a971974ae81ff6880b61872314f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the <a class="el" href="class_x_d_d_s_p_1_1_integer_and_fraction.html" title="A class encapsulating the best algorithm for splitting a sample into its integer and fraction compone...">IntegerAndFraction</a> object and calculate the integer and fraction parts of the provided sample. <br /></td></tr>
+<tr class="memitem:aef180c9b1507ab8a84211c5d542b5b4a" id="r_aef180c9b1507ab8a84211c5d542b5b4a"><td class="memItemLeft" align="right" valign="top">constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef180c9b1507ab8a84211c5d542b5b4a">intPart</a> () const</td></tr>
+<tr class="memdesc:aef180c9b1507ab8a84211c5d542b5b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the integer part as a floating point type.  <br /></td></tr>
+<tr class="memitem:ac48a2f39ce6c9fbf52b9867fd54af518" id="r_ac48a2f39ce6c9fbf52b9867fd54af518"><td class="memItemLeft" align="right" valign="top">constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac48a2f39ce6c9fbf52b9867fd54af518">fracPart</a> () const</td></tr>
+<tr class="memdesc:ac48a2f39ce6c9fbf52b9867fd54af518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the fraction part.  <br /></td></tr>
+<tr class="memitem:ae402fb46848bda0775ead8874904180d" id="r_ae402fb46848bda0775ead8874904180d"><td class="memItemLeft" align="right" valign="top">constexpr IntType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae402fb46848bda0775ead8874904180d">intRep</a> () const</td></tr>
+<tr class="memdesc:ae402fb46848bda0775ead8874904180d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the integer part in an integer form.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename IntType = int&gt;<br />
+class XDDSP::IntegerAndFraction&lt; IntType &gt;</div><p>A class encapsulating the best algorithm for splitting a sample into its integer and fraction components. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IntType</td><td>The integer type used by the class. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac48a2f39ce6c9fbf52b9867fd54af518" name="ac48a2f39ce6c9fbf52b9867fd54af518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48a2f39ce6c9fbf52b9867fd54af518">&#9670;&#160;</a></span>fracPart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType = int&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_integer_and_fraction.html">XDDSP::IntegerAndFraction</a>&lt; IntType &gt;::fracPart </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the fraction part. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The fraction part. </dd></dl>
+
+</div>
+</div>
+<a id="aef180c9b1507ab8a84211c5d542b5b4a" name="aef180c9b1507ab8a84211c5d542b5b4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef180c9b1507ab8a84211c5d542b5b4a">&#9670;&#160;</a></span>intPart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType = int&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_integer_and_fraction.html">XDDSP::IntegerAndFraction</a>&lt; IntType &gt;::intPart </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the integer part as a floating point type. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The integer part. </dd></dl>
+
+</div>
+</div>
+<a id="ae402fb46848bda0775ead8874904180d" name="ae402fb46848bda0775ead8874904180d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae402fb46848bda0775ead8874904180d">&#9670;&#160;</a></span>intRep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IntType = int&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IntType <a class="el" href="class_x_d_d_s_p_1_1_integer_and_fraction.html">XDDSP::IntegerAndFraction</a>&lt; IntType &gt;::intRep </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the integer part in an integer form. </p>
+<dl class="section return"><dt>Returns</dt><dd>IntType The integer part. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a></li>
 </ul>
@@ -120,7 +226,7 @@ constexpr IntType&#160;</td><td class="memItemRight" valign="bottom"><b>intRep</
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_integer_and_fraction.html">IntegerAndFraction</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_integer_and_fraction.html">IntegerAndFraction</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

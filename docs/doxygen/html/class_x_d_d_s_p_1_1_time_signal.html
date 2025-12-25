@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_time_signal.html','','class_x_d_d_
   <div class="headertitle"><div class="title">XDDSP::TimeSignal Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component which outputs three time signals.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___utilities_8h_source.html">XDDSP_Utilities.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::TimeSignal:</div>
 <div class="dyncontent">
@@ -111,12 +116,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abb68497ab47198e7fc67d96228768ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:aec7cac7b09bfebb4d26cfd5a9d0d11fd" id="r_aec7cac7b09bfebb4d26cfd5a9d0d11fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec7cac7b09bfebb4d26cfd5a9d0d11fd">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:aec7cac7b09bfebb4d26cfd5a9d0d11fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="memitem:a65ce3148c07e1f56abc0f5b135e10a09" id="r_a65ce3148c07e1f56abc0f5b135e10a09"><td class="memItemLeft" align="right" valign="top"><a id="a65ce3148c07e1f56abc0f5b135e10a09" name="a65ce3148c07e1f56abc0f5b135e10a09"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setScalePPQ</b> (SampleType _scale)</td></tr>
-<tr class="memitem:a7e3d76e73318d254dc42c0484604ef32" id="r_a7e3d76e73318d254dc42c0484604ef32"><td class="memItemLeft" align="right" valign="top"><a id="a7e3d76e73318d254dc42c0484604ef32" name="a7e3d76e73318d254dc42c0484604ef32"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setScaleSeconds</b> (SampleType _scale)</td></tr>
-<tr class="memitem:aed919c4c5347e8fad3e1321afccc148d" id="r_aed919c4c5347e8fad3e1321afccc148d"><td class="memItemLeft" align="right" valign="top"><a id="aed919c4c5347e8fad3e1321afccc148d" name="aed919c4c5347e8fad3e1321afccc148d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSync</b> (bool _sync)</td></tr>
+<tr class="memitem:a65ce3148c07e1f56abc0f5b135e10a09" id="r_a65ce3148c07e1f56abc0f5b135e10a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65ce3148c07e1f56abc0f5b135e10a09">setScalePPQ</a> (SampleType _scale)</td></tr>
+<tr class="memdesc:a65ce3148c07e1f56abc0f5b135e10a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a scale factor to use on the PPQ signal.  <br /></td></tr>
+<tr class="memitem:a7e3d76e73318d254dc42c0484604ef32" id="r_a7e3d76e73318d254dc42c0484604ef32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e3d76e73318d254dc42c0484604ef32">setScaleSeconds</a> (SampleType _scale)</td></tr>
+<tr class="memdesc:a7e3d76e73318d254dc42c0484604ef32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a scale factor to use on the seconds signal.  <br /></td></tr>
+<tr class="memitem:aed919c4c5347e8fad3e1321afccc148d" id="r_aed919c4c5347e8fad3e1321afccc148d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed919c4c5347e8fad3e1321afccc148d">setSync</a> (bool _sync)</td></tr>
+<tr class="memdesc:aed919c4c5347e8fad3e1321afccc148d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set whether the component syncronises with the MIDI information provided in the <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> object.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; TimeSignal &gt;</a></td></tr>
 <tr class="memitem:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_ac71014690b2ff661f495d7d07ddbab93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">startProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to return a step size to use. It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.  <br /></td></tr>
@@ -155,7 +160,9 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A component which outputs three time signals. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="abb68497ab47198e7fc67d96228768ebd" name="abb68497ab47198e7fc67d96228768ebd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abb68497ab47198e7fc67d96228768ebd">&#9670;&#160;</a></span>reset()</h2>
 
@@ -180,8 +187,108 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; TimeSignal &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a65ce3148c07e1f56abc0f5b135e10a09" name="a65ce3148c07e1f56abc0f5b135e10a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ce3148c07e1f56abc0f5b135e10a09">&#9670;&#160;</a></span>setScalePPQ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::TimeSignal::setScalePPQ </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_scale</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set a scale factor to use on the PPQ signal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_scale</td><td>The scale factor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7e3d76e73318d254dc42c0484604ef32" name="a7e3d76e73318d254dc42c0484604ef32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e3d76e73318d254dc42c0484604ef32">&#9670;&#160;</a></span>setScaleSeconds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::TimeSignal::setScaleSeconds </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_scale</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set a scale factor to use on the seconds signal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_scale</td><td>The scale factor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aed919c4c5347e8fad3e1321afccc148d" name="aed919c4c5347e8fad3e1321afccc148d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed919c4c5347e8fad3e1321afccc148d">&#9670;&#160;</a></span>setSync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::TimeSignal::setSync </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>_sync</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set whether the component syncronises with the MIDI information provided in the <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_sync</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -241,7 +348,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_time_signal.html">TimeSignal</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_time_signal.html">TimeSignal</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

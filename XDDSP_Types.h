@@ -101,12 +101,17 @@ typedef std::function<SampleType (SampleType)> WaveformFunction;
 
 
 
-
+/**
+ * @brief A static global method to enable assertion checking in debug builds.
+ * 
+ * @param condition 
+ */
 inline void dsp_assert(bool condition)
 {
 #ifdef DEBUG
  if (!condition)
  {
+    // Place a breakpoint on this line to catch exceptions in action.
   throw std::runtime_error("Assertion failed");
  }
 #endif
@@ -127,6 +132,12 @@ inline void dsp_assert(bool condition)
 
 
 
+
+/**
+ * @brief An enum which can be used in various components to specify the quality level of a particular process.
+ * 
+ * Where sample interpolation is used, low quality selects nearest neighbour interpolation, mid quality selects linear and high quality selects cubic hermite.
+ */
 namespace ProcessQuality
 {
 enum

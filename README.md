@@ -7,14 +7,14 @@ A not-so-simple C++ template library for creating complex DSP networks.
 I had lots of DSP code snippets lying around and I wanted an easy way to tie them together into DSP networks.
 
 My goals where:
- - A common base class for components
- - Named inputs and outputs for each component
- - Maximising code-encapsulation and reusability
- - Portability
- - As many opportunities for automatic optimisation as possible
- - Independence from other libraries (except for the C++ standard library)
+ - A common base class for components.
+ - Component inputs and outputs to have human readable names.
+ - Maximising code-encapsulation and reusability.
+ - Portability.
+ - As many opportunities for automatic optimisation as possible.
+ - Independence from other libraries (except for the C++ standard library).
 
-At this early stage, my code is not readable or well commented. I will be creating a series of YouTube videos where I explain the code and will be building examples using Juce.
+I am in the process of creating doxygen documentation for the library. Watch this space.
 
 ## Usage
 

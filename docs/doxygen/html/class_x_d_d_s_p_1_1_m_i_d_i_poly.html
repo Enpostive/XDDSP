@@ -92,57 +92,385 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_m_i_d_i_poly.html','','class_x_d_d
   <div class="headertitle"><div class="title">XDDSP::MIDIPoly&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A special component which connects to a collection of voices to make a polyphonic component.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___polyphony_8h_source.html">XDDSP_Polyphony.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::MIDIPoly&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_x_d_d_s_p_1_1_m_i_d_i_poly.png" usemap="#XDDSP_3A_3AMIDIPoly_3C_20VoiceComponent_2C_20MaxVoiceCount_2C_20AutoEnable_20_3E_map" alt=""/>
   <map id="XDDSP_3A_3AMIDIPoly_3C_20VoiceComponent_2C_20MaxVoiceCount_2C_20AutoEnable_20_3E_map" name="XDDSP_3A_3AMIDIPoly_3C_20VoiceComponent_2C_20MaxVoiceCount_2C_20AutoEnable_20_3E_map">
-<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="0,0,405,24"/>
+<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object." alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="0,0,405,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a43789defe551395ab0c50a7619e8a188" id="r_a43789defe551395ab0c50a7619e8a188"><td class="memItemLeft" align="right" valign="top"><a id="a43789defe551395ab0c50a7619e8a188" name="a43789defe551395ab0c50a7619e8a188"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MIDIPoly</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, <a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">SummingArray</a>&lt; VoiceComponent, MaxVoiceCount &gt; &amp;va)</td></tr>
-<tr class="memitem:a510f6cb77fb76690b64ee91fd8dc4082" id="r_a510f6cb77fb76690b64ee91fd8dc4082"><td class="memItemLeft" align="right" valign="top"><a id="a510f6cb77fb76690b64ee91fd8dc4082" name="a510f6cb77fb76690b64ee91fd8dc4082"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setVoiceLimit</b> (int l)</td></tr>
-<tr class="memitem:a9e689085e26473c39ebac5569c67b462" id="r_a9e689085e26473c39ebac5569c67b462"><td class="memItemLeft" align="right" valign="top"><a id="a9e689085e26473c39ebac5569c67b462" name="a9e689085e26473c39ebac5569c67b462"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setUnisonMode</b> (int u)</td></tr>
+<tr class="memitem:a43789defe551395ab0c50a7619e8a188" id="r_a43789defe551395ab0c50a7619e8a188"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43789defe551395ab0c50a7619e8a188">MIDIPoly</a> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, <a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">SummingArray</a>&lt; VoiceComponent, MaxVoiceCount &gt; &amp;va)</td></tr>
+<tr class="memdesc:a43789defe551395ab0c50a7619e8a188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html" title="A special component which connects to a collection of voices to make a polyphonic component.">MIDIPoly</a> object.  <br /></td></tr>
+<tr class="memitem:a510f6cb77fb76690b64ee91fd8dc4082" id="r_a510f6cb77fb76690b64ee91fd8dc4082"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a510f6cb77fb76690b64ee91fd8dc4082">setVoiceLimit</a> (int l)</td></tr>
+<tr class="memdesc:a510f6cb77fb76690b64ee91fd8dc4082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of voices allowed and disable unison mode.  <br /></td></tr>
+<tr class="memitem:a9e689085e26473c39ebac5569c67b462" id="r_a9e689085e26473c39ebac5569c67b462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9e689085e26473c39ebac5569c67b462">setUnisonMode</a> (int u)</td></tr>
+<tr class="memdesc:a9e689085e26473c39ebac5569c67b462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable unison mode.  <br /></td></tr>
 <tr class="memitem:a998932fa2b9cb05b2bccdb01c963c113" id="r_a998932fa2b9cb05b2bccdb01c963c113"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a998932fa2b9cb05b2bccdb01c963c113">updateCustomParameter</a> (int category, int index) override</td></tr>
+<tr class="memdesc:a998932fa2b9cb05b2bccdb01c963c113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to any custom parameter.  <br /></td></tr>
 <tr class="memitem:ae4b50fcc67e2191f774a090336f6012a" id="r_ae4b50fcc67e2191f774a090336f6012a"><td class="memItemLeft" align="right" valign="top"><a id="ae4b50fcc67e2191f774a090336f6012a" name="ae4b50fcc67e2191f774a090336f6012a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetAllNotes</b> ()</td></tr>
-<tr class="memitem:a70a1eb9686ffe5a179cfaa48723e79fe" id="r_a70a1eb9686ffe5a179cfaa48723e79fe"><td class="memItemLeft" align="right" valign="top"><a id="a70a1eb9686ffe5a179cfaa48723e79fe" name="a70a1eb9686ffe5a179cfaa48723e79fe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>scheduleNoteEvent</b> (int note, int velocity, int samplePosition)</td></tr>
-<tr class="memitem:a53abb2b5fd91876ccc15b6ea09101eb8" id="r_a53abb2b5fd91876ccc15b6ea09101eb8"><td class="memItemLeft" align="right" valign="top"><a id="a53abb2b5fd91876ccc15b6ea09101eb8" name="a53abb2b5fd91876ccc15b6ea09101eb8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>scheduleAllNotesOff</b> (int samplePosition)</td></tr>
-<tr class="memitem:a2e3c4d4d104af88014af568f344d1555" id="r_a2e3c4d4d104af88014af568f344d1555"><td class="memItemLeft" align="right" valign="top"><a id="a2e3c4d4d104af88014af568f344d1555" name="a2e3c4d4d104af88014af568f344d1555"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>scheduleAllSoundOff</b> (int samplePosition)</td></tr>
+<tr class="memdesc:ae4b50fcc67e2191f774a090336f6012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset every voice and remove all MIDI events from the buffer. <br /></td></tr>
+<tr class="memitem:a70a1eb9686ffe5a179cfaa48723e79fe" id="r_a70a1eb9686ffe5a179cfaa48723e79fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70a1eb9686ffe5a179cfaa48723e79fe">scheduleNoteEvent</a> (int note, int velocity, int samplePosition)</td></tr>
+<tr class="memdesc:a70a1eb9686ffe5a179cfaa48723e79fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a MIDI note event to the MIDI event schedule.  <br /></td></tr>
+<tr class="memitem:a53abb2b5fd91876ccc15b6ea09101eb8" id="r_a53abb2b5fd91876ccc15b6ea09101eb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53abb2b5fd91876ccc15b6ea09101eb8">scheduleAllNotesOff</a> (int samplePosition)</td></tr>
+<tr class="memdesc:a53abb2b5fd91876ccc15b6ea09101eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an All Notes Off MIDI message to the cue.  <br /></td></tr>
+<tr class="memitem:a2e3c4d4d104af88014af568f344d1555" id="r_a2e3c4d4d104af88014af568f344d1555"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e3c4d4d104af88014af568f344d1555">scheduleAllSoundOff</a> (int samplePosition)</td></tr>
+<tr class="memdesc:a2e3c4d4d104af88014af568f344d1555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an All Sound Off MIDI message to the cue.  <br /></td></tr>
 <tr class="memitem:a12088fd0ee4dccb9d4ecb52d203b7f70" id="r_a12088fd0ee4dccb9d4ecb52d203b7f70"><td class="memItemLeft" align="right" valign="top"><a id="a12088fd0ee4dccb9d4ecb52d203b7f70" name="a12088fd0ee4dccb9d4ecb52d203b7f70"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
 <tr class="memitem:a923e6b1f69718ac57746891079d71f1f" id="r_a923e6b1f69718ac57746891079d71f1f"><td class="memItemLeft" align="right" valign="top"><a id="a923e6b1f69718ac57746891079d71f1f" name="a923e6b1f69718ac57746891079d71f1f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>process</b> (int startPosition, int sampleCount)</td></tr>
-<tr class="memitem:a6ea95e2f3d27707c18d08d63baa270aa" id="r_a6ea95e2f3d27707c18d08d63baa270aa"><td class="memItemLeft" align="right" valign="top"><a id="a6ea95e2f3d27707c18d08d63baa270aa" name="a6ea95e2f3d27707c18d08d63baa270aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>advanceMidiEvents</b> (int sampleCount)</td></tr>
-<tr class="memitem:a513b0acae22e893bf969cef6c30136a6" id="r_a513b0acae22e893bf969cef6c30136a6"><td class="memItemLeft" align="right" valign="top"><a id="a513b0acae22e893bf969cef6c30136a6" name="a513b0acae22e893bf969cef6c30136a6"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>parallelProcess</b> (int startPoint, int sampleCount)</td></tr>
+<tr class="memitem:a6ea95e2f3d27707c18d08d63baa270aa" id="r_a6ea95e2f3d27707c18d08d63baa270aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ea95e2f3d27707c18d08d63baa270aa">advanceMidiEvents</a> (int sampleCount)</td></tr>
+<tr class="memdesc:a6ea95e2f3d27707c18d08d63baa270aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance all the MIDI events in the buffer by the sample count given.  <br /></td></tr>
+<tr class="memitem:a513b0acae22e893bf969cef6c30136a6" id="r_a513b0acae22e893bf969cef6c30136a6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a513b0acae22e893bf969cef6c30136a6">parallelProcess</a> (int startPoint, int sampleCount)</td></tr>
+<tr class="memdesc:a513b0acae22e893bf969cef6c30136a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sub-classes can implement this method to enable the processing of a mono portion of the synthesiser.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a></td></tr>
-<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>ParameterListener</b> (Parameters &amp;p)</td></tr>
-<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSampleRate</b> (double sr, double isr)</td></tr>
-<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateBufferSize</b> (int bs)</td></tr>
+<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a26d1f9d7e8b523a290bfdc81794b42d9">ParameterListener</a> (Parameters &amp;p)</td></tr>
+<tr class="memdesc:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object.">ParameterListener</a> object and add this as a listener.  <br /></td></tr>
+<tr class="memitem:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_af1e818d978468f5a85eb1d49fa5fdfe7"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ParameterListener</b> ()</td></tr>
+<tr class="memdesc:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Parameter Listener object and remove this from the listeners list. <br /></td></tr>
+<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#abf0c32c9a053315ed00cfd95712d4733">updateSampleRate</a> (double sr, double isr)</td></tr>
+<tr class="memdesc:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the sample rate.  <br /></td></tr>
+<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a08798bf96e26f72768c42821535e5374">updateBufferSize</a> (int bs)</td></tr>
+<tr class="memdesc:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the buffer size.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:af57359254482d261d4b63fdef37a95db" id="r_af57359254482d261d4b63fdef37a95db"><td class="memItemLeft" align="right" valign="top"><a id="af57359254482d261d4b63fdef37a95db" name="af57359254482d261d4b63fdef37a95db"></a>
 std::function&lt; void(int)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onNoteOn</b></td></tr>
+<tr class="memdesc:af57359254482d261d4b63fdef37a95db"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function which is called whenever a note on occurs. <br /></td></tr>
 <tr class="memitem:a212a36a69dad013be33e7c4c4c33e8d1" id="r_a212a36a69dad013be33e7c4c4c33e8d1"><td class="memItemLeft" align="right" valign="top"><a id="a212a36a69dad013be33e7c4c4c33e8d1" name="a212a36a69dad013be33e7c4c4c33e8d1"></a>
 std::function&lt; void(int)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onNoteOff</b></td></tr>
+<tr class="memdesc:a212a36a69dad013be33e7c4c4c33e8d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function which is called whenever a noteoff occurs. <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt;<br />
+class XDDSP::MIDIPoly&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;</div><p>A special component which connects to a collection of voices to make a polyphonic component. </p>
+<p><b>The component given as InternalComponent must have an input named noteIn, an input named velocityIn and an output named signalOut</b></p>
+<p>TODO: Add another template argument to specify the input names and an output to sum, instead of assuming the names given above.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">VoiceComponent</td><td>The component that makes up each individual voice. </td></tr>
+    <tr><td class="paramname">MaxVoiceCount</td><td>The maximum number of voices allowed. </td></tr>
+    <tr><td class="paramname">AutoEnable</td><td>When set to any value other than 0, will automatically enable and disable individual voices using internal logic. Keep in mind that components are reset when they are disabled, so this may not be desired behaviour. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a43789defe551395ab0c50a7619e8a188" name="a43789defe551395ab0c50a7619e8a188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43789defe551395ab0c50a7619e8a188">&#9670;&#160;</a></span>MIDIPoly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::MIDIPoly </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">SummingArray</a>&lt; VoiceComponent, MaxVoiceCount &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>va</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html" title="A special component which connects to a collection of voices to make a polyphonic component.">MIDIPoly</a> object. </p>
+<p><b>Note: The parameters class passed to this constructor is <a class="el" href="class_x_d_d_s_p_1_1_poly_synth_parameters.html" title="An extension of Parameters that contains extra parameters suitable for a MIDI polyphonic synthesiser.">XDDSP::PolySynthParameters</a></b></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>A <a class="el" href="class_x_d_d_s_p_1_1_poly_synth_parameters.html" title="An extension of Parameters that contains extra parameters suitable for a MIDI polyphonic synthesiser.">XDDSP::PolySynthParameters</a> object. </td></tr>
+    <tr><td class="paramname">va</td><td>A reference to the summing array. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a6ea95e2f3d27707c18d08d63baa270aa" name="a6ea95e2f3d27707c18d08d63baa270aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ea95e2f3d27707c18d08d63baa270aa">&#9670;&#160;</a></span>advanceMidiEvents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::advanceMidiEvents </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>sampleCount</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advance all the MIDI events in the buffer by the sample count given. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sampleCount</td><td>The number of samples to advance the events in the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a513b0acae22e893bf969cef6c30136a6" name="a513b0acae22e893bf969cef6c30136a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513b0acae22e893bf969cef6c30136a6">&#9670;&#160;</a></span>parallelProcess()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::parallelProcess </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>startPoint</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>sampleCount</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sub-classes can implement this method to enable the processing of a mono portion of the synthesiser. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startPoint</td><td>The start point to begin processing. </td></tr>
+    <tr><td class="paramname">sampleCount</td><td>The number of samples to process. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a53abb2b5fd91876ccc15b6ea09101eb8" name="a53abb2b5fd91876ccc15b6ea09101eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53abb2b5fd91876ccc15b6ea09101eb8">&#9670;&#160;</a></span>scheduleAllNotesOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::scheduleAllNotesOff </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>samplePosition</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add an All Notes Off MIDI message to the cue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">samplePosition</td><td>The number of samples to wait until the event is triggered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2e3c4d4d104af88014af568f344d1555" name="a2e3c4d4d104af88014af568f344d1555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e3c4d4d104af88014af568f344d1555">&#9670;&#160;</a></span>scheduleAllSoundOff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::scheduleAllSoundOff </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>samplePosition</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add an All Sound Off MIDI message to the cue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">samplePosition</td><td>The number of samples to wait until the event is triggered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70a1eb9686ffe5a179cfaa48723e79fe" name="a70a1eb9686ffe5a179cfaa48723e79fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70a1eb9686ffe5a179cfaa48723e79fe">&#9670;&#160;</a></span>scheduleNoteEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::scheduleNoteEvent </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>note</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>velocity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>samplePosition</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add a MIDI note event to the MIDI event schedule. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">note</td><td>The pitch of the note. </td></tr>
+    <tr><td class="paramname">velocity</td><td>The velocity of the note. Use 0 to schedule a note off. </td></tr>
+    <tr><td class="paramname">samplePosition</td><td>The number of samples to wait until the event is triggered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9e689085e26473c39ebac5569c67b462" name="a9e689085e26473c39ebac5569c67b462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e689085e26473c39ebac5569c67b462">&#9670;&#160;</a></span>setUnisonMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::setUnisonMode </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>u</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable or disable unison mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">u</td><td>True to enable unison mode, false to disable it. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a510f6cb77fb76690b64ee91fd8dc4082" name="a510f6cb77fb76690b64ee91fd8dc4082"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510f6cb77fb76690b64ee91fd8dc4082">&#9670;&#160;</a></span>setVoiceLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">XDDSP::MIDIPoly</a>&lt; VoiceComponent, MaxVoiceCount, AutoEnable &gt;::setVoiceLimit </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>l</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the maximum number of voices allowed and disable unison mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">l</td><td>The number of voices allowed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a998932fa2b9cb05b2bccdb01c963c113" name="a998932fa2b9cb05b2bccdb01c963c113"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a998932fa2b9cb05b2bccdb01c963c113">&#9670;&#160;</a></span>updateCustomParameter()</h2>
 
@@ -172,7 +500,17 @@ template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; <
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a>.</p>
+<p>Get notified of an update to any custom parameter. </p>
+<p>Your class should override this method with its own method to be updated with custom parameter changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">category</td><td>The category of the custom parameter. -1 is reserved for built-in custom parameters. </td></tr>
+    <tr><td class="paramname">index</td><td>The index of the custom parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a932121d85708e6573b87dbf7d90d2b78">XDDSP::Parameters::ParameterListener</a>.</p>
 
 </div>
 </div>
@@ -192,7 +530,7 @@ template&lt;typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0&gt; <
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">MIDIPoly</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_m_i_d_i_poly.html">MIDIPoly</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

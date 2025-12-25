@@ -36,6 +36,11 @@ namespace XDDSP
 
 
 
+/**
+ * @brief A class for accessing a global lookup table made of random numbers.
+ * 
+ * This buffer contains 512k of high quality procedurally generated noise, which is good for about 11 seconds at a 44.1kHz sample rate. The noise is generated using the mersenne twister mt19937 with the default random number seed, guaranteeing noise that is deterministic, making it great for predictable and repeatable randomness when required, while being big enough that no discernable pattern will stand out to the average listener.
+ */
 class RandomNumberBuffer
 {
 public:
@@ -47,6 +52,11 @@ private:
  static std::array<SampleType, NoiseBufferSize.size()> noiseBuffer;
 
 public:
+ /**
+  * @brief Construct a new RandomNumberBuffer object.
+  * 
+  * This method checks whether the global buffer has been generated and if not this method then proceeds to generate it. Then it chooses a random index into the buffer based on the current system time.
+  */
  RandomNumberBuffer()
  {
   if (!noiseBufferValid)
@@ -67,11 +77,22 @@ public:
   }
  }
  
+ /**
+  * @brief Look up a random number from the buffer. This method allows for deterministic look up of random numbers for any purpose.
+  * 
+  * @param index The index into the buffer. The look up is bounded to the size of the buffer by a modulo operation.
+  * @return SampleType The random sample at that index.
+  */
  SampleType lookupRandomNumber(int index)
  {
   return noiseBuffer[index & NoiseBufferSize.mask()];
  }
  
+ /**
+  * @brief Get the random number in the buffer at the current random index then increment the index.
+  * 
+  * @return SampleType The next random number.
+  */
  SampleType lookupNextRandomNumber()
  {
   SampleType result = lookupRandomNumber(r);
@@ -88,27 +109,25 @@ public:
 
 
 
+
+/**
+ * @brief A component which outputs white noise.
+ * 
+ * @tparam ChannelCount The number of output channels to make available.
+ */
 template <int ChannelCount = 1>
 class NoiseGenerator : public Component<NoiseGenerator<ChannelCount>>
 {
- // Private data members here
  RandomNumberBuffer noise;
 
 public:
- // Specify your inputs as public members here
- // No Inputs
- 
- // Specify your outputs like this
  Output<ChannelCount> noiseOut;
  
- // Include a definition for each input in the constructor
  NoiseGenerator(Parameters &p) :
  noiseOut(p)
  {
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   noiseOut.reset();
@@ -135,28 +154,26 @@ public:
 
 
 
-// Increasing the SpectrumSize argument adds lower frequency components to the noise
+/**
+ * @brief A component which outputs pink noise.
+ * 
+ * @tparam ChannelCount The number of channels to make available.
+ * @tparam SpectrumSize The depth of the generator algorithm. Increasing the spectrum size adds lower frequency components to the noise and increases computation overhead. Default is 5.
+ */
 template <int ChannelCount = 1, int SpectrumSize = 5>
 class PinkNoiseGenerator : public Component<PinkNoiseGenerator<ChannelCount, SpectrumSize>>
 {
- // Private data members here
  const PowerSize Size {SpectrumSize};
  RandomNumberBuffer noise;
  std::array<SampleType, ChannelCount> accum {0.};
  std::array<std::array<SampleType, SpectrumSize>, ChannelCount> gnr;
  int counter {0};
  int gIndex {0};
-// const SampleType Atten {1./SpectrumSize};
  const SampleType Atten {static_cast<SampleType>(1./sqrt(SpectrumSize))};
 
 public:
- // Specify your inputs as public members here
- // No inputs
- 
- // Specify your outputs like this
  Output<ChannelCount> noiseOut;
  
- // Include a definition for each input in the constructor
  PinkNoiseGenerator(Parameters &p) :
  noiseOut(p)
  {
@@ -164,8 +181,6 @@ public:
   for (auto &g : gnr) g.fill(0.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   accum.fill(0.);
@@ -201,14 +216,20 @@ public:
 
 
 
+/**
+ * @brief A component for adding convincing analog noise to a signal.
+ * 
+ * This component doesn't directly add noise to the input signal. This component generates base line pink noise to simulate flicker noise, then adds shot noise and junction noise modulated by the input signal. The output can be mixed back with the original input to add a convincing analog flavour. Read the documentation on AnalogNoiseSimulator::shotNoiseAtten, AnalogNoiseSimulator::whiteNoiseAtten and AnalogNoiseSimulator::noiseLevel for configuration options.
+ * 
+ * @tparam SignalIn Couples to an input to generate noise for. This can have as many channels as you like.
+ * @tparam NoiseSpectrumSize The depth of the generator algorithm. Increasing the spectrum size adds lower frequency components to the noise and increases computation overhead. Values over 8 start to see diminishing returns as the frequencies added are not audible. Default is 5.
+ */
 template <typename SignalIn, int NoiseSpectrumSize = 5>
 class AnalogNoiseSimulator : public Component<AnalogNoiseSimulator<SignalIn, NoiseSpectrumSize>>
 {
- // Private data members here
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
  PinkNoiseGenerator<Count, NoiseSpectrumSize> flickerNoise;
@@ -222,6 +243,10 @@ public:
  Connector<decltype(snAmp)>
  > shotNoiseModulator;
  
+ /**
+  * @brief Modify the gainIn control on this to customise the flavour of the noise. Default 0.001.
+  * 
+  */
  SimpleGain<
  Connector<decltype(shotNoiseModulator.signalOut)>,
  ControlConstant<>
@@ -232,6 +257,10 @@ public:
  Connector<SignalIn>
  > jnNoiseModulator;
  
+ /**
+  * @brief Modify the gainIn control on this to customise the flavour of the noise. Default 0.56234133 (-5 dB)
+  * 
+  */
  SimpleGain<
  Sum<2, Count>,
  ControlConstant<>
@@ -239,14 +268,16 @@ public:
  
  Sum<2, Count> noiseMix;
  
+ /**
+  * @brief You can change the gainIn from the default of 0.0001 (-80dB) on this one to simulate hotter or colder electronics.
+  * 
+  */
  SimpleGain<
  Connector<decltype(noiseMix)>,
  ControlConstant<>
  > noiseLevel;
  
- // Specify your outputs like this
  Connector<decltype(noiseLevel.signalOut)> signalOut;
- // Output<Count> signalOut;
  
  AnalogNoiseSimulator(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),

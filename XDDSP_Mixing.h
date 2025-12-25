@@ -31,14 +31,21 @@ namespace XDDSP
 
 
 
-// Mixing Laws
-// Use these classes for Crossfader and Panner components
-// Expected inputs are between 0 and 1
-
+/**
+ * @brief Mixing Laws
+ * 
+ * Each struct here contains a function called getWeights which returns a pair of mix weights suitable for use to mix or pan a pair of signals according to a parameter.
+ * Expected inputs for getWeights are between 0 and 1
+ * Use these classes for Crossfader and Panner components
+ */
 namespace MixingLaws
 {
 typedef std::tuple<SampleType, SampleType> MixWeights;
 
+/**
+ * @brief Calculates weights for linear fading.
+ * 
+ */
 struct LinearFadeLaw
 {
  static MixWeights getWeights(SampleType p)
@@ -48,6 +55,10 @@ struct LinearFadeLaw
  }
 };
 
+/**
+ * @brief Calculates weights for equal power fading.
+ * 
+ */
 struct EqualPowerLaw
 {
  static MixWeights getWeights(SampleType p)
@@ -57,7 +68,10 @@ struct EqualPowerLaw
  }
 };
 
-
+/**
+ * @brief Calculates weights for full middle fading.
+ * 
+ */
 struct FullMiddleLaw
 {
  static MixWeights getWeights(SampleType p)
@@ -78,6 +92,15 @@ struct FullMiddleLaw
 
 
 
+/**
+ * @brief A component for crossfading between two signals.
+ * 
+ * @tparam ASignalIn Couples to input A. May have any number of channels.
+ * @tparam BSignalIn Couples to input B. Must have the same number of channels as input A.
+ * @tparam CrossfadeIn Couples to a cross fade signal. Must have either a single channel or the same number of channels as input A.
+ * @tparam MixLaw A class from the MixingLaw namespace to configure the crossfader.
+ * @tparam StepSize Sets how often the component updates the mix levels from MixLaw. By default this is once every 16 samples.
+ */
 template <
 typename ASignalIn,
 typename BSignalIn,
@@ -90,20 +113,16 @@ public Component<Crossfader<ASignalIn, BSignalIn, CrossfadeIn, MixLaw, StepSize>
 {
  static_assert(ASignalIn::Count == BSignalIn::Count, "Crossfader expects inputs to have same channel count");
  static_assert(ASignalIn::Count == CrossfadeIn::Count || CrossfadeIn::Count == 1, "Crossfader expects control signal to have one channel or same channel count as inputs");
- // Private data members here
  
 public:
  static constexpr int Count = ASignalIn::Count;
  
- // Specify your inputs as public members here
  ASignalIn aSignalIn;
  BSignalIn bSignalIn;
  CrossfadeIn crossfadeIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  Crossfader(Parameters &p,
             ASignalIn _aSignalIn,
             BSignalIn _bSignalIn,
@@ -114,14 +133,11 @@ public:
  signalOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   signalOut.reset();
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   MixingLaws::MixWeights w = MixLaw::getWeights(crossfadeIn(startPoint));
@@ -151,6 +167,14 @@ public:
 
 
 
+/**
+ * @brief A component for panning an input signal between two output signals.
+ * 
+ * @tparam SignalIn Couples to an input. May have as many channels as you like.
+ * @tparam PanIn Couples to the pan signal. Must have either one channel, or the same number of channels as the input.
+ * @tparam MixLaw A class from the MixingLaw namespace to configure the panner.
+ * @tparam StepSize Sets how often the component updates the mix levels from MixLaw. By default this is once every 16 samples.
+ */
 template <
 typename SignalIn,
 typename PanIn,
@@ -217,6 +241,14 @@ public:
 
 
 
+/**
+ * @brief A component for simplifying the panning of a stereo signal.
+ * 
+ * @tparam SignalIn Couples to an input with 2 channels.
+ * @tparam PanIn Couples to a pan signal with 1 channel.
+ * @tparam MixLaw A class from the MixingLaw namespace to configure the panner.
+ * @tparam StepSize Sets how often the component updates the mix levels from MixLaw. By default this is once every 16 samples.
+ */
 template <
 typename SignalIn,
 typename PanIn,
@@ -278,6 +310,14 @@ public:
 
 
 
+/**
+ * @brief A component with connectable mono inputs.
+ * 
+ * This component exposes a std::vector of MixCoupler objects. Your app may add or remove elements from this vector to connect an arbitrary number of inputs to be panned and mixed onto a single stereo bus. This class is not thread safe.
+ * 
+ * @tparam MixLaw A class from the MixingLaw namespace to configure the panner on each channel.
+ * @tparam StepSize Sets how often the component updates the mix levels from MixLaw. By default this is once every 16 samples.
+ */
 template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
 class MonoToStereoMixBus : public Component<MonoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
@@ -309,12 +349,6 @@ public:
   stereoOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   bool solo = false;
@@ -352,6 +386,14 @@ public:
 
 
 
+/**
+ * @brief A component with connectable stereo inputs.
+ * 
+ * This component exposes a std::vector of MixCoupler objects. Your app may add or remove elements from this vector to connect an arbitrary number of inputs to be panned and mixed onto a single stereo bus. This class is not thread safe.
+ * 
+ * @tparam MixLaw A class from the MixingLaw namespace to configure the panner on each channel.
+ * @tparam StepSize Sets how often the component updates the mix levels from MixLaw. By default this is once every 16 samples.
+ */
 template <typename MixLaw = MixingLaws::EqualPowerLaw, int StepSize = 16>
 class StereoToStereoMixBus : public Component<StereoToStereoMixBus<MixLaw, StepSize>, StepSize>
 {
@@ -383,12 +425,6 @@ public:
   stereoOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   bool solo = false;

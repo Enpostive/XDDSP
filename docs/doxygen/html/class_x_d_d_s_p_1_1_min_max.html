@@ -92,36 +92,555 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_min_max.html','','class_x_d_d_s_p_
   <div class="headertitle"><div class="title">XDDSP::MinMax&lt; TopBottom &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class encapsulating some common min-max functionality.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9be315ec4c8e6c74110ea441ae656522" id="r_a9be315ec4c8e6c74110ea441ae656522"><td class="memItemLeft" align="right" valign="top"><a id="a9be315ec4c8e6c74110ea441ae656522" name="a9be315ec4c8e6c74110ea441ae656522"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MinMax</b> (SampleType min, SampleType max)</td></tr>
-<tr class="memitem:abdf6e80aedb02b600135db487098eb47" id="r_abdf6e80aedb02b600135db487098eb47"><td class="memItemLeft" align="right" valign="top"><a id="abdf6e80aedb02b600135db487098eb47" name="abdf6e80aedb02b600135db487098eb47"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MinMax</b> (const MinMax &amp;rhs)</td></tr>
-<tr class="memitem:a4f690b51897a3186b9e7ff9a79a51c98" id="r_a4f690b51897a3186b9e7ff9a79a51c98"><td class="memItemLeft" align="right" valign="top"><a id="a4f690b51897a3186b9e7ff9a79a51c98" name="a4f690b51897a3186b9e7ff9a79a51c98"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMinMax</b> (SampleType min, SampleType max)</td></tr>
-<tr class="memitem:ad6eb0b1af87dea16d555f49b50e40f71" id="r_ad6eb0b1af87dea16d555f49b50e40f71"><td class="memItemLeft" align="right" valign="top"><a id="ad6eb0b1af87dea16d555f49b50e40f71" name="ad6eb0b1af87dea16d555f49b50e40f71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMin</b> (SampleType min)</td></tr>
-<tr class="memitem:a9947ad9cf1ffded139b097c5abc725b2" id="r_a9947ad9cf1ffded139b097c5abc725b2"><td class="memItemLeft" align="right" valign="top"><a id="a9947ad9cf1ffded139b097c5abc725b2" name="a9947ad9cf1ffded139b097c5abc725b2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMax</b> (SampleType max)</td></tr>
-<tr class="memitem:a7c40af06b16496ea95b76ace2cee523c" id="r_a7c40af06b16496ea95b76ace2cee523c"><td class="memItemLeft" align="right" valign="top"><a id="a7c40af06b16496ea95b76ace2cee523c" name="a7c40af06b16496ea95b76ace2cee523c"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>min</b> ()</td></tr>
-<tr class="memitem:a1a9ce4abc3cb4aced78c02a23de9146b" id="r_a1a9ce4abc3cb4aced78c02a23de9146b"><td class="memItemLeft" align="right" valign="top"><a id="a1a9ce4abc3cb4aced78c02a23de9146b" name="a1a9ce4abc3cb4aced78c02a23de9146b"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>max</b> ()</td></tr>
-<tr class="memitem:a71ba1386b932e3e38f3e7efac584b963" id="r_a71ba1386b932e3e38f3e7efac584b963"><td class="memItemLeft" align="right" valign="top"><a id="a71ba1386b932e3e38f3e7efac584b963" name="a71ba1386b932e3e38f3e7efac584b963"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>delta</b> ()</td></tr>
-<tr class="memitem:ad856c3daaec158096a646a184d81047e" id="r_ad856c3daaec158096a646a184d81047e"><td class="memItemLeft" align="right" valign="top"><a id="ad856c3daaec158096a646a184d81047e" name="ad856c3daaec158096a646a184d81047e"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>fastBoundary</b> (SampleType input)</td></tr>
-<tr class="memitem:a7e0202b2f9e9d27e0877ab9c9d14dd2c" id="r_a7e0202b2f9e9d27e0877ab9c9d14dd2c"><td class="memItemLeft" align="right" valign="top"><a id="a7e0202b2f9e9d27e0877ab9c9d14dd2c" name="a7e0202b2f9e9d27e0877ab9c9d14dd2c"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>LERP</b> (SampleType input)</td></tr>
-<tr class="memitem:a27076a8d759b7aeb08443c0fefbd1741" id="r_a27076a8d759b7aeb08443c0fefbd1741"><td class="memItemLeft" align="right" valign="top"><a id="a27076a8d759b7aeb08443c0fefbd1741" name="a27076a8d759b7aeb08443c0fefbd1741"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>normalise</b> (SampleType input)</td></tr>
-<tr class="memitem:aa00838c5fec0d321b3aafe5c68da0063" id="r_aa00838c5fec0d321b3aafe5c68da0063"><td class="memItemLeft" align="right" valign="top"><a id="aa00838c5fec0d321b3aafe5c68da0063" name="aa00838c5fec0d321b3aafe5c68da0063"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>expCurve</b> (SampleType input, SampleType exponent)</td></tr>
-<tr class="memitem:a2a79f03532626ec5d2e8e9012faaa6d0" id="r_a2a79f03532626ec5d2e8e9012faaa6d0"><td class="memItemLeft" align="right" valign="top"><a id="a2a79f03532626ec5d2e8e9012faaa6d0" name="a2a79f03532626ec5d2e8e9012faaa6d0"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>invCurve</b> (SampleType input, SampleType exponent)</td></tr>
+<tr class="memitem:a3ddfc2434ab82a46b18bd04ef9f69845" id="r_a3ddfc2434ab82a46b18bd04ef9f69845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ddfc2434ab82a46b18bd04ef9f69845">MinMax</a> ()</td></tr>
+<tr class="memdesc:a3ddfc2434ab82a46b18bd04ef9f69845"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new default Min Max object.  <br /></td></tr>
+<tr class="memitem:a9be315ec4c8e6c74110ea441ae656522" id="r_a9be315ec4c8e6c74110ea441ae656522"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9be315ec4c8e6c74110ea441ae656522">MinMax</a> (SampleType <a class="el" href="#a7c40af06b16496ea95b76ace2cee523c">min</a>, SampleType <a class="el" href="#a1a9ce4abc3cb4aced78c02a23de9146b">max</a>)</td></tr>
+<tr class="memdesc:a9be315ec4c8e6c74110ea441ae656522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Min Max object.  <br /></td></tr>
+<tr class="memitem:abdf6e80aedb02b600135db487098eb47" id="r_abdf6e80aedb02b600135db487098eb47"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdf6e80aedb02b600135db487098eb47">MinMax</a> (const MinMax &amp;rhs)</td></tr>
+<tr class="memdesc:abdf6e80aedb02b600135db487098eb47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a copy of another Min Max object.  <br /></td></tr>
+<tr class="memitem:a4f690b51897a3186b9e7ff9a79a51c98" id="r_a4f690b51897a3186b9e7ff9a79a51c98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f690b51897a3186b9e7ff9a79a51c98">setMinMax</a> (SampleType <a class="el" href="#a7c40af06b16496ea95b76ace2cee523c">min</a>, SampleType <a class="el" href="#a1a9ce4abc3cb4aced78c02a23de9146b">max</a>)</td></tr>
+<tr class="memdesc:a4f690b51897a3186b9e7ff9a79a51c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the minimum and maximum values.  <br /></td></tr>
+<tr class="memitem:ad6eb0b1af87dea16d555f49b50e40f71" id="r_ad6eb0b1af87dea16d555f49b50e40f71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6eb0b1af87dea16d555f49b50e40f71">setMin</a> (SampleType <a class="el" href="#a7c40af06b16496ea95b76ace2cee523c">min</a>)</td></tr>
+<tr class="memdesc:ad6eb0b1af87dea16d555f49b50e40f71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set just the minimum value.  <br /></td></tr>
+<tr class="memitem:a9947ad9cf1ffded139b097c5abc725b2" id="r_a9947ad9cf1ffded139b097c5abc725b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9947ad9cf1ffded139b097c5abc725b2">setMax</a> (SampleType <a class="el" href="#a1a9ce4abc3cb4aced78c02a23de9146b">max</a>)</td></tr>
+<tr class="memdesc:a9947ad9cf1ffded139b097c5abc725b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set just the maximum value.  <br /></td></tr>
+<tr class="memitem:a7c40af06b16496ea95b76ace2cee523c" id="r_a7c40af06b16496ea95b76ace2cee523c"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c40af06b16496ea95b76ace2cee523c">min</a> ()</td></tr>
+<tr class="memdesc:a7c40af06b16496ea95b76ace2cee523c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum value.  <br /></td></tr>
+<tr class="memitem:a1a9ce4abc3cb4aced78c02a23de9146b" id="r_a1a9ce4abc3cb4aced78c02a23de9146b"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a9ce4abc3cb4aced78c02a23de9146b">max</a> ()</td></tr>
+<tr class="memdesc:a1a9ce4abc3cb4aced78c02a23de9146b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum value.  <br /></td></tr>
+<tr class="memitem:a71ba1386b932e3e38f3e7efac584b963" id="r_a71ba1386b932e3e38f3e7efac584b963"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71ba1386b932e3e38f3e7efac584b963">delta</a> ()</td></tr>
+<tr class="memdesc:a71ba1386b932e3e38f3e7efac584b963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the difference between minimum and maximum.  <br /></td></tr>
+<tr class="memitem:ad856c3daaec158096a646a184d81047e" id="r_ad856c3daaec158096a646a184d81047e"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad856c3daaec158096a646a184d81047e">fastBoundary</a> (SampleType input)</td></tr>
+<tr class="memdesc:ad856c3daaec158096a646a184d81047e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp a value between minimum and maximum values.  <br /></td></tr>
+<tr class="memitem:a7e0202b2f9e9d27e0877ab9c9d14dd2c" id="r_a7e0202b2f9e9d27e0877ab9c9d14dd2c"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e0202b2f9e9d27e0877ab9c9d14dd2c">LERP</a> (SampleType input)</td></tr>
+<tr class="memdesc:a7e0202b2f9e9d27e0877ab9c9d14dd2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a linear interpolation between the minimum and the maximum.  <br /></td></tr>
+<tr class="memitem:a27076a8d759b7aeb08443c0fefbd1741" id="r_a27076a8d759b7aeb08443c0fefbd1741"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27076a8d759b7aeb08443c0fefbd1741">normalise</a> (SampleType input)</td></tr>
+<tr class="memdesc:a27076a8d759b7aeb08443c0fefbd1741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the opposite of an interpolation.  <br /></td></tr>
+<tr class="memitem:aa00838c5fec0d321b3aafe5c68da0063" id="r_aa00838c5fec0d321b3aafe5c68da0063"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa00838c5fec0d321b3aafe5c68da0063">expCurve</a> (SampleType input, SampleType exponent)</td></tr>
+<tr class="memdesc:aa00838c5fec0d321b3aafe5c68da0063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate between minimum and maximum, with a bias curve described by the exponent.  <br /></td></tr>
+<tr class="memitem:a2a79f03532626ec5d2e8e9012faaa6d0" id="r_a2a79f03532626ec5d2e8e9012faaa6d0"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a79f03532626ec5d2e8e9012faaa6d0">invCurve</a> (SampleType input, SampleType exponent)</td></tr>
+<tr class="memdesc:a2a79f03532626ec5d2e8e9012faaa6d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the inverse operation of expCurve.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;int TopBottom = 0&gt;<br />
+class XDDSP::MinMax&lt; TopBottom &gt;</div><p>A class encapsulating some common min-max functionality. </p>
+<p>This class contains some common functions that come in handy where a signal, parameter or control has a minimum and a maximum value.</p>
+<p>This class has two different modes: Min-Max mode and Top-Bottom mode.</p>
+<p>In Min-Max mode, the minimum and maximum value only describe a region where a signal is valid. If they are put in the wrong order, this class will swap them around.</p>
+<p>In Top-Bottom mode, the minimum and maximum value describe a literal value at the top and bottom of a control range, allowing the range to be inverted if required. An example of this might be the radius of a turn, where higher numbers result in slower turns, so it might make sence to put higher numbers at the bottom of the control range.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TopBottom</td><td>Anything non-zero enables Top-Bottom mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3ddfc2434ab82a46b18bd04ef9f69845" name="a3ddfc2434ab82a46b18bd04ef9f69845"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ddfc2434ab82a46b18bd04ef9f69845">&#9670;&#160;</a></span>MinMax() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::MinMax </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new default Min Max object. </p>
+<p>The default settings for minimin and maximum are 0 and 1 respectively. </p>
+
+</div>
+</div>
+<a id="a9be315ec4c8e6c74110ea441ae656522" name="a9be315ec4c8e6c74110ea441ae656522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be315ec4c8e6c74110ea441ae656522">&#9670;&#160;</a></span>MinMax() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::MinMax </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>min</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Min Max object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>The minimum value. </td></tr>
+    <tr><td class="paramname">max</td><td>The maximum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abdf6e80aedb02b600135db487098eb47" name="abdf6e80aedb02b600135db487098eb47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdf6e80aedb02b600135db487098eb47">&#9670;&#160;</a></span>MinMax() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::MinMax </td>
+          <td>(</td>
+          <td class="paramtype">const MinMax&lt; TopBottom &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a copy of another Min Max object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>The other object to copy. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a71ba1386b932e3e38f3e7efac584b963" name="a71ba1386b932e3e38f3e7efac584b963"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71ba1386b932e3e38f3e7efac584b963">&#9670;&#160;</a></span>delta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::delta </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the difference between minimum and maximum. </p>
+<p>In Top-Bottom mode, this number is allowed to be negative.</p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The current delta between minimum and maximum. </dd></dl>
+
+</div>
+</div>
+<a id="aa00838c5fec0d321b3aafe5c68da0063" name="aa00838c5fec0d321b3aafe5c68da0063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa00838c5fec0d321b3aafe5c68da0063">&#9670;&#160;</a></span>expCurve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::expCurve </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>exponent</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Interpolate between minimum and maximum, with a bias curve described by the exponent. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>A fraction between 0 and 1. </td></tr>
+    <tr><td class="paramname">exponent</td><td>The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType A value between minimum and maximum corresponding to the input and curve. </dd></dl>
+
+</div>
+</div>
+<a id="ad856c3daaec158096a646a184d81047e" name="ad856c3daaec158096a646a184d81047e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad856c3daaec158096a646a184d81047e">&#9670;&#160;</a></span>fastBoundary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::fastBoundary </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clamp a value between minimum and maximum values. </p>
+<p>Regardless of what mode it is in, the object will always correctly clamp between the smallest and the largest values in the object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>Some value to clamp. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The clamped value. </dd></dl>
+
+</div>
+</div>
+<a id="a2a79f03532626ec5d2e8e9012faaa6d0" name="a2a79f03532626ec5d2e8e9012faaa6d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a79f03532626ec5d2e8e9012faaa6d0">&#9670;&#160;</a></span>invCurve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::invCurve </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>exponent</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform the inverse operation of expCurve. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>A value between minimum and maximum. </td></tr>
+    <tr><td class="paramname">exponent</td><td>The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType A value between 0 and 1 such that, when entered into expCurve, returns the same value as the input. </dd></dl>
+
+</div>
+</div>
+<a id="a7e0202b2f9e9d27e0877ab9c9d14dd2c" name="a7e0202b2f9e9d27e0877ab9c9d14dd2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e0202b2f9e9d27e0877ab9c9d14dd2c">&#9670;&#160;</a></span>LERP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::LERP </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a linear interpolation between the minimum and the maximum. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>A fraction between 0 and 1. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The value interpolated between minimum and maximum. </dd></dl>
+
+</div>
+</div>
+<a id="a1a9ce4abc3cb4aced78c02a23de9146b" name="a1a9ce4abc3cb4aced78c02a23de9146b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a9ce4abc3cb4aced78c02a23de9146b">&#9670;&#160;</a></span>max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::max </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the maximum value. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The maximum value. </dd></dl>
+
+</div>
+</div>
+<a id="a7c40af06b16496ea95b76ace2cee523c" name="a7c40af06b16496ea95b76ace2cee523c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c40af06b16496ea95b76ace2cee523c">&#9670;&#160;</a></span>min()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::min </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the minimum value. </p>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The minimum value. </dd></dl>
+
+</div>
+</div>
+<a id="a27076a8d759b7aeb08443c0fefbd1741" name="a27076a8d759b7aeb08443c0fefbd1741"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27076a8d759b7aeb08443c0fefbd1741">&#9670;&#160;</a></span>normalise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::normalise </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform the opposite of an interpolation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>A value between minimum and maximum. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType A normalised value between 0 and 1. </dd></dl>
+
+</div>
+</div>
+<a id="a9947ad9cf1ffded139b097c5abc725b2" name="a9947ad9cf1ffded139b097c5abc725b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9947ad9cf1ffded139b097c5abc725b2">&#9670;&#160;</a></span>setMax()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::setMax </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>max</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set just the maximum value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">max</td><td>The maximum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad6eb0b1af87dea16d555f49b50e40f71" name="ad6eb0b1af87dea16d555f49b50e40f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6eb0b1af87dea16d555f49b50e40f71">&#9670;&#160;</a></span>setMin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::setMin </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>min</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set just the minimum value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>The minimum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4f690b51897a3186b9e7ff9a79a51c98" name="a4f690b51897a3186b9e7ff9a79a51c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f690b51897a3186b9e7ff9a79a51c98">&#9670;&#160;</a></span>setMinMax()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int TopBottom = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_min_max.html">XDDSP::MinMax</a>&lt; TopBottom &gt;::setMinMax </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>min</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>max</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the minimum and maximum values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min</td><td>The minimum value. </td></tr>
+    <tr><td class="paramname">max</td><td>The maximum value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a></li>
 </ul>
@@ -138,7 +657,7 @@ SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>invCurve</b> (S
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_min_max.html">MinMax</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_min_max.html">MinMax</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

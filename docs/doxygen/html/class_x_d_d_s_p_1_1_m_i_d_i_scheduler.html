@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html','','class_
   <div class="headertitle"><div class="title">XDDSP::MIDIScheduler&lt; OutputCount, RampLengthms &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component which takes MIDI events and outputs a signal for each.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___polyphony_8h_source.html">XDDSP_Polyphony.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::MIDIScheduler&lt; OutputCount, RampLengthms &gt;:</div>
 <div class="dyncontent">
@@ -99,7 +104,7 @@ Inheritance diagram for XDDSP::MIDIScheduler&lt; OutputCount, RampLengthms &gt;:
   <img src="class_x_d_d_s_p_1_1_m_i_d_i_scheduler.png" usemap="#XDDSP_3A_3AMIDIScheduler_3C_20OutputCount_2C_20RampLengthms_20_3E_map" alt=""/>
   <map id="XDDSP_3A_3AMIDIScheduler_3C_20OutputCount_2C_20RampLengthms_20_3E_map" name="XDDSP_3A_3AMIDIScheduler_3C_20OutputCount_2C_20RampLengthms_20_3E_map">
 <area href="class_x_d_d_s_p_1_1_component.html" alt="XDDSP::Component&lt; MIDIScheduler&lt; OutputCount, 5 &gt; &gt;" shape="rect" coords="0,56,342,80"/>
-<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="352,56,694,80"/>
+<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object." alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="352,56,694,80"/>
 <area href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to..." alt="XDDSP::ComponentBaseClass" shape="rect" coords="0,0,342,24"/>
   </map>
 </div></div>
@@ -108,12 +113,12 @@ Inheritance diagram for XDDSP::MIDIScheduler&lt; OutputCount, RampLengthms &gt;:
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adbc30975d5b8716d47573ec31591eb05" id="r_adbc30975d5b8716d47573ec31591eb05"><td class="memItemLeft" align="right" valign="top"><a id="adbc30975d5b8716d47573ec31591eb05" name="adbc30975d5b8716d47573ec31591eb05"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>MIDIScheduler</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p)</td></tr>
-<tr class="memitem:aad2f175da22e417b229cadb3cf060a31" id="r_aad2f175da22e417b229cadb3cf060a31"><td class="memItemLeft" align="right" valign="top"><a id="aad2f175da22e417b229cadb3cf060a31" name="aad2f175da22e417b229cadb3cf060a31"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addEvent</b> (int channel, SampleType newValue, int samplePosition)</td></tr>
+<tr class="memitem:aad2f175da22e417b229cadb3cf060a31" id="r_aad2f175da22e417b229cadb3cf060a31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad2f175da22e417b229cadb3cf060a31">addEvent</a> (int channel, SampleType newValue, int samplePosition)</td></tr>
+<tr class="memdesc:aad2f175da22e417b229cadb3cf060a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a MIDI event to a channel.  <br /></td></tr>
 <tr class="memitem:adea245bb427457c687ed319c454ca568" id="r_adea245bb427457c687ed319c454ca568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adea245bb427457c687ed319c454ca568">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:adea245bb427457c687ed319c454ca568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="memitem:a00f63f869201a699a3efd89306446866" id="r_a00f63f869201a699a3efd89306446866"><td class="memItemLeft" align="right" valign="top"><a id="a00f63f869201a699a3efd89306446866" name="a00f63f869201a699a3efd89306446866"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>advanceMidiEvents</b> (int sampleCount)</td></tr>
+<tr class="memitem:a00f63f869201a699a3efd89306446866" id="r_a00f63f869201a699a3efd89306446866"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00f63f869201a699a3efd89306446866">advanceMidiEvents</a> (int sampleCount)</td></tr>
+<tr class="memdesc:a00f63f869201a699a3efd89306446866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance all the MIDI events in the buffer by the sample count given.  <br /></td></tr>
 <tr class="memitem:abc35bc590dfaeef274e71b3f6c4e9858" id="r_abc35bc590dfaeef274e71b3f6c4e9858"><td class="memItemLeft" align="right" valign="top"><a id="abc35bc590dfaeef274e71b3f6c4e9858" name="abc35bc590dfaeef274e71b3f6c4e9858"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSampleRate</b> (SampleType sr, SampleType isr) override</td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; MIDIScheduler&lt; OutputCount, 5 &gt; &gt;</a></td></tr>
@@ -133,14 +138,17 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSampleR
 <tr class="memitem:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class" id="r_a15b536e90f03eaa4c18bfe37d07370d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#a15b536e90f03eaa4c18bfe37d07370d5">setEnabled</a> (bool e)</td></tr>
 <tr class="memdesc:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether the component is enabled or not.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a></td></tr>
-<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>ParameterListener</b> (Parameters &amp;p)</td></tr>
-<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSampleRate</b> (double sr, double isr)</td></tr>
-<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateBufferSize</b> (int bs)</td></tr>
-<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCustomParameter</b> (int category, int index)</td></tr>
+<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a26d1f9d7e8b523a290bfdc81794b42d9">ParameterListener</a> (Parameters &amp;p)</td></tr>
+<tr class="memdesc:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object.">ParameterListener</a> object and add this as a listener.  <br /></td></tr>
+<tr class="memitem:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_af1e818d978468f5a85eb1d49fa5fdfe7"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ParameterListener</b> ()</td></tr>
+<tr class="memdesc:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Parameter Listener object and remove this from the listeners list. <br /></td></tr>
+<tr class="memitem:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_abf0c32c9a053315ed00cfd95712d4733"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#abf0c32c9a053315ed00cfd95712d4733">updateSampleRate</a> (double sr, double isr)</td></tr>
+<tr class="memdesc:abf0c32c9a053315ed00cfd95712d4733 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the sample rate.  <br /></td></tr>
+<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a08798bf96e26f72768c42821535e5374">updateBufferSize</a> (int bs)</td></tr>
+<tr class="memdesc:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the buffer size.  <br /></td></tr>
+<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a932121d85708e6573b87dbf7d90d2b78">updateCustomParameter</a> (int category, int index)</td></tr>
+<tr class="memdesc:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to any custom parameter.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -161,7 +169,99 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;int OutputCount, int RampLengthms = 5&gt;<br />
+class XDDSP::MIDIScheduler&lt; OutputCount, RampLengthms &gt;</div><p>A component which takes MIDI events and outputs a signal for each. </p>
+<p>TODO: Change the algorithm to use a heap to order events.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">OutputCount</td><td>The number of signals to output. </td></tr>
+    <tr><td class="paramname">RampLengthms</td><td>The length of the smoothing window in ms. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="aad2f175da22e417b229cadb3cf060a31" name="aad2f175da22e417b229cadb3cf060a31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad2f175da22e417b229cadb3cf060a31">&#9670;&#160;</a></span>addEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int OutputCount, int RampLengthms = 5&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html">XDDSP::MIDIScheduler</a>&lt; OutputCount, RampLengthms &gt;::addEvent </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>newValue</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>samplePosition</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add a MIDI event to a channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to add the event to. </td></tr>
+    <tr><td class="paramname">newValue</td><td>The new value that will be output when the event is triggered. </td></tr>
+    <tr><td class="paramname">samplePosition</td><td>The number of samples to wait until triggering the event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a00f63f869201a699a3efd89306446866" name="a00f63f869201a699a3efd89306446866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00f63f869201a699a3efd89306446866">&#9670;&#160;</a></span>advanceMidiEvents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int OutputCount, int RampLengthms = 5&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html">XDDSP::MIDIScheduler</a>&lt; OutputCount, RampLengthms &gt;::advanceMidiEvents </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>sampleCount</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advance all the MIDI events in the buffer by the sample count given. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sampleCount</td><td>The number of samples to advance the events in the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="adea245bb427457c687ed319c454ca568" name="adea245bb427457c687ed319c454ca568"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adea245bb427457c687ed319c454ca568">&#9670;&#160;</a></span>stepProcess()</h2>
 
@@ -220,7 +320,7 @@ template&lt;int OutputCount, int RampLengthms = 5&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html">MIDIScheduler</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html">MIDIScheduler</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

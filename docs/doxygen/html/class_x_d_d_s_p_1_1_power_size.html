@@ -92,29 +92,264 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_power_size.html','','class_x_d_d_s
   <div class="headertitle"><div class="title">XDDSP::PowerSize Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class containing commonly used functionality in relation to powers of two.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a546ac33c174a4fc08486a197fc4632b7" id="r_a546ac33c174a4fc08486a197fc4632b7"><td class="memItemLeft" align="right" valign="top"><a id="a546ac33c174a4fc08486a197fc4632b7" name="a546ac33c174a4fc08486a197fc4632b7"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>PowerSize</b> ()</td></tr>
+<tr class="memdesc:a546ac33c174a4fc08486a197fc4632b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a default <a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> object using 8 bits. <br /></td></tr>
 <tr class="memitem:a9bd70631ad4cf071f589b26177a0760f" id="r_a9bd70631ad4cf071f589b26177a0760f"><td class="memItemLeft" align="right" valign="top"><a id="a9bd70631ad4cf071f589b26177a0760f" name="a9bd70631ad4cf071f589b26177a0760f"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>PowerSize</b> (uint32_t bits)</td></tr>
-<tr class="memitem:a7f9b0813d1cb46a92f7d138080f79fbd" id="r_a7f9b0813d1cb46a92f7d138080f79fbd"><td class="memItemLeft" align="right" valign="top"><a id="a7f9b0813d1cb46a92f7d138080f79fbd" name="a7f9b0813d1cb46a92f7d138080f79fbd"></a>
-constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>bits</b> () const</td></tr>
-<tr class="memitem:aeadd7c119b220c9a18ffec7bcc652999" id="r_aeadd7c119b220c9a18ffec7bcc652999"><td class="memItemLeft" align="right" valign="top"><a id="aeadd7c119b220c9a18ffec7bcc652999" name="aeadd7c119b220c9a18ffec7bcc652999"></a>
-constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</td></tr>
-<tr class="memitem:abef40580249f420044c02d9008c923ce" id="r_abef40580249f420044c02d9008c923ce"><td class="memItemLeft" align="right" valign="top"><a id="abef40580249f420044c02d9008c923ce" name="abef40580249f420044c02d9008c923ce"></a>
-constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>mask</b> () const</td></tr>
-<tr class="memitem:aee89ca9a74543ada1eb0643c35c22c0b" id="r_aee89ca9a74543ada1eb0643c35c22c0b"><td class="memItemLeft" align="right" valign="top"><a id="aee89ca9a74543ada1eb0643c35c22c0b" name="aee89ca9a74543ada1eb0643c35c22c0b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBits</b> (int bits)</td></tr>
-<tr class="memitem:a7b789ba793ca0d61f358a72cfda998aa" id="r_a7b789ba793ca0d61f358a72cfda998aa"><td class="memItemLeft" align="right" valign="top"><a id="a7b789ba793ca0d61f358a72cfda998aa" name="a7b789ba793ca0d61f358a72cfda998aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setToNextPowerTwo</b> (uint32_t rs)</td></tr>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>PowerSize</b> (uint32_t <a class="el" href="#a7f9b0813d1cb46a92f7d138080f79fbd">bits</a>)</td></tr>
+<tr class="memdesc:a9bd70631ad4cf071f589b26177a0760f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> object with a number of bits between 0 and 32. <br /></td></tr>
+<tr class="memitem:a7f9b0813d1cb46a92f7d138080f79fbd" id="r_a7f9b0813d1cb46a92f7d138080f79fbd"><td class="memItemLeft" align="right" valign="top">constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f9b0813d1cb46a92f7d138080f79fbd">bits</a> () const</td></tr>
+<tr class="memdesc:a7f9b0813d1cb46a92f7d138080f79fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of bits the object was constructed with.  <br /></td></tr>
+<tr class="memitem:aeadd7c119b220c9a18ffec7bcc652999" id="r_aeadd7c119b220c9a18ffec7bcc652999"><td class="memItemLeft" align="right" valign="top">constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeadd7c119b220c9a18ffec7bcc652999">size</a> () const</td></tr>
+<tr class="memdesc:aeadd7c119b220c9a18ffec7bcc652999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the power of two corresponding to the number of bits.  <br /></td></tr>
+<tr class="memitem:abef40580249f420044c02d9008c923ce" id="r_abef40580249f420044c02d9008c923ce"><td class="memItemLeft" align="right" valign="top">constexpr uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abef40580249f420044c02d9008c923ce">mask</a> () const</td></tr>
+<tr class="memdesc:abef40580249f420044c02d9008c923ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a number with all the bits set to 1, useful for masking.  <br /></td></tr>
+<tr class="memitem:aee89ca9a74543ada1eb0643c35c22c0b" id="r_aee89ca9a74543ada1eb0643c35c22c0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee89ca9a74543ada1eb0643c35c22c0b">setBits</a> (int <a class="el" href="#a7f9b0813d1cb46a92f7d138080f79fbd">bits</a>)</td></tr>
+<tr class="memdesc:aee89ca9a74543ada1eb0643c35c22c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the object with a different number of bits.  <br /></td></tr>
+<tr class="memitem:a7b789ba793ca0d61f358a72cfda998aa" id="r_a7b789ba793ca0d61f358a72cfda998aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b789ba793ca0d61f358a72cfda998aa">setToNextPowerTwo</a> (uint32_t rs)</td></tr>
+<tr class="memdesc:a7b789ba793ca0d61f358a72cfda998aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the object using the next power of two higher than the target value.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a05f20587b121b02890d705fb40b0ceeb" id="r_a05f20587b121b02890d705fb40b0ceeb"><td class="memItemLeft" align="right" valign="top"><a id="a05f20587b121b02890d705fb40b0ceeb" name="a05f20587b121b02890d705fb40b0ceeb"></a>
-static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>nextPowerTwoMinusOne</b> (uint32_t rs)</td></tr>
-<tr class="memitem:a97d6142ba3265b993d81a3ae1a49191e" id="r_a97d6142ba3265b993d81a3ae1a49191e"><td class="memItemLeft" align="right" valign="top"><a id="a97d6142ba3265b993d81a3ae1a49191e" name="a97d6142ba3265b993d81a3ae1a49191e"></a>
-static PowerSize&#160;</td><td class="memItemRight" valign="bottom"><b>fromNextPowerTwo</b> (uint32_t rs)</td></tr>
+<tr class="memitem:a05f20587b121b02890d705fb40b0ceeb" id="r_a05f20587b121b02890d705fb40b0ceeb"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05f20587b121b02890d705fb40b0ceeb">nextPowerTwoMinusOne</a> (uint32_t rs)</td></tr>
+<tr class="memdesc:a05f20587b121b02890d705fb40b0ceeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a mask by finding the next power of two higher than the target value and subtracting one.  <br /></td></tr>
+<tr class="memitem:a97d6142ba3265b993d81a3ae1a49191e" id="r_a97d6142ba3265b993d81a3ae1a49191e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="#a546ac33c174a4fc08486a197fc4632b7">PowerSize</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97d6142ba3265b993d81a3ae1a49191e">fromNextPowerTwo</a> (uint32_t rs)</td></tr>
+<tr class="memdesc:a97d6142ba3265b993d81a3ae1a49191e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct and return a <a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> object using the <a class="el" href="#a7b789ba793ca0d61f358a72cfda998aa" title="Reset the object using the next power of two higher than the target value.">PowerSize::setToNextPowerTwo</a> setter method on a new object.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class containing commonly used functionality in relation to powers of two. </p>
+<p>Unless otherwise noted, all the defaults referred to in the documentation for this class refer to the default construction with 8 bits.</p>
+<p>It has constexpr methods which allow it to be used inside template arguments in some cases. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a7f9b0813d1cb46a92f7d138080f79fbd" name="a7f9b0813d1cb46a92f7d138080f79fbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f9b0813d1cb46a92f7d138080f79fbd">&#9670;&#160;</a></span>bits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t XDDSP::PowerSize::bits </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of bits the object was constructed with. </p>
+<p>Default = 8.</p>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t The number of bits the object was constructed with. </dd></dl>
+
+</div>
+</div>
+<a id="a97d6142ba3265b993d81a3ae1a49191e" name="a97d6142ba3265b993d81a3ae1a49191e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97d6142ba3265b993d81a3ae1a49191e">&#9670;&#160;</a></span>fromNextPowerTwo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a546ac33c174a4fc08486a197fc4632b7">PowerSize</a> XDDSP::PowerSize::fromNextPowerTwo </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>rs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct and return a <a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> object using the <a class="el" href="#a7b789ba793ca0d61f358a72cfda998aa" title="Reset the object using the next power of two higher than the target value.">PowerSize::setToNextPowerTwo</a> setter method on a new object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rs</td><td>A target value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> A <a class="el" href="class_x_d_d_s_p_1_1_power_size.html" title="A class containing commonly used functionality in relation to powers of two.">PowerSize</a> object made with enough bits to fit the target value. </dd></dl>
+
+</div>
+</div>
+<a id="abef40580249f420044c02d9008c923ce" name="abef40580249f420044c02d9008c923ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abef40580249f420044c02d9008c923ce">&#9670;&#160;</a></span>mask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t XDDSP::PowerSize::mask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a number with all the bits set to 1, useful for masking. </p>
+<p>Default = 255.</p>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t A number with all the bits set to 1, useful for masking. </dd></dl>
+
+</div>
+</div>
+<a id="a05f20587b121b02890d705fb40b0ceeb" name="a05f20587b121b02890d705fb40b0ceeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05f20587b121b02890d705fb40b0ceeb">&#9670;&#160;</a></span>nextPowerTwoMinusOne()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t XDDSP::PowerSize::nextPowerTwoMinusOne </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>rs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make a mask by finding the next power of two higher than the target value and subtracting one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rs</td><td>The target value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t The next power of two subtract one. </dd></dl>
+
+</div>
+</div>
+<a id="aee89ca9a74543ada1eb0643c35c22c0b" name="aee89ca9a74543ada1eb0643c35c22c0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee89ca9a74543ada1eb0643c35c22c0b">&#9670;&#160;</a></span>setBits()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PowerSize::setBits </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>bits</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset the object with a different number of bits. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bits</td><td>Number of bits to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7b789ba793ca0d61f358a72cfda998aa" name="a7b789ba793ca0d61f358a72cfda998aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b789ba793ca0d61f358a72cfda998aa">&#9670;&#160;</a></span>setToNextPowerTwo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::PowerSize::setToNextPowerTwo </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>rs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset the object using the next power of two higher than the target value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rs</td><td>The target value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeadd7c119b220c9a18ffec7bcc652999" name="aeadd7c119b220c9a18ffec7bcc652999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeadd7c119b220c9a18ffec7bcc652999">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t XDDSP::PowerSize::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the power of two corresponding to the number of bits. </p>
+<p>Default = 256.</p>
+<dl class="section return"><dt>Returns</dt><dd>uint32_t The power of two corresponding to the number of bits. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a></li>
 </ul>
@@ -131,7 +366,7 @@ static PowerSize&#160;</td><td class="memItemRight" valign="bottom"><b>fromNextP
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_power_size.html">PowerSize</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_power_size.html">PowerSize</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

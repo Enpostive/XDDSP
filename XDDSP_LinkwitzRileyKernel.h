@@ -39,6 +39,12 @@ class LinkwitzRileyFilterKernel;
 
 
 
+/**
+ * @brief A class encapsulating code for generating Linkwitz-Riley filter coefficients.
+ * 
+ * Thank you Lubomir I. Ivanov
+ * Derived from pseudo code taken from https://www.musicdsp.org/en/latest/Filters/266-4th-order-linkwitz-riley-filters.html
+ */
 class LinkwitzRileyFilterCoefficients : public Parameters::ParameterListener
 {
  friend class LinkwitzRileyFilterKernel;
@@ -110,6 +116,11 @@ public:
   setCoeff();
  }
  
+ /**
+  * @brief Set the cutoff frequency for the filter in Hz.
+  * 
+  * @param frequency The cutoff frequency for the filter in Hz.
+  */
  void setFrequency(SampleType frequency)
  {
   fc = frequency;
@@ -126,6 +137,12 @@ public:
 
 
 
+/**
+ * @brief A class encapsulating a Linkwitz-Riley filter kernel.
+ * 
+ * Thank you Lubomir I. Ivanov
+ * Derived from pseudo code taken from https://www.musicdsp.org/en/latest/Filters/266-4th-order-linkwitz-riley-filters.html
+ */
 class LinkwitzRileyFilterKernel
 {
  SampleType xm1;
@@ -147,11 +164,23 @@ public:
   reset();
  }
  
+ /**
+  * @brief Reset the filter kernel.
+  * 
+  */
  void reset()
  {
   xm1 = xm2 = xm3 = xm4 = lym1 = lym2 = lym3 = lym4 = hym1 = hym2 = hym3 = hym4 = 0.;
  }
  
+ /**
+  * @brief Process one sample of filter input.
+  * 
+  * @param coeff The class containing the filter coefficients.
+  * @param lowOutput The output containing signals below the cutoff frequency.
+  * @param highOutput The output containing signals above the cutoff frequency.
+  * @param input The input sample.
+  */
  void process(const LinkwitzRileyFilterCoefficients &coeff,
               SampleType &lowOutput,
               SampleType &highOutput,

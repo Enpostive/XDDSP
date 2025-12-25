@@ -33,26 +33,49 @@ namespace XDDSP
 
 
 
+  /**
+   * @brief An input only component which can come in handy when debugging your DSP Network.
+   * 
+   * @tparam SignalIn Couples to the signal to debug. May have as many channels as you like.
+   */
 template <typename SignalIn>
 class DebugWatch : public Component<DebugWatch<SignalIn>>
 {
- // Private data members here
 public:
  static constexpr int Count = SignalIn::Count;
  
+ /**
+  * @brief Called with the channel number when a zero is detected.
+  * 
+  */
  std::function<void (int)> onZero;
+
+ /**
+  * @brief Called with the channel number when a nonzero is detected.
+  * 
+  */
  std::function<void (int)> onNonZero;
+
+ /**
+  * @brief Called with the channel number when a nan value is detected.
+  * 
+  */
  std::function<void (int)> onNAN;
+
+ /**
+  * @brief Called with the channel number when a denormal or subnormal number is detected.
+  * 
+  */
  std::function<void (int)> onDenormal;
+
+ /**
+  * @brief Called with the channel number when an infinite value is detected.
+  * 
+  */
  std::function<void (int)> onInfinite;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
- // No outputs
- 
- // Include a definition for each input in the constructor
  DebugWatch(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn)
  {}
@@ -111,10 +134,16 @@ public:
 
 
 
+/**
+ * @brief A probe suitable for measureing minimum, maximum and instantaneous values in a signal and reading them from non-DSP code.
+ * 
+ * This component is thread safe.
+ * 
+ * @tparam SignalIn Couples to the signal to measure. May have as many channels as you like.
+ */
 template <typename SignalIn>
 class SignalProbe : public Component<SignalProbe<SignalIn>>
 {
- // Private data members here
  std::array<SampleType, SignalIn::Count> maximumValue;
  std::array<SampleType, SignalIn::Count> minimumValue;
  std::array<SampleType, SignalIn::Count> instantaneousValue;
@@ -123,19 +152,18 @@ class SignalProbe : public Component<SignalProbe<SignalIn>>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
- // No output
- 
- // Include a definition for each input in the constructor
  SignalProbe(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn)
  {
   reset();
  }
  
+ /**
+  * @brief Reset the minimum and maximum values.
+  * 
+  */
  void reset()
  {
   std::unique_lock lock(mtx);
@@ -160,30 +188,60 @@ public:
   }
  }
  
+ /**
+  * @brief Get the minimum value seen since the last reset.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The minimum value.
+  */
  SampleType getMinimumValue(int channel)
  {
   std::unique_lock lock(mtx);
   return minimumValue[channel];
  }
  
+ /**
+  * @brief Get the maximum value seen since the last reset.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The maximum value.
+  */
  SampleType getMaximumValue(int channel)
  {
   std::unique_lock lock(mtx);
   return maximumValue[channel];
  }
  
+ /**
+  * @brief Get the value with the highest magnitude seen since the last reset.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The maximum value.
+  */
  SampleType getAbsoluteMaximumValue(int channel)
  { 
   std::unique_lock lock(mtx);
   return fastMax(fabs(minimumValue[channel]), fabs(maximumValue[channel]));
  }
  
+ /**
+  * @brief Get the last value seen by the object
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The last value seen.
+  */
  SampleType getInstantValue(int channel)
  {
   std::unique_lock lock(mtx);
   return instantaneousValue[channel];
  }
  
+ /**
+  * @brief Get the value with the highest magnitude seen since the last reset, then perform a reset straight away.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The maximum value.
+  */
  SampleType probe(int channel)
  {
   std::unique_lock lock(mtx);
@@ -192,6 +250,12 @@ public:
   return result;
  }
  
+ /**
+  * @brief Designed for getting the maximum value coming from a squared signal.
+  * 
+  * @param channel The channel to check.
+  * @return SampleType The maximum value.
+  */
  SampleType probeSqrt(int channel)
  {
   std::unique_lock lock(mtx);
@@ -319,10 +383,14 @@ public:
 
 
 
+/**
+ * @brief A component which buffers samples from its input and makes them available in a thread safe manner
+ * 
+ * @tparam SignalIn Couples to the signal to monitor. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class InterfaceBuffer : public Component<InterfaceBuffer<SignalIn>>
 {
- // Private data members here
  std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
  int bufferSize {32};
  std::mutex mux;
@@ -330,23 +398,21 @@ class InterfaceBuffer : public Component<InterfaceBuffer<SignalIn>>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
- // No outputs
- 
- // Include a definition for each input in the constructor
  InterfaceBuffer(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
  }
  
+ /**
+  * @brief Set the size of the buffer which keeps input values.
+  * 
+  * @param size The new size of the buffer.
+  */
  void setBufferSize(int size)
  {
   std::lock_guard lock(mux);
@@ -369,6 +435,14 @@ public:
   }
  }
  
+ /**
+  * @brief Extract the samples from the buffer of one channel into a vector.
+  * 
+  * This method overwrites the vector object which is passed in. It may allocate memory, but it does so before locking any mutex which means the actual extraction phase executes in a consistent manner.
+  * 
+  * @param channel The channel to extract.
+  * @param vector The vector to write the samples into.
+  */
  void extractChannel(int channel, std::vector<SampleType> &vector)
  {
   vector.resize(bufferSize);
@@ -379,6 +453,14 @@ public:
   }
  }
  
+ /**
+  * @brief Extract the sum of the samples from the buffer of every channel into a vector.
+  * 
+  * This method overwrites the vector object which is passed in. It may allocate memory, but it does so before locking any mutex which means the actual extraction phase executes in a consistent manner.
+  * 
+  * @param vector The vector to write the samples into.
+  * @param scaleFactor The scaling to apply to the summed samples. Defaults to 1.
+  */
  void extractSumChannels(std::vector<SampleType> &vector, SampleType scaleFactor = 1.)
  {
   vector.resize(bufferSize);
@@ -394,6 +476,15 @@ public:
   }
  }
  
+ /**
+  * @brief Extract a subset of the samples from the buffer of one channel into a vector.
+  * 
+  * This method overwrites the vector object which is passed in. It may allocate memory, but it does so before locking any mutex which means the actual extraction phase executes in a consistent manner.
+  * 
+  * @param channel The channel to extract.
+  * @param vector The vector to write the samples into.
+  * @param length The length of the buffer to read. It always starts from the most recent sample.
+  */
  void partialExtractChannel(int channel, std::vector<SampleType> &vector, int length)
  {
   vector.resize(length);
@@ -404,6 +495,15 @@ public:
   }
  }
  
+ /**
+  * @brief Extract the sum of the samples from the buffer of every channel into a vector.
+  * 
+  * This method overwrites the vector object which is passed in. It may allocate memory, but it does so before locking any mutex which means the actual extraction phase executes in a consistent manner.
+  * 
+  * @param vector The vector to write the samples into.
+  * @param length The length of the buffer to read. It always starts from the most recent sample.
+  * @param scaleFactor The scaling to apply to the summed samples. Defaults to 1.
+  */
  void partialExtractSumChannels(std::vector<SampleType> &vector,
                                 int length,
                                 SampleType scaleFactor = 1.)

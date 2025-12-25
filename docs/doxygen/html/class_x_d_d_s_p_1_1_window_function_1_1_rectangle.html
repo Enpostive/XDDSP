@@ -92,37 +92,81 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_window_function_1_1_rectangle.html
   <div class="headertitle"><div class="title">XDDSP::WindowFunction::Rectangle Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A callable class which generates a rectangle shaped window of a certain length.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___window_functions_8h_source.html">XDDSP_WindowFunctions.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::WindowFunction::Rectangle:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_x_d_d_s_p_1_1_window_function_1_1_rectangle.png" usemap="#XDDSP_3A_3AWindowFunction_3A_3ARectangle_map" alt=""/>
   <map id="XDDSP_3A_3AWindowFunction_3A_3ARectangle_map" name="XDDSP_3A_3AWindowFunction_3A_3ARectangle_map">
-<area href="class_x_d_d_s_p_1_1_window_function_1_1_cosine_window.html" alt="XDDSP::WindowFunction::CosineWindow" shape="rect" coords="0,56,243,80"/>
-<area href="class_x_d_d_s_p_1_1_window_function_1_1_gauss.html" alt="XDDSP::WindowFunction::Gauss" shape="rect" coords="253,56,496,80"/>
-<area href="class_x_d_d_s_p_1_1_window_function_1_1_sine.html" alt="XDDSP::WindowFunction::Sine" shape="rect" coords="506,56,749,80"/>
-<area href="class_x_d_d_s_p_1_1_window_function_1_1_triangle.html" alt="XDDSP::WindowFunction::Triangle" shape="rect" coords="759,56,1002,80"/>
-<area href="class_x_d_d_s_p_1_1_window_function_1_1_welch.html" alt="XDDSP::WindowFunction::Welch" shape="rect" coords="1012,56,1255,80"/>
+<area href="class_x_d_d_s_p_1_1_window_function_1_1_cosine_window.html" title="A callable class which produces a cosine window, which is distinct from a sine window given that the ..." alt="XDDSP::WindowFunction::CosineWindow" shape="rect" coords="0,56,243,80"/>
+<area href="class_x_d_d_s_p_1_1_window_function_1_1_gauss.html" title="Produce a Gauss window." alt="XDDSP::WindowFunction::Gauss" shape="rect" coords="253,56,496,80"/>
+<area href="class_x_d_d_s_p_1_1_window_function_1_1_sine.html" title="A callable class which produces a sine window." alt="XDDSP::WindowFunction::Sine" shape="rect" coords="506,56,749,80"/>
+<area href="class_x_d_d_s_p_1_1_window_function_1_1_triangle.html" title="A callable class which produces a triangle window." alt="XDDSP::WindowFunction::Triangle" shape="rect" coords="759,56,1002,80"/>
+<area href="class_x_d_d_s_p_1_1_window_function_1_1_welch.html" title="A callable class which produces a Welch window." alt="XDDSP::WindowFunction::Welch" shape="rect" coords="1012,56,1255,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b905750b1cddd1377926fc2c831caff" id="r_a8b905750b1cddd1377926fc2c831caff"><td class="memItemLeft" align="right" valign="top"><a id="a8b905750b1cddd1377926fc2c831caff" name="a8b905750b1cddd1377926fc2c831caff"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Rectangle</b> (SampleType length)</td></tr>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Rectangle</b> (SampleType <a class="el" href="#a7b4f0e18e6624aa9d4e6af4027ce1cef">length</a>)</td></tr>
 <tr class="memitem:a55c2b1db4b4add06691803ed27a3acc3" id="r_a55c2b1db4b4add06691803ed27a3acc3"><td class="memItemLeft" align="right" valign="top"><a id="a55c2b1db4b4add06691803ed27a3acc3" name="a55c2b1db4b4add06691803ed27a3acc3"></a>
 constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (SampleType x)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac55acfc6d9ff68446aa9eb6f3c85b559" id="r_ac55acfc6d9ff68446aa9eb6f3c85b559"><td class="memItemLeft" align="right" valign="top"><a id="ac55acfc6d9ff68446aa9eb6f3c85b559" name="ac55acfc6d9ff68446aa9eb6f3c85b559"></a>
-constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>window</b> (SampleType x)</td></tr>
+<tr class="memitem:ac55acfc6d9ff68446aa9eb6f3c85b559" id="r_ac55acfc6d9ff68446aa9eb6f3c85b559"><td class="memItemLeft" align="right" valign="top">constexpr SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac55acfc6d9ff68446aa9eb6f3c85b559">window</a> (SampleType x)</td></tr>
+<tr class="memdesc:ac55acfc6d9ff68446aa9eb6f3c85b559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produce a rectangle window sample for a given co-ordinate.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a7b4f0e18e6624aa9d4e6af4027ce1cef" id="r_a7b4f0e18e6624aa9d4e6af4027ce1cef"><td class="memItemLeft" align="right" valign="top"><a id="a7b4f0e18e6624aa9d4e6af4027ce1cef" name="a7b4f0e18e6624aa9d4e6af4027ce1cef"></a>
 const SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>length</b></td></tr>
+<tr class="memdesc:a7b4f0e18e6624aa9d4e6af4027ce1cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">This constant is initialised with the length of the window upon construction. <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A callable class which generates a rectangle shaped window of a certain length. </p>
+<p>This is also the base class for all other window function classes, as every other window also multiplies itself with the rectangle window. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac55acfc6d9ff68446aa9eb6f3c85b559" name="ac55acfc6d9ff68446aa9eb6f3c85b559"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac55acfc6d9ff68446aa9eb6f3c85b559">&#9670;&#160;</a></span>window()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType XDDSP::WindowFunction::Rectangle::window </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Produce a rectangle window sample for a given co-ordinate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>The co-ordinate to produce the sample for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The sample. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___window_functions_8h_source.html">XDDSP_WindowFunctions.h</a></li>
 </ul>
@@ -139,7 +183,7 @@ const SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>length</b
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><b>WindowFunction</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_window_function_1_1_rectangle.html">Rectangle</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="namespace_x_d_d_s_p_1_1_window_function.html">WindowFunction</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_window_function_1_1_rectangle.html">Rectangle</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

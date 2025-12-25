@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_waveshaper.html','','class_x_d_d_s
   <div class="headertitle"><div class="title">XDDSP::Waveshaper&lt; SignalIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component which applies a waveshaping function to an input.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___waveshaper_8h_source.html">XDDSP_Waveshaper.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::Waveshaper&lt; SignalIn &gt;:</div>
 <div class="dyncontent">
@@ -107,10 +112,11 @@ Inheritance diagram for XDDSP::Waveshaper&lt; SignalIn &gt;:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a01280843b16052d1b5ac8e55bc5e9a84" id="r_a01280843b16052d1b5ac8e55bc5e9a84"><td class="memItemLeft" align="right" valign="top"><a id="a01280843b16052d1b5ac8e55bc5e9a84" name="a01280843b16052d1b5ac8e55bc5e9a84"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Waveshaper</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn signalIn)</td></tr>
-<tr class="memitem:ae62262af491e372087559be053d61b93" id="r_ae62262af491e372087559be053d61b93"><td class="memItemLeft" align="right" valign="top"><a id="ae62262af491e372087559be053d61b93" name="ae62262af491e372087559be053d61b93"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFunction</b> (WaveformFunction f)</td></tr>
+<tr class="memitem:ae62262af491e372087559be053d61b93" id="r_ae62262af491e372087559be053d61b93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae62262af491e372087559be053d61b93">setFunction</a> (WaveformFunction f)</td></tr>
+<tr class="memdesc:ae62262af491e372087559be053d61b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the function object that will be used to transform each sample.  <br /></td></tr>
 <tr class="memitem:a67001f3de34c2edfe1bccd7befa1fbf2" id="r_a67001f3de34c2edfe1bccd7befa1fbf2"><td class="memItemLeft" align="right" valign="top"><a id="a67001f3de34c2edfe1bccd7befa1fbf2" name="a67001f3de34c2edfe1bccd7befa1fbf2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetFunction</b> ()</td></tr>
+<tr class="memdesc:a67001f3de34c2edfe1bccd7befa1fbf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the current function and set an identity function in its place. <br /></td></tr>
 <tr class="memitem:a700eae20361d7ea37ba9f155833709a2" id="r_a700eae20361d7ea37ba9f155833709a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a700eae20361d7ea37ba9f155833709a2">reset</a> ()</td></tr>
 <tr class="memdesc:a700eae20361d7ea37ba9f155833709a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:a31f33bc3356cb3da27bb0248a031f47a" id="r_a31f33bc3356cb3da27bb0248a031f47a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31f33bc3356cb3da27bb0248a031f47a">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
@@ -151,7 +157,16 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn&gt;<br />
+class XDDSP::Waveshaper&lt; SignalIn &gt;</div><p>A component which applies a waveshaping function to an input. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to an input signal. Can have as many channels as you like. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a700eae20361d7ea37ba9f155833709a2" name="a700eae20361d7ea37ba9f155833709a2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a700eae20361d7ea37ba9f155833709a2">&#9670;&#160;</a></span>reset()</h2>
 
@@ -178,8 +193,45 @@ template&lt;typename SignalIn&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; Waveshaper&lt; SignalIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ae62262af491e372087559be053d61b93" name="ae62262af491e372087559be053d61b93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae62262af491e372087559be053d61b93">&#9670;&#160;</a></span>setFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_waveshaper.html">XDDSP::Waveshaper</a>&lt; SignalIn &gt;::setFunction </td>
+          <td>(</td>
+          <td class="paramtype">WaveformFunction</td>          <td class="paramname"><span class="paramname"><em>f</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the function object that will be used to transform each sample. </p>
+<p>The callable object is called with the raw input sample as it's parameter and is expected to return a transformed sample.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>A callable object to transform the signal. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -241,7 +293,7 @@ template&lt;typename SignalIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_waveshaper.html">Waveshaper</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_waveshaper.html">Waveshaper</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

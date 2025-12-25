@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html',
   <div class="headertitle"><div class="title">XDDSP::BandLimitedSawOscillator&lt; FrequencyIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A multi-channel band-limited sawtooth oscillator.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___oscillators_8h_source.html">XDDSP_Oscillators.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::BandLimitedSawOscillator&lt; FrequencyIn &gt;:</div>
 <div class="dyncontent">
@@ -108,10 +113,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a858c4ce3472186b1006ff1f94f8d4766" id="r_a858c4ce3472186b1006ff1f94f8d4766"><td class="memItemLeft" align="right" valign="top"><a id="a858c4ce3472186b1006ff1f94f8d4766" name="a858c4ce3472186b1006ff1f94f8d4766"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>BandLimitedSawOscillator</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, FrequencyIn _frequencyIn)</td></tr>
 <tr class="memitem:a8184ead8438f381e449359d3a2c717a0" id="r_a8184ead8438f381e449359d3a2c717a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8184ead8438f381e449359d3a2c717a0">reset</a> ()</td></tr>
-<tr class="memitem:a2ae31eb31806be953f88d27c3fa825af" id="r_a2ae31eb31806be953f88d27c3fa825af"><td class="memItemLeft" align="right" valign="top"><a id="a2ae31eb31806be953f88d27c3fa825af" name="a2ae31eb31806be953f88d27c3fa825af"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (int channel, SampleType _phase)</td></tr>
-<tr class="memitem:a12d24782ebdd8199540c38cab32967b4" id="r_a12d24782ebdd8199540c38cab32967b4"><td class="memItemLeft" align="right" valign="top"><a id="a12d24782ebdd8199540c38cab32967b4" name="a12d24782ebdd8199540c38cab32967b4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (SampleType _phase)</td></tr>
+<tr class="memitem:a2ae31eb31806be953f88d27c3fa825af" id="r_a2ae31eb31806be953f88d27c3fa825af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ae31eb31806be953f88d27c3fa825af">setPhase</a> (int channel, SampleType _phase)</td></tr>
+<tr class="memdesc:a2ae31eb31806be953f88d27c3fa825af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the phase of the oscillator on one channel.  <br /></td></tr>
+<tr class="memitem:a12d24782ebdd8199540c38cab32967b4" id="r_a12d24782ebdd8199540c38cab32967b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12d24782ebdd8199540c38cab32967b4">setPhase</a> (SampleType _phase)</td></tr>
+<tr class="memdesc:a12d24782ebdd8199540c38cab32967b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the phase of every oscillator.  <br /></td></tr>
 <tr class="memitem:a07d78028a2f5827d6ee59874ea00add7" id="r_a07d78028a2f5827d6ee59874ea00add7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07d78028a2f5827d6ee59874ea00add7">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; BandLimitedSawOscillator&lt; FrequencyIn &gt; &gt;</a></td></tr>
 <tr class="memitem:a7fb7ab876decfdd94c1ba3dd9f167545 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_a7fb7ab876decfdd94c1ba3dd9f167545"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">reset</a> ()</td></tr>
@@ -153,7 +158,16 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename FrequencyIn&gt;<br />
+class XDDSP::BandLimitedSawOscillator&lt; FrequencyIn &gt;</div><p>A multi-channel band-limited sawtooth oscillator. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FrequencyIn</td><td>Couples to a frequency in Hz. This can have as many channels as you like. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a8184ead8438f381e449359d3a2c717a0" name="a8184ead8438f381e449359d3a2c717a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8184ead8438f381e449359d3a2c717a0">&#9670;&#160;</a></span>reset()</h2>
 
@@ -180,6 +194,81 @@ template&lt;typename FrequencyIn&gt; </div>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html">XDDSP::ComponentBaseClass</a>.</p>
+
+</div>
+</div>
+<a id="a2ae31eb31806be953f88d27c3fa825af" name="a2ae31eb31806be953f88d27c3fa825af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ae31eb31806be953f88d27c3fa825af">&#9670;&#160;</a></span>setPhase() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FrequencyIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html">XDDSP::BandLimitedSawOscillator</a>&lt; FrequencyIn &gt;::setPhase </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_phase</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the phase of the oscillator on one channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel index of the oscillator to set. </td></tr>
+    <tr><td class="paramname">_phase</td><td>The new phase of the oscialltor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a12d24782ebdd8199540c38cab32967b4" name="a12d24782ebdd8199540c38cab32967b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12d24782ebdd8199540c38cab32967b4">&#9670;&#160;</a></span>setPhase() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FrequencyIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html">XDDSP::BandLimitedSawOscillator</a>&lt; FrequencyIn &gt;::setPhase </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_phase</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the phase of every oscillator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_phase</td><td>The new phase of every oscillator. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -232,7 +321,7 @@ template&lt;typename FrequencyIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html">BandLimitedSawOscillator</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_band_limited_saw_oscillator.html">BandLimitedSawOscillator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

@@ -92,14 +92,74 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel.html'
   <div class="headertitle"><div class="title">XDDSP::LinkwitzRileyFilterKernel Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class encapsulating a Linkwitz-Riley filter kernel.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___linkwitz_riley_kernel_8h_source.html">XDDSP_LinkwitzRileyKernel.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4ce92ae5ab5e6585e600338493459c28" id="r_a4ce92ae5ab5e6585e600338493459c28"><td class="memItemLeft" align="right" valign="top"><a id="a4ce92ae5ab5e6585e600338493459c28" name="a4ce92ae5ab5e6585e600338493459c28"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
-<tr class="memitem:a783ee537f0af242061792cd006df9cf1" id="r_a783ee537f0af242061792cd006df9cf1"><td class="memItemLeft" align="right" valign="top"><a id="a783ee537f0af242061792cd006df9cf1" name="a783ee537f0af242061792cd006df9cf1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>process</b> (const <a class="el" href="class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients.html">LinkwitzRileyFilterCoefficients</a> &amp;coeff, SampleType &amp;lowOutput, SampleType &amp;highOutput, SampleType input)</td></tr>
+<tr class="memdesc:a4ce92ae5ab5e6585e600338493459c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the filter kernel. <br /></td></tr>
+<tr class="memitem:a783ee537f0af242061792cd006df9cf1" id="r_a783ee537f0af242061792cd006df9cf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a783ee537f0af242061792cd006df9cf1">process</a> (const <a class="el" href="class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients.html">LinkwitzRileyFilterCoefficients</a> &amp;coeff, SampleType &amp;lowOutput, SampleType &amp;highOutput, SampleType input)</td></tr>
+<tr class="memdesc:a783ee537f0af242061792cd006df9cf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process one sample of filter input.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class encapsulating a Linkwitz-Riley filter kernel. </p>
+<p>Thank you Lubomir I. Ivanov Derived from pseudo code taken from <a href="https://www.musicdsp.org/en/latest/Filters/266-4th-order-linkwitz-riley-filters.html">https://www.musicdsp.org/en/latest/Filters/266-4th-order-linkwitz-riley-filters.html</a> </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a783ee537f0af242061792cd006df9cf1" name="a783ee537f0af242061792cd006df9cf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a783ee537f0af242061792cd006df9cf1">&#9670;&#160;</a></span>process()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::LinkwitzRileyFilterKernel::process </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_x_d_d_s_p_1_1_linkwitz_riley_filter_coefficients.html">LinkwitzRileyFilterCoefficients</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>coeff</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType &amp;</td>          <td class="paramname"><span class="paramname"><em>lowOutput</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType &amp;</td>          <td class="paramname"><span class="paramname"><em>highOutput</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>input</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Process one sample of filter input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coeff</td><td>The class containing the filter coefficients. </td></tr>
+    <tr><td class="paramname">lowOutput</td><td>The output containing signals below the cutoff frequency. </td></tr>
+    <tr><td class="paramname">highOutput</td><td>The output containing signals above the cutoff frequency. </td></tr>
+    <tr><td class="paramname">input</td><td>The input sample. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___linkwitz_riley_kernel_8h_source.html">XDDSP_LinkwitzRileyKernel.h</a></li>
 </ul>
@@ -116,7 +176,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>process</b> (const <a
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel.html">LinkwitzRileyFilterKernel</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_linkwitz_riley_filter_kernel.html">LinkwitzRileyFilterKernel</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

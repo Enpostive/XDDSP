@@ -34,6 +34,11 @@ namespace XDDSP
 
 
 
+/**
+ * @brief A component encapsulating a simple one-pole averaging filter, suitable for use as a simple lowpass filter, control smoother, RMS filter etc.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class OnePoleAveragingFilter : public Component<OnePoleAveragingFilter<SignalIn>>, public Parameters::ParameterListener
 {
@@ -51,13 +56,10 @@ class OnePoleAveragingFilter : public Component<OnePoleAveragingFilter<SignalIn>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  OnePoleAveragingFilter(Parameters &p, SignalIn signalIn) :
  Parameters::ParameterListener(p),
  dspParam(p),
@@ -91,6 +93,11 @@ public:
   }
  }
  
+ /**
+  * @brief Set the length of the averaging window in seconds.
+  * 
+  * @param seconds The length of the averaging window in seconds.
+  */
  void setAveragingWindow(SampleType seconds)
  {
   parameter = seconds;
@@ -107,6 +114,13 @@ public:
 
 
 
+/**
+ * @brief A component encapsulating a simple static biquad filter.
+ * 
+ * This component exposes a coefficients object and a public interface object, enabling easy static configuration.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class StaticBiquad : public Component<StaticBiquad<SignalIn>>
 {
@@ -116,16 +130,22 @@ class StaticBiquad : public Component<StaticBiquad<SignalIn>>
 public:
  static constexpr int Count = SignalIn::Count;
  
+ /**
+  * @brief The exposed filter configuration object.
+  * 
+  */
  BiquadFilterCoefficients coeff;
+ 
+ /**
+  * @brief The exposed public interface object.
+  * 
+  */
  BiquadFilterPublicInterface interface;
 
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  StaticBiquad(Parameters &p, SignalIn signalIn) :
  coeff(p),
  interface(coeff),
@@ -162,6 +182,17 @@ public:
 
 
 
+/**
+ * @brief A component containing a dynamic biquad filter.
+ * 
+ * This filter hides its configuration object, instead opting to configure the filter based on input signals provided, eg. signals for frequency and quality.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ * @tparam FreqIn Couples to the signal providing the input frequency in Hz. Must have only one channel.
+ * @tparam QIn Couples to the signal providing the quality factor. Must have only one channel.
+ * @tparam GainIn Couples to the signal specifying the gain in dB. Must have only one channel.
+ * @tparam StepSize Controls how often the component reconfigures the filter from the inputs. Default is every 16 samples.
+ */
 template <
 typename SignalIn,
 typename FreqIn,
@@ -182,7 +213,6 @@ class DynamicBiquad : public Component<DynamicBiquad<SignalIn, FreqIn, QIn, Gain
 public:
  BiquadFilterPublicInterface interface;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  FreqIn frequency;
  QIn qFactor;
@@ -190,10 +220,8 @@ public:
 
  static constexpr int Count = SignalIn::Count;
  
- // Specify your outputs like this
  Output<SignalIn::Count> signalOut;
  
- // Include a definition for each input in the constructor
  DynamicBiquad(Parameters &p,
                SignalIn signalIn,
                FreqIn frequency,
@@ -215,9 +243,19 @@ public:
   for (auto &f : flt) f.reset();
  }
  
+ /**
+  * @brief Set the mode of the filter. See BiquadFilterCoefficients for a list of modes.
+  * 
+  * @param mode The new mode of the filter.
+  */
  void setFilterMode(int mode)
  { coeff.setFilterMode(mode); }
  
+ /**
+  * @brief Enable or disable a second biquad with the same settings in cascade mode.
+  * 
+  * @param cascade Set true to enable cascade, or false to disable.
+  */
  void setFilterCascade(bool cascade)
  { coeff.setCascade(cascade); }
  
@@ -246,24 +284,27 @@ public:
 
 
 
+/**
+ * @brief A component encapsulating a Linkwitz-Riley filter suitable for building phase-aligned crossover filters.
+ * 
+ * This component exposes two outputs, one signal with all the high frequency components and one with all the low frequency components.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class CrossoverFilter : public Component<CrossoverFilter<SignalIn>>
 {
- // Private data members here
  std::array<LinkwitzRileyFilterKernel, SignalIn::Count> flt;
  
 public:
  static constexpr int Count = SignalIn::Count;
  LinkwitzRileyFilterCoefficients coeff;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> lowPassOut;
  Output<Count> highPassOut;
  
- // Include a definition for each input in the constructor
  CrossoverFilter(Parameters &p, SignalIn signalIn) :
  coeff(p),
  signalIn(signalIn),
@@ -271,8 +312,6 @@ public:
  highPassOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   lowPassOut.reset();
@@ -301,6 +340,14 @@ public:
 
 
 
+/**
+ * @brief A component encapsulating a Hilbert Transform using an FIR.
+ * 
+ * This hilbert transform component uses an FIR filter to perform the transform, making it optimal for low tap counts only. For higher tap counts and better quality output, see ConvolutionHilbertFilter
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ * @tparam FIRTapCount Controls the size of the fir kernel used. **The tap count must be an odd number**. The default is 31.
+ */
 template <typename SignalIn, int FIRTapCount = 31>
 class FIRHilbertTransform : public Component<FIRHilbertTransform<SignalIn>>
 {
@@ -315,14 +362,11 @@ public:
  static constexpr int DelayLength = FIRTapCount/2;
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> inPhaseOut;
  Output<Count> quadratureOut;
  
- // Include a definition for each input in the constructor
  FIRHilbertTransform(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),
  inPhaseOut(p),
@@ -343,8 +387,6 @@ public:
   applyWindowFunction(WindowFunction::CosineWindow(alpha), taps);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   for (auto &b: buffer) b.reset(0.);
@@ -352,12 +394,6 @@ public:
   quadratureOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)
@@ -369,7 +405,6 @@ public:
     
     for (int t = 0; t < FIRTapCount; t += 2)
     {
-//     x += buffer[c].tapOut(t)*taps[t];
      x = std::fma(buffer[c].tapOut(t), taps[t], x);
     }
     
@@ -378,10 +413,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
 
@@ -393,6 +424,14 @@ public:
 
 
 
+/**
+ * @brief A component encapsulating a Hilbert Transform using a convolution kernel.
+ * 
+ * This hilbert transform component uses a convolution kernel to perform the transform, making it optimal for large tap counts only. For smaller tap counts, see FIRHilbertTransform
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ * @tparam FIRTapCount Controls the size of the convolution kernel used. **The tap count must be an odd number**. The default is 255.
+ */
 template <typename SignalIn, int FIRTapCount = 255>
 class ConvolutionHilbertFilter : public Component<ConvolutionHilbertFilter<SignalIn>>
 {
@@ -411,8 +450,6 @@ public:
  
  SignalIn &signalIn;
  
- // Specify your inputs as public members here
- // Specify your outputs like this
  Output<Count> inPhaseOut;
  Connector<decltype(filter.signalOut)> quadratureOut;
  
@@ -441,20 +478,12 @@ public:
   filter.initialiseConvolution();
  }
 
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   filter.reset();
   inPhaseOut.reset();
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   filter.process(startPoint, sampleCount);
@@ -468,10 +497,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  
@@ -483,6 +508,14 @@ public:
  
  
  
+/**
+ * @brief A component encapsulating a hilbert approximator using an IIR filter.
+ * 
+ * This code was taken from another source.
+ * TODO: Figure out where this code came from!
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class IIRHilbertApproximator : public Component<IIRHilbertApproximator<SignalIn>>
 {
@@ -492,14 +525,11 @@ class IIRHilbertApproximator : public Component<IIRHilbertApproximator<SignalIn>
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> quadratureOut;
  Output<Count> inPhaseOut;
  
- // Include a definition for each input in the constructor
  IIRHilbertApproximator(Parameters &p, SignalIn _signalIn) :
  signalIn(_signalIn),
  quadratureOut(p),
@@ -508,8 +538,6 @@ public:
   for (auto &hx : h) hx.fill(0.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   quadratureOut.reset();
@@ -517,12 +545,6 @@ public:
   for (auto &hx : h) hx.fill(0.);
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { return std::min(sampleCount, StepSize); }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   SampleType xa, xb;
@@ -568,10 +590,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  

@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_signal_probe.html','','class_x_d_d
   <div class="headertitle"><div class="title">XDDSP::SignalProbe&lt; SignalIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A probe suitable for measureing minimum, maximum and instantaneous values in a signal and reading them from non-DSP code.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___monitors_8h_source.html">XDDSP_Monitors.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::SignalProbe&lt; SignalIn &gt;:</div>
 <div class="dyncontent">
@@ -108,21 +113,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1501d3b95e464bb0c8e3fea8fdd693c1" id="r_a1501d3b95e464bb0c8e3fea8fdd693c1"><td class="memItemLeft" align="right" valign="top"><a id="a1501d3b95e464bb0c8e3fea8fdd693c1" name="a1501d3b95e464bb0c8e3fea8fdd693c1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SignalProbe</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn _signalIn)</td></tr>
 <tr class="memitem:a43db9dd985da39152752446366ae7d76" id="r_a43db9dd985da39152752446366ae7d76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43db9dd985da39152752446366ae7d76">reset</a> ()</td></tr>
-<tr class="memdesc:a43db9dd985da39152752446366ae7d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
+<tr class="memdesc:a43db9dd985da39152752446366ae7d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the minimum and maximum values.  <br /></td></tr>
 <tr class="memitem:ad0297ed44461bfb0c5c3815b39527624" id="r_ad0297ed44461bfb0c5c3815b39527624"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0297ed44461bfb0c5c3815b39527624">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ad0297ed44461bfb0c5c3815b39527624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="memitem:a5ee3c0e23461b844b811f76edabe40f6" id="r_a5ee3c0e23461b844b811f76edabe40f6"><td class="memItemLeft" align="right" valign="top"><a id="a5ee3c0e23461b844b811f76edabe40f6" name="a5ee3c0e23461b844b811f76edabe40f6"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>getMinimumValue</b> (int channel)</td></tr>
-<tr class="memitem:a6a0088e981b2508d64c653fa88240e55" id="r_a6a0088e981b2508d64c653fa88240e55"><td class="memItemLeft" align="right" valign="top"><a id="a6a0088e981b2508d64c653fa88240e55" name="a6a0088e981b2508d64c653fa88240e55"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>getMaximumValue</b> (int channel)</td></tr>
-<tr class="memitem:a10df1591196d41dd10001ddaa3ff9da7" id="r_a10df1591196d41dd10001ddaa3ff9da7"><td class="memItemLeft" align="right" valign="top"><a id="a10df1591196d41dd10001ddaa3ff9da7" name="a10df1591196d41dd10001ddaa3ff9da7"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>getAbsoluteMaximumValue</b> (int channel)</td></tr>
-<tr class="memitem:a5a85d5e7673945303c7600b41934866d" id="r_a5a85d5e7673945303c7600b41934866d"><td class="memItemLeft" align="right" valign="top"><a id="a5a85d5e7673945303c7600b41934866d" name="a5a85d5e7673945303c7600b41934866d"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>getInstantValue</b> (int channel)</td></tr>
-<tr class="memitem:a33bcfe56972a51d483d7175d8c4fd298" id="r_a33bcfe56972a51d483d7175d8c4fd298"><td class="memItemLeft" align="right" valign="top"><a id="a33bcfe56972a51d483d7175d8c4fd298" name="a33bcfe56972a51d483d7175d8c4fd298"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>probe</b> (int channel)</td></tr>
-<tr class="memitem:aded0f9b5f5a50f0d32caec5fd5a423eb" id="r_aded0f9b5f5a50f0d32caec5fd5a423eb"><td class="memItemLeft" align="right" valign="top"><a id="aded0f9b5f5a50f0d32caec5fd5a423eb" name="aded0f9b5f5a50f0d32caec5fd5a423eb"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>probeSqrt</b> (int channel)</td></tr>
+<tr class="memitem:a5ee3c0e23461b844b811f76edabe40f6" id="r_a5ee3c0e23461b844b811f76edabe40f6"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ee3c0e23461b844b811f76edabe40f6">getMinimumValue</a> (int channel)</td></tr>
+<tr class="memdesc:a5ee3c0e23461b844b811f76edabe40f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum value seen since the last reset.  <br /></td></tr>
+<tr class="memitem:a6a0088e981b2508d64c653fa88240e55" id="r_a6a0088e981b2508d64c653fa88240e55"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a0088e981b2508d64c653fa88240e55">getMaximumValue</a> (int channel)</td></tr>
+<tr class="memdesc:a6a0088e981b2508d64c653fa88240e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum value seen since the last reset.  <br /></td></tr>
+<tr class="memitem:a10df1591196d41dd10001ddaa3ff9da7" id="r_a10df1591196d41dd10001ddaa3ff9da7"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10df1591196d41dd10001ddaa3ff9da7">getAbsoluteMaximumValue</a> (int channel)</td></tr>
+<tr class="memdesc:a10df1591196d41dd10001ddaa3ff9da7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value with the highest magnitude seen since the last reset.  <br /></td></tr>
+<tr class="memitem:a5a85d5e7673945303c7600b41934866d" id="r_a5a85d5e7673945303c7600b41934866d"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a85d5e7673945303c7600b41934866d">getInstantValue</a> (int channel)</td></tr>
+<tr class="memdesc:a5a85d5e7673945303c7600b41934866d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last value seen by the object.  <br /></td></tr>
+<tr class="memitem:a33bcfe56972a51d483d7175d8c4fd298" id="r_a33bcfe56972a51d483d7175d8c4fd298"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33bcfe56972a51d483d7175d8c4fd298">probe</a> (int channel)</td></tr>
+<tr class="memdesc:a33bcfe56972a51d483d7175d8c4fd298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value with the highest magnitude seen since the last reset, then perform a reset straight away.  <br /></td></tr>
+<tr class="memitem:aded0f9b5f5a50f0d32caec5fd5a423eb" id="r_aded0f9b5f5a50f0d32caec5fd5a423eb"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aded0f9b5f5a50f0d32caec5fd5a423eb">probeSqrt</a> (int channel)</td></tr>
+<tr class="memdesc:aded0f9b5f5a50f0d32caec5fd5a423eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Designed for getting the maximum value coming from a squared signal.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; SignalProbe&lt; SignalIn &gt; &gt;</a></td></tr>
 <tr class="memitem:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_ac71014690b2ff661f495d7d07ddbab93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">startProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to return a step size to use. It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.  <br /></td></tr>
@@ -157,7 +162,233 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn&gt;<br />
+class XDDSP::SignalProbe&lt; SignalIn &gt;</div><p>A probe suitable for measureing minimum, maximum and instantaneous values in a signal and reading them from non-DSP code. </p>
+<p>This component is thread safe.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to the signal to measure. May have as many channels as you like. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a10df1591196d41dd10001ddaa3ff9da7" name="a10df1591196d41dd10001ddaa3ff9da7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10df1591196d41dd10001ddaa3ff9da7">&#9670;&#160;</a></span>getAbsoluteMaximumValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::getAbsoluteMaximumValue </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the value with the highest magnitude seen since the last reset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The maximum value. </dd></dl>
+
+</div>
+</div>
+<a id="a5a85d5e7673945303c7600b41934866d" name="a5a85d5e7673945303c7600b41934866d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a85d5e7673945303c7600b41934866d">&#9670;&#160;</a></span>getInstantValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::getInstantValue </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the last value seen by the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The last value seen. </dd></dl>
+
+</div>
+</div>
+<a id="a6a0088e981b2508d64c653fa88240e55" name="a6a0088e981b2508d64c653fa88240e55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a0088e981b2508d64c653fa88240e55">&#9670;&#160;</a></span>getMaximumValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::getMaximumValue </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the maximum value seen since the last reset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The maximum value. </dd></dl>
+
+</div>
+</div>
+<a id="a5ee3c0e23461b844b811f76edabe40f6" name="a5ee3c0e23461b844b811f76edabe40f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ee3c0e23461b844b811f76edabe40f6">&#9670;&#160;</a></span>getMinimumValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::getMinimumValue </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the minimum value seen since the last reset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The minimum value. </dd></dl>
+
+</div>
+</div>
+<a id="a33bcfe56972a51d483d7175d8c4fd298" name="a33bcfe56972a51d483d7175d8c4fd298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33bcfe56972a51d483d7175d8c4fd298">&#9670;&#160;</a></span>probe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::probe </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the value with the highest magnitude seen since the last reset, then perform a reset straight away. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The maximum value. </dd></dl>
+
+</div>
+</div>
+<a id="aded0f9b5f5a50f0d32caec5fd5a423eb" name="aded0f9b5f5a50f0d32caec5fd5a423eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aded0f9b5f5a50f0d32caec5fd5a423eb">&#9670;&#160;</a></span>probeSqrt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType <a class="el" href="class_x_d_d_s_p_1_1_signal_probe.html">XDDSP::SignalProbe</a>&lt; SignalIn &gt;::probeSqrt </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Designed for getting the maximum value coming from a squared signal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The maximum value. </dd></dl>
+
+</div>
+</div>
 <a id="a43db9dd985da39152752446366ae7d76" name="a43db9dd985da39152752446366ae7d76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43db9dd985da39152752446366ae7d76">&#9670;&#160;</a></span>reset()</h2>
 
@@ -183,7 +414,7 @@ template&lt;typename SignalIn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>Reset the minimum and maximum values. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; SignalProbe&lt; SignalIn &gt; &gt;</a>.</p>
 
@@ -247,7 +478,7 @@ template&lt;typename SignalIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_signal_probe.html">SignalProbe</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_signal_probe.html">SignalProbe</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

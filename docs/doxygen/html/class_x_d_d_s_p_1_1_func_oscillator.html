@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_func_oscillator.html','','class_x_
   <div class="headertitle"><div class="title">XDDSP::FuncOscillator&lt; FrequencyIn, PhaseModIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A basic multi-channel oscillator which uses a callable object to generate a waveform.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___oscillators_8h_source.html">XDDSP_Oscillators.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::FuncOscillator&lt; FrequencyIn, PhaseModIn &gt;:</div>
 <div class="dyncontent">
@@ -109,10 +114,10 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FuncOscillator</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, FrequencyIn _frequencyIn, PhaseModIn _phaseModIn)</td></tr>
 <tr class="memitem:a79c9b30bb5ad01e31ce0a148572135b7" id="r_a79c9b30bb5ad01e31ce0a148572135b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79c9b30bb5ad01e31ce0a148572135b7">reset</a> ()</td></tr>
 <tr class="memdesc:a79c9b30bb5ad01e31ce0a148572135b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
-<tr class="memitem:ac6f6e1400dfb570d8b4ac88d69d606e7" id="r_ac6f6e1400dfb570d8b4ac88d69d606e7"><td class="memItemLeft" align="right" valign="top"><a id="ac6f6e1400dfb570d8b4ac88d69d606e7" name="ac6f6e1400dfb570d8b4ac88d69d606e7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (int channel, SampleType _phase)</td></tr>
-<tr class="memitem:a0463e855ed2a494b06b480e6c154e601" id="r_a0463e855ed2a494b06b480e6c154e601"><td class="memItemLeft" align="right" valign="top"><a id="a0463e855ed2a494b06b480e6c154e601" name="a0463e855ed2a494b06b480e6c154e601"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (SampleType _phase)</td></tr>
+<tr class="memitem:ac6f6e1400dfb570d8b4ac88d69d606e7" id="r_ac6f6e1400dfb570d8b4ac88d69d606e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6f6e1400dfb570d8b4ac88d69d606e7">setPhase</a> (int channel, SampleType _phase)</td></tr>
+<tr class="memdesc:ac6f6e1400dfb570d8b4ac88d69d606e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the phase of the oscillator on one channel.  <br /></td></tr>
+<tr class="memitem:a0463e855ed2a494b06b480e6c154e601" id="r_a0463e855ed2a494b06b480e6c154e601"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0463e855ed2a494b06b480e6c154e601">setPhase</a> (SampleType _phase)</td></tr>
+<tr class="memdesc:a0463e855ed2a494b06b480e6c154e601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the phase of every oscillator.  <br /></td></tr>
 <tr class="memitem:a42b09ae0fda90bc179a19e84735f1b16" id="r_a42b09ae0fda90bc179a19e84735f1b16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a42b09ae0fda90bc179a19e84735f1b16">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:a42b09ae0fda90bc179a19e84735f1b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; FuncOscillator&lt; FrequencyIn, PhaseModIn &gt; &gt;</a></td></tr>
@@ -134,6 +139,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPhase</b> (SampleT
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6ae523067c387a9669ff13ad68848aca" id="r_a6ae523067c387a9669ff13ad68848aca"><td class="memItemLeft" align="right" valign="top"><a id="a6ae523067c387a9669ff13ad68848aca" name="a6ae523067c387a9669ff13ad68848aca"></a>
 WaveformFunction&#160;</td><td class="memItemRight" valign="bottom"><b>func</b></td></tr>
+<tr class="memdesc:a6ae523067c387a9669ff13ad68848aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callable object must be loaded here first before calling <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a>. <br /></td></tr>
 <tr class="memitem:abb2923ee129f95966f4a22e974393bbb" id="r_abb2923ee129f95966f4a22e974393bbb"><td class="memItemLeft" align="right" valign="top"><a id="abb2923ee129f95966f4a22e974393bbb" name="abb2923ee129f95966f4a22e974393bbb"></a>
 FrequencyIn&#160;</td><td class="memItemRight" valign="bottom"><b>frequencyIn</b></td></tr>
 <tr class="memitem:abbeddaee5a0822fa52f98d4c0bd60f22" id="r_abbeddaee5a0822fa52f98d4c0bd60f22"><td class="memItemLeft" align="right" valign="top"><a id="abbeddaee5a0822fa52f98d4c0bd60f22" name="abbeddaee5a0822fa52f98d4c0bd60f22"></a>
@@ -155,7 +161,19 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename FrequencyIn, typename PhaseModIn&gt;<br />
+class XDDSP::FuncOscillator&lt; FrequencyIn, PhaseModIn &gt;</div><p>A basic multi-channel oscillator which uses a callable object to generate a waveform. </p>
+<p>This object calls <a class="el" href="#a6ae523067c387a9669ff13ad68848aca" title="The callable object must be loaded here first before calling Component::process.">FuncOscillator::func</a> with a value between 0 and 1. func must be set to a callable object before any processing begins, otherwise the component will crash.</p>
+<p>This object supports basic phase modulation. There is no anti-aliasing.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FrequencyIn</td><td>Couples to a frequency input. The frequency is in Hz. This can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">PhaseModIn</td><td>Couples to a phase modulation input. It must have the same number of channels as FrequencyIn. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a79c9b30bb5ad01e31ce0a148572135b7" name="a79c9b30bb5ad01e31ce0a148572135b7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79c9b30bb5ad01e31ce0a148572135b7">&#9670;&#160;</a></span>reset()</h2>
 
@@ -182,8 +200,84 @@ template&lt;typename FrequencyIn, typename PhaseModIn&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; FuncOscillator&lt; FrequencyIn, PhaseModIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ac6f6e1400dfb570d8b4ac88d69d606e7" name="ac6f6e1400dfb570d8b4ac88d69d606e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6f6e1400dfb570d8b4ac88d69d606e7">&#9670;&#160;</a></span>setPhase() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FrequencyIn, typename PhaseModIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_func_oscillator.html">XDDSP::FuncOscillator</a>&lt; FrequencyIn, PhaseModIn &gt;::setPhase </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_phase</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the phase of the oscillator on one channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The channel index of the oscillator to set. </td></tr>
+    <tr><td class="paramname">_phase</td><td>The new phase of the oscialltor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0463e855ed2a494b06b480e6c154e601" name="a0463e855ed2a494b06b480e6c154e601"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0463e855ed2a494b06b480e6c154e601">&#9670;&#160;</a></span>setPhase() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FrequencyIn, typename PhaseModIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_func_oscillator.html">XDDSP::FuncOscillator</a>&lt; FrequencyIn, PhaseModIn &gt;::setPhase </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_phase</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the phase of every oscillator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_phase</td><td>The new phase of every oscillator. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -245,7 +339,7 @@ template&lt;typename FrequencyIn, typename PhaseModIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_func_oscillator.html">FuncOscillator</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_func_oscillator.html">FuncOscillator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

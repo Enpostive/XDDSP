@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_summing_array.html','','class_x_d_
   <div class="headertitle"><div class="title">XDDSP::SummingArray&lt; InternalComponent, ComponentCount &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A special component which creates an array of internal component and sums an output to one output.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___polyphony_8h_source.html">XDDSP_Polyphony.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::SummingArray&lt; InternalComponent, ComponentCount &gt;:</div>
 <div class="dyncontent">
@@ -111,12 +116,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aaa60f1d9d5c2ee0f0492bb183286a1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:a8959932d2586899de35b6e2b345d1713" id="r_a8959932d2586899de35b6e2b345d1713"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8959932d2586899de35b6e2b345d1713">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:a8959932d2586899de35b6e2b345d1713"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="memitem:a5c0a867591eb5cae6ce2ce2cf2992939" id="r_a5c0a867591eb5cae6ce2ce2cf2992939"><td class="memItemLeft" align="right" valign="top"><a id="a5c0a867591eb5cae6ce2ce2cf2992939" name="a5c0a867591eb5cae6ce2ce2cf2992939"></a>
-InternalComponent &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (unsigned int i)</td></tr>
-<tr class="memitem:a2fdfc991fea6fb6db63a4db1266129a5" id="r_a2fdfc991fea6fb6db63a4db1266129a5"><td class="memItemLeft" align="right" valign="top"><a id="a2fdfc991fea6fb6db63a4db1266129a5" name="a2fdfc991fea6fb6db63a4db1266129a5"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
-<tr class="memitem:a2d15a96b0632f62b4aa3b0c1d5751643" id="r_a2d15a96b0632f62b4aa3b0c1d5751643"><td class="memItemLeft" align="right" valign="top"><a id="a2d15a96b0632f62b4aa3b0c1d5751643" name="a2d15a96b0632f62b4aa3b0c1d5751643"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
+<tr class="memitem:a5c0a867591eb5cae6ce2ce2cf2992939" id="r_a5c0a867591eb5cae6ce2ce2cf2992939"><td class="memItemLeft" align="right" valign="top">InternalComponent &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c0a867591eb5cae6ce2ce2cf2992939">operator[]</a> (unsigned int i)</td></tr>
+<tr class="memdesc:a5c0a867591eb5cae6ce2ce2cf2992939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access each component individually.  <br /></td></tr>
+<tr class="memitem:a2fdfc991fea6fb6db63a4db1266129a5" id="r_a2fdfc991fea6fb6db63a4db1266129a5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fdfc991fea6fb6db63a4db1266129a5">begin</a> ()</td></tr>
+<tr class="memdesc:a2fdfc991fea6fb6db63a4db1266129a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an iterator to the first component in the array.  <br /></td></tr>
+<tr class="memitem:a2d15a96b0632f62b4aa3b0c1d5751643" id="r_a2d15a96b0632f62b4aa3b0c1d5751643"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d15a96b0632f62b4aa3b0c1d5751643">end</a> ()</td></tr>
+<tr class="memdesc:a2d15a96b0632f62b4aa3b0c1d5751643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an iterator to the end of the array.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; SummingArray&lt; InternalComponent, ComponentCount &gt; &gt;</a></td></tr>
 <tr class="memitem:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_ac71014690b2ff661f495d7d07ddbab93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">startProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to return a step size to use. It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.  <br /></td></tr>
@@ -153,7 +158,115 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename InternalComponent, int ComponentCount&gt;<br />
+class XDDSP::SummingArray&lt; InternalComponent, ComponentCount &gt;</div><p>A special component which creates an array of internal component and sums an output to one output. </p>
+<p><b>The component given as InternalComponent must have an output named signalOut</b></p>
+<p>TODO: Add another template argument to specify the output to sum, instead of assuming the output is called signalOut.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">InternalComponent</td><td>The class of the component to make an array of. </td></tr>
+    <tr><td class="paramname">ComponentCount</td><td>The size of the array. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a2fdfc991fea6fb6db63a4db1266129a5" name="a2fdfc991fea6fb6db63a4db1266129a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fdfc991fea6fb6db63a4db1266129a5">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename InternalComponent, int ComponentCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">XDDSP::SummingArray</a>&lt; InternalComponent, ComponentCount &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return an iterator to the first component in the array. </p>
+<dl class="section return"><dt>Returns</dt><dd>auto An iterator to the first component in the array. </dd></dl>
+
+</div>
+</div>
+<a id="a2d15a96b0632f62b4aa3b0c1d5751643" name="a2d15a96b0632f62b4aa3b0c1d5751643"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d15a96b0632f62b4aa3b0c1d5751643">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename InternalComponent, int ComponentCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">XDDSP::SummingArray</a>&lt; InternalComponent, ComponentCount &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return an iterator to the end of the array. </p>
+<dl class="section return"><dt>Returns</dt><dd>auto An iterator to the end of the array. </dd></dl>
+
+</div>
+</div>
+<a id="a5c0a867591eb5cae6ce2ce2cf2992939" name="a5c0a867591eb5cae6ce2ce2cf2992939"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c0a867591eb5cae6ce2ce2cf2992939">&#9670;&#160;</a></span>operator[]()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename InternalComponent, int ComponentCount&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">InternalComponent &amp; <a class="el" href="class_x_d_d_s_p_1_1_summing_array.html">XDDSP::SummingArray</a>&lt; InternalComponent, ComponentCount &gt;::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access each component individually. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>The index of the component to access. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>InternalComponent&amp; A reference to the component. </dd></dl>
+
+</div>
+</div>
 <a id="aaa60f1d9d5c2ee0f0492bb183286a1cf" name="aaa60f1d9d5c2ee0f0492bb183286a1cf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaa60f1d9d5c2ee0f0492bb183286a1cf">&#9670;&#160;</a></span>reset()</h2>
 
@@ -180,6 +293,7 @@ template&lt;typename InternalComponent, int ComponentCount&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; SummingArray&lt; InternalComponent, ComponentCount &gt; &gt;</a>.</p>
 
@@ -243,7 +357,7 @@ template&lt;typename InternalComponent, int ComponentCount&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_summing_array.html">SummingArray</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_summing_array.html">SummingArray</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

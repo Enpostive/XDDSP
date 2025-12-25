@@ -29,21 +29,22 @@ namespace XDDSP
 
 
 
+/**
+ * @brief A component which applies a waveshaping function to an input.
+ * 
+ * @tparam SignalIn Couples to an input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class Waveshaper : public Component<Waveshaper<SignalIn>>
 {
- // Private data members here
  WaveformFunction func;
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  Waveshaper(Parameters &p, SignalIn signalIn) :
  signalIn(signalIn),
  signalOut(p)
@@ -51,18 +52,27 @@ public:
   resetFunction();
  }
  
+ /**
+  * @brief Set the function object that will be used to transform each sample.
+  * 
+  * The callable object is called with the raw input sample as it's parameter and is expected to return a transformed sample.
+  * 
+  * @param f A callable object to transform the signal.
+  */
  void setFunction(WaveformFunction f)
  {
   func = f;
  }
  
+ /**
+  * @brief Remove the current function and set an identity function in its place.
+  * 
+  */
  void resetFunction()
  {
   func = [](SampleType x) { return x; };
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   signalOut.reset();
@@ -92,6 +102,14 @@ public:
 /*
  WaveshapeLookupTable is a lookup table object that can be called like a WaveformFunction and thus used with the above Waveshaper object
  */
+
+ /**
+  * @brief A callable function object which transforms the input signal using a lookup table.
+  * 
+  * This will be deprecated in favour of XDDSP::LookupTable. Use that instead of this object in any new code.
+  * 
+  * @tparam LookupTableSize the size of the lookup table.
+  */
 template <int LookupTableSize = 512>
 class WaveshapeLookupTable
 {

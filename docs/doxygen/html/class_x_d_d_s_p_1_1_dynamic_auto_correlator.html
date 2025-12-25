@@ -92,21 +92,211 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_dynamic_auto_correlator.html','','
   <div class="headertitle"><div class="title">XDDSP::DynamicAutoCorrelator Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class with a buffer stored in an internal std::vector used for doing antocorrelation,.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___f_f_t_8h_source.html">XDDSP_FFT.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac05355d6e611550d757a4384e809291b" id="r_ac05355d6e611550d757a4384e809291b"><td class="memItemLeft" align="right" valign="top"><a id="ac05355d6e611550d757a4384e809291b" name="ac05355d6e611550d757a4384e809291b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DynamicAutoCorrelator</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p)</td></tr>
-<tr class="memitem:a11a090d6e3b03be1ccecc92b2b71ed1d" id="r_a11a090d6e3b03be1ccecc92b2b71ed1d"><td class="memItemLeft" align="right" valign="top"><a id="a11a090d6e3b03be1ccecc92b2b71ed1d" name="a11a090d6e3b03be1ccecc92b2b71ed1d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBufferSize</b> (unsigned long bufferSize)</td></tr>
-<tr class="memitem:af67e952bf8bdeb915e8e262a0c290430" id="r_af67e952bf8bdeb915e8e262a0c290430"><td class="memItemLeft" align="right" valign="top"><a id="af67e952bf8bdeb915e8e262a0c290430" name="af67e952bf8bdeb915e8e262a0c290430"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>autoCorrelate</b> (SampleType *data, unsigned long length)</td></tr>
-<tr class="memitem:ae481b84d7754d80e6d099d8966201c50" id="r_ae481b84d7754d80e6d099d8966201c50"><td class="memTemplParams" colspan="2"><a id="ae481b84d7754d80e6d099d8966201c50" name="ae481b84d7754d80e6d099d8966201c50"></a>
-template&lt;unsigned long n&gt; </td></tr>
-<tr class="memitem:ae481b84d7754d80e6d099d8966201c50 template"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>autoCorrelate</b> (std::array&lt; SampleType, n &gt; &amp;data)</td></tr>
-<tr class="memitem:a93da389f639dcd5faed37b126f9a1ea5" id="r_a93da389f639dcd5faed37b126f9a1ea5"><td class="memItemLeft" align="right" valign="top"><a id="a93da389f639dcd5faed37b126f9a1ea5" name="a93da389f639dcd5faed37b126f9a1ea5"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>autoCorrelate</b> (std::vector&lt; SampleType &gt; &amp;data)</td></tr>
+<tr class="memitem:ac05355d6e611550d757a4384e809291b" id="r_ac05355d6e611550d757a4384e809291b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac05355d6e611550d757a4384e809291b">DynamicAutoCorrelator</a> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p)</td></tr>
+<tr class="memdesc:ac05355d6e611550d757a4384e809291b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Dynamic Auto Correlator object.  <br /></td></tr>
+<tr class="memitem:a11a090d6e3b03be1ccecc92b2b71ed1d" id="r_a11a090d6e3b03be1ccecc92b2b71ed1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a11a090d6e3b03be1ccecc92b2b71ed1d">setBufferSize</a> (unsigned long bufferSize)</td></tr>
+<tr class="memdesc:a11a090d6e3b03be1ccecc92b2b71ed1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the size of the buffer.  <br /></td></tr>
+<tr class="memitem:af67e952bf8bdeb915e8e262a0c290430" id="r_af67e952bf8bdeb915e8e262a0c290430"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af67e952bf8bdeb915e8e262a0c290430">autoCorrelate</a> (SampleType *data, unsigned long length)</td></tr>
+<tr class="memdesc:af67e952bf8bdeb915e8e262a0c290430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do autocorrelation on the input data. The input data is destroyed.  <br /></td></tr>
+<tr class="memitem:ae481b84d7754d80e6d099d8966201c50" id="r_ae481b84d7754d80e6d099d8966201c50"><td class="memTemplParams" colspan="2">template&lt;unsigned long n&gt; </td></tr>
+<tr class="memitem:ae481b84d7754d80e6d099d8966201c50 template"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae481b84d7754d80e6d099d8966201c50">autoCorrelate</a> (std::array&lt; SampleType, n &gt; &amp;data)</td></tr>
+<tr class="memdesc:ae481b84d7754d80e6d099d8966201c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do autocorrelation on the input data in a std::array.  <br /></td></tr>
+<tr class="memitem:a93da389f639dcd5faed37b126f9a1ea5" id="r_a93da389f639dcd5faed37b126f9a1ea5"><td class="memItemLeft" align="right" valign="top">SampleType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93da389f639dcd5faed37b126f9a1ea5">autoCorrelate</a> (std::vector&lt; SampleType &gt; &amp;data)</td></tr>
+<tr class="memdesc:a93da389f639dcd5faed37b126f9a1ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do autocorrelation on the input data in a std::vector.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class with a buffer stored in an internal std::vector used for doing antocorrelation,. </p>
+</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac05355d6e611550d757a4384e809291b" name="ac05355d6e611550d757a4384e809291b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac05355d6e611550d757a4384e809291b">&#9670;&#160;</a></span>DynamicAutoCorrelator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">XDDSP::DynamicAutoCorrelator::DynamicAutoCorrelator </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Dynamic Auto Correlator object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td><a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">Parameters</a> object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="af67e952bf8bdeb915e8e262a0c290430" name="af67e952bf8bdeb915e8e262a0c290430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af67e952bf8bdeb915e8e262a0c290430">&#9670;&#160;</a></span>autoCorrelate() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType XDDSP::DynamicAutoCorrelator::autoCorrelate </td>
+          <td>(</td>
+          <td class="paramtype">SampleType *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do autocorrelation on the input data. The input data is destroyed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The pointer to the data. </td></tr>
+    <tr><td class="paramname">length</td><td>The length of the data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The autocorrelation result. </dd></dl>
+
+</div>
+</div>
+<a id="ae481b84d7754d80e6d099d8966201c50" name="ae481b84d7754d80e6d099d8966201c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae481b84d7754d80e6d099d8966201c50">&#9670;&#160;</a></span>autoCorrelate() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned long n&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType XDDSP::DynamicAutoCorrelator::autoCorrelate </td>
+          <td>(</td>
+          <td class="paramtype">std::array&lt; SampleType, n &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do autocorrelation on the input data in a std::array. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">n</td><td>The length of the data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The pointer to the data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The autocorrelation result. </dd></dl>
+
+</div>
+</div>
+<a id="a93da389f639dcd5faed37b126f9a1ea5" name="a93da389f639dcd5faed37b126f9a1ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93da389f639dcd5faed37b126f9a1ea5">&#9670;&#160;</a></span>autoCorrelate() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SampleType XDDSP::DynamicAutoCorrelator::autoCorrelate </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; SampleType &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do autocorrelation on the input data in a std::vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>The pointer to the data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>SampleType The autocorrelation result. </dd></dl>
+
+</div>
+</div>
+<a id="a11a090d6e3b03be1ccecc92b2b71ed1d" name="a11a090d6e3b03be1ccecc92b2b71ed1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11a090d6e3b03be1ccecc92b2b71ed1d">&#9670;&#160;</a></span>setBufferSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::DynamicAutoCorrelator::setBufferSize </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long</td>          <td class="paramname"><span class="paramname"><em>bufferSize</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the size of the buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bufferSize</td><td>The new buffer size. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___f_f_t_8h_source.html">XDDSP_FFT.h</a></li>
 </ul>
@@ -123,7 +313,7 @@ SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>autoCorrelate</
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_dynamic_auto_correlator.html">DynamicAutoCorrelator</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_dynamic_auto_correlator.html">DynamicAutoCorrelator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

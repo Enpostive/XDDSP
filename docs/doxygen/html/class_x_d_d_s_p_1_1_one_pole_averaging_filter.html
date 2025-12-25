@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_one_pole_averaging_filter.html',''
   <div class="headertitle"><div class="title">XDDSP::OnePoleAveragingFilter&lt; SignalIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component encapsulating a simple one-pole averaging filter, suitable for use as a simple lowpass filter, control smoother, RMS filter etc.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___filters_8h_source.html">XDDSP_Filters.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::OnePoleAveragingFilter&lt; SignalIn &gt;:</div>
 <div class="dyncontent">
@@ -99,7 +104,7 @@ Inheritance diagram for XDDSP::OnePoleAveragingFilter&lt; SignalIn &gt;:</div>
   <img src="class_x_d_d_s_p_1_1_one_pole_averaging_filter.png" usemap="#XDDSP_3A_3AOnePoleAveragingFilter_3C_20SignalIn_20_3E_map" alt=""/>
   <map id="XDDSP_3A_3AOnePoleAveragingFilter_3C_20SignalIn_20_3E_map" name="XDDSP_3A_3AOnePoleAveragingFilter_3C_20SignalIn_20_3E_map">
 <area href="class_x_d_d_s_p_1_1_component.html" alt="XDDSP::Component&lt; OnePoleAveragingFilter&lt; SignalIn &gt; &gt;" shape="rect" coords="0,56,354,80"/>
-<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="364,56,718,80"/>
+<area href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object." alt="XDDSP::Parameters::ParameterListener" shape="rect" coords="364,56,718,80"/>
 <area href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to..." alt="XDDSP::ComponentBaseClass" shape="rect" coords="0,0,354,24"/>
   </map>
 </div></div>
@@ -109,12 +114,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a049e3ac49f29c322c28f7be964fab6be" id="r_a049e3ac49f29c322c28f7be964fab6be"><td class="memItemLeft" align="right" valign="top"><a id="a049e3ac49f29c322c28f7be964fab6be" name="a049e3ac49f29c322c28f7be964fab6be"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>OnePoleAveragingFilter</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn signalIn)</td></tr>
 <tr class="memitem:a4882167592be2f42f93af7ba74942407" id="r_a4882167592be2f42f93af7ba74942407"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4882167592be2f42f93af7ba74942407">updateSampleRate</a> (double sr, double isr) override</td></tr>
+<tr class="memdesc:a4882167592be2f42f93af7ba74942407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the sample rate.  <br /></td></tr>
 <tr class="memitem:a9019313f344a979cadecadbd051d6581" id="r_a9019313f344a979cadecadbd051d6581"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9019313f344a979cadecadbd051d6581">reset</a> ()</td></tr>
 <tr class="memdesc:a9019313f344a979cadecadbd051d6581"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:aa76fb26c888377acef2dd9cef31bd69f" id="r_aa76fb26c888377acef2dd9cef31bd69f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa76fb26c888377acef2dd9cef31bd69f">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:aa76fb26c888377acef2dd9cef31bd69f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="memitem:a790d1b37a399ab4b21afcb133cef2afe" id="r_a790d1b37a399ab4b21afcb133cef2afe"><td class="memItemLeft" align="right" valign="top"><a id="a790d1b37a399ab4b21afcb133cef2afe" name="a790d1b37a399ab4b21afcb133cef2afe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setAveragingWindow</b> (SampleType seconds)</td></tr>
+<tr class="memitem:a790d1b37a399ab4b21afcb133cef2afe" id="r_a790d1b37a399ab4b21afcb133cef2afe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a790d1b37a399ab4b21afcb133cef2afe">setAveragingWindow</a> (SampleType seconds)</td></tr>
+<tr class="memdesc:a790d1b37a399ab4b21afcb133cef2afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the length of the averaging window in seconds.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; OnePoleAveragingFilter&lt; SignalIn &gt; &gt;</a></td></tr>
 <tr class="memitem:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_ac71014690b2ff661f495d7d07ddbab93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">startProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to return a step size to use. It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.  <br /></td></tr>
@@ -130,12 +136,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setAveragingWindow</b
 <tr class="memitem:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class" id="r_a15b536e90f03eaa4c18bfe37d07370d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#a15b536e90f03eaa4c18bfe37d07370d5">setEnabled</a> (bool e)</td></tr>
 <tr class="memdesc:a15b536e90f03eaa4c18bfe37d07370d5 inherit pub_methods_class_x_d_d_s_p_1_1_component_base_class"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether the component is enabled or not.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a></td></tr>
-<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>ParameterListener</b> (Parameters &amp;p)</td></tr>
-<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateBufferSize</b> (int bs)</td></tr>
-<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>updateCustomParameter</b> (int category, int index)</td></tr>
+<tr class="memitem:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a26d1f9d7e8b523a290bfdc81794b42d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a26d1f9d7e8b523a290bfdc81794b42d9">ParameterListener</a> (Parameters &amp;p)</td></tr>
+<tr class="memdesc:a26d1f9d7e8b523a290bfdc81794b42d9 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html" title="This class is the base class for all objects which need to listen to a Parameters object.">ParameterListener</a> object and add this as a listener.  <br /></td></tr>
+<tr class="memitem:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_af1e818d978468f5a85eb1d49fa5fdfe7"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ParameterListener</b> ()</td></tr>
+<tr class="memdesc:af1e818d978468f5a85eb1d49fa5fdfe7 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Parameter Listener object and remove this from the listeners list. <br /></td></tr>
+<tr class="memitem:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a08798bf96e26f72768c42821535e5374"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a08798bf96e26f72768c42821535e5374">updateBufferSize</a> (int bs)</td></tr>
+<tr class="memdesc:a08798bf96e26f72768c42821535e5374 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the buffer size.  <br /></td></tr>
+<tr class="memitem:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener" id="r_a932121d85708e6573b87dbf7d90d2b78"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#a932121d85708e6573b87dbf7d90d2b78">updateCustomParameter</a> (int category, int index)</td></tr>
+<tr class="memdesc:a932121d85708e6573b87dbf7d90d2b78 inherit pub_methods_class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to any custom parameter.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -158,7 +167,16 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn&gt;<br />
+class XDDSP::OnePoleAveragingFilter&lt; SignalIn &gt;</div><p>A component encapsulating a simple one-pole averaging filter, suitable for use as a simple lowpass filter, control smoother, RMS filter etc. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to the input signal. Can have as many channels as you like. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a9019313f344a979cadecadbd051d6581" name="a9019313f344a979cadecadbd051d6581"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9019313f344a979cadecadbd051d6581">&#9670;&#160;</a></span>reset()</h2>
 
@@ -185,8 +203,44 @@ template&lt;typename SignalIn&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; OnePoleAveragingFilter&lt; SignalIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a790d1b37a399ab4b21afcb133cef2afe" name="a790d1b37a399ab4b21afcb133cef2afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a790d1b37a399ab4b21afcb133cef2afe">&#9670;&#160;</a></span>setAveragingWindow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_one_pole_averaging_filter.html">XDDSP::OnePoleAveragingFilter</a>&lt; SignalIn &gt;::setAveragingWindow </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>seconds</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the length of the averaging window in seconds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seconds</td><td>The length of the averaging window in seconds. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -261,7 +315,17 @@ template&lt;typename SignalIn&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">XDDSP::Parameters::ParameterListener</a>.</p>
+<p>Get notified of an update to the sample rate. </p>
+<p>Your class should override this method with its own method to be updated with sample rate changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sr</td><td>The new sample rate. </td></tr>
+    <tr><td class="paramname">isr</td><td>The new sample interval, the reciprocal of the sample rate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html#abf0c32c9a053315ed00cfd95712d4733">XDDSP::Parameters::ParameterListener</a>.</p>
 
 </div>
 </div>
@@ -281,7 +345,7 @@ template&lt;typename SignalIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_one_pole_averaging_filter.html">OnePoleAveragingFilter</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_one_pole_averaging_filter.html">OnePoleAveragingFilter</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

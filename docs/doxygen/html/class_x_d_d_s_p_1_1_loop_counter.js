@@ -1,5 +1,7 @@
 var class_x_d_d_s_p_1_1_loop_counter =
 [
     [ "reset", "class_x_d_d_s_p_1_1_loop_counter.html#a55ffe1b7cf01b12798b0fbc5839e299a", null ],
+    [ "setCounter", "class_x_d_d_s_p_1_1_loop_counter.html#a7a606f1d6b3ed95a8b40a4244f69a051", null ],
+    [ "setCounter", "class_x_d_d_s_p_1_1_loop_counter.html#a78e34ccb3ba68e73847e3453db889257", null ],
     [ "stepProcess", "class_x_d_d_s_p_1_1_loop_counter.html#a62f309104e35dddcb43da15655e812c0", null ]
 ];

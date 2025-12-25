@@ -92,20 +92,155 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_intersection_estimator.html','','c
   <div class="headertitle"><div class="title">XDDSP::IntersectionEstimator Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class for estimating the intersection of a cubic waveform and flat line fixed at some value.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad235d4e66a6bd90de32afa1b0ad1a808" id="r_ad235d4e66a6bd90de32afa1b0ad1a808"><td class="memItemLeft" align="right" valign="top"><a id="ad235d4e66a6bd90de32afa1b0ad1a808" name="ad235d4e66a6bd90de32afa1b0ad1a808"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSampleValues</b> (SampleType xm2, SampleType xm1, SampleType x1, SampleType x2)</td></tr>
-<tr class="memitem:a6ba1e93dd2335ac7c346ebe32786013d" id="r_a6ba1e93dd2335ac7c346ebe32786013d"><td class="memItemLeft" align="right" valign="top"><a id="a6ba1e93dd2335ac7c346ebe32786013d" name="a6ba1e93dd2335ac7c346ebe32786013d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>estimateIntersection</b> (double p, double epsilon=0.001)</td></tr>
+<tr class="memitem:ad235d4e66a6bd90de32afa1b0ad1a808" id="r_ad235d4e66a6bd90de32afa1b0ad1a808"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad235d4e66a6bd90de32afa1b0ad1a808">setSampleValues</a> (SampleType xm2, SampleType xm1, SampleType x1, SampleType x2)</td></tr>
+<tr class="memdesc:ad235d4e66a6bd90de32afa1b0ad1a808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the samples that define the cubic waveform.  <br /></td></tr>
+<tr class="memitem:a6ba1e93dd2335ac7c346ebe32786013d" id="r_a6ba1e93dd2335ac7c346ebe32786013d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ba1e93dd2335ac7c346ebe32786013d">estimateIntersection</a> (double p, double epsilon=0.001)</td></tr>
+<tr class="memdesc:a6ba1e93dd2335ac7c346ebe32786013d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do the actual intersection estimation.  <br /></td></tr>
 <tr class="memitem:a05d810ba8e45c412fd37bb28a2b238be" id="r_a05d810ba8e45c412fd37bb28a2b238be"><td class="memItemLeft" align="right" valign="top"><a id="a05d810ba8e45c412fd37bb28a2b238be" name="a05d810ba8e45c412fd37bb28a2b238be"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>calculateStationaryPoints</b> (SampleType &amp;minimum, SampleType &amp;maximum)</td></tr>
 <tr class="memitem:a5a84a252c41761e3bfcb481389a16daa" id="r_a5a84a252c41761e3bfcb481389a16daa"><td class="memItemLeft" align="right" valign="top"><a id="a5a84a252c41761e3bfcb481389a16daa" name="a5a84a252c41761e3bfcb481389a16daa"></a>
 SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>calculateInflectionPoint</b> ()</td></tr>
-<tr class="memitem:a65972e696e4f276f27b7fe1fc5cfb7de" id="r_a65972e696e4f276f27b7fe1fc5cfb7de"><td class="memItemLeft" align="right" valign="top"><a id="a65972e696e4f276f27b7fe1fc5cfb7de" name="a65972e696e4f276f27b7fe1fc5cfb7de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>getIntersectionValues</b> (SampleType &amp;frac, SampleType &amp;slope)</td></tr>
+<tr class="memitem:a65972e696e4f276f27b7fe1fc5cfb7de" id="r_a65972e696e4f276f27b7fe1fc5cfb7de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65972e696e4f276f27b7fe1fc5cfb7de">getIntersectionValues</a> (SampleType &amp;frac, SampleType &amp;slope)</td></tr>
+<tr class="memdesc:a65972e696e4f276f27b7fe1fc5cfb7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the location and slote of the estimated intersection.  <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class for estimating the intersection of a cubic waveform and flat line fixed at some value. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a6ba1e93dd2335ac7c346ebe32786013d" name="a6ba1e93dd2335ac7c346ebe32786013d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ba1e93dd2335ac7c346ebe32786013d">&#9670;&#160;</a></span>estimateIntersection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::IntersectionEstimator::estimateIntersection </td>
+          <td>(</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>p</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>epsilon</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.001</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Do the actual intersection estimation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>The constant where we want to solve for the intersection. </td></tr>
+    <tr><td class="paramname">epsilon</td><td>The allowable error in the estimation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a65972e696e4f276f27b7fe1fc5cfb7de" name="a65972e696e4f276f27b7fe1fc5cfb7de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65972e696e4f276f27b7fe1fc5cfb7de">&#9670;&#160;</a></span>getIntersectionValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::IntersectionEstimator::getIntersectionValues </td>
+          <td>(</td>
+          <td class="paramtype">SampleType &amp;</td>          <td class="paramname"><span class="paramname"><em>frac</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType &amp;</td>          <td class="paramname"><span class="paramname"><em>slope</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the location and slote of the estimated intersection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frac</td><td>A variable passed by reference to return the distance between xm1 and x1 of the intersection. </td></tr>
+    <tr><td class="paramname">slope</td><td>The slope of the cubic function at the intersection. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad235d4e66a6bd90de32afa1b0ad1a808" name="ad235d4e66a6bd90de32afa1b0ad1a808"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad235d4e66a6bd90de32afa1b0ad1a808">&#9670;&#160;</a></span>setSampleValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XDDSP::IntersectionEstimator::setSampleValues </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>xm2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>xm1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>x1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>x2</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the samples that define the cubic waveform. </p>
+<p>The object is expecting an intersection to lie between the samples xm1 and x1. No bounds checking or sanity checking is performed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xm2</td><td></td></tr>
+    <tr><td class="paramname">xm1</td><td></td></tr>
+    <tr><td class="paramname">x1</td><td></td></tr>
+    <tr><td class="paramname">x2</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___functions_8h_source.html">XDDSP_Functions.h</a></li>
 </ul>
@@ -122,7 +257,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>getIntersectionValues
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_intersection_estimator.html">IntersectionEstimator</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_intersection_estimator.html">IntersectionEstimator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

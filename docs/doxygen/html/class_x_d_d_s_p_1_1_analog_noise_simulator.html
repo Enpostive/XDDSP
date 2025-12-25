@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_analog_noise_simulator.html','','c
   <div class="headertitle"><div class="title">XDDSP::AnalogNoiseSimulator&lt; SignalIn, NoiseSpectrumSize &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component for adding convincing analog noise to a signal.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___noise_8h_source.html">XDDSP_Noise.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::AnalogNoiseSimulator&lt; SignalIn, NoiseSpectrumSize &gt;:</div>
 <div class="dyncontent">
@@ -144,14 +149,17 @@ SignalIn&#160;</td><td class="memItemRight" valign="bottom"><b>signalIn</b></td>
 <a class="el" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt; <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(shotNoise)&gt;, <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(snAmp)&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>shotNoiseModulator</b></td></tr>
 <tr class="memitem:adb3cb52c85d2d404faf1c6cd8dc4f638" id="r_adb3cb52c85d2d404faf1c6cd8dc4f638"><td class="memItemLeft" align="right" valign="top"><a id="adb3cb52c85d2d404faf1c6cd8dc4f638" name="adb3cb52c85d2d404faf1c6cd8dc4f638"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt; <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(shotNoiseModulator.signalOut)&gt;, <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a>&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>shotNoiseAtten</b></td></tr>
+<tr class="memdesc:adb3cb52c85d2d404faf1c6cd8dc4f638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the gainIn control on this to customise the flavour of the noise. Default 0.001. <br /></td></tr>
 <tr class="memitem:a8f8053ec6622955132c64a70803c1fe6" id="r_a8f8053ec6622955132c64a70803c1fe6"><td class="memItemLeft" align="right" valign="top"><a id="a8f8053ec6622955132c64a70803c1fe6" name="a8f8053ec6622955132c64a70803c1fe6"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt; <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(jnNoise.noiseOut)&gt;, <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; SignalIn &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>jnNoiseModulator</b></td></tr>
 <tr class="memitem:a0786aa0a4f7369e4e822b486a86b18bd" id="r_a0786aa0a4f7369e4e822b486a86b18bd"><td class="memItemLeft" align="right" valign="top"><a id="a0786aa0a4f7369e4e822b486a86b18bd" name="a0786aa0a4f7369e4e822b486a86b18bd"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt; <a class="el" href="class_x_d_d_s_p_1_1_sum.html">Sum</a>&lt; 2, Count &gt;, <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a>&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>whiteNoiseAtten</b></td></tr>
+<tr class="memdesc:a0786aa0a4f7369e4e822b486a86b18bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the gainIn control on this to customise the flavour of the noise. Default 0.56234133 (-5 dB). <br /></td></tr>
 <tr class="memitem:ae674d8075618942b1aeb4f82248d2cdd" id="r_ae674d8075618942b1aeb4f82248d2cdd"><td class="memItemLeft" align="right" valign="top"><a id="ae674d8075618942b1aeb4f82248d2cdd" name="ae674d8075618942b1aeb4f82248d2cdd"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_sum.html">Sum</a>&lt; 2, Count &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>noiseMix</b></td></tr>
 <tr class="memitem:a68db9296c867680507496316b2a1d297" id="r_a68db9296c867680507496316b2a1d297"><td class="memItemLeft" align="right" valign="top"><a id="a68db9296c867680507496316b2a1d297" name="a68db9296c867680507496316b2a1d297"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt; <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(noiseMix)&gt;, <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a>&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>noiseLevel</b></td></tr>
+<tr class="memdesc:a68db9296c867680507496316b2a1d297"><td class="mdescLeft">&#160;</td><td class="mdescRight">You can change the gainIn from the default of 0.0001 (-80dB) on this one to simulate hotter or colder electronics. <br /></td></tr>
 <tr class="memitem:abed45cfd535f8084de6befb50698f141" id="r_abed45cfd535f8084de6befb50698f141"><td class="memItemLeft" align="right" valign="top"><a id="abed45cfd535f8084de6befb50698f141" name="abed45cfd535f8084de6befb50698f141"></a>
 <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt; decltype(noiseLevel.signalOut)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalOut</b></td></tr>
 </table><table class="memberdecls">
@@ -169,7 +177,18 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn, int NoiseSpectrumSize = 5&gt;<br />
+class XDDSP::AnalogNoiseSimulator&lt; SignalIn, NoiseSpectrumSize &gt;</div><p>A component for adding convincing analog noise to a signal. </p>
+<p>This component doesn't directly add noise to the input signal. This component generates base line pink noise to simulate flicker noise, then adds shot noise and junction noise modulated by the input signal. The output can be mixed back with the original input to add a convincing analog flavour. Read the documentation on <a class="el" href="#adb3cb52c85d2d404faf1c6cd8dc4f638" title="Modify the gainIn control on this to customise the flavour of the noise. Default 0....">AnalogNoiseSimulator::shotNoiseAtten</a>, <a class="el" href="#a0786aa0a4f7369e4e822b486a86b18bd" title="Modify the gainIn control on this to customise the flavour of the noise. Default 0....">AnalogNoiseSimulator::whiteNoiseAtten</a> and <a class="el" href="#a68db9296c867680507496316b2a1d297" title="You can change the gainIn from the default of 0.0001 (-80dB) on this one to simulate hotter or colder...">AnalogNoiseSimulator::noiseLevel</a> for configuration options.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to an input to generate noise for. This can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">NoiseSpectrumSize</td><td>The depth of the generator algorithm. Increasing the spectrum size adds lower frequency components to the noise and increases computation overhead. Values over 8 start to see diminishing returns as the frequencies added are not audible. Default is 5. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a93761870dbbaa4b741b28d13ef310476" name="a93761870dbbaa4b741b28d13ef310476"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a93761870dbbaa4b741b28d13ef310476">&#9670;&#160;</a></span>reset()</h2>
 
@@ -248,7 +267,7 @@ template&lt;typename SignalIn, int NoiseSpectrumSize = 5&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html">AnalogNoiseSimulator</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html">AnalogNoiseSimulator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

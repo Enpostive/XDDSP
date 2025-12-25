@@ -31,9 +31,17 @@ namespace XDDSP
 
 
 
-/* Simple oscillator that uses a function to generate a waveform.
- * This oscillator will likely produce aliasing for any function other than sin
- */
+
+ /**
+  * @brief A basic multi-channel oscillator which uses a callable object to generate a waveform.
+  * 
+  * This object calls FuncOscillator::func with a value between 0 and 1. func must be set to a callable object before any processing begins, otherwise the component will crash.
+  * 
+  * This object supports basic phase modulation. There is no anti-aliasing.
+  * 
+  * @tparam FrequencyIn Couples to a frequency input. The frequency is in Hz. This can have as many channels as you like.
+  * @tparam PhaseModIn Couples to a phase modulation input. It must have the same number of channels as FrequencyIn.
+  */
 template <
 typename FrequencyIn,
 typename PhaseModIn
@@ -45,22 +53,22 @@ public:
  static constexpr int Count = FrequencyIn::Count;
  
 private:
- // Private data members here
  Parameters &dspParam;
  
  std::array<SampleType, Count> phase;
 public:
  
+ /**
+  * @brief The callable object must be loaded here first before calling Component::process.
+  * 
+  */
  WaveformFunction func;
  
- // Specify your inputs as public members here
  FrequencyIn frequencyIn;
  PhaseModIn phaseModIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  FuncOscillator(Parameters &p, FrequencyIn _frequencyIn, PhaseModIn _phaseModIn) :
  dspParam(p),
  frequencyIn(_frequencyIn),
@@ -70,25 +78,33 @@ public:
   func = [](SampleType i) { return sin(2.*M_PI*i); };
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   phase.fill(0.);
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the phase of the oscillator on one channel.
+  * 
+  * @param channel The channel index of the oscillator to set.
+  * @param _phase The new phase of the oscialltor.
+  */
  void setPhase(int channel, SampleType _phase)
  {
   phase[channel] = _phase - floor(_phase);
  }
  
+ /**
+  * @brief Set the phase of every oscillator.
+  * 
+  * @param _phase The new phase of every oscillator.
+  */
  void setPhase(SampleType _phase)
  {
   for (auto &p : phase) p = _phase - floor(_phase);
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   SampleType mod;
@@ -118,28 +134,28 @@ public:
 
 
 
+/**
+ * @brief A multi-channel band-limited sawtooth oscillator.
+ * 
+ * @tparam FrequencyIn Couples to a frequency in Hz. This can have as many channels as you like.
+ */
 template <typename FrequencyIn>
 class BandLimitedSawOscillator : public Component<BandLimitedSawOscillator<FrequencyIn>>
 {
- // Private data members here
 public:
  static constexpr int Count = FrequencyIn::Count;
  
 private:
- // Private data members here
  Parameters &dspParam;
  
  std::array<SampleType, Count> phase;
  std::array<BLEPGenerator, Count> blep;
 public:
 
- // Specify your inputs as public members here
  FrequencyIn frequencyIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  BandLimitedSawOscillator(Parameters &p, FrequencyIn _frequencyIn) :
  dspParam(p),
  frequencyIn(_frequencyIn),
@@ -148,8 +164,6 @@ public:
   phase.fill(0.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   phase.fill(0.);
@@ -157,22 +171,27 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the phase of the oscillator on one channel.
+  * 
+  * @param channel The channel index of the oscillator to set.
+  * @param _phase The new phase of the oscialltor.
+  */
  void setPhase(int channel, SampleType _phase)
  {
   phase[channel] = _phase - floor(_phase);
  }
  
+ /**
+  * @brief Set the phase of every oscillator.
+  * 
+  * @param _phase The new phase of every oscillator.
+  */
  void setPhase(SampleType _phase)
  {
   for (auto &p : phase) p = _phase - floor(_phase);
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)
@@ -187,10 +206,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
- // void finishProcess()
- // {}
 };
 
 
@@ -202,15 +217,19 @@ public:
 
 
 
+/**
+ * @brief A multi-channel band-limited square wave oscillator with PWM input.
+ * 
+ * @tparam FrequencyIn Couples to a frequency in Hz. This can have as many channels as you like.
+ * @tparam PulseWidthIn Couples to a pulse-width input between 0 and 1. Must have the same number of channels as FrequencyIn.
+ */
 template <typename FrequencyIn, typename PulseWidthIn>
 class BandLimitedSquareOscillator : public Component<BandLimitedSquareOscillator<FrequencyIn, PulseWidthIn>>
 {
- // Private data members here
 public:
  static constexpr int Count = FrequencyIn::Count;
  
 private:
- // Private data members here
  Parameters &dspParam;
  
  std::array<SampleType, Count> phase;
@@ -218,14 +237,11 @@ private:
  std::array<BLEPGenerator, Count> blep;
 public:
  
- // Specify your inputs as public members here
  FrequencyIn frequencyIn;
  PulseWidthIn pulseWidthIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  BandLimitedSquareOscillator(Parameters &p, FrequencyIn _frequencyIn, PulseWidthIn _pulseWidthIn) :
  dspParam(p),
  frequencyIn(_frequencyIn),
@@ -236,8 +252,6 @@ public:
   prevState.fill(0);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   phase.fill(0.);
@@ -246,22 +260,27 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the phase of the oscillator on one channel.
+  * 
+  * @param channel The channel index of the oscillator to set.
+  * @param _phase The new phase of the oscialltor.
+  */
  void setPhase(int channel, SampleType _phase)
  {
   phase[channel] = _phase - floor(_phase);
  }
  
+ /**
+  * @brief Set the phase of every oscillator.
+  * 
+  * @param _phase The new phase of every oscillator.
+  */
  void setPhase(SampleType _phase)
  {
   for (auto &p : phase) p = _phase - floor(_phase);
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   SampleType ppStep = frequencyIn(startPoint)*dspParam.sampleInterval();
@@ -307,15 +326,18 @@ public:
 
 
 
+/**
+ * @brief A multi-channel band-limited triangle wave oscillator.
+ * 
+ * @tparam FrequencyIn Couples to a frequency in Hz. This can have as many channels as you like.
+ */
 template <typename FrequencyIn>
 class BandLimitedTriangleOscillator : public Component<BandLimitedTriangleOscillator<FrequencyIn>>
 {
- // Private data members here
 public:
  static constexpr int Count = FrequencyIn::Count;
  
 private:
- // Private data members here
  Parameters &dspParam;
  
  std::array<SampleType, Count> phase;
@@ -328,13 +350,10 @@ private:
  
 public:
  
- // Specify your inputs as public members here
  FrequencyIn frequencyIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  BandLimitedTriangleOscillator(Parameters &p, FrequencyIn _frequencyIn) :
  dspParam(p),
  frequencyIn(_frequencyIn),
@@ -343,31 +362,33 @@ public:
   phase.fill(0.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   phase.fill(0.);
-  //  for (auto &b : blep) b.reset();
   signalOut.reset();
  }
  
+ /**
+  * @brief Set the phase of the oscillator on one channel.
+  * 
+  * @param channel The channel index of the oscillator to set.
+  * @param _phase The new phase of the oscialltor.
+  */
  void setPhase(int channel, SampleType _phase)
  {
   phase[channel] = _phase - floor(_phase);
  }
  
+ /**
+  * @brief Set the phase of every oscillator.
+  * 
+  * @param _phase The new phase of every oscillator.
+  */
  void setPhase(SampleType _phase)
  {
   for (auto &p : phase) p = _phase - floor(_phase);
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
- // int startProcess(int startPoint, int sampleCount)
- // { return std::min(sampleCount, StepSize); }
- 
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (int c = 0; c < Count; ++c)

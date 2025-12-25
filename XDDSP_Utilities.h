@@ -29,20 +29,22 @@ namespace XDDSP
 
 
 
+/**
+ * @brief A component which couples an array of inputs and sums them into a single output.
+ * 
+ * @tparam SignalIn Couples to one input. The class of coupler selected is duplicated in an array. The coupler can have as many channels as you like.
+ * @tparam SignalCount The number of input signals to be mixed.
+ */
 template <typename SignalIn, int SignalCount>
 class MixDown : public Component<MixDown<SignalIn, SignalCount>>
 {
- // Private data members here
 public:
  static constexpr int ChannelCount = SignalIn::Count;
  
- // Specify your inputs as public members here
  std::array<SignalIn, SignalCount> signalsIn;
  
- // Specify your outputs like this
  Output<ChannelCount> signalOut;
  
- // Include a definition for each input in the constructor
  MixDown(Parameters &p, const std::array<SignalIn, SignalCount> &_signalsIn) :
  signalsIn(_signalsIn),
  signalOut(p)
@@ -79,6 +81,12 @@ public:
 
 
 
+/**
+ * @brief A component which applies a gain signal to an input.
+ * 
+ * @tparam SignalIn The signal to amplify. Can have as many channels as you like.
+ * @tparam GainIn The linear gain signal to apply. Must either have one channel or the same number of channels as SignalIn.
+ */
 template <typename SignalIn, typename GainIn>
 class SimpleGain : public Component<SimpleGain<SignalIn, GainIn>>
 {
@@ -123,22 +131,24 @@ public:
 
 
 
+/**
+ * @brief A component which rectifies a signal.
+ * 
+ * @tparam SignalIn The signal to rectify.
+ * @tparam RectifyLevelIn A signal to specify the level which is considered "zero". Anything below this signal is rectified about the signal.
+ */
 template <typename SignalIn, typename RectifyLevelIn>
 class Rectifier : public Component<Rectifier<SignalIn, RectifyLevelIn>>
 {
  static_assert(RectifyLevelIn::Count == 1, "Rectifier expects a single channel control source");
- // Private data members here
 public:
  static constexpr int Count = SignalIn::Count;
 
- // Specify your inputs as public members here
  SignalIn signalIn;
  RectifyLevelIn rectifyLevelIn;
  
- // Specify your outputs like this
  Output<SignalIn::Count> signalOut;
  
- // Include a definition for each input in the constructor
  Rectifier(Parameters &p,
            SignalIn _signalIn,
            RectifyLevelIn _rectifyLevelIn) :
@@ -173,23 +183,24 @@ public:
 
 
 
+/**
+ * @brief A component which takes an input signal and outputs a delta signal.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class SignalDelta : public Component<SignalDelta<SignalIn>>
 {
- // Private data members here
  Parameters &dspParam;
  std::array<SampleType, SignalIn::Count> h;
  
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  SignalDelta(Parameters &p, SignalIn _signalIn) :
  dspParam(p),
  signalIn(_signalIn),
@@ -226,23 +237,26 @@ public:
 
 
 
+/**
+ * @brief A component which constrains a signal between two other signals.
+ * 
+ * @tparam SignalIn Couples to an input signal.
+ * @tparam MinimumIn Couples to a signal which specifies the maximum level allowed.
+ * @tparam MaximumIn Couples to a signal which specifies the minimum level allowed.
+ */
 template <typename SignalIn, typename MinimumIn, typename MaximumIn>
 class Clipper : public Component<Clipper<SignalIn, MinimumIn, MaximumIn>>
 {
  static_assert(MinimumIn::Count == 1 && MaximumIn::Count == 1, "Clipper expects control signals with single channels");
- // Private data members here
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  MinimumIn minimumIn;
  MaximumIn maximumIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  Clipper(Parameters &p,
          SignalIn _signalIn,
          MinimumIn _minimumIn,
@@ -253,8 +267,6 @@ public:
  signalOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   signalOut.reset();
@@ -281,27 +293,27 @@ public:
 
 
 
+/**
+ * @brief A component which takes multiple signals and outputs the signal which has the highest level.
+ * 
+ * @tparam SignalIn Couples to the inputs. Can have as many channels as you like.
+ * @tparam InputCount The number of inputs to take.
+ */
 template <typename SignalIn, int InputCount>
 class Maximum : public Component<Maximum<SignalIn, InputCount>>
 {
- // Private data members here
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  std::array<SignalIn, InputCount> signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  Maximum(Parameters &p, const std::array<SignalIn, InputCount> &_signalIn) :
  signalIn(_signalIn),
  signalOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   signalOut.reset();
@@ -332,9 +344,12 @@ public:
 
 
 
+/**
+ * @brief A component which outputs three time signals.
+ * 
+ */
 class TimeSignal : public Component<TimeSignal>
 {
- // Private data members here
  Parameters &dspParam;
  uint64_t sampleTime {0};
  SampleType scalePPQ {1.};
@@ -344,15 +359,10 @@ class TimeSignal : public Component<TimeSignal>
 public:
  static constexpr int Count = 1;
  
- // Specify your inputs as public members here
- // This class has no inputs
- 
- // Specify your outputs like this
  Output<Count> timeSamples;
  Output<Count> timePPQ;
  Output<Count> timeSeconds;
  
- // Include a definition for each input in the constructor
  TimeSignal(Parameters &p) :
  dspParam(p),
  timeSamples(p),
@@ -360,8 +370,6 @@ public:
  timeSeconds(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   timeSamples.reset();
@@ -404,16 +412,31 @@ public:
   }
  }
  
+ /**
+  * @brief Set a scale factor to use on the PPQ signal.
+  * 
+  * @param _scale The scale factor.
+  */
  void setScalePPQ(SampleType _scale)
  {
   scalePPQ = _scale;
  }
  
+ /**
+  * @brief Set a scale factor to use on the seconds signal.
+  * 
+  * @param _scale The scale factor.
+  */
  void setScaleSeconds(SampleType _scale)
  {
   scaleSeconds = _scale;
  }
  
+ /**
+  * @brief Set whether the component syncronises with the MIDI information provided in the Parameters object.
+  * 
+  * @param _sync 
+  */
  void setSync(bool _sync)
  { sync = _sync; }
 };
@@ -427,27 +450,32 @@ public:
 
 
 
+/**
+ * @brief A counter object.
+ * 
+ * This counter counts up or down (depnding on the value for StepSize). When the counter reaches one of the boundaries, it stops counting.
+ * 
+ * @tparam StartIn Couples to a signal which specifies the start point of the counter. Can have as many channels as you like.
+ * @tparam EndIn Couples to a signal which specifies the end point of the counter. Must have the same number of channels as StartIn.
+ * @tparam SpeedIn Couples to a signal which specifies the speed of the counter. Must have the same number of channels as StartIn.
+ * @tparam StepSize Selects how often the component updates the counter speed, the default is INT_MAX.
+ */
 template <typename StartIn, typename EndIn, typename SpeedIn, int StepSize = INT_MAX>
 class Counter : public Component<Counter<StartIn, EndIn, SpeedIn, StepSize>>
 {
  static_assert(StartIn::Count == EndIn::Count && StartIn::Count == SpeedIn::Count, "Counter expects all control signals to have the same channel count");
- // Private data members here
  std::array<SampleType, StartIn::Count> _counter;
 public:
  static constexpr int Count = StartIn::Count;
  
- // Read only access to internal counter
  const std::array<SampleType, StartIn::Count> &currentCount {_counter};
  
- // Specify your inputs as public members here
  StartIn startIn;
  EndIn endIn;
  SpeedIn speedIn;
  
- // Specify your outputs like this
  Output<Count> counterOut;
  
- // Include a definition for each input in the constructor
  Counter(Parameters &p, StartIn _startIn, EndIn _endIn, SpeedIn _speedIn) :
  startIn(_startIn),
  endIn(_endIn),
@@ -457,22 +485,29 @@ public:
   _counter.fill(0.);
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   _counter.fill(0.);
   counterOut.reset();
  }
  
+ /**
+  * @brief Set the counter value on all channels.
+  * 
+  * @param counter The new counter value.
+  */
  void setCounter(SampleType counter)
  { _counter.fill(counter); }
  
+ /**
+  * @brief Set the counter value on a single channel.
+  * 
+  * @param channel The counter to set.
+  * @param counter The new counter value.
+  */
  void setCounter(int channel, SampleType counter)
  { _counter[channel] = counter; }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
  int startProcess(int startPoint, int sampleCount)
  { return std::min(sampleCount, StepSize); }
 
@@ -501,6 +536,15 @@ public:
 
 
 
+/**
+ * @brief A counter object.
+ * 
+ * This counter counts up or down (depnding on the value for StepSize). When the counter reaches one of the boundaries, it loops back to the other boundary.
+ * 
+ * @tparam StartIn Couples to a signal which specifies the start point of the counter. Can have as many channels as you like.
+ * @tparam EndIn Couples to a signal which specifies the end point of the counter. Must have the same number of channels as StartIn.
+ * @tparam SpeedIn Couples to a signal which specifies the speed of the counter. Must have the same number of channels as StartIn.
+ */
 template <typename StartIn, typename EndIn, typename SpeedIn>
 class LoopCounter : public Component<LoopCounter<StartIn, EndIn, SpeedIn>>
 {
@@ -539,9 +583,20 @@ public:
   counterOut.reset();
  }
  
+ /**
+  * @brief Set the counter value on all channels.
+  * 
+  * @param counter The new counter value.
+  */
  void setCounter(SampleType counter)
  { _counter.fill(counter); }
  
+ /**
+  * @brief Set the counter value on a single channel.
+  * 
+  * @param channel The counter to set.
+  * @param counter The new counter value.
+  */
  void setCounter(int channel, SampleType counter)
  { _counter[channel] = counter; }
  
@@ -571,23 +626,26 @@ public:
 
 
 
+/**
+ * @brief Selects between two different signals depending on the sign of a third.
+ * 
+ * @tparam TopIn Couples to an input which will be put out if SwitchIn is above 0.
+ * @tparam BottomIn Couples to an input which will be put out if SwitchIn is equal to or below 0.
+ * @tparam SwitchIn Couples to the input which selects either TopIn or ButtomIn.
+ */
 template <typename TopIn, typename BottomIn, typename SwitchIn>
 class TopBottomSwitch : public Component<TopBottomSwitch<TopIn, BottomIn, SwitchIn>>
 {
  static_assert(TopIn::Count == BottomIn::Count && TopIn::Count == SwitchIn::Count, "TopBottomSwitch expects all inputs to have the same number of channels");
- // Private data members here
 public:
  static constexpr int Count = TopIn::Count;
  
- // Specify your inputs as public members here
  TopIn topIn;
  BottomIn bottomIn;
  SwitchIn switchIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  TopBottomSwitch(Parameters &p,
                  TopIn _topIn,
                  BottomIn _bottomIn,

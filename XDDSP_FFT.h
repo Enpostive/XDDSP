@@ -30,6 +30,16 @@ static constexpr double recSqrt2 = 1./sqrt2;
 }
 
 
+/**
+ * @brief Compute an FFT inside an arbitrary buffer.
+ * 
+ * The input samples are transformed in place from the time domain to the frequency domain. The output consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half. The function XDDSP::getComplexSample is provided to fetch complex numbers from the resulting array and convert them to std::complex<>
+ * 
+ * @tparam T The sample type
+ * @param data The data to transform. The data is overwritten by the transformed data.
+ * @param n The size of the buffer. Must be a power of 2.
+ * @param normalise If true, the transformed data is normalised at the end.
+ */
 template <typename T>
 void fftDynamicSize(T *data, unsigned long n, bool normalise = true)
 {
@@ -184,6 +194,15 @@ void fftDynamicSize(T *data, unsigned long n, bool normalise = true)
 
 
 
+/**
+ * @brief Transform an FFT back into the time domain.
+ * 
+ * The input samples are transformed in place from the frequency domain to the time domain. The input consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half.
+ * 
+ * @tparam T The sample type.
+ * @param data The data to transfer.
+ * @param n The size of the buffer, must be a power of 2.
+ */
 template <typename T>
 void ifftDynamicSize(T *data, unsigned long n)
 {
@@ -319,12 +338,31 @@ void ifftDynamicSize(T *data, unsigned long n)
 
 
 
+/**
+ * @brief Compute an FFT on data in a std::array
+ * 
+ * The input samples are transformed in place from the time domain to the frequency domain. The output consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half. The function XDDSP::getComplexSample is provided to fetch complex numbers from the resulting array and convert them to std::complex<>
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @tparam n The size of the array, inferred from the input.
+ * @param data The samples to transform.
+ * @param normalise If true, the resulting FFT is normalised.
+ */
 template <typename T, unsigned long n>
 void fftStaticSize(std::array<T, n> &data, bool normalise = true)
 {
  fftDynamicSize(data.data(), data.size(), normalise);
 }
 
+/**
+ * @brief Compute an FFT on data in a std::vector
+ * 
+ * The input samples are transformed in place from the time domain to the frequency domain. The output consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half. The function XDDSP::getComplexSample is provided to fetch complex numbers from the resulting array and convert them to std::complex<>
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @param data The vector containing the data.
+ * @param normalise If true, the resulting FFT is normalised.
+ */
 template <typename T>
 void fftDynamicSize(std::vector<T> &data, bool normalise = true)
 {
@@ -339,13 +377,29 @@ void fftDynamicSize(std::vector<T> &data, bool normalise = true)
 
 
 
-
+/**
+ * @brief Perform an inverse FFT on samples in a std::array.
+ * 
+ * The input samples are transformed in place from the frequency domain to the time domain. The input consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half.
+ * 
+ * @tparam T The sample type.
+ * @tparam n The size of the buffer, must be a power of 2.
+ * @param data The data to transfer.
+ */
 template <typename T, unsigned long n>
 void ifftStaticSize(std::array<T, n> &data)
 {
  ifftDynamicSize(data.data(), data.size());
 }
 
+/**
+ * @brief 
+ * 
+ * The input samples are transformed in place from the frequency domain to the time domain. The input consists of complex numbers, with the real parts being in the first half of the array and the imaginary parts running backwards in the second half.
+ * 
+ * @tparam T The sample type.
+ * @param data The data to transfer.
+ */
 template <typename T>
 void ifftDynamicSize(std::vector<T> &data)
 {
@@ -361,6 +415,15 @@ void ifftDynamicSize(std::vector<T> &data)
 
 
 
+/**
+ * @brief Extract a complex sample from an FFT result.
+ * 
+ * @tparam T Sample type inferred from input parameters.
+ * @param data A pointer to the sample data.
+ * @param index The index of the complex number sought.
+ * @param n The length of the actual array.
+ * @return std::pair<T, T> The complex number returned.
+ */
 template <typename T>
 std::pair<T, T> getComplexSample(T* data, unsigned long index, unsigned long n)
 {
@@ -377,6 +440,16 @@ std::pair<T, T> getComplexSample(T* data, unsigned long index, unsigned long n)
 
 
 
+
+/**
+ * @brief Perform a complex multiplication of two FFTs
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @param output A pointer to a suitable output buffer.
+ * @param in1 A pointer to one FFT input.
+ * @param in2 A pointer to the other FFT inpit.
+ * @param n The size of the output buffer, which must be the same as the two input buffers.
+ */
 template <typename T>
 void multiplyFFTs(T* output, T* in1, T* in2, unsigned long n)
 {
@@ -409,6 +482,15 @@ void multiplyFFTs(T* output, T* in1, T* in2, unsigned long n)
 
 
 
+/**
+ * @brief Multiply two FFTs together and add the result to another FFT result.
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @param output A pointer to the output buffer which contains the FFT to be added to.
+ * @param in1 A pointer to one FFT input.
+ * @param in2 A pointer to the other FFT inpit.
+ * @param n The size of the output buffer, which must be the same as the two input buffers.
+ */
 template <typename T>
 void multiplyAndAddFFTs(T* output, T* in1, T* in2, unsigned long n)
 {
@@ -440,6 +522,15 @@ void multiplyAndAddFFTs(T* output, T* in1, T* in2, unsigned long n)
 
 
 
+/**
+ * @brief Calculate the magnitude of one complex number in the FFT result.
+ * 
+ * @tparam T The sample type.
+ * @param data The pointer to the data buffer.
+ * @param index The index into the buffer.
+ * @param n The length of the buffer.
+ * @return T The calculated magnitude.
+ */
 template <typename T>
 T magnitudeAt(T* data, unsigned long index, unsigned long n)
 {
@@ -456,6 +547,14 @@ T magnitudeAt(T* data, unsigned long index, unsigned long n)
 
 
 
+
+/**
+ * @brief Calculate every magnitude in an FFT. The FFT is overwritten with magnitudes in the first half of the buffer, and zeros in the second half.
+ * 
+ * @tparam T The sample type.
+ * @param data The pointer to the buffer.
+ * @param n The size of the buffer.
+ */
 template <typename T>
 void calculateMagnitudes(T* data, unsigned long n)
 {
@@ -480,6 +579,14 @@ void calculateMagnitudes(T* data, unsigned long n)
 
 
 
+/**
+ * @brief Do autocorrelation on the input data. The input data is destroyed.
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @param data The pointer to the data.
+ * @param n The length of the data.
+ * @return T The autocorrelation result.
+ */
 template <typename T>
 T autoCorrelateDynamicSizeHalved(T *data, unsigned long n)
 {
@@ -529,12 +636,27 @@ T autoCorrelateDynamicSizeHalved(T *data, unsigned long n)
 }
 
 
+/**
+ * @brief Do autocorrelation on the input data in a std::array. The input data is destroyed.
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @tparam n The length of the data.
+ * @param data The pointer to the data.
+ * @return T The autocorrelation result.
+ */
 template <typename T, unsigned long n>
 T autoCorrelateStaticSizeHalved(std::array<T, n> &data)
 {
  return autoCorrelateDynamicSizeHalved(data.data(), n);
 }
 
+/**
+ * @brief Do autocorrelation on the input data in a std::vector. The input data is destroyed.
+ * 
+ * @tparam T The sample type, inferred from the input.
+ * @param data The pointer to the data.
+ * @return T The autocorrelation result.
+ */
 template <typename T>
 T autoCorrelateDynamicSizeHalved(std::vector<T> &data)
 {
@@ -542,6 +664,11 @@ T autoCorrelateDynamicSizeHalved(std::vector<T> &data)
 }
 
 
+/**
+ * @brief A class which pre-allocates a processing buffer to perform autocorrelation.
+ * 
+ * @tparam SampleLength The size of the buffer to allocate.
+ */
 template <unsigned long SampleLength>
 class AutoCorrelator
 {
@@ -549,9 +676,21 @@ class AutoCorrelator
  std::array<SampleType, 2*SampleLength> buffer;
  
 public:
+/**
+ * @brief Construct a new Auto Correlator object
+ * 
+ * @param p A parameters object.
+ */
  AutoCorrelator(Parameters &p) : dspParam(p)
  {}
  
+ /**
+  * @brief Do autocorrelation on the input data. The input data is destroyed.
+  * 
+  * @param data The pointer to the data.
+  * @param length The length of the data.
+  * @return SampleType The autocorrelation result.
+  */
  SampleType autoCorrelate(SampleType *data, unsigned long length)
  {
   if (length > SampleLength) length = SampleLength;
@@ -564,11 +703,24 @@ public:
   return a;
  }
  
+ /**
+  * @brief Do autocorrelation on the input data in a std::array.
+  * 
+  * @tparam n The length of the data.
+  * @param data The pointer to the data.
+  * @return SampleType The autocorrelation result.
+  */
  template <unsigned long n>
  SampleType autoCorrelate(std::array<SampleType, n> &data)
  { return autoCorrelate(data.data(), n); }
  
- SampleType autoCorrelate(std::vector<SampleType> &data)
+ /**
+ * @brief Do autocorrelation on the input data in a std::vector.
+ * 
+ * @param data The pointer to the data.
+ * @return SampleType The autocorrelation result.
+ */
+SampleType autoCorrelate(std::vector<SampleType> &data)
  { return autoCorrelate(data.data(), data.size()); }
 };
 
@@ -581,6 +733,10 @@ public:
 
 
 
+/**
+ * @brief A class with a buffer stored in an internal std::vector used for doing antocorrelation,
+ * 
+ */
 class DynamicAutoCorrelator
 {
  Parameters &dspParam;
@@ -588,15 +744,32 @@ class DynamicAutoCorrelator
  std::vector<SampleType> buffer;
  
 public:
+/**
+ * @brief Construct a new Dynamic Auto Correlator object
+ * 
+ * @param p Parameters object
+ */
  DynamicAutoCorrelator(Parameters &p) : dspParam(p)
  {}
  
+ /**
+  * @brief Set the size of the buffer.
+  * 
+  * @param bufferSize The new buffer size.
+  */
  void setBufferSize(unsigned long bufferSize)
  {
   sampleLength = bufferSize;
   buffer.resize(2*bufferSize, 0.);
  }
  
+ /**
+  * @brief Do autocorrelation on the input data. The input data is destroyed.
+  * 
+  * @param data The pointer to the data.
+  * @param length The length of the data.
+  * @return SampleType The autocorrelation result.
+  */
  SampleType autoCorrelate(SampleType *data, unsigned long length)
  {
   if (length > sampleLength) length = sampleLength;
@@ -610,10 +783,23 @@ public:
   return a;
  }
  
+ /**
+  * @brief Do autocorrelation on the input data in a std::array.
+  * 
+  * @tparam n The length of the data.
+  * @param data The pointer to the data.
+  * @return SampleType The autocorrelation result.
+  */
  template <unsigned long n>
  SampleType autoCorrelate(std::array<SampleType, n> &data)
  { return autoCorrelate(data.data(), n); }
  
+ /**
+  * @brief Do autocorrelation on the input data in a std::vector.
+  * 
+  * @param data The pointer to the data.
+  * @return SampleType The autocorrelation result.
+  */
  SampleType autoCorrelate(std::vector<SampleType> &data)
  { return autoCorrelate(data.data(), data.size()); }
 };
@@ -630,19 +816,25 @@ public:
 namespace ConvolutionEngine
 {
 
-
+/**
+ * @brief An internal container for storing convolution kernels.
+ * 
+ */
 struct KernelContainer
 {
  std::vector<std::vector<SampleType>> k;
  
+ /// Set up the container
  void setup(unsigned int kernelCount, unsigned int kernelSize)
  {
   k.resize(kernelCount);
   for (auto &kk: k) kk.resize(kernelSize, 0.);
  }
  
+ /// Get the size of the container
  unsigned int size() { return static_cast<unsigned int>(k.size()); }
  
+ /// Return a pointer to convolution kernel data.
  SampleType *get(unsigned int index)
  {
   dsp_assert(index >= 0 && index < k.size());
@@ -654,6 +846,10 @@ struct KernelContainer
 
 
 
+/**
+ * @brief An internal class for managing the parameters of the convolution engine.
+ * 
+ */
 class ConvolutionParameters
 {
  int iBS {256};
@@ -670,6 +866,7 @@ public:
   setParameters(iBS, dBS);
  }
  
+ // Set the buffer size and FFT size hint
  void setParameters(int bufferSize, int fftHint)
  {
   iBS = PowerSize::nextPowerTwoMinusOne(bufferSize) + 1;
@@ -692,12 +889,17 @@ public:
 
 
 
+/**
+ * @brief The data structure for storing impulse response data.
+ * 
+ */
 struct ImpulseResponse
 {
  KernelContainer inputKernels;
  KernelContainer deferredKernels;
  unsigned int sampleCount;
 
+ // Load an impulse response into the container, with consideration for the convolution parameters.
  void setImpulseResponse(ConvolutionParameters &cp,
                          const SampleType *impulseSamples,
                          unsigned int size)
@@ -759,6 +961,11 @@ private:
 
 
 
+/**
+ * @brief An internal class which encapsulates a convolution engine for one signal.
+ * 
+ * @tparam ConnectorChannelCount The expected channel count of the input signal.
+ */
 template <int ConnectorChannelCount>
 class ConvolutionEngine
 {
@@ -865,6 +1072,15 @@ class ConvolutionEngine
 public:
  PConnector<ConnectorChannelCount> signalIn;
  
+ /**
+  * @brief Construct a new Convolution Engine object.
+  * 
+  * The convolution engine starts a thread upon construction. The thread waits on an internal structure for data to process.
+  * 
+  * @tparam Source The source of the connection, inferred from the parameter.
+  * @param cp The convolution parameters object.
+  * @param c The coupler to take input from.
+  */
  template<typename Source>
  ConvolutionEngine(ConvolutionParameters &cp, Coupler<Source, ConnectorChannelCount> &c) :
  cp(cp),
@@ -872,12 +1088,25 @@ public:
  signalIn(c)
  {}
  
+ /**
+  * @brief Construct a copy of a Convolution Engine object.
+  * 
+  * The convolution engine starts a thread upon construction. The thread waits on an internal structure for data to process.
+  * 
+  * @param rhs The other object to copy from.
+  */
  ConvolutionEngine(ConvolutionEngine &&rhs) :
  cp(rhs.cp),
  deferredProcThread([&]() {deferredProcessor();}),
  signalIn(rhs.signalIn)
  {}
  
+ /**
+  * @brief Stop the processing thread, then destroy the Convolution Engine object.
+  * 
+  * Currently, this object waits for the processing thread to finish with no time out.
+  * TODO: Add a timeout for the process thread wait.
+  */
  ~ConvolutionEngine()
  {
   {
@@ -888,12 +1117,22 @@ public:
   if (deferredProcThread.joinable()) deferredProcThread.join();
  }
  
+ /**
+  * @brief Set the Impulse Response object.
+  * 
+  * @param impulse 
+  */
  void setImpulseResponse(ImpulseResponse &impulse)
  {
   std::unique_lock lock(dmux);
   imp = &impulse;
  }
  
+ /**
+  * @brief Initialise the convolution engine.
+  * 
+  * Initialises and resets the convolution engine. This needs to be called whenever any of the convolution parameters are changed.
+  */
  void initialise()
  {
   {
@@ -914,6 +1153,11 @@ public:
   reset();
  }
  
+ /**
+  * @brief Reset the convolution engine.
+  * 
+  * Performs a quick reset. Call this to clear the internal buffers and reset the convolution process, without doing all the extra work needed when convolution parameters are changed.
+  */
  void reset()
  {
   std::unique_lock lock(dmux);
@@ -926,6 +1170,14 @@ public:
   }
  }
  
+ /**
+  * @brief Process some samples from the input.
+  * 
+  * @param channel Which channel to process.
+  * @param startPoint The start point in the channel.
+  * @param output A pointer to an output buffer.
+  * @param sampleCount How many samples to process.
+  */
  void processSamples(int channel,
                      int startPoint,
                      SampleType *output,
@@ -983,6 +1235,13 @@ public:
 
 
 
+/**
+ * @brief A component for performing convolution on an input signal.
+ * 
+ * This component can handle mono or multi-channel impulse responses. Upon construction, the convolution engine starts multiple threads to perform background processing on signal data. These threads are automatically stopped upon destruction of the component, however they currently wait on the stopping thread indefinitely, so a stuck thread might result in a hang.
+ * 
+ * @tparam SignalIn Couples to the input signal. Can have as many channels as you like.
+ */
 template <typename SignalIn>
 class ConvolutionFilter : public Component<ConvolutionFilter<SignalIn>>, public Parameters::ParameterListener
 {
@@ -990,7 +1249,6 @@ public:
  static constexpr int Count = SignalIn::Count;
 
 private:
- // Private data members here
  bool initialised = false;
  
  struct ImpulseSample
@@ -1012,13 +1270,11 @@ private:
  
 public:
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
+ // Upon construction, the convolution engine starts multiple threads to perform background processing on signal data. These threads are automatically stopped upon destruction of the component, however they currently wait on the stopping thread indefinitely, so a stuck thread might result in a hang.
  ConvolutionFilter(Parameters &p, SignalIn _signalIn) :
  Parameters::ParameterListener(p),
  dsp(p),
@@ -1033,8 +1289,6 @@ public:
   }
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset() override
  {
   std::lock_guard<std::mutex> lock(mtx);
@@ -1042,6 +1296,10 @@ public:
   signalOut.reset();
  }
  
+ /**
+  * @brief Clear the convolution engines, unload the impulse response samples and bypass the component.
+  * 
+  */
  void resetConvolution()
  {
   std::lock_guard<std::mutex> lock(mtx);
@@ -1051,6 +1309,15 @@ public:
   imp.assign(Count, ConvolutionEngine::ImpulseResponse());
  }
  
+ /**
+  * @brief Set the impulse response data for one channel.
+  * 
+  * Set the impulse response samples with this method first, then call ConvolutionFilter::initialiseConvolution to load the impulse response samples into the convolution engine. You must load a sample into index 0 at a minimum otherwise initialisation will fail. Each index corresponds to a channel (ie. left/right/other). If any indexes are left empty, that channel is loaded with the sample in index 0 at initialisation.
+  * 
+  * @param index The index to load this sample into. There is one index for each channel.
+  * @param data A pointer to the sample data.
+  * @param length The length of the sample data.
+  */
  void setImpulse(int index, SampleType* data, unsigned int length)
  {
   dsp_assert(index >= 0 && index < Count);
@@ -1064,16 +1331,41 @@ public:
   initialiseConvolution();
  }
 
+ /**
+  * @brief Returns whether the convolution engine is fully initialised.
+  * 
+  * When the engine is fully initialised then convolution happens, otherwise this component will feed its input straight into its output.
+  * 
+  * @return true If it is initialised.
+  * @return false If it is not initialised.
+  */
  bool isInitlialised() const { return initialised; }
  
+ /**
+  * @brief Set a hint for the FFT size to be used by the convolution engine.
+  * 
+  * The convolution engine uses FFT to speed up the convolution algorithm. Some systems may perform better with smaller or larger FFT size chunks. This method provides a way to set the FFT size in order to find the optimal size. Calling this will cause the engine to be reinitialised immediately.
+  * 
+  * @param hint A hint for the convolution engine about what might be the optimal size for the FFT. This can be any number, and the convolution engine might ignore the value. It is internally rounded to a power of 2.
+  */
  void setFFTHint(unsigned int hint)
  {
   selectedFFTSize = hint;
   initialiseConvolution();
  }
  
+ /**
+  * @brief Return the current size of the FFT chunk being used by the convolution engine.
+  * 
+  * @return int The current size of the FFT chunk being used by the convolution engine. It may or may not be equal to the FFT hint provided.
+  */
  int getFFTSize() const { return cp.deferredFFTSize(); }
 
+ /**
+  * @brief Prepare for convolution.
+  * 
+  * Call this method after setting all convolution parameters and loading the impulse response data. This must be called again if new impulse response data is loaded. It is automatically called whenever the buffer size or fft hints are changed.
+  */
  void initialiseConvolution()
  {
   std::lock_guard<std::mutex> lock(mtx);
@@ -1097,12 +1389,6 @@ public:
   initialised = true;
  }
  
- // startProcess prepares the component for processing one block and returns the step
- // size. By default, it returns the entire sampleCount as one big step.
-// int startProcess(int startPoint, int sampleCount)
-// { }
-
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount) override
  {
   std::lock_guard<std::mutex> lock(mtx);
@@ -1130,10 +1416,6 @@ public:
    }
   }
  }
- 
- // finishProcess is called after the block has been processed
-// void finishProcess()
-// {}
 };
 
  

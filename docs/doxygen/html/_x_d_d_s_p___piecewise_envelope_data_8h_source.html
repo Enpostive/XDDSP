@@ -114,7 +114,7 @@ $(function(){initNavTree('_x_d_d_s_p___piecewise_envelope_data_8h_source.html','
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span>XDDSP</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_x_d_d_s_p.html">XDDSP</a></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
@@ -194,7 +194,7 @@ $(function(){initNavTree('_x_d_d_s_p___piecewise_envelope_data_8h_source.html','
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; CurveResolution - 1; ++i)</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  {</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>   SampleType x = <span class="keyword">static_cast&lt;</span>SampleType<span class="keyword">&gt;</span>(i)*CurveStepSize;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>   SampleType y = exponentialCurve(x0, x1, x, curveExponent);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>   SampleType y = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a6afd36f7351fd88289d49f89dead1e95">exponentialCurve</a>(x0, x1, x, curveExponent);</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>   points[point].samples[i] = y;</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  }</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  </div>
@@ -366,15 +366,15 @@ $(function(){initNavTree('_x_d_d_s_p___piecewise_envelope_data_8h_source.html','
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>   {</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    <span class="keywordflow">if</span> (index == 0)</div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    {</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>     time = fastMin(time, points[1].time);</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>     time = <a class="code hl_function" href="namespace_x_d_d_s_p.html#abf6c7288a1dc9d8d759f9569085b9bad">fastMin</a>(time, points[1].time);</div>
 <div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    }</div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (index == pointCount - 1)</div>
 <div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    {</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>     time = fastMax(time, points[pointCount - 2].time);</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>     time = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">fastMax</a>(time, points[pointCount - 2].time);</div>
 <div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    }</div>
 <div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>    {</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>     time = fastBoundary(time, points[index - 1].time, points[index + 1].time);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>     time = <a class="code hl_function" href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">fastBoundary</a>(time, points[index - 1].time, points[index + 1].time);</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    }</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>   }</div>
 <div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>   points[index].time = time;</div>
@@ -433,7 +433,7 @@ $(function(){initNavTree('_x_d_d_s_p___piecewise_envelope_data_8h_source.html','
 <div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>  </div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>  <span class="keywordflow">if</span> (lineSampleFrac == 0.) <span class="keywordflow">return</span> points[point].samples[lineSample];</div>
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>  </div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>  <span class="keywordflow">return</span> LERP(lineSampleFrac,</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_x_d_d_s_p.html#a72d684c645e0b21ea21c660634b25490">LERP</a>(lineSampleFrac,</div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>              points[point].samples[lineSample],</div>
 <div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>              points[point].samples[lineSample + 1]);</div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> }</div>
@@ -617,6 +617,12 @@ $(function(){initNavTree('_x_d_d_s_p___piecewise_envelope_data_8h_source.html','
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_data_html_adae064d10b9a787bccd5800ed780cabd"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope_data.html#adae064d10b9a787bccd5800ed780cabd">XDDSP::PiecewiseEnvelopeData::saveStateToString</a></div><div class="ttdeci">std::string saveStateToString()</div><div class="ttdoc">Create a string representation that can be used to restore the state of the piecewise envelope.</div><div class="ttdef"><b>Definition</b> XDDSP_PiecewiseEnvelopeData.h:494</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_data_html_af52bc169825a8317c5678d8f3f28c9bf"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope_data.html#af52bc169825a8317c5678d8f3f28c9bf">XDDSP::PiecewiseEnvelopeData::loadStateFromString</a></div><div class="ttdeci">bool loadStateFromString(const std::string &amp;state)</div><div class="ttdoc">Restore the state of the envelope from a save string.</div><div class="ttdef"><b>Definition</b> XDDSP_PiecewiseEnvelopeData.h:516</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_piecewise_envelope_listener_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_piecewise_envelope_listener.html">XDDSP::PiecewiseEnvelopeListener</a></div><div class="ttdoc">Implements a listener which is notified of changes to a piecewise envelope.</div><div class="ttdef"><b>Definition</b> XDDSP_PiecewiseEnvelopeData.h:40</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html"><div class="ttname"><a href="namespace_x_d_d_s_p.html">XDDSP</a></div><div class="ttdef"><b>Definition</b> XDDSP_Analysis.h:28</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a13c3f9f1228f7211d9b338ce2a832858"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858">XDDSP::fastBoundary</a></div><div class="ttdeci">SampleType fastBoundary(SampleType x, SampleType min, SampleType max)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of clamping a sample between between ...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:113</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a28800de13ab70bf12e6fb48746ca32b7"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7">XDDSP::fastMax</a></div><div class="ttdeci">SampleType fastMax(SampleType a, SampleType b)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of computing the maximum between two ...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:74</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a6afd36f7351fd88289d49f89dead1e95"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a6afd36f7351fd88289d49f89dead1e95">XDDSP::exponentialCurve</a></div><div class="ttdeci">SampleType exponentialCurve(SampleType min, SampleType max, SampleType input, SampleType exp)</div><div class="ttdoc">Maps a linear control to an exponential curve between a minimum and a maximum.</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:210</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_a72d684c645e0b21ea21c660634b25490"><div class="ttname"><a href="namespace_x_d_d_s_p.html#a72d684c645e0b21ea21c660634b25490">XDDSP::LERP</a></div><div class="ttdeci">SampleType LERP(SampleType fracPos, SampleType x0, SampleType x1)</div><div class="ttdoc">Perform a linear interpolation between two samples.</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:168</div></div>
+<div class="ttc" id="anamespace_x_d_d_s_p_html_abf6c7288a1dc9d8d759f9569085b9bad"><div class="ttname"><a href="namespace_x_d_d_s_p.html#abf6c7288a1dc9d8d759f9569085b9bad">XDDSP::fastMin</a></div><div class="ttdeci">SampleType fastMin(SampleType a, SampleType b)</div><div class="ttdoc">A placeholder method to encapsulate the fastest possible method of computing the smaller of two sampl...</div><div class="ttdef"><b>Definition</b> XDDSP_Functions.h:93</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

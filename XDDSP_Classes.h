@@ -206,7 +206,7 @@ public:
  * @brief A foundational base class for the CRTP base class to inherit from.
  *        Pointers of this type can point to any component class which enables component containers to work.
  * 
- * The application programmer should only know about this class where polymorphic pointers are concerned.
+ * This class is deprecated in favour of making the CRTP class into the foundation class. Virtual methods will be removed entirely. This shouldn't break too much code, except for perhaps removing a few 'override' specifiers.
  * 
  */
 class ComponentBaseClass
@@ -217,6 +217,7 @@ protected:
  int samplesToNextTrigger = -1;
  
  /**
+  * @anchor Component_setNextTrigger
   * @brief Set the Next Trigger object
   *        A component can use this->setNextTrigger(time) to set the number of samples in the future to trigger. Only one trigger is kept, subsequent calls override the previous calls.
   * 
@@ -231,6 +232,7 @@ public:
  virtual ~ComponentBaseClass() {}
 
  /**
+  * @anchor Component_isEnabled
   * @brief Returns whether the component is enabled. If the component is disabled, the inner process loop is not run when process is called.
   * 
   * @return true if the parameter is enabled
@@ -239,6 +241,7 @@ public:
  bool isEnabled() { return enabled; }
  
  /**
+  * @anchor Component_isDisabled
   * @brief Sets whether the component is enabled or not
   * 
   * @param e Pass true to enable the device, false otherwise
@@ -285,7 +288,8 @@ public:
  
  /**
   * @brief This can be implemented to contain the code used to reset the component to a default known state.
-  * 
+  *
+  * At a minimum, it is expected that this method fills all output buffers with zeroes.
   */
  void reset()
  {}
@@ -383,7 +387,7 @@ public:
 
 
 
-
+/// @brief Deprecated.
 class ComponentContainer : public Component<ComponentContainer>
 {
  std::vector<ComponentBaseClass*> partsList;

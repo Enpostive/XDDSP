@@ -22,5 +22,6 @@ var class_x_d_d_s_p_1_1_biquad_filter_coefficients =
     [ "setParametricFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a4240c95280e433353fe2b9e41e904c93", null ],
     [ "setPassingFilterParameters", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#aca3058a72dee8bc3c28aa3a0c1f46ec8", null ],
     [ "setQFactor", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ad373fbf6915603a09e15cd2dc29c9fc4", null ],
-    [ "setShelvingFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a23a8e781d787ba41e498c150bfb1fa47", null ]
+    [ "setShelvingFilter", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#a23a8e781d787ba41e498c150bfb1fa47", null ],
+    [ "updateSampleRate", "class_x_d_d_s_p_1_1_biquad_filter_coefficients.html#ab2de99c417be416af203a2cad4ad5594", null ]
 ];

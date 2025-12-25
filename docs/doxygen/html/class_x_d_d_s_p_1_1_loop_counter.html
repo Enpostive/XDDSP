@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_loop_counter.html','','class_x_d_d
   <div class="headertitle"><div class="title">XDDSP::LoopCounter&lt; StartIn, EndIn, SpeedIn &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A counter object.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___utilities_8h_source.html">XDDSP_Utilities.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::LoopCounter&lt; StartIn, EndIn, SpeedIn &gt;:</div>
 <div class="dyncontent">
@@ -109,10 +114,10 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>LoopCounter</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, StartIn _startIn, EndIn _endIn, SpeedIn _speedIn)</td></tr>
 <tr class="memitem:a55ffe1b7cf01b12798b0fbc5839e299a" id="r_a55ffe1b7cf01b12798b0fbc5839e299a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55ffe1b7cf01b12798b0fbc5839e299a">reset</a> ()</td></tr>
 <tr class="memdesc:a55ffe1b7cf01b12798b0fbc5839e299a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
-<tr class="memitem:a78e34ccb3ba68e73847e3453db889257" id="r_a78e34ccb3ba68e73847e3453db889257"><td class="memItemLeft" align="right" valign="top"><a id="a78e34ccb3ba68e73847e3453db889257" name="a78e34ccb3ba68e73847e3453db889257"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCounter</b> (SampleType counter)</td></tr>
-<tr class="memitem:a7a606f1d6b3ed95a8b40a4244f69a051" id="r_a7a606f1d6b3ed95a8b40a4244f69a051"><td class="memItemLeft" align="right" valign="top"><a id="a7a606f1d6b3ed95a8b40a4244f69a051" name="a7a606f1d6b3ed95a8b40a4244f69a051"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCounter</b> (int channel, SampleType counter)</td></tr>
+<tr class="memitem:a78e34ccb3ba68e73847e3453db889257" id="r_a78e34ccb3ba68e73847e3453db889257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78e34ccb3ba68e73847e3453db889257">setCounter</a> (SampleType counter)</td></tr>
+<tr class="memdesc:a78e34ccb3ba68e73847e3453db889257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the counter value on all channels.  <br /></td></tr>
+<tr class="memitem:a7a606f1d6b3ed95a8b40a4244f69a051" id="r_a7a606f1d6b3ed95a8b40a4244f69a051"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a606f1d6b3ed95a8b40a4244f69a051">setCounter</a> (int channel, SampleType counter)</td></tr>
+<tr class="memdesc:a7a606f1d6b3ed95a8b40a4244f69a051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the counter value on a single channel.  <br /></td></tr>
 <tr class="memitem:a62f309104e35dddcb43da15655e812c0" id="r_a62f309104e35dddcb43da15655e812c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62f309104e35dddcb43da15655e812c0">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:a62f309104e35dddcb43da15655e812c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; LoopCounter&lt; StartIn, EndIn, SpeedIn &gt; &gt;</a></td></tr>
@@ -157,7 +162,19 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename StartIn, typename EndIn, typename SpeedIn&gt;<br />
+class XDDSP::LoopCounter&lt; StartIn, EndIn, SpeedIn &gt;</div><p>A counter object. </p>
+<p>This counter counts up or down (depnding on the value for StepSize). When the counter reaches one of the boundaries, it loops back to the other boundary.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">StartIn</td><td>Couples to a signal which specifies the start point of the counter. Can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">EndIn</td><td>Couples to a signal which specifies the end point of the counter. Must have the same number of channels as StartIn. </td></tr>
+    <tr><td class="paramname">SpeedIn</td><td>Couples to a signal which specifies the speed of the counter. Must have the same number of channels as StartIn. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a55ffe1b7cf01b12798b0fbc5839e299a" name="a55ffe1b7cf01b12798b0fbc5839e299a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55ffe1b7cf01b12798b0fbc5839e299a">&#9670;&#160;</a></span>reset()</h2>
 
@@ -184,8 +201,84 @@ template&lt;typename StartIn, typename EndIn, typename SpeedIn&gt; </div>
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; LoopCounter&lt; StartIn, EndIn, SpeedIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a7a606f1d6b3ed95a8b40a4244f69a051" name="a7a606f1d6b3ed95a8b40a4244f69a051"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a606f1d6b3ed95a8b40a4244f69a051">&#9670;&#160;</a></span>setCounter() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename StartIn, typename EndIn, typename SpeedIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_loop_counter.html">XDDSP::LoopCounter</a>&lt; StartIn, EndIn, SpeedIn &gt;::setCounter </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>counter</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the counter value on a single channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>The counter to set. </td></tr>
+    <tr><td class="paramname">counter</td><td>The new counter value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78e34ccb3ba68e73847e3453db889257" name="a78e34ccb3ba68e73847e3453db889257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78e34ccb3ba68e73847e3453db889257">&#9670;&#160;</a></span>setCounter() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename StartIn, typename EndIn, typename SpeedIn&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_loop_counter.html">XDDSP::LoopCounter</a>&lt; StartIn, EndIn, SpeedIn &gt;::setCounter </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>counter</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the counter value on all channels. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">counter</td><td>The new counter value. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -247,7 +340,7 @@ template&lt;typename StartIn, typename EndIn, typename SpeedIn&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_loop_counter.html">LoopCounter</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_loop_counter.html">LoopCounter</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

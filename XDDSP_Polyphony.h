@@ -38,7 +38,10 @@ namespace XDDSP
 
 
 
-// An extension of Parameters that contains parameters suitable for a MIDI polyphonic synthesiser
+/**
+ * @brief An extension of Parameters that contains extra parameters suitable for a MIDI polyphonic synthesiser.
+ * 
+ */
 class PolySynthParameters : public Parameters
 {
  SampleType tuning {440.};
@@ -48,7 +51,6 @@ class PolySynthParameters : public Parameters
  int pbr {2};
  
 public:
- // using MIDILookup = LookupTable<127>;
  using MIDILookup = LookupTable<127>;
  
  MIDILookup midiNoteFreq;
@@ -72,12 +74,27 @@ public:
   }
  }
  
+ /**
+  * @brief Set the amount of pitch bend in response to pitch bend commands.
+  * 
+  * @param pbr Maximum pitch bend in semitones.
+  */
  void setPitchBendRange(int pbr)
  { if (pbr >= 0) pbr = pbr; }
  
+ /**
+  * @brief Enable or disable glissando.
+  * 
+  * @param g True to enable, false to disable.
+  */
  void setGlissando(bool g)
  { glissandoSetting = g; }
  
+ /**
+  * @brief Enable or disable legato.
+  * 
+  * @param l True to enable, false to disable.
+  */
  void setLegato(bool l)
  {
   legatoSetting = l;
@@ -85,21 +102,53 @@ public:
                         Parameters::BuiltinCustomParameters::Legato);
  }
  
+ /**
+  * @brief Set the time spent bending between notes in legato or glissando modes.
+  * 
+  * @param t Portamenteau time in seconds.
+  */
  void setPortamenteauTime(SampleType t)
  { if (t >= 0.) portTime = t; }
  
+ /**
+  * @brief Get the current pitch bend range setting.
+  * 
+  * @return int The pitch bend in semitones.
+  */
  int pitchBendRange() const
  { return pbr; }
  
+ /**
+  * @brief Get the current portamenteau time in seconds.
+  * 
+  * @return SampleType The current portamenteau time in seconds.
+  */
  SampleType portamenteauTime() const
  { return portTime; }
  
+ /**
+  * @brief Get the current portamenteau time in samples.
+  * 
+  * @return SampleType The current portamenteau time in samples.
+  */
  int portTimeSamples() const
  { return portTime*sampleRate(); }
  
+ /**
+  * @brief Get the current legato setting.
+  * 
+  * @return true Legato enabled.
+  * @return false Legato disabled.
+  */
  bool legato() const
  { return legatoSetting; }
  
+ /**
+  * @brief Get the current glissando setting.
+  * 
+  * @return true Glissando enabled.
+  * @return false Glissando disabled.
+  */
  bool glissando() const
  { return glissandoSetting; }
 };
@@ -113,35 +162,38 @@ public:
 
 
 
-// See the TestVoice template in XDDSP.h
+/**
+ * @brief A special component which creates an array of internal component and sums an output to one output.
+ * 
+ * **The component given as InternalComponent must have an output named signalOut**
+ * 
+ * TODO: Add another template argument to specify the output to sum, instead of assuming the output is called signalOut.
+ * 
+ * @tparam InternalComponent The class of the component to make an array of.
+ * @tparam ComponentCount The size of the array.
+ */
 template <typename InternalComponent, int ComponentCount>
 class SummingArray : public Component<SummingArray<InternalComponent, ComponentCount>>
 {
- // Private data members here
  std::array<InternalComponent, ComponentCount> components;
  
 public:
  static constexpr int Count = InternalComponent::Count;
  static constexpr int CountComponents = ComponentCount;
  
- // Specify your outputs like this
  Output<Count> sumOut;
  
- // Include a definition for each input in the constructor
  SummingArray(Parameters &p) :
  components(makeComponentArray<ComponentCount, InternalComponent>(p)),
  sumOut(p)
  {}
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset()
  {
   for (auto &c : components) c.reset();
   sumOut.reset();
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   for (auto &j : components) j.process(startPoint, sampleCount);
@@ -157,16 +209,32 @@ public:
   }
  }
  
+ /**
+  * @brief Access each component individually.
+  * 
+  * @param i The index of the component to access.
+  * @return InternalComponent& A reference to the component.
+  */
  InternalComponent& operator[](unsigned int i)
  {
   return components[i];
  }
  
+ /**
+  * @brief Return an iterator to the first component in the array.
+  * 
+  * @return auto An iterator to the first component in the array.
+  */
  auto begin()
  {
   return components.begin();
  }
  
+ /**
+  * @brief Return an iterator to the end of the array.
+  * 
+  * @return auto An iterator to the end of the array.
+  */
  auto end()
  {
   return components.end();
@@ -182,6 +250,14 @@ public:
 
 
 
+/**
+ * @brief A component which takes MIDI events and outputs a signal for each.
+ * 
+ * TODO: Change the algorithm to use a heap to order events.
+ * 
+ * @tparam OutputCount The number of signals to output.
+ * @tparam RampLengthms The length of the smoothing window in ms.
+ */
 template <int OutputCount, int RampLengthms = 5>
 class MIDIScheduler : public Component<MIDIScheduler<OutputCount, RampLengthms>>, public Parameters::ParameterListener
 {
@@ -212,6 +288,13 @@ public:
   updateSampleRate(p.sampleRate(), p.sampleInterval());
  }
  
+ /**
+  * @brief Add a MIDI event to a channel.
+  * 
+  * @param channel The channel to add the event to.
+  * @param newValue The new value that will be output when the event is triggered.
+  * @param samplePosition The number of samples to wait until triggering the event.
+  */
  void addEvent(int channel, SampleType newValue, int samplePosition)
  {
   auto it = schedule.begin();
@@ -252,6 +335,11 @@ public:
   it = schedule.erase(schedule.begin(), it);
  }
  
+ /**
+  * @brief Advance all the MIDI events in the buffer by the sample count given. 
+  * 
+  * @param sampleCount The number of samples to advance the events in the buffer.
+  */
  void advanceMidiEvents(int sampleCount)
  {
   auto it = schedule.begin();
@@ -275,6 +363,17 @@ public:
 
 
 
+/**
+ * @brief A special component which connects to a collection of voices to make a polyphonic component.
+ * 
+ * **The component given as InternalComponent must have an input named noteIn, an input named velocityIn and an output named signalOut**
+ * 
+ * TODO: Add another template argument to specify the input names and an output to sum, instead of assuming the names given above.
+ * 
+ * @tparam VoiceComponent The component that makes up each individual voice.
+ * @tparam MaxVoiceCount The maximum number of voices allowed.
+ * @tparam AutoEnable When set to any value other than 0, will automatically enable and disable individual voices using internal logic. Keep in mind that components are reset when they are disabled, so this may not be desired behaviour.
+ */
 template <typename VoiceComponent, int MaxVoiceCount, int AutoEnable = 0>
 class MIDIPoly : public Parameters::ParameterListener
 {
@@ -613,6 +712,14 @@ class MIDIPoly : public Parameters::ParameterListener
 
 
 public:
+ /**
+  * @brief Construct a new MIDIPoly object.
+  * 
+  * **Note: The parameters class passed to this constructor is XDDSP::PolySynthParameters**
+  * 
+  * @param p A XDDSP::PolySynthParameters object.
+  * @param va A reference to the summing array.
+  */
  MIDIPoly(Parameters &p, SummingArray<VoiceComponent, MaxVoiceCount> &va) :
  Parameters::ParameterListener(p),
  voiceArray(va),
@@ -627,9 +734,23 @@ public:
   setUnisonMode(1);
  }
  
+ /**
+  * @brief A function which is called whenever a note on occurs.
+  * 
+  */
  std::function<void (int)> onNoteOn;
+
+ /**
+  * @brief A function which is called whenever a noteoff occurs.
+  * 
+  */
  std::function<void (int)> onNoteOff;
  
+ /**
+  * @brief Set the maximum number of voices allowed and disable unison mode.
+  * 
+  * @param l The number of voices allowed.
+  */
  void setVoiceLimit(int l)
  {
   resetAllNotes();
@@ -638,6 +759,11 @@ public:
   setUnisonMode(1);
  }
  
+ /**
+  * @brief Enable or disable unison mode.
+  * 
+  * @param u True to enable unison mode, false to disable it.
+  */
  void setUnisonMode(int u)
  {
   resetAllNotes();
@@ -667,6 +793,10 @@ public:
   }
  }
  
+ /**
+  * @brief Reset every voice and remove all MIDI events from the buffer
+  * 
+  */
  void resetAllNotes()
  {
   for (auto &v: voices)
@@ -680,6 +810,13 @@ public:
   voiceOrder.clear();
  }
  
+ /**
+  * @brief Add a MIDI note event to the MIDI event schedule.
+  * 
+  * @param note The pitch of the note.
+  * @param velocity The velocity of the note. Use 0 to schedule a note off.
+  * @param samplePosition The number of samples to wait until the event is triggered.
+  */
  void scheduleNoteEvent(int note, int velocity, int samplePosition)
  {
   auto it = schedule.begin();
@@ -693,11 +830,21 @@ public:
   schedule.insert(it, NoteSchedule(note, velocity, samplePosition));
  }
  
+ /**
+  * @brief Add an All Notes Off MIDI message to the cue.
+  * 
+  * @param samplePosition The number of samples to wait until the event is triggered.
+  */
  void scheduleAllNotesOff(int samplePosition)
  {
   scheduleNoteEvent(0, NoteSchedule::AllNotesOff, samplePosition);
  }
  
+ /**
+  * @brief Add an All Sound Off MIDI message to the cue.
+  * 
+  * @param samplePosition The number of samples to wait until the event is triggered.
+  */
  void scheduleAllSoundOff(int samplePosition)
  {
   scheduleNoteEvent(0, NoteSchedule::AllSoundOff, samplePosition);
@@ -740,6 +887,12 @@ public:
   purgeInactiveVoices();
  }
 
+ 
+ /**
+  * @brief Advance all the MIDI events in the buffer by the sample count given. 
+  * 
+  * @param sampleCount The number of samples to advance the events in the buffer.
+  */
  void advanceMidiEvents(int sampleCount)
  {
   for (auto & sch: schedule)
@@ -748,6 +901,12 @@ public:
   }
  }
 
+ /**
+  * @brief Sub-classes can implement this method to enable the processing of a mono portion of the synthesiser.
+  * 
+  * @param startPoint The start point to begin processing.
+  * @param sampleCount The number of samples to process.
+  */
  virtual void parallelProcess(int startPoint, int sampleCount)
  {}
 };

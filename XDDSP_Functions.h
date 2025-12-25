@@ -31,23 +31,46 @@ namespace XDDSP
 
 
 
-/*
- Some optimised and convenient math routines
+/**
+ * @brief Clamp a number between a lower and a higher boundary
+ * 
+ * If high and low are reversed, this function will always return the value given in low.
+ * 
+ * @tparam T The data type, inferred from the parameters.
+ * @param x The value to clamp.
+ * @param low The lower boundary value.
+ * @param high The higher boundary value.
+ * @return T The clamped value.
  */
-
-
 template <typename T>
 inline T boundary(T x, T low, T high)
 {
  return std::max(low, std::min(high, x));
 }
 
+/**
+ * @brief Constrain a number to a maximum magnitude.
+ * 
+ * @tparam T The data type, inferred from the parameters.
+ * @param x The number to constrain.
+ * @param limit The maximum magnitude. Must be positive.
+ * @return T The constrained value.
+ */
 template <typename T>
 inline T clip(T x, T limit)
 {
  return boundary(x, -limit, limit);
 }
 
+/**
+ * @brief A placeholder method to encapsulate the fastest possible method of computing the maximum between two samples.
+ * 
+ * Currently uses std::max
+ * 
+ * @param a A value to compare.
+ * @param b A value to compare.
+ * @return SampleType The larger value.
+ */
 inline SampleType fastMax(SampleType a, SampleType b)
 {
 /* a -= b;
@@ -58,6 +81,15 @@ inline SampleType fastMax(SampleType a, SampleType b)
  return std::max(a, b);
 }
 
+/**
+ * @brief A placeholder method to encapsulate the fastest possible method of computing the smaller of two samples.
+ * 
+ * Currently uses std::min
+ * 
+ * @param a A value to compare.
+ * @param b A value to compare.
+ * @return SampleType The smaller value.
+ */
 inline SampleType fastMin(SampleType a, SampleType b)
 {
 /* a = b - a;
@@ -68,6 +100,16 @@ inline SampleType fastMin(SampleType a, SampleType b)
  return std::min(a, b);
 }
 
+/**
+ * @brief A placeholder method to encapsulate the fastest possible method of clamping a sample between between two samples.
+ * 
+ * Currently uses std::max and std::min. If min and max are reversed, this function will always return the value given in min.
+ * 
+ * @param x A value to compare.
+ * @param min The lower boundary value.
+ * @param max The higher boundary value.
+ * @return SampleType The larger value.
+ */
 inline SampleType fastBoundary(SampleType x, SampleType min, SampleType max)
 {
 /* SampleType x1 = fabs(x - min);
@@ -79,27 +121,72 @@ inline SampleType fastBoundary(SampleType x, SampleType min, SampleType max)
  return boundary(x, min, max);
 }
 
-inline SampleType fastClip(SampleType x, SampleType limit)
+/**
+ * @brief A placeholder method to encapsulate the fastest possible method of clipping a sample to a maximum magnitude.
+ * 
+ * Currently uses std::max and std::min.
+
+ * @param x The number to constrain.
+ * @param limit The maximum magnitude. Must be positive.
+ * @return T The constrained value.
+ */
+nline SampleType fastClip(SampleType x, SampleType limit)
 {
  return fastBoundary(x, -limit, limit);
 }
 
+/**
+ * @brief Convert a linear sample (measurement, gain etc.) to a dB sample.
+ * 
+ * @param l The linear sample to convert.
+ * @return SampleType The converted sample.
+ */
 inline SampleType linear2dB(SampleType l)
 {
  return log(l) / 0.115129254649702;
 }
 
+/**
+ * @brief Convert a dB sample (measurement, gain etc.) to a linear sample.
+ * 
+ * @param dB The sample in decibels to convert.
+ * @return SampleType The converted sample.
+ */
 inline SampleType dB2Linear(SampleType dB)
 {
  return exp(dB * 0.115129254649702);
 }
 
+/**
+ * @brief Perform a linear interpolation between two samples.
+ * 
+ * @param fracPos The amount to interpolate between 0 and 1.
+ * @param x0 Sample at position 0.
+ * @param x1 Sample at position 1.
+ * @return SampleType The interpolated sample.
+ */
 inline SampleType LERP(SampleType fracPos, SampleType x0, SampleType x1)
 {
  // return x0 + (x1 - x0)*fracPos;
  return std::fma(x1 - x0, fracPos, x0);
 }
 
+/**
+ * @brief Hermite interpolation
+ * 
+ * Performs a cubic interpolation of a curve described by 4 equidistant samples.
+ * 
+ * Thank you to Laurent de Soras.
+ * 
+ * Taken from https://www.musicdsp.org/en/latest/Other/93-hermite-interpollation.html
+ * 
+ * @param fracPos The amount to interpolate between 0 and 1.
+ * @param xm1 Sample at position -1.
+ * @param x0 Sample at position 0.
+ * @param x1 Sample at position 1.
+ * @param x2 Sample at position 2.
+ * @return SampleType The interpolated Sample.
+ */
 inline SampleType hermite(SampleType fracPos, SampleType xm1, SampleType x0, SampleType x1, SampleType x2)
 {
  const SampleType c = 0.5*(x1 - xm1);
@@ -111,6 +198,15 @@ inline SampleType hermite(SampleType fracPos, SampleType xm1, SampleType x0, Sam
  return ((((a*fracPos) - b_neg)*fracPos + c)*fracPos + x0);
 }
 
+/**
+ * @brief Maps a linear control to an exponential curve between a minimum and a maximum.
+ * 
+ * @param min The smallest allowed output.
+ * @param max The largest allowed output.
+ * @param input The input between 0 and 1.
+ * @param exp The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late.
+ * @return SampleType The curve mapped value.
+ */
 inline SampleType exponentialCurve(SampleType min,
                                  SampleType max,
                                  SampleType input,
@@ -119,6 +215,15 @@ inline SampleType exponentialCurve(SampleType min,
  return min + (max - min)*pow(input, exp);
 }
 
+/**
+ * @brief Maps a linear control to an exponential curve described by a minimum and a delta value.
+ * 
+ * @param min The smallest allowed output.
+ * @param delta The distance fromt he smallest output to the largest output.
+ * @param input The input between 0 and 1.
+ * @param exp The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late.
+ * @return SampleType The curve mapped value.
+ */
 inline SampleType exponentialDeltaCurve(SampleType min,
                                         SampleType delta,
                                         SampleType input,
@@ -128,20 +233,15 @@ inline SampleType exponentialDeltaCurve(SampleType min,
 }
 
 
-/*
- out = min + (max - min)*pow(input, exp)
- 
- out - min
- --------- = pow(input, exp)
- (max - min)
- 
- 
-      out - min    1
- pow(-----------, ---) = input
-     (max - min)  exp
- 
+/**
+ * @brief Maps an exponential curve value back to a linear value.
+ * 
+ * @param min The smallest allowed output.
+ * @param delta The distance fromt he smallest output to the largest output.
+ * @param output The value on the curve between the minimum and the maximum.
+ * @param exp The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late.
+ * @return SampleType A linear value between 0 and 1.
  */
-
 inline SampleType inverseExponentialDeltaCurve(SampleType min,
                                                SampleType delta,
                                                SampleType output,
@@ -150,39 +250,62 @@ inline SampleType inverseExponentialDeltaCurve(SampleType min,
  return pow((output - min)/delta, 1./exp);
 }
 
-/*
- inline SampleType fastexp5(SampleType x)
- {
- return (120.+x*(120.+x*(60.+x*(20.+x*(5.+x)))))*0.0083333333f;
- }
+/**
+ * @brief Calculate an exponential decay coefficient that drops to 1% within a certain number of samples.
+ * 
+ * @param samples The number of samples to decay by.
+ * @return SampleType The resulting coefficient.
  */
-
 inline SampleType expCoef(SampleType samples)
 {
  return exp(-4.605170185988091 / samples);
 }
 
+/**
+ * @brief A method to calulcate the sign of any number type.
+ * 
+ * @tparam T The number type.
+ * @param x The value to test.
+ * @return constexpr T -1, 0 or 1, depending on the sign of x
+ */
 template <typename T>
 inline constexpr T signum(T x)
 {
  return (static_cast<T>(0) < x) - (x < static_cast<T>(0));
 }
 
+/**
+ * @brief A quick method which takes a variable passed by reference and decays it towards the target at the given factor.
+ * 
+ * @param value A variable passed by reference to decay.
+ * @param target The target value for the variable.
+ * @param factor The decay coefficient, probably calculated with XDDSP::expCoef.
+ */
 inline void expTrack(SampleType &value, SampleType target, SampleType factor)
 {
- // value = target + factor*(value - target);
  value = std::fma(value - target, factor, target);
 }
 
 constexpr int ABeforeMiddleC = 69;
 
+/**
+ * @brief Calculate the ratio between two equal tempered notes.
+ * 
+ * @param st The difference betweent the notes in semitones.
+ * @return SampleType The ratio between the notes.
+ */
 inline SampleType semitoneRatio(SampleType st)
 {
  constexpr SampleType oneOverTwelve = 1./12.;
- // return powf(1.059463094359295, st);
  return pow(2, st*oneOverTwelve);
 }
 
+/**
+ * @brief Return the index of the lowest bit set in a 32-bit unsigned integer.
+ * 
+ * @param word The 32-bit unsigned integer to check.
+ * @return int The index of the lowest bit set. Returns 0 for no bits set. 1 for the lowest significant bit and 32 for the highest significant bit.
+ */
 inline int lowestBitSet(uint32_t word)
 {
  static const int BitPositionLookup[32] = // hash table
@@ -213,14 +336,19 @@ int recursiveBinarySearch(int start, int end, std::function<bool (int)> f);
 
 
 
-/*
- Some helper classes encapsulating commonly used programming patterns
+/**
+ * @brief A class encapsulating some common min-max functionality.
+ * 
+ * This class contains some common functions that come in handy where a signal, parameter or control has a minimum and a maximum value.
+ * 
+ * This class has two different modes: Min-Max mode and Top-Bottom mode.
+ * 
+ * In Min-Max mode, the minimum and maximum value only describe a region where a signal is valid. If they are put in the wrong order, this class will swap them around.
+ * 
+ * In Top-Bottom mode, the minimum and maximum value describe a literal value at the top and bottom of a control range, allowing the range to be inverted if required. An example of this might be the radius of a turn, where higher numbers result in slower turns, so it might make sence to put higher numbers at the bottom of the control range.
+ * 
+ * @tparam TopBottom Anything non-zero enables Top-Bottom mode.
  */
-
-
-
-
-// TopBottom mode causes MinMax to not swap _min and _max if _min > _max
 template <int TopBottom = 0>
 class MinMax
 {
@@ -229,19 +357,41 @@ class MinMax
  SampleType _delta {_max - _min};
  
 public:
+ /**
+  * @brief Construct a new default Min Max object.
+  * 
+  * The default settings for minimin and maximum are 0 and 1 respectively.
+  */
  MinMax() {}
  
+ /**
+  * @brief Construct a new Min Max object.
+  * 
+  * @param min The minimum value.
+  * @param max The maximum value.
+  */
  MinMax(SampleType min, SampleType max)
  {
   setMinMax(min, max);
  }
  
+ /**
+  * @brief Construct a copy of another Min Max object.
+  * 
+  * @param rhs The other object to copy.
+  */
  MinMax(const MinMax& rhs) :
  _min(rhs._min),
  _max(rhs._max),
  _delta(rhs._delta)
  {}
  
+ /**
+  * @brief Set the minimum and maximum values.
+  * 
+  * @param min The minimum value.
+  * @param max The maximum value.
+  */
  void setMinMax(SampleType min, SampleType max)
  {
   if ((TopBottom == 0) && (min > max)) std::swap(min, max);
@@ -250,21 +400,56 @@ public:
   _delta = _max - _min;
  }
  
+ /**
+  * @brief Set just the minimum value.
+  * 
+  * @param min The minimum value.
+  */
  void setMin(SampleType min)
  { setMinMax(min, _max); }
  
+ /**
+  * @brief Set just the maximum value.
+  * 
+  * @param max The maximum value.
+  */
  void setMax(SampleType max)
  { setMinMax(_min, max); }
  
+ /**
+  * @brief Get the minimum value.
+  * 
+  * @return SampleType The minimum value.
+  */
  SampleType min()
  { return _min; }
  
+ /**
+  * @brief Get the maximum value.
+  * 
+  * @return SampleType The maximum value.
+  */
  SampleType max()
  { return _max; }
  
+ /**
+  * @brief Get the difference between minimum and maximum.
+  * 
+  * In Top-Bottom mode, this number is allowed to be negative.
+  * 
+  * @return SampleType The current delta between minimum and maximum.
+  */
  SampleType delta()
  { return _delta; }
  
+ /**
+  * @brief Clamp a value between minimum and maximum values.
+  * 
+  * Regardless of what mode it is in, the object will always correctly clamp between the smallest and the largest values in the object.
+  * 
+  * @param input Some value to clamp.
+  * @return SampleType The clamped value.
+  */
  SampleType fastBoundary(SampleType input)
  {
   if (TopBottom == 0) return ::XDDSP::fastBoundary(input, _min, _max);
@@ -273,15 +458,41 @@ public:
   ::XDDSP::fastBoundary(input, _max, _min);
  }
  
+ /**
+  * @brief Perform a linear interpolation between the minimum and the maximum.
+  * 
+  * @param input A fraction between 0 and 1.
+  * @return SampleType The value interpolated between minimum and maximum.
+  */
  SampleType LERP(SampleType input)
  { return ::XDDSP::LERP(input, _min, _max); }
  
+ /**
+  * @brief Perform the opposite of an interpolation.
+  * 
+  * @param input A value between minimum and maximum.
+  * @return SampleType A normalised value between 0 and 1.
+  */
  SampleType normalise(SampleType input)
  { return (input - _min)/_delta; }
  
+ /**
+  * @brief Interpolate between minimum and maximum, with a bias curve described by the exponent.
+  * 
+  * @param input A fraction between 0 and 1.
+  * @param exponent The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late.
+  * @return SampleType A value between minimum and maximum corresponding to the input and curve.
+  */
  SampleType expCurve(SampleType input, SampleType exponent)
  { return exponentialDeltaCurve(_min, _delta, input, exponent); }
  
+ /**
+  * @brief Perform the inverse operation of expCurve.
+  * 
+  * @param input A value between minimum and maximum.
+  * @param exponent The curve factor. Values larger than 0 curve up early, values at 0 are linear and values smaller than 0 curve up late.
+  * @return SampleType A value between 0 and 1 such that, when entered into expCurve, returns the same value as the input.
+  */
  SampleType invCurve(SampleType input, SampleType exponent)
  { return inverseExponentialDeltaCurve(_min, _delta, input, exponent); }
 };
@@ -294,7 +505,10 @@ public:
 
 
 
-
+/**
+ * @brief To be deprecated in favour of adding this functionality to MinMax
+ * 
+ */
 class LogarithmicScale
 {
  SampleType _min {0.};
@@ -333,33 +547,74 @@ public:
 
 
 
+/**
+ * @brief A class containing commonly used functionality in relation to powers of two
+ * 
+ * Unless otherwise noted, all the defaults referred to in the documentation for this class refer to the default construction with 8 bits.
+ * 
+ * It has constexpr methods which allow it to be used inside template arguments in some cases.
+ */
 class PowerSize
 {
  uint32_t b;
  uint32_t s;
  uint32_t m;
 public:
+/**
+ * @brief Construct a default PowerSize object using 8 bits.
+ * 
+ */
  constexpr PowerSize():
  b(8),
  s(1 << b),
  m(s - 1)
  {}
  
+ /**
+  * @brief Construct a PowerSize object with a number of bits between 0 and 32.
+  * 
+  */
  constexpr PowerSize(uint32_t bits):
  b(bits),
  s(1 << bits),
  m(s - 1)
  {}
  
+ /**
+  * @brief Returns the number of bits the object was constructed with.
+  * 
+  * Default = 8.
+  * 
+  * @return uint32_t The number of bits the object was constructed with.
+  */
  constexpr uint32_t bits() const
  { return b; }
  
+ /**
+  * @brief Returns the power of two corresponding to the number of bits.
+  * 
+  * Default = 256.
+  * 
+  * @return uint32_t The power of two corresponding to the number of bits.
+  */
  constexpr uint32_t size() const
  { return s; }
  
+ /**
+  * @brief Returns a number with all the bits set to 1, useful for masking.
+  * 
+  * Default = 255.
+  * 
+  * @return uint32_t A number with all the bits set to 1, useful for masking.
+  */
  constexpr uint32_t mask() const
  { return m; }
  
+ /**
+  * @brief Reset the object with a different number of bits.
+  * 
+  * @param bits Number of bits to use.
+  */
  void setBits(int bits)
  {
   dsp_assert(bits >= 0 && bits < 33);
@@ -368,17 +623,11 @@ public:
   m = s - 1;
  }
  
- static uint32_t nextPowerTwoMinusOne(uint32_t rs)
- {
-  rs = rs - 1;
-  rs |= rs >> 1;
-  rs |= rs >> 2;
-  rs |= rs >> 4;
-  rs |= rs >> 8;
-  rs |= rs >> 16;
-  return rs;
- }
- 
+ /**
+  * @brief Reset the object using the next power of two higher than the target value.
+  * 
+  * @param rs The target value.
+  */
  void setToNextPowerTwo(uint32_t rs)
  {
   static const int MultiplyDeBruijnBitPosition[32] =
@@ -392,6 +641,29 @@ public:
   s = m + 1;
  }
  
+ /**
+  * @brief Make a mask by finding the next power of two higher than the target value and subtracting one.
+  * 
+  * @param rs The target value.
+  * @return uint32_t The next power of two subtract one.
+  */
+ static uint32_t nextPowerTwoMinusOne(uint32_t rs)
+ {
+  rs = rs - 1;
+  rs |= rs >> 1;
+  rs |= rs >> 2;
+  rs |= rs >> 4;
+  rs |= rs >> 8;
+  rs |= rs >> 16;
+  return rs;
+ }
+ 
+ /**
+  * @brief Construct and return a PowerSize object using the PowerSize::setToNextPowerTwo setter method on a new object.
+  * 
+  * @param rs A target value.
+  * @return PowerSize A PowerSize object made with enough bits to fit the target value.
+  */
  static PowerSize fromNextPowerTwo(uint32_t rs)
  {
   PowerSize r;
@@ -409,6 +681,11 @@ public:
 
 
 
+/**
+ * @brief A class encapsulating the best algorithm for splitting a sample into its integer and fraction components.
+ * 
+ * @tparam IntType The integer type used by the class.
+ */
 template <typename IntType = int>
 class IntegerAndFraction
 {
@@ -416,6 +693,10 @@ class IntegerAndFraction
  SampleType fP;
  IntType i;
 public:
+ /**
+  * @brief Construct the IntegerAndFraction object and calculate the integer and fraction parts of the provided sample.
+  * 
+  */
  constexpr IntegerAndFraction(SampleType whole) :
  iP(trunc(whole)),
  fP(whole - iP),
@@ -424,12 +705,27 @@ public:
   dsp_assert(!isnan(whole));
  }
  
+ /**
+  * @brief Return the integer part as a floating point type.
+  * 
+  * @return SampleType The integer part.
+  */
  constexpr SampleType intPart() const
  { return iP; }
  
+ /**
+  * @brief Return the fraction part.
+  * 
+  * @return SampleType The fraction part.
+  */
  constexpr SampleType fracPart() const
  { return fP; }
  
+ /**
+  * @brief Return the integer part in an integer form.
+  * 
+  * @return IntType The integer part.
+  */
  constexpr IntType intRep() const
  { return i; }
 };
@@ -443,6 +739,7 @@ public:
 
 
 
+// TODO: Document LinearEstimator or deprecate it.
 class LinearEstimator
 {
  SampleType s1;
@@ -478,6 +775,11 @@ public:
 
 
 
+
+/**
+ * @brief A class for estimating the intersection of a cubic waveform and flat line fixed at some value.
+ * 
+ */
 class IntersectionEstimator
 {
  static constexpr double c1_6 = 1./6.;
@@ -495,6 +797,16 @@ class IntersectionEstimator
  }
  
 public:
+ /**
+  * @brief Set the samples that define the cubic waveform. 
+  * 
+  * The object is expecting an intersection to lie between the samples xm1 and x1. No bounds checking or sanity checking is performed.
+  * 
+  * @param xm2 
+  * @param xm1 
+  * @param x1 
+  * @param x2 
+  */
  void setSampleValues(SampleType xm2,
                       SampleType xm1,
                       SampleType x1,
@@ -506,6 +818,12 @@ public:
   e = xm2;
  }
  
+ /**
+  * @brief Do the actual intersection estimation.
+  * 
+  * @param p The constant where we want to solve for the intersection.
+  * @param epsilon The allowable error in the estimation.
+  */
  void estimateIntersection(double p, double epsilon = 0.001)
  {
   double _a = 1.;
@@ -559,6 +877,7 @@ public:
   d = dd - 1.;
  }
  
+ // TODO: Document calculateStationaryPoints or deprecate it.
  bool calculateStationaryPoints(SampleType &minimum, SampleType &maximum)
  {
   const double dis = b*b - 3.*a*c;
@@ -580,11 +899,18 @@ public:
   return true;
  }
  
+ // TODO: Document calculateInflectionPoint or deprecate it.
  SampleType calculateInflectionPoint()
  {
   return -b/(3.*a);
  }
  
+ /**
+  * @brief Get the location and slote of the estimated intersection.
+  * 
+  * @param frac A variable passed by reference to return the distance between xm1 and x1 of the intersection.
+  * @param slope The slope of the cubic function at the intersection.
+  */
  void getIntersectionValues(SampleType &frac, SampleType &slope)
  {
   frac = d;
@@ -601,6 +927,16 @@ public:
 
 
 
+/**
+ * @brief A callable object which creates a lookup table from a function.
+ * 
+ * This class exposes a MinMax object to describe the boundaries where the lookup table is calculated.
+ * 
+ * To use a LookupTable object: First use the default constructor, then set the minimum and maximum in the LookupTable::boundaries property, then use LookupTable::calculateTable to populate the lookup table with values.
+ * 
+ * @tparam Size The size of the table. Depending on the quality mode, padding may be added to the table.
+ * @tparam Quality The quality of the interpolation performed. See XDDSP::ProcessQuality
+ */
 template <int Size, int Quality = ProcessQuality::MidQuality>
 class LookupTable
 {
@@ -628,13 +964,29 @@ class LookupTable
  std::array<SampleType, Size + Padding()> table;
  
 public:
+ /**
+  * @brief Set the boundaries here before calculating the table.
+  */
  MinMax<> boundaries;
 
+ /**
+  * @brief Construct a new LookupTable object
+  * 
+  */
  LookupTable()
  {
   table.fill(0.);
  }
   
+ /**
+  * @brief Call func repeatedly and populate the lookup table with the values.
+  * 
+  * **Before calling this, make sure to set the minimum and maximum values in the LookupTable::boundaries property**
+  * 
+  * Depending on the quality setting used, there may be padding added to the lookup table on either end, so func should expect inputs that are actually lower than the minimum or higher than the maximum. The func object may clamp the input value to the allowable range or, if the table is expected to be a loop of some sort, wrap the input around to the output.
+  * 
+  * @param func A callable object to provide values for the lookup table.
+  */
  void calculateTable(WaveformFunction func)
  {
   for (int i = 0; i < Size + Padding(); ++i)
@@ -644,6 +996,12 @@ public:
   }
  }
  
+ /**
+  * @brief Perform a table lookup.
+  * 
+  * @param x The input to lookup.
+  * @return SampleType The interpolated output value.
+  */
  SampleType lookup(SampleType x)
  {
   SampleType y, ym1, y0, y1, y2;
@@ -677,6 +1035,12 @@ public:
   return y;
  }
  
+ /**
+  * @brief An alias for lookup.
+  * 
+  * @param x The input to lookup.
+  * @return SampleType The interpolated output value.
+  */
  SampleType operator()(SampleType x) { return lookup(x); }
 };
 

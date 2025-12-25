@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_dynamic_biquad.html','','class_x_d
   <div class="headertitle"><div class="title">XDDSP::DynamicBiquad&lt; SignalIn, FreqIn, QIn, GainIn, StepSize &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component containing a dynamic biquad filter.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___filters_8h_source.html">XDDSP_Filters.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::DynamicBiquad&lt; SignalIn, FreqIn, QIn, GainIn, StepSize &gt;:</div>
 <div class="dyncontent">
@@ -109,10 +114,10 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DynamicBiquad</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn signalIn, FreqIn frequency, QIn qFactor, GainIn gain)</td></tr>
 <tr class="memitem:a2b0b7e4af0d12b14029ff55d15f7aff2" id="r_a2b0b7e4af0d12b14029ff55d15f7aff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b0b7e4af0d12b14029ff55d15f7aff2">reset</a> ()</td></tr>
 <tr class="memdesc:a2b0b7e4af0d12b14029ff55d15f7aff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
-<tr class="memitem:a437b5707d9078de6c726705e5e4c5142" id="r_a437b5707d9078de6c726705e5e4c5142"><td class="memItemLeft" align="right" valign="top"><a id="a437b5707d9078de6c726705e5e4c5142" name="a437b5707d9078de6c726705e5e4c5142"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilterMode</b> (int mode)</td></tr>
-<tr class="memitem:af8fddd8be124c67734c7019c01e82257" id="r_af8fddd8be124c67734c7019c01e82257"><td class="memItemLeft" align="right" valign="top"><a id="af8fddd8be124c67734c7019c01e82257" name="af8fddd8be124c67734c7019c01e82257"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilterCascade</b> (bool cascade)</td></tr>
+<tr class="memitem:a437b5707d9078de6c726705e5e4c5142" id="r_a437b5707d9078de6c726705e5e4c5142"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a437b5707d9078de6c726705e5e4c5142">setFilterMode</a> (int mode)</td></tr>
+<tr class="memdesc:a437b5707d9078de6c726705e5e4c5142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the mode of the filter. See <a class="el" href="class_x_d_d_s_p_1_1_biquad_filter_coefficients.html" title="Holds the state of configuration for a biquad filter.">BiquadFilterCoefficients</a> for a list of modes.  <br /></td></tr>
+<tr class="memitem:af8fddd8be124c67734c7019c01e82257" id="r_af8fddd8be124c67734c7019c01e82257"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8fddd8be124c67734c7019c01e82257">setFilterCascade</a> (bool cascade)</td></tr>
+<tr class="memdesc:af8fddd8be124c67734c7019c01e82257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable a second biquad with the same settings in cascade mode.  <br /></td></tr>
 <tr class="memitem:a2dcad6f400e266d4725253a74313318b" id="r_a2dcad6f400e266d4725253a74313318b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dcad6f400e266d4725253a74313318b">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:a2dcad6f400e266d4725253a74313318b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; DynamicBiquad&lt; SignalIn, FreqIn, QIn, GainIn, 16 &gt;, 16 &gt;</a></td></tr>
@@ -159,7 +164,21 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn, typename FreqIn, typename QIn, typename GainIn, int StepSize = 16&gt;<br />
+class XDDSP::DynamicBiquad&lt; SignalIn, FreqIn, QIn, GainIn, StepSize &gt;</div><p>A component containing a dynamic biquad filter. </p>
+<p>This filter hides its configuration object, instead opting to configure the filter based on input signals provided, eg. signals for frequency and quality.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to the input signal. Can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">FreqIn</td><td>Couples to the signal providing the input frequency in Hz. Must have only one channel. </td></tr>
+    <tr><td class="paramname">QIn</td><td>Couples to the signal providing the quality factor. Must have only one channel. </td></tr>
+    <tr><td class="paramname">GainIn</td><td>Couples to the signal specifying the gain in dB. Must have only one channel. </td></tr>
+    <tr><td class="paramname">StepSize</td><td>Controls how often the component reconfigures the filter from the inputs. Default is every 16 samples. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a2b0b7e4af0d12b14029ff55d15f7aff2" name="a2b0b7e4af0d12b14029ff55d15f7aff2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b0b7e4af0d12b14029ff55d15f7aff2">&#9670;&#160;</a></span>reset()</h2>
 
@@ -186,8 +205,79 @@ template&lt;typename SignalIn, typename FreqIn, typename QIn, typename GainIn, i
 </div><div class="memdoc">
 
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
+<p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; DynamicBiquad&lt; SignalIn, FreqIn, QIn, GainIn, 16 &gt;, 16 &gt;</a>.</p>
+
+</div>
+</div>
+<a id="af8fddd8be124c67734c7019c01e82257" name="af8fddd8be124c67734c7019c01e82257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8fddd8be124c67734c7019c01e82257">&#9670;&#160;</a></span>setFilterCascade()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn, typename FreqIn, typename QIn, typename GainIn, int StepSize = 16&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_dynamic_biquad.html">XDDSP::DynamicBiquad</a>&lt; SignalIn, FreqIn, QIn, GainIn, StepSize &gt;::setFilterCascade </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>cascade</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable or disable a second biquad with the same settings in cascade mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cascade</td><td>Set true to enable cascade, or false to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a437b5707d9078de6c726705e5e4c5142" name="a437b5707d9078de6c726705e5e4c5142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a437b5707d9078de6c726705e5e4c5142">&#9670;&#160;</a></span>setFilterMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn, typename FreqIn, typename QIn, typename GainIn, int StepSize = 16&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_dynamic_biquad.html">XDDSP::DynamicBiquad</a>&lt; SignalIn, FreqIn, QIn, GainIn, StepSize &gt;::setFilterMode </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the mode of the filter. See <a class="el" href="class_x_d_d_s_p_1_1_biquad_filter_coefficients.html" title="Holds the state of configuration for a biquad filter.">BiquadFilterCoefficients</a> for a list of modes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>The new mode of the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -249,7 +339,7 @@ template&lt;typename SignalIn, typename FreqIn, typename QIn, typename GainIn, i
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>XDDSP</b></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_dynamic_biquad.html">DynamicBiquad</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_dynamic_biquad.html">DynamicBiquad</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

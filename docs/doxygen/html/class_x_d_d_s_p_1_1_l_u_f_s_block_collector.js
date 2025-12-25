@@ -6,5 +6,6 @@ var class_x_d_d_s_p_1_1_l_u_f_s_block_collector =
     [ "integrateBlocks", "class_x_d_d_s_p_1_1_l_u_f_s_block_collector.html#a523464666d914b62a540234783c6e997", null ],
     [ "reset", "class_x_d_d_s_p_1_1_l_u_f_s_block_collector.html#a3a70194c1c2182c9aefab51f5a2df46a", null ],
     [ "stepProcess", "class_x_d_d_s_p_1_1_l_u_f_s_block_collector.html#a10ebbd6cc23a9b84398ac81aa25a2b59", null ],
+    [ "updateSampleRate", "class_x_d_d_s_p_1_1_l_u_f_s_block_collector.html#a5c828ef4ae6fc9da7fc9099434251cc7", null ],
     [ "signalIn", "class_x_d_d_s_p_1_1_l_u_f_s_block_collector.html#aebf6727a0cf5c062f373f684478c3980", null ]
 ];
