@@ -35,7 +35,7 @@ var NAVTREE =
           [ "Maximising code-encapsulation and reusability.", "md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md7", null ],
           [ "Portability and independence from other libraries.", "md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md8", null ],
           [ "As many opportunities for automatic optimisation as possible.", "md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md9", null ],
-          [ "Adding subcomponents", "md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md16", null ]
+          [ "Adding subcomponents", "md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md17", null ]
         ] ]
       ] ]
     ] ],
@@ -66,9 +66,9 @@ var NAVTREEINDEX =
 [
 "_x_d_d_s_p_8h_source.html",
 "class_x_d_d_s_p_1_1_control_constant.html#af86fdde22b5de24dade74715c1bac97d",
-"class_x_d_d_s_p_1_1_intersection_estimator.html#ad235d4e66a6bd90de32afa1b0ad1a808",
-"class_x_d_d_s_p_1_1_parameters.html#aaf1eef39514064bf7eb17132f1c57468",
-"class_x_d_d_s_p_1_1_static_biquad.html"
+"class_x_d_d_s_p_1_1_intersection_estimator.html",
+"class_x_d_d_s_p_1_1_parameters.html#a99a65beaa6968ea0ec2636325301e90c",
+"class_x_d_d_s_p_1_1_stereo_panner.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

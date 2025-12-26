@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>XDDSP: XDDSP::PiecewiseEnvelope&lt; PiecewiseData &gt; Class Template Reference</title>
+<title>XDDSP: XDDSP::ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,7 +63,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(function(){initNavTree('class_x_d_d_s_p_1_1_piecewise_envelope.html','','class_x_d_d_s_p_1_1_piecewise_envelope-members'); });
+$(function(){initNavTree('class_x_d_d_s_p_1_1_control_modulator.html','','class_x_d_d_s_p_1_1_control_modulator-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -89,46 +89,38 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_piecewise_envelope.html','','class
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">XDDSP::PiecewiseEnvelope&lt; PiecewiseData &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">XDDSP::ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Run a piecewise envelope.  
+<p>A component which translates signals from an LFO or an envelope to a control range.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___envelopes_8h_source.html">XDDSP_Envelopes.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___utilities_8h_source.html">XDDSP_Utilities.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for XDDSP::PiecewiseEnvelope&lt; PiecewiseData &gt;:</div>
+Inheritance diagram for XDDSP::ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_x_d_d_s_p_1_1_piecewise_envelope.png" usemap="#XDDSP_3A_3APiecewiseEnvelope_3C_20PiecewiseData_20_3E_map" alt=""/>
-  <map id="XDDSP_3A_3APiecewiseEnvelope_3C_20PiecewiseData_20_3E_map" name="XDDSP_3A_3APiecewiseEnvelope_3C_20PiecewiseData_20_3E_map">
-<area href="class_x_d_d_s_p_1_1_component.html" alt="XDDSP::Component&lt; PiecewiseEnvelope&lt; PiecewiseData &gt; &gt;" shape="rect" coords="0,56,365,80"/>
-<area href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to..." alt="XDDSP::ComponentBaseClass" shape="rect" coords="0,0,365,24"/>
+  <img src="class_x_d_d_s_p_1_1_control_modulator.png" usemap="#XDDSP_3A_3AControlModulator_3C_20SignalIn_2C_20MinimumIn_2C_20MaximumIn_2C_20Mode_2C_20StepSize_20_3E_map" alt=""/>
+  <map id="XDDSP_3A_3AControlModulator_3C_20SignalIn_2C_20MinimumIn_2C_20MaximumIn_2C_20Mode_2C_20StepSize_20_3E_map" name="XDDSP_3A_3AControlModulator_3C_20SignalIn_2C_20MinimumIn_2C_20MaximumIn_2C_20Mode_2C_20StepSize_20_3E_map">
+<area href="class_x_d_d_s_p_1_1_component.html" alt="XDDSP::Component&lt; ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional &gt;, 16 &gt;" shape="rect" coords="0,56,707,80"/>
+<area href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to..." alt="XDDSP::ComponentBaseClass" shape="rect" coords="0,0,707,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac90170f5588cc560c8f2ef5be96a69d6" id="r_ac90170f5588cc560c8f2ef5be96a69d6"><td class="memItemLeft" align="right" valign="top"><a id="ac90170f5588cc560c8f2ef5be96a69d6" name="ac90170f5588cc560c8f2ef5be96a69d6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PiecewiseEnvelope</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p)</td></tr>
-<tr class="memitem:a08f87eea135f83a71c9d95acc0dc0999" id="r_a08f87eea135f83a71c9d95acc0dc0999"><td class="memItemLeft" align="right" valign="top"><a id="a08f87eea135f83a71c9d95acc0dc0999" name="a08f87eea135f83a71c9d95acc0dc0999"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>connect</b> (PiecewiseData &amp;data)</td></tr>
-<tr class="memitem:a54eb5e566ceaadcfc079753472344bae" id="r_a54eb5e566ceaadcfc079753472344bae"><td class="memItemLeft" align="right" valign="top"><a id="a54eb5e566ceaadcfc079753472344bae" name="a54eb5e566ceaadcfc079753472344bae"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect</b> ()</td></tr>
-<tr class="memitem:a937a6e21691ce7777d3562058e4d901c" id="r_a937a6e21691ce7777d3562058e4d901c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a937a6e21691ce7777d3562058e4d901c">reset</a> ()</td></tr>
-<tr class="memdesc:a937a6e21691ce7777d3562058e4d901c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
-<tr class="memitem:a20a190edc668ec8717fabb503bc9dcbb" id="r_a20a190edc668ec8717fabb503bc9dcbb"><td class="memItemLeft" align="right" valign="top"><a id="a20a190edc668ec8717fabb503bc9dcbb" name="a20a190edc668ec8717fabb503bc9dcbb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>triggerEnvelope</b> ()</td></tr>
-<tr class="memitem:a8e74fcbbbd5658cbbf26fc8fa0988b66" id="r_a8e74fcbbbd5658cbbf26fc8fa0988b66"><td class="memItemLeft" align="right" valign="top"><a id="a8e74fcbbbd5658cbbf26fc8fa0988b66" name="a8e74fcbbbd5658cbbf26fc8fa0988b66"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>releaseEnvelope</b> ()</td></tr>
-<tr class="memitem:a743c740443ea4b6b3cc3eb0e59b7ba94" id="r_a743c740443ea4b6b3cc3eb0e59b7ba94"><td class="memItemLeft" align="right" valign="top"><a id="a743c740443ea4b6b3cc3eb0e59b7ba94" name="a743c740443ea4b6b3cc3eb0e59b7ba94"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>envelopeActive</b> ()</td></tr>
-<tr class="memitem:a8ece7daeda055687a14de7075908ea14" id="r_a8ece7daeda055687a14de7075908ea14"><td class="memItemLeft" align="right" valign="top"><a id="a8ece7daeda055687a14de7075908ea14" name="a8ece7daeda055687a14de7075908ea14"></a>
-SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>currentPosition</b> ()</td></tr>
-<tr class="memitem:a3aa724c1dff582af1ee3c9e0bd764b33" id="r_a3aa724c1dff582af1ee3c9e0bd764b33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aa724c1dff582af1ee3c9e0bd764b33">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
-<tr class="memdesc:a3aa724c1dff582af1ee3c9e0bd764b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
-<tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; PiecewiseEnvelope&lt; PiecewiseData &gt; &gt;</a></td></tr>
+<tr class="memitem:a404b01ac956cba9f83c2f8ec7f1d1144" id="r_a404b01ac956cba9f83c2f8ec7f1d1144"><td class="memItemLeft" align="right" valign="top"><a id="a404b01ac956cba9f83c2f8ec7f1d1144" name="a404b01ac956cba9f83c2f8ec7f1d1144"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ControlModulator</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn _signalIn, MinimumIn _minimumIn, MaximumIn _maximumIn)</td></tr>
+<tr class="memitem:ac3cdb04a9641d1b939d55dac739b3b4e" id="r_ac3cdb04a9641d1b939d55dac739b3b4e"><td class="memItemLeft" align="right" valign="top"><a id="ac3cdb04a9641d1b939d55dac739b3b4e" name="ac3cdb04a9641d1b939d55dac739b3b4e"></a>
+SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>getExponent</b> ()</td></tr>
+<tr class="memitem:abd937a8b8c965aba9a01c0bb50f341b9" id="r_abd937a8b8c965aba9a01c0bb50f341b9"><td class="memItemLeft" align="right" valign="top"><a id="abd937a8b8c965aba9a01c0bb50f341b9" name="abd937a8b8c965aba9a01c0bb50f341b9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setExponent</b> (SampleType e)</td></tr>
+<tr class="memitem:ad4a2b912a49dd02b1c0845a1a094128c" id="r_ad4a2b912a49dd02b1c0845a1a094128c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4a2b912a49dd02b1c0845a1a094128c">reset</a> ()</td></tr>
+<tr class="memdesc:ad4a2b912a49dd02b1c0845a1a094128c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
+<tr class="memitem:af55939ea77de3f066a28832a0002bf2b" id="r_af55939ea77de3f066a28832a0002bf2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af55939ea77de3f066a28832a0002bf2b">stepProcess</a> (int startPoint, int sampleCount)</td></tr>
+<tr class="memdesc:af55939ea77de3f066a28832a0002bf2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is called repeatedly by <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a> with the start point incremented by step size. The actual DSP processing code lives here.  <br /></td></tr>
+<tr class="inherit_header pub_methods_class_x_d_d_s_p_1_1_component"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_x_d_d_s_p_1_1_component')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="class_x_d_d_s_p_1_1_component.html">XDDSP::Component&lt; ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional &gt;, 16 &gt;</a></td></tr>
 <tr class="memitem:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_ac71014690b2ff661f495d7d07ddbab93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">startProcess</a> (int startPoint, int sampleCount)</td></tr>
 <tr class="memdesc:ac71014690b2ff661f495d7d07ddbab93 inherit pub_methods_class_x_d_d_s_p_1_1_component"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to return a step size to use. It can return the same value each time, or it can return an arbitrary step size not bigger than the sampleCount argument provided. Alternatively, the default implementation will use the template argument provided.  <br /></td></tr>
 <tr class="memitem:a07c07a7f9101fe6e59ac7de4f43f505e inherit pub_methods_class_x_d_d_s_p_1_1_component" id="r_a07c07a7f9101fe6e59ac7de4f43f505e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_x_d_d_s_p_1_1_component.html#a07c07a7f9101fe6e59ac7de4f43f505e">triggerProcess</a> (int triggerPoint)</td></tr>
@@ -145,13 +137,19 @@ SampleType&#160;</td><td class="memItemRight" valign="bottom"><b>currentPosition
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:af15c13b9f8bf85d6deb3c61af8b69673" id="r_af15c13b9f8bf85d6deb3c61af8b69673"><td class="memItemLeft" align="right" valign="top"><a id="af15c13b9f8bf85d6deb3c61af8b69673" name="af15c13b9f8bf85d6deb3c61af8b69673"></a>
-<a class="el" href="class_x_d_d_s_p_1_1_output.html">Output</a>&lt; Count &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>envOut</b></td></tr>
+<tr class="memitem:a9dce442795d230828a765e980a61265b" id="r_a9dce442795d230828a765e980a61265b"><td class="memItemLeft" align="right" valign="top"><a id="a9dce442795d230828a765e980a61265b" name="a9dce442795d230828a765e980a61265b"></a>
+SignalIn&#160;</td><td class="memItemRight" valign="bottom"><b>signalIn</b></td></tr>
+<tr class="memitem:a2f0b1beff64122e0bc9a9934a85cfe24" id="r_a2f0b1beff64122e0bc9a9934a85cfe24"><td class="memItemLeft" align="right" valign="top"><a id="a2f0b1beff64122e0bc9a9934a85cfe24" name="a2f0b1beff64122e0bc9a9934a85cfe24"></a>
+MinimumIn&#160;</td><td class="memItemRight" valign="bottom"><b>minimumIn</b></td></tr>
+<tr class="memitem:afc0d5a010e9f73c55649b90e135944b4" id="r_afc0d5a010e9f73c55649b90e135944b4"><td class="memItemLeft" align="right" valign="top"><a id="afc0d5a010e9f73c55649b90e135944b4" name="afc0d5a010e9f73c55649b90e135944b4"></a>
+MaximumIn&#160;</td><td class="memItemRight" valign="bottom"><b>maximumIn</b></td></tr>
+<tr class="memitem:aeaa60120d16fb506fc456d42f13274b1" id="r_aeaa60120d16fb506fc456d42f13274b1"><td class="memItemLeft" align="right" valign="top"><a id="aeaa60120d16fb506fc456d42f13274b1" name="aeaa60120d16fb506fc456d42f13274b1"></a>
+<a class="el" href="class_x_d_d_s_p_1_1_output.html">Output</a>&lt; Count &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>signalOut</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2953296396c9c4e5d0c6fc29716a5481" id="r_a2953296396c9c4e5d0c6fc29716a5481"><td class="memItemLeft" align="right" valign="top"><a id="a2953296396c9c4e5d0c6fc29716a5481" name="a2953296396c9c4e5d0c6fc29716a5481"></a>
-static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b> = 1</td></tr>
+<tr class="memitem:a237986ad40dd80416f1ffb324dd5613b" id="r_a237986ad40dd80416f1ffb324dd5613b"><td class="memItemLeft" align="right" valign="top"><a id="a237986ad40dd80416f1ffb324dd5613b" name="a237986ad40dd80416f1ffb324dd5613b"></a>
+static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>Count</b> = SignalIn::Count</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -163,29 +161,39 @@ Additional Inherited Members</h2></td></tr>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename PiecewiseData&gt;<br />
-class XDDSP::PiecewiseEnvelope&lt; PiecewiseData &gt;</div><p>Run a piecewise envelope. </p>
-<p>The module connects to an <a class="el" href="class_x_d_d_s_p_1_1_piecewise_envelope_data.html" title="A class containing a data structure to describe a piecewise envelope and code to synthesise the envel...">XDDSP::PiecewiseEnvelopeData</a> object and plays back the envelope.</p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn, typename MinimumIn, typename MaximumIn, int Mode = ControlModulatorModes::UniDirectional, int StepSize = 16&gt;<br />
+class XDDSP::ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt;</div><p>A component which translates signals from an LFO or an envelope to a control range. </p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_control_modulator.html" title="A component which translates signals from an LFO or an envelope to a control range.">ControlModulator</a> has 4 different modes of operation, defined in <a class="el" href="struct_x_d_d_s_p_1_1_control_modulator_modes.html" title="Contains the enum which select the mode of ControlModulator.">ControlModulatorModes</a>:</p><ul>
+<li>ControlModulatorModes::UniDirectional takes an envelope between 0 and 1 and translates it linearly.</li>
+<li>ControlModulatorModes::BiDirectional takes an LFO signal between -1 and 1 and translates it linearly.</li>
+<li>ControlModulatorModes::UniExponential takes an envelope between 0 and 1 and translates it with an exponential bias.</li>
+<li>ControlModulatorModes::BiExponential takes an LFO signal between -1 and 1 and translates it with an exponential bias.</li>
+</ul>
+<p>The exponential bias can bet set using ControlModulator::setExponent. In all modes, the component downsamples all input signals, and then upscales the output signal with a linear interpolator.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">PiecewiseData</td><td>The datatype of the piecewise data structure. </td></tr>
+    <tr><td class="paramname">SignalIn</td><td>Couples to the input signal. This can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">MinimumIn</td><td>Couples to the signal which specifies the minimum range of the control. This must have the same number of channels as SignalIn, or only one channel. </td></tr>
+    <tr><td class="paramname">MaximumIn</td><td>Couples to the signal which specifies the maximum range of the control. This must have the same number of channels as SignalIn, or only one channel. </td></tr>
+    <tr><td class="paramname">Mode</td><td>Specifies the mode the component operates in. Defaults to ControlModulatorModes::UniDirectional. </td></tr>
+    <tr><td class="paramname">StepSize</td><td>Specifies the downsample factor. </td></tr>
   </table>
   </dd>
 </dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a937a6e21691ce7777d3562058e4d901c" name="a937a6e21691ce7777d3562058e4d901c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a937a6e21691ce7777d3562058e4d901c">&#9670;&#160;</a></span>reset()</h2>
+<a id="ad4a2b912a49dd02b1c0845a1a094128c" name="ad4a2b912a49dd02b1c0845a1a094128c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4a2b912a49dd02b1c0845a1a094128c">&#9670;&#160;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename PiecewiseData&gt; </div>
+template&lt;typename SignalIn, typename MinimumIn, typename MaximumIn, int Mode = ControlModulatorModes::UniDirectional, int StepSize = 16&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_piecewise_envelope.html">XDDSP::PiecewiseEnvelope</a>&lt; PiecewiseData &gt;::reset </td>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_control_modulator.html">XDDSP::ControlModulator</a>&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt;::reset </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -201,23 +209,23 @@ template&lt;typename PiecewiseData&gt; </div>
 <p>This can be implemented to contain the code used to reset the component to a default known state. </p>
 <p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
-<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; PiecewiseEnvelope&lt; PiecewiseData &gt; &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional &gt;, 16 &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a3aa724c1dff582af1ee3c9e0bd764b33" name="a3aa724c1dff582af1ee3c9e0bd764b33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3aa724c1dff582af1ee3c9e0bd764b33">&#9670;&#160;</a></span>stepProcess()</h2>
+<a id="af55939ea77de3f066a28832a0002bf2b" name="af55939ea77de3f066a28832a0002bf2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af55939ea77de3f066a28832a0002bf2b">&#9670;&#160;</a></span>stepProcess()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename PiecewiseData&gt; </div>
+template&lt;typename SignalIn, typename MinimumIn, typename MaximumIn, int Mode = ControlModulatorModes::UniDirectional, int StepSize = 16&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_piecewise_envelope.html">XDDSP::PiecewiseEnvelope</a>&lt; PiecewiseData &gt;::stepProcess </td>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_control_modulator.html">XDDSP::ControlModulator</a>&lt; SignalIn, MinimumIn, MaximumIn, Mode, StepSize &gt;::stepProcess </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>startPoint</em></span>, </td>
         </tr>
@@ -243,12 +251,12 @@ template&lt;typename PiecewiseData&gt; </div>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a88928f12d1d0a3624e84e892379132c6">XDDSP::Component&lt; PiecewiseEnvelope&lt; PiecewiseData &gt; &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a88928f12d1d0a3624e84e892379132c6">XDDSP::Component&lt; ControlModulator&lt; SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional &gt;, 16 &gt;</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___envelopes_8h_source.html">XDDSP_Envelopes.h</a></li>
+<li>/Users/adam/Documents/Development/XDDSP/<a class="el" href="_x_d_d_s_p___utilities_8h_source.html">XDDSP_Utilities.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -263,7 +271,7 @@ template&lt;typename PiecewiseData&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_piecewise_envelope.html">PiecewiseEnvelope</a></li>
+    <li class="navelem"><a href="namespace_x_d_d_s_p.html">XDDSP</a></li><li class="navelem"><a href="class_x_d_d_s_p_1_1_control_modulator.html">ControlModulator</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
   </ul>
 </div>

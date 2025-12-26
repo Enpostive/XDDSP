@@ -66,66 +66,125 @@ All of these methods inside the process loop are called from the audio processin
 
 Here is a helpful template which you can copy into your application to use as a component class.
 
-    #include "XDDSP/XDDSP.h"
-    
-    // Input types are specified as template arguments to the class. Input types go
-    // first, because they never have defaults.
-    template <typename SignalIn>
-    class NewComponent : public Component<NewComponent<SignalIn>> {
-      
-      // Private data members here
-      
-     public:
-      static constexpr int Count = SignalIn::Count;
-      
-      // Specify your inputs as public members here
-      SignalIn signalIn;
-      
-      // Specify your outputs like this
-      Output<Count> signalOut;
-      
-      // Include a definition for each input in the constructor
-      NewComponent(Parameters &p, SignalIn _signalIn) :
-      signalIn(_signalIn),
-      signalOut(p)
-      {}
-      
-      // This function is responsible for clearing the output buffers to a default
-      // state when the component is disabled.
-      void reset() {
-        signalOut.reset();
-      }
-      
-      // startProcess prepares the component for processing one block and returns the 
-      // step size. By default, it returns the entire sampleCount as one big step, so
-      // this function can be deleted if not required.
-      int startProcess(int startPoint, int sampleCount) {
-        return std::min(sampleCount, StepSize);
-      }
+```cpp
+#include "XDDSP/XDDSP.h"
 
-      // stepProcess is called repeatedly with the start point incremented by step size
-      void stepProcess(int startPoint, int sampleCount) {
-        for (int c = 0; c < Count; ++c) {
-          for (int i = startPoint, s = sampleCount; s--; ++i) {
-            // DSP work done here
-          }
-        }
-      }
+// Input types are specified as template arguments to the class. Input types go
+// first, because they never have defaults.
+template <typename SignalIn>
+class NewComponent : public Component<NewComponent<SignalIn>> {
   
-      // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
-      // components can use 'setNextTrigger' to set a trigger point. This function can
-      // be deleted if not needed.
-      void triggerprocess(int triggerPoint) {
-      }
+  // Private data members here
+  
+ public:
+  static constexpr int Count = SignalIn::Count;
+  
+  // Specify your inputs as public members here
+  SignalIn signalIn;
+  
+  // Specify your outputs like this
+  Output<Count> signalOut;
+  
+  // Include a definition for each input in the constructor
+  NewComponent(Parameters &p, SignalIn _signalIn) :
+  signalIn(_signalIn),
+  signalOut(p)
+  {}
+  
+  // This function is responsible for clearing the output buffers to a default
+  // state when the component is disabled.
+  void reset() {
+    signalOut.reset();
+  }
+  
+  // startProcess prepares the component for processing one block and returns the 
+  // step size. By default, it returns the entire sampleCount as one big step, so
+  // this function can be deleted if not required.
+  int startProcess(int startPoint, int sampleCount) {
+    return std::min(sampleCount, StepSize);
+  }
 
-      // finishProcess is called after the block has been processed. This function
-      // can be deleted if not needed.
-      void finishProcess() {
+  // stepProcess is called repeatedly with the start point incremented by step size
+  void stepProcess(int startPoint, int sampleCount) {
+    for (int c = 0; c < Count; ++c) {
+      for (int i = startPoint, s = sampleCount; s--; ++i) {
+        // DSP work done here
       }
-    };
+    }
+  }
+
+  // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
+  // components can use 'setNextTrigger' to set a trigger point. This function can
+  // be deleted if not needed.
+  void triggerprocess(int triggerPoint) {
+  }
+
+  // finishProcess is called after the block has been processed. This function
+  // can be deleted if not needed.
+  void finishProcess() {
+  }
+};
+```
 
 ---
 
 ### Adding subcomponents
 
-Here we have modified the template to include a dynamic biquad and an LFO
+Here we have modified the template to include a dynamic biquad and an LFO.
+
+```cpp
+// I've removed all the previous comments and added new comments to highlight changes
+// The first change is to rename the component to something meaningful
+template <typename SignalIn>
+class ModulatingFilter : public Component<ModulatingFilter<SignalIn>> {
+ 
+ public:
+ static constexpr int Count = SignalIn::Count;
+ 
+ SignalIn signalIn;
+ 
+ // Subcomponents can be added as public members of the component class with their controls exposed.
+ // Create a new component class by instantiating a template with Coupler classes as inputs.
+ 
+ // Here is the LFO. The frequency and phase of the LFO are exposed as control constants.
+ // ControlConstant<> can be used directly as an input as it is a type of coupler.
+ FuncOscillator<ControlConstant<>, ControlConstant<>> lfo;
+ 
+ // Here is a modulator which takes the LFO signal and scales it to the frequency in Hz for the filter.
+ // The minimum and maximum frequency of the filter are exposed here as control constants.
+ // Here, we wrap the type of output inside a Connector<> to create the right coupler for the type.
+ ControlModulator<Connector<decltype(lfo.signalOut)>, ControlConstant<>, ControlConstant<>, ControlModulatorModes::BiExponential> freq;
+ 
+ // Here is the filter. The filter exposes methods to change the various modes.
+ // The q and gain are exposed as control constants.
+ DynamicBiquad<Connector<decltype(signalIn)>, Connector<decltype(freq.signalOut)>, ControlConstant<>, ControlConstant<>> flt;
+
+ 
+ Connector<decltype(flt.signalOut)> signalOut;
+ 
+ ModulatingFilter(Parameters &p, SignalIn _signalIn) :
+ signalIn(_signalIn),
+ lfo(p, {1.1}, {0.}),
+ freq(p, {lfo.signalOut}, {500.}, {2000.}),
+ flt(p, {signalIn}, {freq.signalOut}, {0.7}, {0.}),
+ signalOut({flt.signalOut})
+ {}
+ 
+ void reset() {
+  lfo.reset();
+  freq.reset();
+  flt.reset();
+ }
+ 
+ // startProcess has been removed because we don't need it.
+ 
+ // stepProcess is modified to call the process methods of the subcomponents.
+ void stepProcess(int startPoint, int sampleCount) {
+  lfo.process(startPoint, sampleCount);
+  freq.process(startPoint, sampleCount);
+  flt.process(startPoint, sampleCount);
+ }
+ 
+ // triggerProcess and finishProcess have been removed because they are not needed.
+};
+```

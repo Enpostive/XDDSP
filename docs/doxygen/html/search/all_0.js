@@ -3,7 +3,7 @@ var searchData=
   ['a_20common_20base_20class_20for_20components_0',['A common base class for components.',['../md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md5',1,'']]],
   ['a_20custom_20component_1',['Building A Custom Component',['../md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md11',1,'']]],
   ['addevent_2',['addEvent',['../class_x_d_d_s_p_1_1_m_i_d_i_scheduler.html#aad2f175da22e417b229cadb3cf060a31',1,'XDDSP::MIDIScheduler']]],
-  ['adding_20subcomponents_3',['Adding subcomponents',['../md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md16',1,'']]],
+  ['adding_20subcomponents_3',['Adding subcomponents',['../md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html#autotoc_md17',1,'']]],
   ['addlistener_4',['addListener',['../class_x_d_d_s_p_1_1_piecewise_envelope_data.html#aae233045b1a5afbbffb0a74a49c442cb',1,'XDDSP::PiecewiseEnvelopeData']]],
   ['addpoint_5',['addPoint',['../class_x_d_d_s_p_1_1_piecewise_envelope_data.html#a32d809a3157a831361d6db8448422f73',1,'XDDSP::PiecewiseEnvelopeData']]],
   ['adsrgenerator_6',['ADSRGenerator',['../class_x_d_d_s_p_1_1_a_d_s_r_generator.html',1,'XDDSP']]],

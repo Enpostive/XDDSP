@@ -1,7 +1,7 @@
 var searchData=
 [
   ['fastboundary_0',['fastBoundary',['../class_x_d_d_s_p_1_1_min_max.html#ad856c3daaec158096a646a184d81047e',1,'XDDSP::MinMax::fastBoundary()'],['../namespace_x_d_d_s_p.html#a13c3f9f1228f7211d9b338ce2a832858',1,'XDDSP::fastBoundary(SampleType x, SampleType min, SampleType max)']]],
-  ['fastclip_1',['fastClip',['../namespace_x_d_d_s_p.html#af77ebc7e2c6223d21a2e22299efa64d6',1,'XDDSP']]],
+  ['fastclip_1',['fastClip',['../namespace_x_d_d_s_p.html#a2bfc921fa0143efe506fcb074371add7',1,'XDDSP']]],
   ['fastmax_2',['fastMax',['../namespace_x_d_d_s_p.html#a28800de13ab70bf12e6fb48746ca32b7',1,'XDDSP']]],
   ['fastmin_3',['fastMin',['../namespace_x_d_d_s_p.html#abf6c7288a1dc9d8d759f9569085b9bad',1,'XDDSP']]],
   ['fasttransfer_4',['fastTransfer',['../class_x_d_d_s_p_1_1_coupler.html#a5161343e1b59171f0ae42a8b12af90c0',1,'XDDSP::Coupler']]],

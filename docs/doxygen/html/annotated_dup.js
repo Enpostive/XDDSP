@@ -122,6 +122,8 @@ var annotated_dup =
       [ "Counter", "class_x_d_d_s_p_1_1_counter.html", "class_x_d_d_s_p_1_1_counter" ],
       [ "LoopCounter", "class_x_d_d_s_p_1_1_loop_counter.html", "class_x_d_d_s_p_1_1_loop_counter" ],
       [ "TopBottomSwitch", "class_x_d_d_s_p_1_1_top_bottom_switch.html", "class_x_d_d_s_p_1_1_top_bottom_switch" ],
+      [ "ControlModulatorModes", "struct_x_d_d_s_p_1_1_control_modulator_modes.html", null ],
+      [ "ControlModulator", "class_x_d_d_s_p_1_1_control_modulator.html", "class_x_d_d_s_p_1_1_control_modulator" ],
       [ "Waveshaper", "class_x_d_d_s_p_1_1_waveshaper.html", "class_x_d_d_s_p_1_1_waveshaper" ],
       [ "WaveshapeLookupTable", "class_x_d_d_s_p_1_1_waveshape_lookup_table.html", null ]
     ] ]

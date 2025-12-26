@@ -3,6 +3,12 @@ var NAVTREEINDEX1 =
 "class_x_d_d_s_p_1_1_control_constant.html#af86fdde22b5de24dade74715c1bac97d":[4,0,0,53,9],
 "class_x_d_d_s_p_1_1_control_constant.html#afdf372673bd7f4de7c648d81a5b273cd":[3,0,0,55,2],
 "class_x_d_d_s_p_1_1_control_constant.html#afdf372673bd7f4de7c648d81a5b273cd":[4,0,0,53,2],
+"class_x_d_d_s_p_1_1_control_modulator.html":[3,0,0,103],
+"class_x_d_d_s_p_1_1_control_modulator.html":[4,0,0,101],
+"class_x_d_d_s_p_1_1_control_modulator.html#ad4a2b912a49dd02b1c0845a1a094128c":[3,0,0,103,0],
+"class_x_d_d_s_p_1_1_control_modulator.html#ad4a2b912a49dd02b1c0845a1a094128c":[4,0,0,101,0],
+"class_x_d_d_s_p_1_1_control_modulator.html#af55939ea77de3f066a28832a0002bf2b":[3,0,0,103,1],
+"class_x_d_d_s_p_1_1_control_modulator.html#af55939ea77de3f066a28832a0002bf2b":[4,0,0,101,1],
 "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html":[3,0,0,1,3],
 "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html":[4,0,0,0,3],
 "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html#a030ba1d9186e8cc9d0b7fb6bc9214f22":[3,0,0,1,3,6],
@@ -243,11 +249,5 @@ var NAVTREEINDEX1 =
 "class_x_d_d_s_p_1_1_interface_buffer.html#a94c59b7c238943bdf422ab8a9c1417a5":[4,0,0,74,5],
 "class_x_d_d_s_p_1_1_interface_buffer.html#aa332e921c3fecb0d9072d19fa10c0680":[3,0,0,76,0],
 "class_x_d_d_s_p_1_1_interface_buffer.html#aa332e921c3fecb0d9072d19fa10c0680":[4,0,0,74,0],
-"class_x_d_d_s_p_1_1_intersection_estimator.html":[3,0,0,49],
-"class_x_d_d_s_p_1_1_intersection_estimator.html":[4,0,0,47],
-"class_x_d_d_s_p_1_1_intersection_estimator.html#a65972e696e4f276f27b7fe1fc5cfb7de":[3,0,0,49,1],
-"class_x_d_d_s_p_1_1_intersection_estimator.html#a65972e696e4f276f27b7fe1fc5cfb7de":[4,0,0,47,1],
-"class_x_d_d_s_p_1_1_intersection_estimator.html#a6ba1e93dd2335ac7c346ebe32786013d":[3,0,0,49,0],
-"class_x_d_d_s_p_1_1_intersection_estimator.html#a6ba1e93dd2335ac7c346ebe32786013d":[4,0,0,47,0],
-"class_x_d_d_s_p_1_1_intersection_estimator.html#ad235d4e66a6bd90de32afa1b0ad1a808":[3,0,0,49,2]
+"class_x_d_d_s_p_1_1_intersection_estimator.html":[3,0,0,49]
 };

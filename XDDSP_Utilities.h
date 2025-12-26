@@ -684,6 +684,141 @@ public:
 
 
 
+/**
+ * @brief Contains the enum which select the mode of ControlModulator.
+ * 
+ */
+struct ControlModulatorModes
+{
+ enum
+ {
+  UniDirectional = 0,
+  BiDirectional,
+  UniExponential,
+  BiExponential
+ };
+};
+
+
+
+
+
+/**
+ * @brief A component which translates signals from an LFO or an envelope to a control range.
+ * 
+ * ControlModulator has 4 different modes of operation, defined in ControlModulatorModes:
+ *  - ControlModulatorModes::UniDirectional takes an envelope between 0 and 1 and translates it linearly.
+ *  - ControlModulatorModes::BiDirectional takes an LFO signal between -1 and 1 and translates it linearly.
+ *  - ControlModulatorModes::UniExponential takes an envelope between 0 and 1 and translates it with an exponential bias.
+ *  - ControlModulatorModes::BiExponential takes an LFO signal between -1 and 1 and translates it with an exponential bias.
+ * 
+ * The exponential bias can bet set using ControlModulator::setExponent.
+ * In all modes, the component downsamples all input signals, and then upscales the output signal with a linear interpolator.
+ * 
+ * @tparam SignalIn Couples to the input signal. This can have as many channels as you like.
+ * @tparam MinimumIn Couples to the signal which specifies the minimum range of the control. This must have the same number of channels as SignalIn, or only one channel.
+ * @tparam MaximumIn Couples to the signal which specifies the maximum range of the control. This must have the same number of channels as SignalIn, or only one channel.
+ * @tparam Mode Specifies the mode the component operates in. Defaults to ControlModulatorModes::UniDirectional.
+ * @tparam StepSize Specifies the downsample factor.
+ */
+template <typename SignalIn, typename MinimumIn, typename MaximumIn, int Mode = ControlModulatorModes::UniDirectional, int StepSize = 16>
+class ControlModulator : public Component<ControlModulator<SignalIn, MinimumIn, MaximumIn, Mode>, StepSize>
+{
+ public:
+ 
+ static constexpr int Count = SignalIn::Count;
+
+ private:
+
+ static_assert(MinimumIn::Count == MaximumIn::Count, "ControlModulator is expecting the same number of channels for the minimum and maximum signals");
+ static_assert(MinimumIn::Count == SignalIn::Count || MinimumIn::Count == 1, "ControlModulator is expecting the same number of channels for the range inputs as signal input, or a single channel for range inputs");
+ static_assert(Mode <= ControlModulatorModes::BiExponential, "Mode is invalid");
+
+ SampleType exponent = 1.;
+ std::array<SampleType, Count> history;
+ 
+ SampleType convertInput(SampleType x, SampleType min, SampleType max)
+ {
+  SampleType offset;
+  switch (Mode)
+  {
+   case ControlModulatorModes::UniDirectional:
+    return min + x*(max - min);
+   case ControlModulatorModes::BiDirectional:
+    offset = 0.5*(max + min);
+    return offset + x*(offset - min);
+   case ControlModulatorModes::UniExponential:
+    x = fastMax(x, 0);
+    return min + pow(x, exponent)*(max - min);
+   case ControlModulatorModes::BiExponential:
+    x = fastMax(0.5*x + 0.5, 0);
+    return min + pow(x, exponent)*(max - min);
+   default:
+    return 0.;
+  }
+ }
+ 
+ public:
+ 
+ SignalIn signalIn;
+ MinimumIn minimumIn;
+ MaximumIn maximumIn;
+ 
+ Output<Count> signalOut;
+ 
+ ControlModulator(Parameters &p, SignalIn _signalIn, MinimumIn _minimumIn, MaximumIn _maximumIn) :
+ signalIn(_signalIn),
+ minimumIn(_minimumIn),
+ maximumIn(_maximumIn),
+ signalOut(p)
+ {
+  history.fill(0.);
+ }
+ 
+ SampleType getExponent()
+ {
+  return exponent;
+ }
+ 
+ void setExponent(SampleType e)
+ {
+  exponent = e;
+ }
+ 
+ void reset()
+ {
+  history.fill(0.);
+  signalOut.reset();
+ }
+
+ void stepProcess(int startPoint, int sampleCount)
+ {
+  SampleType r = 1./static_cast<SampleType>(sampleCount);
+  for (int c = 0; c < Count; ++c)
+  {
+   int finalPoint = startPoint + sampleCount - 1;
+   SampleType n = convertInput(signalIn(c, finalPoint),
+                               minimumIn(c, finalPoint),
+                               maximumIn(c, finalPoint));
+   for (int i = startPoint, s = sampleCount, x = 0; s--; ++i, ++x)
+   {
+    SampleType ramp = static_cast<SampleType>(x)*r;
+    signalOut.buffer(c, i) = LERP(ramp, history[c], n);
+   }
+   history[c] = n;
+  }
+ }
+};
+
+
+
+
+
+
+
+
+
+
 }
 
 #endif /* XDDSP_Utilities_h */

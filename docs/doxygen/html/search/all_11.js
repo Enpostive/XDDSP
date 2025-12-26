@@ -11,7 +11,7 @@ var searchData=
   ['trapezoid_3c_20timein_2c_20rampin_2c_20rampout_2c_20integermaximum_20_3e_8',['Trapezoid&lt; TimeIn, RampIn, RampOut, IntegerMaximum &gt;',['../class_x_d_d_s_p_1_1_trapezoid.html',1,'XDDSP']]],
   ['trapezoid_3c_20timein_2c_20rampin_2c_20rampout_2c_20stepsize_20_3e_9',['Trapezoid&lt; TimeIn, RampIn, RampOut, StepSize &gt;',['../class_x_d_d_s_p_1_1_trapezoid.html',1,'XDDSP']]],
   ['triangle_10',['Triangle',['../class_x_d_d_s_p_1_1_window_function_1_1_triangle.html',1,'XDDSP::WindowFunction']]],
-  ['triggerenvelope_11',['triggerEnvelope',['../class_x_d_d_s_p_1_1_a_d_s_r_generator.html#a3a952e2006eb272c99aae3c6ddbe15b5',1,'XDDSP::ADSRGenerator::triggerEnvelope()'],['../class_x_d_d_s_p_1_1_piecewise_envelope.html#abafe5ac14ab5c9fee86db83d70c5d7e7',1,'XDDSP::PiecewiseEnvelope::triggerEnvelope()']]],
+  ['triggerenvelope_11',['triggerEnvelope',['../class_x_d_d_s_p_1_1_a_d_s_r_generator.html#a3a952e2006eb272c99aae3c6ddbe15b5',1,'XDDSP::ADSRGenerator']]],
   ['triggerprocess_12',['triggerProcess',['../class_x_d_d_s_p_1_1_component.html#a07c07a7f9101fe6e59ac7de4f43f505e',1,'XDDSP::Component']]],
   ['tutorial_13',['XDDSP Tutorial',['../md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_tutorial.html',1,'']]]
 ];

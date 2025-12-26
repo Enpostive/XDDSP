@@ -68,6 +68,13 @@ var hierarchy =
       [ "XDDSP::Component< ComponentContainer >", "class_x_d_d_s_p_1_1_component.html", [
         [ "XDDSP::ComponentContainer", "class_x_d_d_s_p_1_1_component_container.html", null ]
       ] ],
+      [ "XDDSP::Component< ControlModulator< SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional >, 16 >", "class_x_d_d_s_p_1_1_component.html", [
+        [ "XDDSP::ControlModulator< SignalIn, MinimumIn, MaximumIn, Mode, StepSize >", "class_x_d_d_s_p_1_1_control_modulator.html", null ]
+      ] ],
+      [ "XDDSP::Component< ControlModulator< SignalIn, MinimumIn, MaximumIn, Mode >, 16 >", "class_x_d_d_s_p_1_1_component.html", [
+        [ "XDDSP::ControlModulator< SignalIn, MinimumIn, MaximumIn, ControlModulatorModes::UniDirectional >", "class_x_d_d_s_p_1_1_control_modulator.html", null ],
+        [ "XDDSP::ControlModulator< SignalIn, MinimumIn, MaximumIn, Mode >", "class_x_d_d_s_p_1_1_control_modulator.html", null ]
+      ] ],
       [ "XDDSP::Component< ConvolutionFilter< SignalIn > >", "class_x_d_d_s_p_1_1_component.html", [
         [ "XDDSP::ConvolutionFilter< SignalIn >", "class_x_d_d_s_p_1_1_convolution_filter.html", null ]
       ] ],
@@ -185,11 +192,11 @@ var hierarchy =
         [ "XDDSP::Panner< SignalIn, PanIn, MixLaw, 16 >", "class_x_d_d_s_p_1_1_panner.html", null ],
         [ "XDDSP::Panner< SignalIn, PanIn, MixLaw, StepSize >", "class_x_d_d_s_p_1_1_panner.html", null ]
       ] ],
-      [ "XDDSP::Component< PiecewiseEnvelope >", "class_x_d_d_s_p_1_1_component.html", [
-        [ "XDDSP::PiecewiseEnvelope", "class_x_d_d_s_p_1_1_piecewise_envelope.html", null ]
+      [ "XDDSP::Component< PiecewiseEnvelope< PiecewiseData > >", "class_x_d_d_s_p_1_1_component.html", [
+        [ "XDDSP::PiecewiseEnvelope< PiecewiseData >", "class_x_d_d_s_p_1_1_piecewise_envelope.html", null ]
       ] ],
-      [ "XDDSP::Component< PiecewiseEnvelopeSampler< PositionIn > >", "class_x_d_d_s_p_1_1_component.html", [
-        [ "XDDSP::PiecewiseEnvelopeSampler< PositionIn >", "class_x_d_d_s_p_1_1_piecewise_envelope_sampler.html", null ]
+      [ "XDDSP::Component< PiecewiseEnvelopeSampler< PositionIn, PiecewiseData > >", "class_x_d_d_s_p_1_1_component.html", [
+        [ "XDDSP::PiecewiseEnvelopeSampler< PositionIn, PiecewiseData >", "class_x_d_d_s_p_1_1_piecewise_envelope_sampler.html", null ]
       ] ],
       [ "XDDSP::Component< PinkNoiseGenerator< 1, 5 > >", "class_x_d_d_s_p_1_1_component.html", [
         [ "XDDSP::PinkNoiseGenerator< ChannelCount, SpectrumSize >", "class_x_d_d_s_p_1_1_pink_noise_generator.html", null ]
@@ -259,6 +266,7 @@ var hierarchy =
       [ "XDDSP::Component< Derived, StepSize >", "class_x_d_d_s_p_1_1_component.html", null ]
     ] ],
     [ "XDDSP::MultiIn&lt; NoConnections, ChannelCount &gt;::Conn", "struct_x_d_d_s_p_1_1_multi_in_1_1_conn.html", null ],
+    [ "XDDSP::ControlModulatorModes", "struct_x_d_d_s_p_1_1_control_modulator_modes.html", null ],
     [ "XDDSP::ConvolutionEngine::ConvolutionEngine&lt; ConnectorChannelCount &gt;", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_engine.html", null ],
     [ "XDDSP::ConvolutionEngine::ConvolutionParameters", "class_x_d_d_s_p_1_1_convolution_engine_1_1_convolution_parameters.html", null ],
     [ "XDDSP::Coupler&lt; Derived, ChannelCount &gt;", "class_x_d_d_s_p_1_1_coupler.html", null ],

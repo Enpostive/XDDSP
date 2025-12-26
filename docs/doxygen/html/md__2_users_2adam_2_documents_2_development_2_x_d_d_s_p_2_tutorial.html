@@ -135,68 +135,123 @@ The Process Loop</h4>
 <hr  />
 <h4 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Handy template</h4>
-<p>Here is a helpful template which you can copy into your application to use as a component class. </p><pre class="fragment">#include "XDDSP/XDDSP.h"
-
-// Input types are specified as template arguments to the class. Input types go
-// first, because they never have defaults.
-template &lt;typename SignalIn&gt;
-class NewComponent : public Component&lt;NewComponent&lt;SignalIn&gt;&gt; {
-
-  // Private data members here
-
- public:
-  static constexpr int Count = SignalIn::Count;
-
-  // Specify your inputs as public members here
-  SignalIn signalIn;
-
-  // Specify your outputs like this
-  Output&lt;Count&gt; signalOut;
-
-  // Include a definition for each input in the constructor
-  NewComponent(Parameters &amp;p, SignalIn _signalIn) :
-  signalIn(_signalIn),
-  signalOut(p)
-  {}
-
-  // This function is responsible for clearing the output buffers to a default
-  // state when the component is disabled.
-  void reset() {
-    signalOut.reset();
-  }
-
-  // startProcess prepares the component for processing one block and returns the 
-  // step size. By default, it returns the entire sampleCount as one big step, so
-  // this function can be deleted if not required.
-  int startProcess(int startPoint, int sampleCount) {
-    return std::min(sampleCount, StepSize);
-  }
-
-  // stepProcess is called repeatedly with the start point incremented by step size
-  void stepProcess(int startPoint, int sampleCount) {
-    for (int c = 0; c &lt; Count; ++c) {
-      for (int i = startPoint, s = sampleCount; s--; ++i) {
-        // DSP work done here
-      }
-    }
-  }
-
-  // triggerProcess is called once if 'samplesToNextTrigger' reaches zero
-  // components can use 'setNextTrigger' to set a trigger point. This function can
-  // be deleted if not needed.
-  void triggerprocess(int triggerPoint) {
-  }
-
-  // finishProcess is called after the block has been processed. This function
-  // can be deleted if not needed.
-  void finishProcess() {
-  }
-};
-</pre><hr  />
-<h3 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<p>Here is a helpful template which you can copy into your application to use as a component class.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;XDDSP/XDDSP.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Input types are specified as template arguments to the class. Input types go</span></div>
+<div class="line"><span class="comment">// first, because they never have defaults.</span></div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
+<div class="line"><span class="keyword">class </span>NewComponent : <span class="keyword">public</span> Component&lt;NewComponent&lt;SignalIn&gt;&gt; {</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Private data members here</span></div>
+<div class="line">  </div>
+<div class="line"> <span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Specify your inputs as public members here</span></div>
+<div class="line">  SignalIn signalIn;</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Specify your outputs like this</span></div>
+<div class="line">  Output&lt;Count&gt; signalOut;</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Include a definition for each input in the constructor</span></div>
+<div class="line">  NewComponent(Parameters &amp;p, SignalIn _signalIn) :</div>
+<div class="line">  signalIn(_signalIn),</div>
+<div class="line">  signalOut(p)</div>
+<div class="line">  {}</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// This function is responsible for clearing the output buffers to a default</span></div>
+<div class="line">  <span class="comment">// state when the component is disabled.</span></div>
+<div class="line">  <span class="keywordtype">void</span> reset() {</div>
+<div class="line">    signalOut.reset();</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// startProcess prepares the component for processing one block and returns the </span></div>
+<div class="line">  <span class="comment">// step size. By default, it returns the entire sampleCount as one big step, so</span></div>
+<div class="line">  <span class="comment">// this function can be deleted if not required.</span></div>
+<div class="line">  <span class="keywordtype">int</span> startProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line">    <span class="keywordflow">return</span> std::min(sampleCount, StepSize);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// stepProcess is called repeatedly with the start point incremented by step size</span></div>
+<div class="line">  <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c) {</div>
+<div class="line">      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i) {</div>
+<div class="line">        <span class="comment">// DSP work done here</span></div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// triggerProcess is called once if &#39;samplesToNextTrigger&#39; reaches zero</span></div>
+<div class="line">  <span class="comment">// components can use &#39;setNextTrigger&#39; to set a trigger point. This function can</span></div>
+<div class="line">  <span class="comment">// be deleted if not needed.</span></div>
+<div class="line">  <span class="keywordtype">void</span> triggerprocess(<span class="keywordtype">int</span> triggerPoint) {</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// finishProcess is called after the block has been processed. This function</span></div>
+<div class="line">  <span class="comment">// can be deleted if not needed.</span></div>
+<div class="line">  <span class="keywordtype">void</span> finishProcess() {</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+</div><!-- fragment --><hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Adding subcomponents</h3>
-<p>Here we have modified the template to include a dynamic biquad and an LFO </p>
-</div></div><!-- contents -->
+<p>Here we have modified the template to include a dynamic biquad and an LFO</p>
+<div class="fragment"><div class="line"><span class="comment">// I&#39;ve removed all the previous comments and added new comments to highlight changes</span></div>
+<div class="line"><span class="comment">// The first change is to rename the component to something meaningful</span></div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
+<div class="line"><span class="keyword">class </span>ModulatingFilter : <span class="keyword">public</span> Component&lt;ModulatingFilter&lt;SignalIn&gt;&gt; {</div>
+<div class="line"> </div>
+<div class="line"> <span class="keyword">public</span>:</div>
+<div class="line"> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
+<div class="line"> </div>
+<div class="line"> SignalIn signalIn;</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Subcomponents can be added as public members of the component class with their controls exposed.</span></div>
+<div class="line"> <span class="comment">// Create a new component class by instantiating a template with Coupler classes as inputs.</span></div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Here is the LFO. The frequency and phase of the LFO are exposed as control constants.</span></div>
+<div class="line"> <span class="comment">// ControlConstant&lt;&gt; can be used directly as an input as it is a type of coupler.</span></div>
+<div class="line"> FuncOscillator&lt;ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; lfo;</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Here is a modulator which takes the LFO signal and scales it to the frequency in Hz for the filter.</span></div>
+<div class="line"> <span class="comment">// The minimum and maximum frequency of the filter are exposed here as control constants.</span></div>
+<div class="line"> <span class="comment">// Here, we wrap the type of output inside a Connector&lt;&gt; to create the right coupler for the type.</span></div>
+<div class="line"> ControlModulator&lt;Connector&lt;<span class="keyword">decltype</span>(lfo.signalOut)&gt;, ControlConstant&lt;&gt;, ControlConstant&lt;&gt;, ControlModulatorModes::BiExponential&gt; freq;</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Here is the filter. The filter exposes methods to change the various modes.</span></div>
+<div class="line"> <span class="comment">// The q and gain are exposed as control constants.</span></div>
+<div class="line"> DynamicBiquad&lt;Connector&lt;<span class="keyword">decltype</span>(signalIn)&gt;, Connector&lt;<span class="keyword">decltype</span>(freq.signalOut)&gt;, ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; flt;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> Connector&lt;<span class="keyword">decltype</span>(flt.signalOut)&gt; signalOut;</div>
+<div class="line"> </div>
+<div class="line"> ModulatingFilter(Parameters &amp;p, SignalIn _signalIn) :</div>
+<div class="line"> signalIn(_signalIn),</div>
+<div class="line"> lfo(p, {1.1}, {0.}),</div>
+<div class="line"> freq(p, {lfo.signalOut}, {500.}, {2000.}),</div>
+<div class="line"> flt(p, {signalIn}, {freq.signalOut}, {0.7}, {0.}),</div>
+<div class="line"> signalOut({flt.signalOut})</div>
+<div class="line"> {}</div>
+<div class="line"> </div>
+<div class="line"> <span class="keywordtype">void</span> reset() {</div>
+<div class="line">  lfo.reset();</div>
+<div class="line">  freq.reset();</div>
+<div class="line">  flt.reset();</div>
+<div class="line"> }</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// startProcess has been removed because we don&#39;t need it.</span></div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// stepProcess is modified to call the process methods of the subcomponents.</span></div>
+<div class="line"> <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line">  lfo.process(startPoint, sampleCount);</div>
+<div class="line">  freq.process(startPoint, sampleCount);</div>
+<div class="line">  flt.process(startPoint, sampleCount);</div>
+<div class="line"> }</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// triggerProcess and finishProcess have been removed because they are not needed.</span></div>
+<div class="line">};</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
