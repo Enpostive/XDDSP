@@ -585,44 +585,43 @@ class Trapezoid : public Component<Trapezoid<TimeIn, RampIn, RampOut, StepSize>,
  * The module connects to an XDDSP::PiecewiseEnvelopeData to get the information for the envelope.
  * 
  * @tparam PositionIn Couples to a position input.
+ * @tparam PiecewiseData The datatype of the piecewise data structure.
  */
-template <typename PositionIn>
-class PiecewiseEnvelopeSampler : public Component<PiecewiseEnvelopeSampler<PositionIn>>
+template <typename PositionIn, typename PiecewiseData>
+class PiecewiseEnvelopeSampler : public Component<PiecewiseEnvelopeSampler<PositionIn, PiecewiseData>>
 {
- PiecewiseEnvelopeData *envData {nullptr};
+ // Private data members here
+ PiecewiseData *envData {nullptr};
  
 public:
  static constexpr int Count = PositionIn::Count;
  
+ // Specify your inputs as public members here
  PositionIn positionIn;
  
+ // Specify your outputs like this
  Output<Count> envOut;
  
+ // Include a definition for each input in the constructor
  PiecewiseEnvelopeSampler(Parameters &p, PositionIn _positionIn) :
  positionIn(_positionIn),
  envOut(p)
  {}
  
- /**
-  * @brief Connect a XDDSP::PiecewiseEnvelopeData object
-  * 
-  * @param data The XDDSP::PiecewiseEnvelopeData to connect to.
-  */
- void connect(PiecewiseEnvelopeData &data)
+ void connect(PiecewiseData &data)
  { envData = &data; }
  
- /**
-  * @brief Disconnect the PiecewiseData object.
-  * 
-  */
  void disconnect()
  { envData = nullptr; }
  
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
  void reset()
  {
   envOut.reset();
  }
-  
+ 
+ // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   if (envData == nullptr) return;
@@ -650,8 +649,10 @@ public:
  * 
  * The module connects to an XDDSP::PiecewiseEnvelopeData object and plays back the envelope.
  * 
+ * @tparam PiecewiseData The datatype of the piecewise data structure.
  */
-class PiecewiseEnvelope : public Component<PiecewiseEnvelope>
+template <typename PiecewiseData>
+class PiecewiseEnvelope : public Component<PiecewiseEnvelope<PiecewiseData>>
 {
  enum
  {
@@ -665,38 +666,35 @@ class PiecewiseEnvelope : public Component<PiecewiseEnvelope>
  
  // Private data members here
  Parameters &dspParam;
- PiecewiseEnvelopeData *envData {nullptr};
+ PiecewiseData *envData {nullptr};
  SampleType position {0.};
  int activeMode {ActiveModeReleased};
  SampleType loopEndPosition {0.};
  SampleType loopReturnDelta {0.};
  SampleType loopSustainPosition {0.};
-
+ 
 public:
  static constexpr int Count = 1;
  
+ // No Inputs
+ 
+ // Specify your outputs like this
  Output<Count> envOut;
  
+ // Include a definition for each input in the constructor
  PiecewiseEnvelope(Parameters &p) :
  dspParam(p),
  envOut(p)
  {}
  
- /**
-  * @brief Connect a XDDSP::PiecewiseEnvelopeData object
-  * 
-  * @param data The XDDSP::PiecewiseEnvelopeData to connect to.
-  */
- void connect(PiecewiseEnvelopeData &data)
+ void connect(PiecewiseData &data)
  { envData = &data; }
  
- /**
-  * @brief Disconnect the PiecewiseData object.
-  * 
-  */
  void disconnect()
  { envData = nullptr; }
  
+ // This function is responsible for clearing the output buffers to a default state when
+ // the component is disabled.
  void reset()
  {
   activeMode = ActiveModeInactive;
@@ -704,10 +702,6 @@ public:
   envOut.reset();
  }
  
- /**
-  * @brief Start the envelope.
-  * 
-  */
  void triggerEnvelope()
  {
   if (envData)
@@ -729,34 +723,20 @@ public:
   position = 0.;
  }
  
- /**
-  * @brief Release the envelope
-  * 
-  */
  void releaseEnvelope()
  {
   activeMode = ActiveModeReleased;
  }
  
- /**
-  * @brief Returns true if the envelope is active.
-  * 
-  * @return true Envelope is active.
-  * @return false Envelope is inactive.
-  */
  bool envelopeActive()
  {
   return activeMode != ActiveModeInactive;
  }
  
- /**
-  * @brief Return the current playback position of the envelope.
-  * 
-  * @return SampleType The current position of the envelope.
-  */
  SampleType currentPosition()
  { return position; }
-  
+ 
+ // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount)
  {
   if (envData == nullptr) return;
@@ -791,17 +771,17 @@ public:
      position += dspParam.sampleInterval();
      ++i;
     }
-   
+    
     activeMode = ActiveModeSustainHold;
     position = loopSustainPosition;
-
+    
    case ActiveModeSustainHold:
     for (; (s--); ++i)
     {
      envOut.buffer(0, i) = envData->resolveRandomPoint(position);
     }
     break;
-
+    
    case ActiveModeLoop:
     for (; (s--); ++i)
     {
@@ -814,6 +794,10 @@ public:
     break;
   }
  }
+ 
+ // finishProcess is called after the block has been processed
+ // void finishProcess()
+ // {}
 };
 
 

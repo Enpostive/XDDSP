@@ -130,7 +130,7 @@ inline SampleType fastBoundary(SampleType x, SampleType min, SampleType max)
  * @param limit The maximum magnitude. Must be positive.
  * @return T The constrained value.
  */
-nline SampleType fastClip(SampleType x, SampleType limit)
+inline SampleType fastClip(SampleType x, SampleType limit)
 {
  return fastBoundary(x, -limit, limit);
 }

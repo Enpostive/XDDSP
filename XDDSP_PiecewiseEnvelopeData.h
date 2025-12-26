@@ -64,8 +64,6 @@ public:
 /**
  * @brief A class containing a data structure to describe a piecewise envelope and code to synthesise the envelope.
  * 
- * @tparam MaxPoints The maximum number of points allowed.
- * @tparam CurveResolution The number of individual segments a curve is divided up into.
  */
 template <unsigned int MaxPoints = 10, int CurveResolution = 5>
 class PiecewiseEnvelopeData
@@ -82,13 +80,13 @@ private:
  {
   SampleType value {0.};
   SampleType curve {0.};
-  std::array<SampleType, CurveResolution> samples {};
+  std::vector<SampleType> samples {};
   SampleType time {0};
   SampleType length {0};
   SampleType timeGradient;
  };
  
- std::array<Point, MaxPoints> points;
+ std::vector<Point> points;
  int pointCount {0};
  int loopStartPoint {-1};
  int loopEndPoint {-1};
