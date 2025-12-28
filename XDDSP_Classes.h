@@ -97,8 +97,7 @@ public:
 
 /**
  * @brief An implementation of a buffer to be used to store output data from a DSP process.
- * 
- * Coupler exposes a similar interface to XDDSP::Coupler which returns references to the samples requested, enabling them to be written by DSP code. This object listens to XDDSP::Parameters and automatically resizes the buffer when it is commanded to.
+ *        Instead of inheriting the coupler code above, a similar interface is presented which returns references to the samples requested, enabling them to be written by DSP code
  * 
  * @tparam BufferCount The number of channels to support
  */
@@ -204,14 +203,16 @@ public:
 
 
 /**
- * @brief A foundational base class for the CRTP base class to inherit from.
- *        Pointers of this type can point to any component class which enables component containers to work.
+ * @brief A CRTP component template which encapsulates the implementation of the process loop logic.
+ *        A component process loop is split up into 4 parts: reset, start, step and finish. Reset is called as required by the application to reset the component. The start code is called once at the start of each process buffer to process. The step code is called repeatedly to do the actual processing. The finish code is called after the last step call. The process loop can also interrupt itself at a pre-determined time to call a trigger.
  * 
- * This class is deprecated in favour of making the CRTP class into the foundation class. Virtual methods will be removed entirely. This shouldn't break too much code, except for perhaps removing a few 'override' specifiers.
- * 
+ * @tparam Derived 
+ * @tparam StepSize 
  */
-class ComponentBaseClass
+template <class Derived, int StepSize = INT_MAX>
+class Component
 {
+ Derived &THIS;
  bool enabled {true};
 
 protected:
@@ -221,21 +222,19 @@ protected:
   * @anchor Component_setNextTrigger
   * @brief Set the Next Trigger object
   *        A component can use this->setNextTrigger(time) to set the number of samples in the future to trigger. Only one trigger is kept, subsequent calls override the previous calls.
-  * 
+  *
   * @param point The number of samples in the future to wait until triggering. Use -1 to cancel the trigger
   */
  void setNextTrigger(int point)
  {
   samplesToNextTrigger = point;
  }
-
+ 
 public:
- virtual ~ComponentBaseClass() {}
-
  /**
   * @anchor Component_isEnabled
   * @brief Returns whether the component is enabled. If the component is disabled, the inner process loop is not run when process is called.
-  * 
+  *
   * @return true if the parameter is enabled
   * @return false otherwise
   */
@@ -244,7 +243,7 @@ public:
  /**
   * @anchor Component_isDisabled
   * @brief Sets whether the component is enabled or not
-  * 
+  *
   * @param e Pass true to enable the device, false otherwise
   */
  void setEnabled(bool e)
@@ -253,36 +252,6 @@ public:
   if (!enabled) reset();
  }
 
- virtual void reset() = 0;
- virtual int startProcess(int startPoint, int sampleCount) = 0;
- virtual void stepProcess(int startPoint, int sampleCount) = 0;
- virtual void triggerProcess(int triggerPoint) = 0;
- virtual void finishProcess() = 0;
- virtual void process(int startPoint, int sampleCount) = 0;
-};
-
-
-
-
-
-
-
-
-
-
-/**
- * @brief A CRTP component template which encapsulates the implementation of the process loop logic.
- *        A component process loop is split up into 4 parts: reset, start, step and finish. Reset is called as required by the application to reset the component. The start code is called once at the start of each process buffer to process. The step code is called repeatedly to do the actual processing. The finish code is called after the last step call. The process loop can also interrupt itself at a pre-determined time to call a trigger.
- * 
- * @tparam Derived 
- * @tparam StepSize 
- */
-template <class Derived, int StepSize = INT_MAX>
-class Component : public ComponentBaseClass
-{
- Derived &THIS;
-
-public:
  Component() :
  THIS(static_cast<Derived&>(*this))
  {}
@@ -384,30 +353,6 @@ public:
 
 
 
-
-
-
-
-/// @brief Deprecated.
-class ComponentContainer : public Component<ComponentContainer>
-{
- std::vector<ComponentBaseClass*> partsList;
- 
-protected:
- void addPart(ComponentBaseClass& part)
- { partsList.push_back(&part); }
- 
-public:
- void reset()
- {
-  for (auto &part : partsList) part->reset();
- }
- 
- void stepProcess(int startPoint, int sampleCount)
- {
-  for (auto &part : partsList) part->process(startPoint, sampleCount);
- }
-};
 
 
 
