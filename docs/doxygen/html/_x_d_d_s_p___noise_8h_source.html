@@ -298,94 +298,92 @@ $(function(){initNavTree('_x_d_d_s_p___noise_8h_source.html','',''); });
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span></div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn, <span class="keywordtype">int</span> NoiseSpectrumSize = 5&gt;</div>
-<div class="foldopen" id="foldopen00228" data-start="{" data-end="};">
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html">  228</a></span><span class="keyword">class </span>AnalogNoiseSimulator : <span class="keyword">public</span> Component&lt;AnalogNoiseSimulator&lt;SignalIn, NoiseSpectrumSize&gt;&gt;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>{</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> SignalIn signalIn;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn, <span class="keywordtype">int</span> NoiseSpectrumSize = 5&gt;</div>
+<div class="foldopen" id="foldopen00230" data-start="{" data-end="};">
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html">  230</a></span><span class="keyword">class </span>AnalogNoiseSimulator : <span class="keyword">public</span> Component&lt;AnalogNoiseSimulator&lt;SignalIn, NoiseSpectrumSize&gt;&gt;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>{</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_pink_noise_generator.html">PinkNoiseGenerator&lt;Count, NoiseSpectrumSize&gt;</a> flickerNoise;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_noise_generator.html">NoiseGenerator&lt;Count&gt;</a> shotNoise;</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_noise_generator.html">NoiseGenerator&lt;Count&gt;</a> jnNoise;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_signal_delta.html">SignalDelta&lt;Connector&lt;SignalIn&gt;</a>&gt; snAmp;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> SignalIn signalIn;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_pink_noise_generator.html">PinkNoiseGenerator&lt;Count, NoiseSpectrumSize&gt;</a> flickerNoise;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_noise_generator.html">NoiseGenerator&lt;Count&gt;</a> shotNoise;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_noise_generator.html">NoiseGenerator&lt;Count&gt;</a> jnNoise;</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(shotNoise)&gt;,</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(snAmp)&gt;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> &gt; shotNoiseModulator;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(shotNoiseModulator.signalOut)&gt;,</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">  253</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(jnNoise.noiseOut)&gt;,</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector&lt;SignalIn&gt;</a></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> &gt; jnNoiseModulator;</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_sum.html">Sum&lt;2, Count&gt;</a>,</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">  267</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_sum.html">Sum&lt;2, Count&gt;</a> noiseMix;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_signal_delta.html">SignalDelta&lt;Connector&lt;SignalIn&gt;</a>&gt; snAmp;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(shotNoise)&gt;,</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(snAmp)&gt;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> &gt; shotNoiseModulator;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(shotNoiseModulator.signalOut)&gt;,</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">  255</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(jnNoise.noiseOut)&gt;,</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector&lt;SignalIn&gt;</a></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> &gt; jnNoiseModulator;</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_sum.html">Sum&lt;2, Count&gt;</a>,</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">  269</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>;</div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(noiseMix)&gt;,</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">  278</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.signalOut)&gt; signalOut;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_sum.html">Sum&lt;2, Count&gt;</a> noiseMix;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_simple_gain.html">SimpleGain</a>&lt;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(noiseMix)&gt;,</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant&lt;&gt;</a></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">  280</a></span> &gt; <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>;</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> AnalogNoiseSimulator(<a class="code hl_class" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn _signalIn) :</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> signalIn(_signalIn),</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> flickerNoise(p),</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> shotNoise(p),</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> jnNoise(p),</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> snAmp(p, {signalIn}),</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> shotNoiseModulator(p, {shotNoise.noiseOut}, {snAmp.signalOut}),</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>(p, {shotNoiseModulator.signalOut}, {0.001}),</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> jnNoiseModulator(p, {jnNoise.noiseOut}, {signalIn}),</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>(p, {{<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.signalOut}, {jnNoiseModulator.signalOut}}, {<a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(-5.)}),</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> noiseMix({flickerNoise.noiseOut, <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.signalOut}),</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>(p, {noiseMix}, {<a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(-80.)}),</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> signalOut(<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.signalOut)</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> {}</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">reset</a>()</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> {</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  flickerNoise.<a class="code hl_function" href="class_x_d_d_s_p_1_1_simple_gain.html#a484d84a151f4d245d70eec8374309948">reset</a>();</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>  shotNoise.reset();</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  jnNoise.reset();</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  snAmp.reset();</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>  shotNoiseModulator.reset();</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.reset();</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  jnNoiseModulator.reset();</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.reset();</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.reset();</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> }</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount)</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> {</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>  flickerNoise.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  shotNoise.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  jnNoise.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  snAmp.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>  shotNoiseModulator.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  jnNoiseModulator.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.process(startPoint, sampleCount);</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> }</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>};</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <a class="code hl_class" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.signalOut)&gt; signalOut;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> AnalogNoiseSimulator(<a class="code hl_class" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn _signalIn) :</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> signalIn(_signalIn),</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> flickerNoise(p),</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> shotNoise(p),</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> jnNoise(p),</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> snAmp(p, {signalIn}),</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> shotNoiseModulator(p, {shotNoise.noiseOut}, {snAmp.signalOut}),</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>(p, {shotNoiseModulator.signalOut}, {0.001}),</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> jnNoiseModulator(p, {jnNoise.noiseOut}, {signalIn}),</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>(p, {{<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.signalOut}, {jnNoiseModulator.signalOut}}, {<a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(-5.)}),</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> noiseMix({flickerNoise.noiseOut, <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.signalOut}),</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>(p, {noiseMix}, {<a class="code hl_function" href="namespace_x_d_d_s_p.html#a4fc7aa4ea6fd39f42da645a95cd445bd">dB2Linear</a>(-80.)}),</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> signalOut(<a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.signalOut)</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> {}</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">reset</a>()</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  flickerNoise.<a class="code hl_function" href="class_x_d_d_s_p_1_1_simple_gain.html#a484d84a151f4d245d70eec8374309948">reset</a>();</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  shotNoise.reset();</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>  jnNoise.reset();</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  snAmp.reset();</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  shotNoiseModulator.reset();</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.reset();</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  jnNoiseModulator.reset();</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.reset();</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.reset();</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> }</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount)</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  flickerNoise.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  shotNoise.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>  jnNoise.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  snAmp.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  shotNoiseModulator.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">shotNoiseAtten</a>.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  jnNoiseModulator.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">whiteNoiseAtten</a>.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>  <a class="code hl_variable" href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">noiseLevel</a>.process(startPoint, sampleCount);</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> }</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>};</div>
 </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
@@ -394,21 +392,23 @@ $(function(){initNavTree('_x_d_d_s_p___noise_8h_source.html','',''); });
 <div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
 <div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
 <div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>}</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>}</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="preprocessor">#endif </span><span class="comment">/* XDDSP_Noise_h */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_a0786aa0a4f7369e4e822b486a86b18bd"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">XDDSP::AnalogNoiseSimulator::whiteNoiseAtten</a></div><div class="ttdeci">SimpleGain&lt; Sum&lt; 2, Count &gt;, ControlConstant&lt;&gt; &gt; whiteNoiseAtten</div><div class="ttdoc">Modify the gainIn control on this to customise the flavour of the noise. Default 0....</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:267</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_a68db9296c867680507496316b2a1d297"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">XDDSP::AnalogNoiseSimulator::noiseLevel</a></div><div class="ttdeci">SimpleGain&lt; Connector&lt; decltype(noiseMix)&gt;, ControlConstant&lt;&gt; &gt; noiseLevel</div><div class="ttdoc">You can change the gainIn from the default of 0.0001 (-80dB) on this one to simulate hotter or colder...</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:278</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_adb3cb52c85d2d404faf1c6cd8dc4f638"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">XDDSP::AnalogNoiseSimulator::shotNoiseAtten</a></div><div class="ttdeci">SimpleGain&lt; Connector&lt; decltype(shotNoiseModulator.signalOut)&gt;, ControlConstant&lt;&gt; &gt; shotNoiseAtten</div><div class="ttdoc">Modify the gainIn control on this to customise the flavour of the noise. Default 0....</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:253</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_component_html_a7fb7ab876decfdd94c1ba3dd9f167545"><div class="ttname"><a href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; AnalogNoiseSimulator&lt; SignalIn, 5 &gt; &gt;::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:294</div></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span> </div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="preprocessor">#endif </span><span class="comment">/* XDDSP_Noise_h */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_a0786aa0a4f7369e4e822b486a86b18bd"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a0786aa0a4f7369e4e822b486a86b18bd">XDDSP::AnalogNoiseSimulator::whiteNoiseAtten</a></div><div class="ttdeci">SimpleGain&lt; Sum&lt; 2, Count &gt;, ControlConstant&lt;&gt; &gt; whiteNoiseAtten</div><div class="ttdoc">Modify the gainIn control on this to customise the flavour of the noise. Default 0....</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:269</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_a68db9296c867680507496316b2a1d297"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#a68db9296c867680507496316b2a1d297">XDDSP::AnalogNoiseSimulator::noiseLevel</a></div><div class="ttdeci">SimpleGain&lt; Connector&lt; decltype(noiseMix)&gt;, ControlConstant&lt;&gt; &gt; noiseLevel</div><div class="ttdoc">You can change the gainIn from the default of 0.0001 (-80dB) on this one to simulate hotter or colder...</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:280</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_analog_noise_simulator_html_adb3cb52c85d2d404faf1c6cd8dc4f638"><div class="ttname"><a href="class_x_d_d_s_p_1_1_analog_noise_simulator.html#adb3cb52c85d2d404faf1c6cd8dc4f638">XDDSP::AnalogNoiseSimulator::shotNoiseAtten</a></div><div class="ttdeci">SimpleGain&lt; Connector&lt; decltype(shotNoiseModulator.signalOut)&gt;, ControlConstant&lt;&gt; &gt; shotNoiseAtten</div><div class="ttdoc">Modify the gainIn control on this to customise the flavour of the noise. Default 0....</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:255</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_component_html_a7fb7ab876decfdd94c1ba3dd9f167545"><div class="ttname"><a href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; AnalogNoiseSimulator&lt; SignalIn, 5 &gt; &gt;::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:295</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_connector_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_connector.html">XDDSP::Connector</a></div><div class="ttdoc">This is a simple straight connector to another coupler.</div><div class="ttdef"><b>Definition</b> XDDSP_Inputs.h:53</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_control_constant_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_control_constant.html">XDDSP::ControlConstant</a></div><div class="ttdoc">A coupler which outputs a constant signal on each channel. A modifier function may be given to modify...</div><div class="ttdef"><b>Definition</b> XDDSP_Inputs.h:292</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_noise_generator_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_noise_generator.html">XDDSP::NoiseGenerator</a></div><div class="ttdoc">A component which outputs white noise.</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:120</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_noise_generator_html_a6840579f3aa5ac121b3a9f7fd1b7f894"><div class="ttname"><a href="class_x_d_d_s_p_1_1_noise_generator.html#a6840579f3aa5ac121b3a9f7fd1b7f894">XDDSP::NoiseGenerator::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">This can be implemented to contain the code used to reset the component to a default known state.</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:131</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_noise_generator_html_a73e9a9bf949ec58983660304bff6e8d9"><div class="ttname"><a href="class_x_d_d_s_p_1_1_noise_generator.html#a73e9a9bf949ec58983660304bff6e8d9">XDDSP::NoiseGenerator::stepProcess</a></div><div class="ttdeci">void stepProcess(int startPoint, int sampleCount)</div><div class="ttdoc">Is called repeatedly by Component::process with the start point incremented by step size....</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:136</div></div>
-<div class="ttc" id="aclass_x_d_d_s_p_1_1_output_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_output.html">XDDSP::Output</a></div><div class="ttdoc">An output which encapsulates an output buffer inside a coupler so that it can be readily connected to...</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:166</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_output_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_output.html">XDDSP::Output</a></div><div class="ttdoc">An output which encapsulates an output buffer inside a coupler so that it can be readily connected to...</div><div class="ttdef"><b>Definition</b> XDDSP_Classes.h:167</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a></div><div class="ttdoc">An object which encapsulates all of the basic parameters of a DSP network.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:35</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_pink_noise_generator_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_pink_noise_generator.html">XDDSP::PinkNoiseGenerator</a></div><div class="ttdoc">A component which outputs pink noise.</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:165</div></div>
 <div class="ttc" id="aclass_x_d_d_s_p_1_1_pink_noise_generator_html_a5771483cf398b11ccbebcec90fb6f3cc"><div class="ttname"><a href="class_x_d_d_s_p_1_1_pink_noise_generator.html#a5771483cf398b11ccbebcec90fb6f3cc">XDDSP::PinkNoiseGenerator::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">This can be implemented to contain the code used to reset the component to a default known state.</div><div class="ttdef"><b>Definition</b> XDDSP_Noise.h:184</div></div>

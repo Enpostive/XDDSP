@@ -274,12 +274,17 @@ public:
 
 
 
-// Set SquareInputSignal to 1 to have a squared signal average output, suitable for
-// calculating RMS
+/**
+  * @brief A component for outputing a signal which tracks the average level of the input signal.
+  *
+  * This component uses a circular buffer to take a rectangle window average, as opposed to using a One-Pole filter
+  *
+  * @tparam SignalIn Couples to an input to average out. This can have as many channels as you like.
+  * @tparam SquareInputSignal Set this to 1 to cause the component to square every input value before taking the average.
+ */
 template <typename SignalIn, int SquareInputSignal = 0>
 class SignalAverage : public Component<SignalAverage<SignalIn>>, public Parameters::ParameterListener
 {
- // Private data members here
  Parameters &dspParam;
  
  std::array<DynamicCircularBuffer<>, SignalIn::Count> buffer;
@@ -292,13 +297,10 @@ class SignalAverage : public Component<SignalAverage<SignalIn>>, public Paramete
 public:
  static constexpr int Count = SignalIn::Count;
  
- // Specify your inputs as public members here
  SignalIn signalIn;
  
- // Specify your outputs like this
  Output<Count> signalOut;
  
- // Include a definition for each input in the constructor
  SignalAverage(Parameters &p, SignalIn _signalIn) :
  Parameters::ParameterListener(p),
  dspParam(p),
@@ -309,6 +311,11 @@ public:
   accum.fill(0.);
  }
  
+ /**
+  * @brief Set the maximum window size and allocate the required memory.
+  * 
+  * @param _maxWindowSize The desired maximum window size.
+  */
  void setMaximumWindowSize(SampleType _maxWindowSize)
  {
   if (_maxWindowSize <= 0.) return;
@@ -331,6 +338,13 @@ public:
   reset();
  }
 
+ /**
+  * @brief Set the window size to use without allocating extra memory.
+  * 
+  * Does bounds checking against the maximum window size. The accumulated average is recalculated.
+  * 
+  * @param _windowSize The desired window size.
+  */
  void setWindowSize(SampleType _windowSize)
  {
   if (_windowSize <= 0) return;
@@ -348,8 +362,6 @@ public:
   }
  }
  
- // This function is responsible for clearing the output buffers to a default state when
- // the component is disabled.
  void reset() override
  {
   accum.fill(0.);
@@ -357,7 +369,6 @@ public:
   signalOut.reset();
  }
  
- // stepProcess is called repeatedly with the start point incremented by step size
  void stepProcess(int startPoint, int sampleCount) override
  {
   for (int c = 0; c < Count; ++c)

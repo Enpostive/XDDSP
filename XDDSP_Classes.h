@@ -97,7 +97,8 @@ public:
 
 /**
  * @brief An implementation of a buffer to be used to store output data from a DSP process.
- *        Instead of inheriting the coupler code above, a similar interface is presented which returns references to the samples requested, enabling them to be written by DSP code
+ * 
+ * Coupler exposes a similar interface to XDDSP::Coupler which returns references to the samples requested, enabling them to be written by DSP code. This object listens to XDDSP::Parameters and automatically resizes the buffer when it is commanded to.
  * 
  * @tparam BufferCount The number of channels to support
  */

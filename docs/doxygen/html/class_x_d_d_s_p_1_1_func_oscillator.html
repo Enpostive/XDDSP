@@ -139,7 +139,7 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6ae523067c387a9669ff13ad68848aca" id="r_a6ae523067c387a9669ff13ad68848aca"><td class="memItemLeft" align="right" valign="top"><a id="a6ae523067c387a9669ff13ad68848aca" name="a6ae523067c387a9669ff13ad68848aca"></a>
 WaveformFunction&#160;</td><td class="memItemRight" valign="bottom"><b>func</b></td></tr>
-<tr class="memdesc:a6ae523067c387a9669ff13ad68848aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callable object must be loaded here first before calling <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">Component::process</a>. <br /></td></tr>
+<tr class="memdesc:a6ae523067c387a9669ff13ad68848aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is where you put the callable object which will produce the waveform samples. <br /></td></tr>
 <tr class="memitem:abb2923ee129f95966f4a22e974393bbb" id="r_abb2923ee129f95966f4a22e974393bbb"><td class="memItemLeft" align="right" valign="top"><a id="abb2923ee129f95966f4a22e974393bbb" name="abb2923ee129f95966f4a22e974393bbb"></a>
 FrequencyIn&#160;</td><td class="memItemRight" valign="bottom"><b>frequencyIn</b></td></tr>
 <tr class="memitem:abbeddaee5a0822fa52f98d4c0bd60f22" id="r_abbeddaee5a0822fa52f98d4c0bd60f22"><td class="memItemLeft" align="right" valign="top"><a id="abbeddaee5a0822fa52f98d4c0bd60f22" name="abbeddaee5a0822fa52f98d4c0bd60f22"></a>
@@ -164,7 +164,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename FrequencyIn, typename PhaseModIn&gt;<br />
 class XDDSP::FuncOscillator&lt; FrequencyIn, PhaseModIn &gt;</div><p>A basic multi-channel oscillator which uses a callable object to generate a waveform. </p>
-<p>This object calls <a class="el" href="#a6ae523067c387a9669ff13ad68848aca" title="The callable object must be loaded here first before calling Component::process.">FuncOscillator::func</a> with a value between 0 and 1. func must be set to a callable object before any processing begins, otherwise the component will crash.</p>
+<p>This object calls <a class="el" href="#a6ae523067c387a9669ff13ad68848aca" title="This is where you put the callable object which will produce the waveform samples.">FuncOscillator::func</a> with a value between 0 and 1. Upon construction, the func object is pointed to a basic sine wave function.</p>
 <p>This object supports basic phase modulation. There is no anti-aliasing.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

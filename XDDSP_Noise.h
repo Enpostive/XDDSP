@@ -221,6 +221,8 @@ public:
  * 
  * This component doesn't directly add noise to the input signal. This component generates base line pink noise to simulate flicker noise, then adds shot noise and junction noise modulated by the input signal. The output can be mixed back with the original input to add a convincing analog flavour. Read the documentation on AnalogNoiseSimulator::shotNoiseAtten, AnalogNoiseSimulator::whiteNoiseAtten and AnalogNoiseSimulator::noiseLevel for configuration options.
  * 
+ * **TODO: Bring the input controls forward**
+ * 
  * @tparam SignalIn Couples to an input to generate noise for. This can have as many channels as you like.
  * @tparam NoiseSpectrumSize The depth of the generator algorithm. Increasing the spectrum size adds lower frequency components to the noise and increases computation overhead. Values over 8 start to see diminishing returns as the frequencies added are not audible. Default is 5.
  */

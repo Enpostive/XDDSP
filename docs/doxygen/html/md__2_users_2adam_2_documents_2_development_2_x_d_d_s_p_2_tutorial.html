@@ -92,49 +92,50 @@ $(function(){initNavTree('md__2_users_2adam_2_documents_2_development_2_x_d_d_s_
   <div class="headertitle"><div class="title">XDDSP Tutorial </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md3"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md22"></a></p>
 <p>Welcome to this quick tutorial, where we will go over the use of the <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> library. First we will introduce some of the basic concepts and the low level classes that encapsulate those concepts. Then we will build a simple component which includes a filter and an LFO. Then we will go over the steps needed to integrate the resulting component into an application.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
-Design Goals</h2>
-<p><a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> is a header-only template library with a few design goals, which we will explore in this section.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
-A common base class for components.</h3>
-<p>The base class for the components is called <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a>. <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> is a template base class utilising CRTP (Curiously Recurring Template Pattern). It encapsulates a couple of common features that make up a typical DSP processing loop including the ability to split a process loop into smaller steps and trigger points.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
-Component inputs and outputs to have human readable names.</h3>
-<p>A second base class is used called <a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">XDDSP::Coupler</a> which also uses CRTP. <a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">XDDSP::Coupler</a> encapsulates mechanisms for fetching input samples in a consistent way and supports multi-channel connections and bulk transfers. Every input into a component may be specified as a template argument to specify the kind of coupler, and a constructor parameter which initialises the coupler, often with a compile time reference.</p>
-<p>Each component class in the library has inputs and outputs exposed as public members which can be addressed by name from other code outside of the component. The <a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">XDDSP::Coupler</a> class is designed to be exposed this way, encapsulating input and output logic and making it easy to specify the connections between components when designing your DSP network. I have found that most code completion features in modern IDEs can locate and auto-complete input and output names.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
-Maximising code-encapsulation and reusability.</h3>
+<p><a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> is a header-only template library with a few design goals, which we will explore in the next section.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+Design Goals</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+A common base class for components.</h2>
+<p>The base class for the components is called <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a>. <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> is a template base class utilising CRTP (Curiously Recurring Template Pattern). It encapsulates a couple of common features that make up a typical DSP processing loop. The prominent features are step sizes and trigger points.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+Component inputs and outputs to have human readable names.</h2>
+<p>A second base class is used called <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a> which also uses CRTP. <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a> encapsulates mechanisms for fetching input samples in a consistent way and supports multi-channel connections and bulk transfers. Every input into a component may be specified as a template argument to specify the kind of coupler, and a constructor parameter which initialises the coupler, often with a compile time reference.</p>
+<p>Each component class in the library has inputs and outputs exposed as public members which can be addressed by name from other code outside of the component. The <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a> class is designed to be exposed this way, encapsulating input and output logic and making it easy to specify the connections between components when designing your DSP network. I have found that most code completion features in modern IDEs can locate and auto-complete input and output names.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+Maximising code-encapsulation and reusability.</h2>
 <p><a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> is extremely modular. Each component is made to do just one thing and provide all the necessary connectivity required for its job. This means that, for example, the filter functionality is completely separate from the dynamics processing functionaliy and both are as easily interoperable as with the rest of the functions provided.</p>
-<p>Furthermore, common features such as control inputs from the user interface or samples from sample buffers are just as connectable as other components, each being encapsulated inside a class derived from <a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">XDDSP::Coupler</a>.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
-Portability and independence from other libraries.</h3>
+<p>Furthermore, common features such as control inputs from the user interface or samples from sample buffers are just as connectable as other components, each being encapsulated inside a class derived from <a class="el" href="class_x_d_d_s_p_1_1_coupler.html">Coupler</a>.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+Portability and independence from other libraries.</h2>
 <p>The library is written in C++17, which has become a widely accepted standard with many compilers being available across many platforms. The only prerequisite to use is the C++ standard library. This does mean that <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> currently lacks certain important features, such as the ability to load media from disk. However, you may find that implementing a coupler to interface with your favourite codec library is trivial, enabling any component in the library to interface with it.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
-As many opportunities for automatic optimisation as possible.</h3>
-<p>As <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> is predominantly a header-only template library, many C++ compilers can exploit inlining and loop-consolidation tricks to reduce code size and increase performance. My own experience with Clang and Ghidra have shown that complex networks can be reduced into a single inner loop and multi-layer connections between components can be optimised away.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+As many opportunities for automatic optimisation as possible.</h2>
+<p>As <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> is predominantly a header-only template library, many C++ compilers can exploit inlining and loop-consolidation tricks to reduce code size and increase performance. Code I have compiled with Clang and anaylised using Ghidra have multi-layer connections between components optimised away and many internal process loops have been merged into bigger loops.</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Building A Custom Component</h1>
-<p>Custom components in <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> consist of template classes which inherit from the <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> template. <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> exposes an interface to enable and disable the component, along with 6 virtual methods. Any class which inherits from this CRTP class is called a component.</p>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
-Component Enabling</h4>
-<p>You can check if any component is enabled by calling <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_isEnabled">XDDSP::Component::isEnabled</a>. You can change the enabled status by calling <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_isDisabled">XDDSP::Component::isDisabled</a>. Note that disabling the component will automatically reset it to mute its output buffers.</p>
-<p>You put your code to reset the component into <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545" title="This can be implemented to contain the code used to reset the component to a default known state.">XDDSP::Component::reset</a>. At a minimum, it is expected that <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545" title="This can be implemented to contain the code used to reset the component to a default known state.">XDDSP::Component::reset</a> will clear the output buffers of the component by filling them with zeroes.</p>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
-The Process Loop</h4>
-<p><a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> declares a method called <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c" title="This is the main entry point of the component. This method should be called after all the input sourc...">XDDSP::Component::process</a>. This method should be used by any code external to the component to run the process loop. Care should be taken to ensure that components are processed in the proper order, that is starting with components connected to the inputs and ending with components connected to outputs.</p>
-<p>The process loop in a component follows a specific routine. First, <a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93" title="This can be implemented to return a step size to use. It can return the same value each time,...">XDDSP::Component::startProcess</a> is called and the return value is kept as the step size. The step size is allowed to change to be whatever is necessary, as long as it is not bigger than the sampleCount parameter. The intention with step sizes is to allow control signals to be calculated at intervals as opposed to being calculated every sample. A good example is a biquad filter with a frequency input. Even a keen listener is not going to notice when filter coefficents are only updated every 16 samples or so. Being able to process in smaller steps also allows the process loop to "interrupt" the process at a predetermined point in the loop.</p>
-<p>After getting the step size, the process loop repeatedly calles <a class="el" href="class_x_d_d_s_p_1_1_component.html#a88928f12d1d0a3624e84e892379132c6" title="Is called repeatedly by Component::process with the start point incremented by step size....">XDDSP::Component::stepProcess</a> with step sized chunks. The process loop may call stepProcess with smaller chunks from time to time. The code inside <a class="el" href="class_x_d_d_s_p_1_1_component.html#a88928f12d1d0a3624e84e892379132c6" title="Is called repeatedly by Component::process with the start point incremented by step size....">XDDSP::Component::stepProcess</a> may call <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_setNextTrigger">XDDSP::Component::setNextTrigger</a> to set a trigger point. Because of how symbol resolution works in C++17, this method can only be called by using a "this dereference" like <span class="tt">this-&gt;setNextTrigger(trigger)</span>.</p>
-<p>When a trigger point is reached, the process loop calles <a class="el" href="class_x_d_d_s_p_1_1_component.html#a07c07a7f9101fe6e59ac7de4f43f505e" title="Is called when a trigger point is reached.">XDDSP::Component::triggerProcess</a> with the sample location of the trigger point.</p>
-<p>After the process loop processes the buffer, it calls <a class="el" href="class_x_d_d_s_p_1_1_component.html#a17c5cf4fb9fe5c30dc6d604e87bff0c4" title="Is called after all the blocks have been processed.">XDDSP::Component::finishProcess</a>.</p>
-<p>The <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> class implements default methods for all of these methods. All of them are empty methods, except for <a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93" title="This can be implemented to return a step size to use. It can return the same value each time,...">XDDSP::Component::startProcess</a>, the default implementation of which uses a template argument as the return value, unless sampleCount is smaller. This means that implementing a fixed sized step size is just a matter of providing the template argument in the <a class="el" href="class_x_d_d_s_p_1_1_component.html" title="A CRTP component template which encapsulates the implementation of the process loop logic....">XDDSP::Component</a> template parameters.</p>
-<p>All of these methods inside the process loop are called from the audio processing thread, meaning that they should be completely non-blocking and optimised for performance. Avoid memory allocations or deallocations, file operations or any other form of blocking IO. Mutex locking for inter-thread communication is sometimes needed to meet this requirement, it is best to keep those critical sections as short as possible.</p>
-<p><b>Note: In a future version these virtual methods will not be virtual and thus the object won't be polymorphic. All new software should avoid keeping pointers of <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html" title="A foundational base class for the CRTP base class to inherit from. Pointers of this type can point to...">XDDSP::ComponentBaseClass</a> and only keep pointers or references to derived classes instead.</b></p>
-<hr  />
-<h4 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
-Handy template</h4>
+<p>Custom components in <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> consist of template classes which inherit from the <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> template. <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> exposes an interface to enable and disable the component, along with 6 virtual methods. Any class which inherits from this CRTP class is called a component.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+Component Enabling</h2>
+<p>You can check if any component is enabled by calling <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_isEnabled">Component::isEnabled</a>. You can change the enabled status by calling <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_isDisabled">Component::isDisabled</a>. Note that disabling the component will automatically reset it to mute its output buffers.</p>
+<p>You put your code to reset the component into <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">Component::reset</a>. At a minimum, it is expected that <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">Component::reset</a> will clear the output buffers of the component by filling them with zeroes.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+The Process Loop</h2>
+<p><a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> declares a method called <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c">Component::process</a>. This method should be used by any code external to the component to run the process loop. Care should be taken to ensure that components are processed in the proper order, that is starting with components connected to the inputs and ending with components connected to outputs.</p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">Component::startProcess</a> is called at the beginning of the process loop and the return value is kept as the step size. The step size is allowed to change to be whatever is necessary, as long as it is not bigger than the sampleCount parameter. The intention with step sizes is to allow control signals to be calculated at intervals as opposed to being calculated every sample. A good example is a biquad filter with a frequency input. Even a keen listener is not going to notice when filter coefficents are only updated every 16 samples or so. Being able to process in smaller steps also allows the process loop to "interrupt" the process at a predetermined point in the loop.</p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_component.html#a88928f12d1d0a3624e84e892379132c6">Component::stepProcess</a> is called repeatedly with step sized chunks. The process loop may call stepProcess with smaller chunks from time to time.</p>
+<p>Your DSP code may call the protected method <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html#Component_setNextTrigger">Component::setNextTrigger</a> to set a trigger point. Because of how symbol resolution works in C++17, this method can only be accessed by referring indirectly through <span class="tt">this</span> like <span class="tt">this-&gt;setNextTrigger(trigger)</span>.</p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_component.html#a07c07a7f9101fe6e59ac7de4f43f505e">Component::triggerProcess</a> is called when a trigger point is reached.</p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_component.html#a17c5cf4fb9fe5c30dc6d604e87bff0c4">Component::finishProcess</a> is called after the process loop finishes.</p>
+<p>The <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> class gives you default implementations for all of these methods. All of the defaults are empty methods, except for <a class="el" href="class_x_d_d_s_p_1_1_component.html#ac71014690b2ff661f495d7d07ddbab93">Component::startProcess</a>, the default implementation of which uses a template argument as the return value, unless sampleCount is smaller. This means that implementing a fixed step size is just a matter of providing the template argument in the <a class="el" href="class_x_d_d_s_p_1_1_component.html">Component</a> template parameters.</p>
+<p>The intention is that you call <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c">Component::process</a> from the audio processing thread. Your implementations of these methods should be completely non-blocking and optimised for performance. Avoid memory allocations or deallocations, file operations or any other form of blocking IO. Mutex locking for inter-thread communication is sometimes needed to meet this requirement, it is best to keep those critical sections as short as possible.</p>
+<p><b>Note: These methods are currently virtual. In a future version these methods will not be virtual and thus the object won't be polymorphic. All new software should avoid keeping pointers of <a class="el" href="class_x_d_d_s_p_1_1_component_base_class.html">ComponentBaseClass</a> and only keep pointers or references to derived classes instead.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+Handy template</h2>
 <p>Here is a helpful template which you can copy into your application to use as a component class.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;XDDSP/XDDSP.h&quot;</span></div>
 <div class="line"> </div>
@@ -142,10 +143,8 @@ Handy template</h4>
 <div class="line"><span class="comment">// first, because they never have defaults.</span></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
 <div class="line"><span class="keyword">class </span>NewComponent : <span class="keyword">public</span> Component&lt;NewComponent&lt;SignalIn&gt;&gt; {</div>
-<div class="line">  </div>
-<div class="line">  <span class="comment">// Private data members here</span></div>
-<div class="line">  </div>
 <div class="line"> <span class="keyword">public</span>:</div>
+<div class="line">  <span class="comment">// A multi-channel component will look at the channel count of the input and put out the same channel count.</span></div>
 <div class="line">  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
 <div class="line">  </div>
 <div class="line">  <span class="comment">// Specify your inputs as public members here</span></div>
@@ -194,11 +193,131 @@ Handy template</h4>
 <div class="line">  }</div>
 <div class="line">};</div>
 </div><!-- fragment --><hr  />
-<h3 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
-Adding subcomponents</h3>
-<p>Here we have modified the template to include a dynamic biquad and an LFO</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+Adding DSP Code to a Component</h2>
+<p>For the purposes of completeness, we will look at a very simple example component which zeroes out denormal numbers. To be clear, there is no reason why such a component would actually need to exist as there are better ways to remove denormals. But the example serves well to demonstrate how actual processing is performed inside a component.</p>
+<p>Let's take the above template and do a little excersise of spot-the-difference (the comments will give you clues).</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;XDDSP/XDDSP.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// First we use find/replace to change the name of our new component into something meaningful.</span></div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
+<div class="line"><span class="keyword">class </span>RemoveDenormals : <span class="keyword">public</span> Component&lt;RemoveDenormals&lt;SignalIn&gt;&gt; {</div>
+<div class="line"> <span class="keyword">public</span>:</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Declare how many channels this instance will use.</span></div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
+<div class="line">  </div>
+<div class="line">  SignalIn signalIn;</div>
+<div class="line">  </div>
+<div class="line">  Output&lt;Count&gt; signalOut;</div>
+<div class="line">  </div>
+<div class="line">  RemoveDenormals(Parameters &amp;p, SignalIn _signalIn) :</div>
+<div class="line">  signalIn(_signalIn),</div>
+<div class="line">  signalOut(p) <span class="comment">// &lt;--- Notice that we pass the parameters object to the output so that it can create the correct buffer size.</span></div>
+<div class="line">  {}</div>
+<div class="line">  </div>
+<div class="line">  <span class="keywordtype">void</span> reset() {</div>
+<div class="line">    signalOut.reset();</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// startProcess can be removed from our template because we can just use the default implementation.</span></div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// stepProcess is modified to have the actual code.</span></div>
+<div class="line">  <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">// Here you can do per-step calculations, such as updating filter co-efficients.</span></div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; Count; ++c) {</div>
+<div class="line">      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = startPoint, s = sampleCount; s--; ++i) {</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Put the next sample inside x</span></div>
+<div class="line">        SampleType x = signalIn(c, i);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Check to see if x is a denormal. If it is, zero it out.</span></div>
+<div class="line">        <span class="keywordflow">if</span> (std::fpclassify(x) == FP_SUBNORMAL)</div>
+<div class="line">          x = 0.;</div>
+<div class="line">        </div>
+<div class="line">        <span class="comment">// Write the output to the output buffer.</span></div>
+<div class="line">        signalOut.buffer(c, i) = x;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// triggerProcess and finishProcess are deleted as they are not needed.</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><p>The code throughout the library provides lots of different examples of how this template can be modified for different kinds of process.</p>
+<p>One thing to notice is now a component differentiates between single-channel and multi-channel operation. Our example looks at the <span class="tt">Count</span> property of the input coupler to determine how many channels it has. Then we set a static constant to the same value and make it public. That <span class="tt">Count</span> property is used to construct the <span class="tt">signalOut</span> coupler with the same number of channels.</p>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+Adding Subcomponents to Your Custom Component</h2>
+<p>A subcomponent can be added to a component by instantiating the class template of the required component (for a list see <a class="el" href="md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_reference.html#component_library_reference">Component Library Reference</a>) inside the parent component. It is safe to add new subcomponents as public members with their controls exposed, as the input method is determined by which Coupler classes are used as template parameters. These Coupler classes are in effect the inputs to the component and the behaviour of each coupler is fixed at compile time.</p>
+<p>At runtime, most couplers cannot be default constructed, so the parent class constructor must take the input couplers as parameters at run time. The actual couplers are usually copy constructed from the parameters.</p>
+<p>Below we have a new custom component for our App. The new component has only three subcomponents, the LFO, the control modulator and the filter.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+LFO</h3>
+<p>This code instantiates a custom oscillator using the <a class="el" href="class_x_d_d_s_p_1_1_func_oscillator.html">FuncOscillator</a> template.</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">FuncOscillator&lt;ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; lfo;</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>In our case, we have chosen a pair of <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> couplers as the inputs to the oscillator. The first input is a frequency in Hz, and the second is a phase modulation input, which we will ignore for now.</p>
+<p>The LFO is initialised in the class constructor initialisation list:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">ModulatingFilter(Parameters &amp;p, SignalIn _signalIn) :</div>
+<div class="line"> signalIn(_signalIn),</div>
+<div class="line"> lfo(p, {1.1}, {0.}), <span class="comment">// &lt;--- The LFO</span></div>
+<div class="line"> ...</div>
+</div><!-- fragment --><p>Every component takes a <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> object as the first parameter, and this is passed to each subcomponent. The parameters object is an object for holding commonly needed parameters, such as the current sample rate, and is explained later at <a class="el" href="#parameters">DSP Global Parameters</a>.</p>
+<p>After the parameters parameter come the couplers. Each one is copy constructed into their respective places. Thanks to some handy syntax sugar, the constructor for the <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> is simply given as <span class="tt">{1.1}</span> or <span class="tt">{0.}</span>, using the curly braces list-initialisation syntax.</p>
+<p>For example, the value can be set using <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html#aece6fe54fcc3c2292c5870f62fa281fc">ControlConstant::setControl</a></p>
+<div class="fragment"><div class="line">lfo.frequencyIn.setControl(4.1); <span class="comment">// An example of setting the frequency of the LFO to 4.1Hz</span></div>
+</div><!-- fragment --><p>The shape of the waveform defaults to a sine wave at the frequency specified. The func property can be overwritten with a new function, for example:</p>
+<div class="fragment"><div class="line">lfo.func = [&amp;](SampleType x) { <span class="keywordflow">return</span> x &lt; 0.5 }; <span class="comment">// An example of setting the waveform to a square wave.</span></div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+Control Modulator</h3>
+<p>The control modulator component takes a signal from an LFO or an envelope and rescales it to fit between a minimum and maximum value. An LFO outputs a signal between -1 and 1, while an envelope outputs a signal between 0 and 1. Either way, the input signal is allowed to be any value and the output signal will still be valid.</p>
+<div class="fragment"><div class="line">ControlModulator&lt;Connector&lt;<span class="keyword">decltype</span>(lfo.signalOut)&gt;, ControlConstant&lt;&gt;, ControlConstant&lt;&gt;, ControlModulatorModes::BiExponential&gt; freq;</div>
+</div><!-- fragment --><p>The control modulator takes three input signals. The <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> appears for the second and third inputs and they behave the same as before. The first input uses a different coupler called <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a>. This coupler takes the type of output as a template parameter. In this instance, we are using <span class="tt">decltype(lfo.signalOut)</span> as the type for the connector because we intend to connect to <span class="tt">lfo.signalOut</span> later on.</p>
+<p>The initialisation looks like:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">lfo(p, {1.1}, {0.}),</div>
+<div class="line">freq(p, {lfo.signalOut}, {500.}, {2000.}), <span class="comment">// &lt;--- The control modulator</span></div>
+<div class="line">flt(p, {signalIn}, {freq.signalOut}, {0.7}, {0.}),</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>The parameters object comes first, followed by a list-initialised coupler connecting to the <span class="tt">lfo.signalOut</span> output. Then the two control constants are initialised to output a minimum of 500Hz and a maximum of 2000Hz.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+Filter</h3>
+<p>We will use the <a class="el" href="class_x_d_d_s_p_1_1_dynamic_biquad.html">DynamicBiquad</a> template for the actual filter.</p>
+<div class="fragment"><div class="line">DynamicBiquad&lt;Connector&lt;<span class="keyword">decltype</span>(signalIn)&gt;, Connector&lt;<span class="keyword">decltype</span>(freq.signalOut)&gt;, ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; flt;</div>
+</div><!-- fragment --><p>We use <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a> to connect the input signal and the control modulator signal as inputs, and <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> is used for the quality and gain inputs.</p>
+<p>Note in the documentation for <a class="el" href="class_x_d_d_s_p_1_1_dynamic_biquad.html">DynamicBiquad</a>, the template actually has five arguments, the signal, frequency, quality, gain and step size arguments. Because the step size argument defaults to 16, we don't need to specify an argument. With this default behaviour, the component will only update its filter coefficients every 16 samples. Here is an example which changes the step size to 32:</p>
+<div class="fragment"><div class="line">DynamicBiquad&lt;Connector&lt;<span class="keyword">decltype</span>(signalIn)&gt;, Connector&lt;<span class="keyword">decltype</span>(freq.signalOut)&gt;, ControlConstant&lt;&gt;, ControlConstant&lt;&gt;, 32&gt; flt;</div>
+</div><!-- fragment --><p>The filter constructor connects the connectors to signalIn and freq.signalOut, and sets the filter quality and gain values to 0.7 and 0dB respectively. We can also see here the signalOut constructor, which is an <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a> that is left to be used as the main output for the component.</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">flt(p, {signalIn}, {freq.signalOut}, {0.7}, {0.}), <span class="comment">// &lt;--- The filter</span></div>
+<div class="line">signalOut({flt.signalOut})</div>
+<div class="line">...</div>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+The process loop</h3>
+<p>The process loop needs to be modified to include the process loops of the subcomponents.</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">void reset() {</div>
+<div class="line"> lfo.reset();</div>
+<div class="line"> freq.reset();</div>
+<div class="line"> flt.reset();</div>
+<div class="line">}</div>
+<div class="line">...</div>
+<div class="line">void stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line"> lfo.process(startPoint, sampleCount);</div>
+<div class="line"> freq.process(startPoint, sampleCount);</div>
+<div class="line"> flt.process(startPoint, sampleCount);</div>
+<div class="line">}</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>As you can see, the minimum requirement is to call the reset and process methods of each subcomponent inside the respective parent methods. The order in which you call each process method is important. You need to follow the signal flow. For example, <span class="tt">lfo</span> should be processed <b>before</b> <span class="tt">freq</span> because <span class="tt">freq</span> takes the output of <span class="tt">lfo</span> as its input.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+Completed Example</h3>
+<p>Once again, we can take the template given above and make some trivial changes to implement our custom component. The comments describe what changes have been made.</p>
 <div class="fragment"><div class="line"><span class="comment">// I&#39;ve removed all the previous comments and added new comments to highlight changes</span></div>
-<div class="line"><span class="comment">// The first change is to rename the component to something meaningful</span></div>
+<div class="line"><span class="comment">// The first change is to use find/replace to rename the component to something meaningful</span></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
 <div class="line"><span class="keyword">class </span>ModulatingFilter : <span class="keyword">public</span> Component&lt;ModulatingFilter&lt;SignalIn&gt;&gt; {</div>
 <div class="line"> </div>
@@ -207,8 +326,6 @@ Adding subcomponents</h3>
 <div class="line"> </div>
 <div class="line"> SignalIn signalIn;</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment">// Subcomponents can be added as public members of the component class with their controls exposed.</span></div>
-<div class="line"> <span class="comment">// Create a new component class by instantiating a template with Coupler classes as inputs.</span></div>
 <div class="line"> </div>
 <div class="line"> <span class="comment">// Here is the LFO. The frequency and phase of the LFO are exposed as control constants.</span></div>
 <div class="line"> <span class="comment">// ControlConstant&lt;&gt; can be used directly as an input as it is a type of coupler.</span></div>
@@ -251,7 +368,192 @@ Adding subcomponents</h3>
 <div class="line"> </div>
 <div class="line"> <span class="comment">// triggerProcess and finishProcess have been removed because they are not needed.</span></div>
 <div class="line">};</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+Bringing Important Controls Forward</h2>
+<p>We can develop our component further by bringing important controls into the parent component, instead of leaving them as members of the subcomponents.</p>
+<div class="fragment"><div class="line">SignalIn signalIn;</div>
+<div class="line">ControlConstant&lt;&gt; lfoFreq {1.1};</div>
+<div class="line">ControlConstant&lt;&gt; minHz {500.};</div>
+<div class="line">ContronConstant&lt;&gt; maxHz {2000.};</div>
+<div class="line">ControlConstant&lt;&gt; fltQ {0.7};</div>
+<div class="line">ControlConstant&lt;&gt; fltGaindB {0.0};</div>
+<div class="line">...</div>
+<div class="line">FuncOscillator&lt;Connector&lt;<span class="keyword">decltype</span>(lfoFreq)&gt;, ControlConstant&lt;&gt;&gt; lfo;</div>
+<div class="line"> </div>
+<div class="line">ControlModulator&lt;Connector&lt;<span class="keyword">decltype</span>(lfo.signalOut)&gt;, Connector&lt;<span class="keyword">decltype</span>(minHz)&gt;, Connector&lt;<span class="keyword">decltype</span>(maxHz)&gt;, ControlModulatorModes::BiExponential&gt; freq;</div>
+<div class="line"> </div>
+<div class="line">DynamicBiquad&lt;Connector&lt;<span class="keyword">decltype</span>(signalIn)&gt;, Connector&lt;<span class="keyword">decltype</span>(freq.signalOut)&gt;, Connector&lt;<span class="keyword">decltype</span>(fltQ)&gt;, Connector&lt;<span class="keyword">decltype</span>(fltGaindB)&gt;&gt; flt;</div>
+<div class="line">...</div>
+<div class="line">lfo(p, {lfoFreq}, {0.}),</div>
+<div class="line">freq(p, {lfo.signalOut}, {minHz}, {maxHz}),</div>
+<div class="line">flt(p, {signalIn}, {freq.signalOut}, {fltQ}, {fltGaindB}),</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>Here, we have moved the <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> objects out as public members, where they can be initialised in place. Each subcomponent has a <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a> where control constants were used before. I'll leave it as an exersise to the reader to see what happens when the control constant objects are replaced with an <a class="el" href="class_x_d_d_s_p_1_1_ramp.html">Ramp</a> objects. Remember that control constants are couplers, while the ramp is a subcomponent.</p>
+<p>The control constants can also be made private to prevent outside objects changing the settings.</p>
+<p>Here is a more complete example of controls brought forward:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> SignalIn&gt;</div>
+<div class="line"><span class="keyword">class </span>ModulatingFilter : <span class="keyword">public</span> Component&lt;ModulatingFilter&lt;SignalIn&gt;&gt; {</div>
+<div class="line"> <span class="keyword">private</span>:</div>
+<div class="line"> <span class="comment">// Hiding the phaseIn control of the lfo.</span></div>
+<div class="line"> ControlConstant&lt;&gt; lfoPhase {0.};</div>
+<div class="line"> </div>
+<div class="line"> <span class="keyword">public</span>:</div>
+<div class="line"> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> Count = SignalIn::Count;</div>
+<div class="line"> </div>
+<div class="line"> SignalIn signalIn;</div>
+<div class="line"> ControlConstant&lt;&gt; lfoFreq {1.1};</div>
+<div class="line"> ControlConstant&lt;&gt; minHz {500.};</div>
+<div class="line"> ContronConstant&lt;&gt; maxHz {2000.};</div>
+<div class="line"> ControlConstant&lt;&gt; fltQ {0.7};</div>
+<div class="line"> ControlConstant&lt;&gt; fltGaindB {0.0};</div>
+<div class="line"> </div>
+<div class="line"> FuncOscillator&lt;Connector&lt;<span class="keyword">decltype</span>(lfoFreq)&gt;, Connector&lt;<span class="keyword">decltype</span>(lfoPhase)&gt;&gt; lfo;</div>
+<div class="line"> ControlModulator&lt;Connector&lt;<span class="keyword">decltype</span>(lfo.signalOut)&gt;, Connector&lt;<span class="keyword">decltype</span>(minHz)&gt;, Connector&lt;<span class="keyword">decltype</span>(maxHz)&gt;, ControlModulatorModes::BiExponential&gt; freq;</div>
+<div class="line"> DynamicBiquad&lt;Connector&lt;<span class="keyword">decltype</span>(signalIn)&gt;, Connector&lt;<span class="keyword">decltype</span>(freq.signalOut)&gt;, Connector&lt;<span class="keyword">decltype</span>(fltQ)&gt;, Connector&lt;<span class="keyword">decltype</span>(fltGaindB)&gt;&gt; flt;</div>
+<div class="line"> </div>
+<div class="line"> Connector&lt;<span class="keyword">decltype</span>(flt.signalOut)&gt; signalOut;</div>
+<div class="line"> </div>
+<div class="line"> ModulatingFilter(Parameters &amp;p, SignalIn _signalIn) :</div>
+<div class="line"> signalIn(_signalIn),</div>
+<div class="line"> lfo(p, {lfoFreq}, {lfoPhase}),</div>
+<div class="line"> freq(p, {lfo.signalOut}, {minHz}, {maxHz}),</div>
+<div class="line"> flt(p, {signalIn}, {freq.signalOut}, {fltQ}, {fltGaindB}),</div>
+<div class="line"> signalOut({flt.signalOut})</div>
+<div class="line"> {}</div>
+<div class="line"> </div>
+<div class="line"> <span class="keywordtype">void</span> reset() {</div>
+<div class="line">  lfo.reset();</div>
+<div class="line">  freq.reset();</div>
+<div class="line">  flt.reset();</div>
+<div class="line"> }</div>
+<div class="line"> </div>
+<div class="line"> <span class="keywordtype">void</span> stepProcess(<span class="keywordtype">int</span> startPoint, <span class="keywordtype">int</span> sampleCount) {</div>
+<div class="line">  lfo.process(startPoint, sampleCount);</div>
+<div class="line">  freq.process(startPoint, sampleCount);</div>
+<div class="line">  flt.process(startPoint, sampleCount);</div>
+<div class="line"> }</div>
+<div class="line">};</div>
+</div><!-- fragment --><p>In some circumstances, it makes sense to <b>not</b> bring controls forward and just leave controls as members of the subcomponents. For example, if you have a component which has two LFOs, you might leave the frequency setting of each LFO as a control constant on the actual subcomponent which can make external code clearer.</p>
+<p>Take this example:</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line">class DualLFO : <span class="keyword">public</span> Component&lt;DualLFO&gt;</div>
+<div class="line">{</div>
+<div class="line"> FuncOscillator&lt;ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; lfo1;</div>
+<div class="line"> FuncOscillator&lt;ControlConstant&lt;&gt;, ControlConstant&lt;&gt;&gt; lfo2;</div>
+<div class="line">}</div>
+<div class="line">...</div>
+<div class="line">DualLFO dualLFO;</div>
+<div class="line">dualLFO.lfo1.frequencyIn.setControl(5); </div>
+<div class="line">dualLFO.lfo2.frequencyIn.setControl(7); </div>
+</div><!-- fragment --><p>It is clear in this example which lines are setting the frequency of LFO 1 and LFO 2.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+Integration</h1>
+<p>After creating your DSP network inside your component, it is time to bring it all together and start running audio through it. The library has a few different coupler types that you can use to connect your network inputs to the other parts of your app. We have already looked at <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a>, you can view the <a class="el" href="md__2_users_2adam_2_documents_2_development_2_x_d_d_s_p_2_reference.html#coupler_types">full list of available couplers</a> which come in handy for connecting components to each other and to external parts. Some useful examples include <a class="el" href="class_x_d_d_s_p_1_1_buffer_coupler.html">BufferCoupler</a>, <a class="el" href="class_x_d_d_s_p_1_1_buffer_reader.html">BufferReader</a>, <a class="el" href="class_x_d_d_s_p_1_1_plugin_input.html">PluginInput</a> or a custom coupler of your own making.</p>
+<p>Once you have decided on which coupler to use to connect your network inputs, you need a way to set basic parameters like sample rate and buffer size. The library provides the <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> class to do this job.</p>
+<p>We have to integrate the DSP network audio processing loop into the app to process the audio. This will involve calling <a class="el" href="class_x_d_d_s_p_1_1_component.html#aac9d097f94ec390ccd24e623c9d7f22c">Component::process</a>. Later in this chapter, we will be giving examples of this using the JUCE audio plugin development package.</p>
+<h2 class="doxsection"><a class="anchor" id="parameters"></a>
+DSP Global Parameters</h2>
+<p>The <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> class is dedicated to handling the kinds of parameters which are required in many places across the DSP network, such as sample rate and buffer size. Your app must construct at least one parameters object and pass it to every component in the network.</p>
+<p>Where appropriate, you may want to derive a new class from <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> to contain extra parameters. While the <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> class is intended to manage parameters which are needed across the entire network, there is no rules about what kind of parameters can or cannot be added in your derived class. There is one built-in derivative called <a class="el" href="class_x_d_d_s_p_1_1_poly_synth_parameters.html">PolySynthParameters</a> which handles parameters like the number of voices and oscillator tuning.</p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> supports listeners and a subclass called <a class="el" href="class_x_d_d_s_p_1_1_parameters_1_1_parameter_listener.html">Parameters::ParameterListener</a> can be extended by any class which wants to listen for changes. Currently, callbacks have been created which advertise changes to sample rate, buffer size and custom parameters.</p>
+<p>For more information, see <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a>.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+Reading output</h2>
+<p>All couplers support bulk transfers of sample data via a method called <a class="el" href="class_x_d_d_s_p_1_1_coupler.html#a5161343e1b59171f0ae42a8b12af90c0">Coupler::fastTransfer</a>. However, the primary use of this method is only to copy the final output from your custom component to your app output.</p>
+<p>This means that your custom class can use <b>any</b> coupler for its output. The most useful output couplers are <a class="el" href="class_x_d_d_s_p_1_1_output.html">Output</a>, <a class="el" href="class_x_d_d_s_p_1_1_connector.html">Connector</a> and <a class="el" href="class_x_d_d_s_p_1_1_p_connector.html">PConnector</a>. But you might want to use something like <a class="el" href="class_x_d_d_s_p_1_1_switch.html">Switch</a> or <a class="el" href="class_x_d_d_s_p_1_1_signal_modifier.html">SignalModifier</a> as an output or even <a class="el" href="class_x_d_d_s_p_1_1_sample_playback_head.html">SamplePlaybackHead</a>.</p>
+<p>The benefit of using a coupler for your components output is that it can be connected by another component as an input for that, meaning that your code stays modular and reusable.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+The final setup</h2>
+<p>Let's look at a setup which I have been primarily using this library for: Developing audio plugins using <a href="https://juce.com/">JUCE</a>.</p>
+<p>If you are not familiar with <a href="https://juce.com/">JUCE</a>, thankfully JUCE is fairly easy to understand. We won't go in depth into developing a complete plugin with JUCE as that is outside of the scope of this document. Instead we will focus on some simple code snippets which should give you an idea of how this library fits into a typical app.</p>
+<p>I have created my ModulatingFilter class as above, inside the <a class="el" href="namespace_x_d_d_s_p.html">XDDSP</a> namespace. I have created a project called DocumentExample, and the class names in this section follow the naming conventions adopted by JUCE.</p>
+<p>Inside the DocumentationExampleAudioProcessor class, we add a <a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> object and our ModulatingFilter giving it a <a class="el" href="class_x_d_d_s_p_1_1_plugin_input.html">PluginInput</a> coupler with 2 channels for the input. I also like to add a mutex, which I use to block parameter changes from happening while the process loop is running.</p>
+<div class="fragment"><div class="line">...</div>
+<div class="line"> <a class="code hl_class" href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a> dspParam;</div>
+<div class="line"> XDDSP::ModulatingFilter&lt;PluginInput&lt;2&gt;&gt; dsp;</div>
+<div class="line"> </div>
+<div class="line"> std::mutex mtx;</div>
+<div class="line">...</div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html">XDDSP::Parameters</a></div><div class="ttdoc">An object which encapsulates all of the basic parameters of a DSP network.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:35</div></div>
+</div><!-- fragment --><p>Next we move on to PluginProcessor.cpp where we add the code to set up the parameters inside <span class="tt">prepareToPlay</span>.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> DocumentationExampleAudioProcessor::prepareToPlay (<span class="keywordtype">double</span> sampleRate, <span class="keywordtype">int</span> samplesPerBlock)</div>
+<div class="line">{</div>
+<div class="line"> <span class="comment">// Here, JUCE tells us what the sample rate and buffer sizes are, so we add the code to put that into the parameters object.</span></div>
+<div class="line"> dspParam.<a class="code hl_function" href="class_x_d_d_s_p_1_1_parameters.html#a99a65beaa6968ea0ec2636325301e90c">setSampleRate</a>(sampleRate);</div>
+<div class="line"> dspParam.<a class="code hl_function" href="class_x_d_d_s_p_1_1_parameters.html#ad48ed9fba40257d8fe0730f5026485e0">setBufferSize</a>(samplesPerBlock);</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html_a99a65beaa6968ea0ec2636325301e90c"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html#a99a65beaa6968ea0ec2636325301e90c">XDDSP::Parameters::setSampleRate</a></div><div class="ttdeci">void setSampleRate(double newsr)</div><div class="ttdoc">Set the sample rate of the signal process.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:170</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html_ad48ed9fba40257d8fe0730f5026485e0"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html#ad48ed9fba40257d8fe0730f5026485e0">XDDSP::Parameters::setBufferSize</a></div><div class="ttdeci">void setBufferSize(int newbs)</div><div class="ttdoc">Set the buffer size that can be expected by the network.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:222</div></div>
+</div><!-- fragment --><p>Staying in PluginProcessor.cpp we add the code to call the process loop inside <span class="tt">processBlock</span>.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> DocumentationExampleAudioProcessor::processBlock (juce::AudioBuffer&lt;float&gt;&amp; buffer, juce::MidiBuffer&amp; midiMessages)</div>
+<div class="line">{</div>
+<div class="line"> <span class="comment">// Lock the mutex.</span></div>
+<div class="line"> std::unique_lock lock(mtx);</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Disable denormals using a handy JUCE class.</span></div>
+<div class="line"> juce::ScopedNoDenormals noDenormals;</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Connect the modulating filter input to the audio buffer.</span></div>
+<div class="line"> dsp.signalIn.connectFloats({buffer.getWritePointer(0), buffer.getWritePointer(1)}, buffer.getNumSamples());</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// OPTIONAL: Extract the transport information from the plugin host.</span></div>
+<div class="line"> syncTransport();</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Run the process loop.</span></div>
+<div class="line"> dsp.process(0, buffer.getNumSamples());</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Bulk transfer the output samples back into the audio buffer.</span></div>
+<div class="line"> dsp.signalOut.fastTransfer&lt;<span class="keywordtype">float</span>&gt;({buffer.getWritePointer(0), buffer.getWritePointer(1)}, buffer.getNumSamples());</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>And here is some example code to syncronise the transport section from the plugin host, if it is available.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> DocumentationExampleAudioProcessor::syncTransport()</div>
+<div class="line">{</div>
+<div class="line"> <span class="comment">// Get the playhead</span></div>
+<div class="line"> juce::AudioPlayHead* playhead = getPlayHead();</div>
+<div class="line"> <span class="keywordflow">if</span> (playhead)</div>
+<div class="line"> {</div>
+<div class="line">  <span class="comment">// Set aside some variables to get the info.</span></div>
+<div class="line">  <span class="keywordtype">double</span> tempo;</div>
+<div class="line">  <span class="keywordtype">double</span> ppq;</div>
+<div class="line">  <span class="keywordtype">double</span> seconds;</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Get the play position from the playhead.</span></div>
+<div class="line">  <span class="keyword">auto</span> optPositionInfo = playhead-&gt;getPosition();</div>
+<div class="line">  juce::AudioPlayHead::PositionInfo posInfo = optPositionInfo.orFallback(juce::AudioPlayHead::PositionInfo());</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Get the current transport information from the parameters to fall back on.</span></div>
+<div class="line">  dspParam.<a class="code hl_function" href="class_x_d_d_s_p_1_1_parameters.html#aaf1eef39514064bf7eb17132f1c57468">getTransportInformation</a>(tempo, ppq, seconds);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Syncronise the temporary variables with whatever is available.</span></div>
+<div class="line">  tempo = posInfo.getBpm().orFallback(tempo);</div>
+<div class="line">  ppq = posInfo.getPpqPosition().orFallback(ppq);</div>
+<div class="line">  seconds = posInfo.getTimeInSeconds().orFallback(seconds);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Set the new transport information back to the parameters object.</span></div>
+<div class="line">  dspParam.<a class="code hl_function" href="class_x_d_d_s_p_1_1_parameters.html#a939bc6c7e889f2d50d9db216895c75ff">setTransportInformation</a>(tempo, ppq, seconds);</div>
+<div class="line"> }</div>
+<div class="line"> <span class="keywordflow">else</span></div>
+<div class="line"> {</div>
+<div class="line">  <span class="comment">// There&#39;s no transport information in this case, so we clear the transport information in the parameters object.</span></div>
+<div class="line">  dspParam.<a class="code hl_function" href="class_x_d_d_s_p_1_1_parameters.html#ae9ba29d0e8021bde5dd6e07a597c206c">clearTransportInformation</a>();</div>
+<div class="line"> }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html_a939bc6c7e889f2d50d9db216895c75ff"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html#a939bc6c7e889f2d50d9db216895c75ff">XDDSP::Parameters::setTransportInformation</a></div><div class="ttdeci">void setTransportInformation(double tempo, double ppq, double seconds)</div><div class="ttdoc">Set the transport information.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:268</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html_aaf1eef39514064bf7eb17132f1c57468"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html#aaf1eef39514064bf7eb17132f1c57468">XDDSP::Parameters::getTransportInformation</a></div><div class="ttdeci">bool getTransportInformation(double &amp;tempo, double &amp;ppq, double &amp;seconds) const</div><div class="ttdoc">Get the most recent transport information notification.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:305</div></div>
+<div class="ttc" id="aclass_x_d_d_s_p_1_1_parameters_html_ae9ba29d0e8021bde5dd6e07a597c206c"><div class="ttname"><a href="class_x_d_d_s_p_1_1_parameters.html#ae9ba29d0e8021bde5dd6e07a597c206c">XDDSP::Parameters::clearTransportInformation</a></div><div class="ttdeci">void clearTransportInformation()</div><div class="ttdoc">Clear the flag which indicates that transport information is valid.</div><div class="ttdef"><b>Definition</b> XDDSP_Parameters.h:293</div></div>
+</div><!-- fragment --><p>We also set up parameter listeners to pass on user control changes to the DSP network. There are many ways to do this and you might have a favourite configuration, but my configuration involves a custom ParameterListener class which takes a lamba like this:</p>
+<div class="fragment"><div class="line">lfoFrequencyParameter.onChange = [&amp;](<span class="keywordtype">float</span> newValue)</div>
+<div class="line">{</div>
+<div class="line"> <span class="comment">// Lock the mutex, so we don&#39;t change the parameter while the process loop is running.</span></div>
+<div class="line"> std::unique_lock lock(mtx);</div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// Make the change. The new value given by the parameter listener is already bounds checked.</span></div>
+<div class="line"> dsp.lfoFreq.setControl(newValue);</div>
+<div class="line">};</div>
+</div><!-- fragment --><p>Here we are setting the LFO frequency by setting the control value from the <a class="el" href="class_x_d_d_s_p_1_1_control_constant.html">ControlConstant</a> we brought foward earlier. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

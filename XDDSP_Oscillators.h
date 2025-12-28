@@ -35,7 +35,7 @@ namespace XDDSP
  /**
   * @brief A basic multi-channel oscillator which uses a callable object to generate a waveform.
   * 
-  * This object calls FuncOscillator::func with a value between 0 and 1. func must be set to a callable object before any processing begins, otherwise the component will crash.
+  * This object calls FuncOscillator::func with a value between 0 and 1. Upon construction, the func object is pointed to a basic sine wave function.
   * 
   * This object supports basic phase modulation. There is no anti-aliasing.
   * 
@@ -59,7 +59,7 @@ private:
 public:
  
  /**
-  * @brief The callable object must be loaded here first before calling Component::process.
+  * @brief This is where you put the callable object which will produce the waveform samples.
   * 
   */
  WaveformFunction func;

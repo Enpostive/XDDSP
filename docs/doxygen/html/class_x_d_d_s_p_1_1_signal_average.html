@@ -92,6 +92,11 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_signal_average.html','','class_x_d
   <div class="headertitle"><div class="title">XDDSP::SignalAverage&lt; SignalIn, SquareInputSignal &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A component for outputing a signal which tracks the average level of the input signal.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_x_d_d_s_p___monitors_8h_source.html">XDDSP_Monitors.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for XDDSP::SignalAverage&lt; SignalIn, SquareInputSignal &gt;:</div>
 <div class="dyncontent">
@@ -108,12 +113,12 @@ Inheritance diagram for XDDSP::SignalAverage&lt; SignalIn, SquareInputSignal &gt
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6404915e41410989c7b5ad2abd0acb39" id="r_a6404915e41410989c7b5ad2abd0acb39"><td class="memItemLeft" align="right" valign="top"><a id="a6404915e41410989c7b5ad2abd0acb39" name="a6404915e41410989c7b5ad2abd0acb39"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SignalAverage</b> (<a class="el" href="class_x_d_d_s_p_1_1_parameters.html">Parameters</a> &amp;p, SignalIn _signalIn)</td></tr>
-<tr class="memitem:a1c1c6cc618c6deae239cf482e7bb93bf" id="r_a1c1c6cc618c6deae239cf482e7bb93bf"><td class="memItemLeft" align="right" valign="top"><a id="a1c1c6cc618c6deae239cf482e7bb93bf" name="a1c1c6cc618c6deae239cf482e7bb93bf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMaximumWindowSize</b> (SampleType _maxWindowSize)</td></tr>
+<tr class="memitem:a1c1c6cc618c6deae239cf482e7bb93bf" id="r_a1c1c6cc618c6deae239cf482e7bb93bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c1c6cc618c6deae239cf482e7bb93bf">setMaximumWindowSize</a> (SampleType _maxWindowSize)</td></tr>
+<tr class="memdesc:a1c1c6cc618c6deae239cf482e7bb93bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum window size and allocate the required memory.  <br /></td></tr>
 <tr class="memitem:aea0cbd55821926045632dd14a8d1a8f0" id="r_aea0cbd55821926045632dd14a8d1a8f0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea0cbd55821926045632dd14a8d1a8f0">updateSampleRate</a> (double sr, double isr) override</td></tr>
 <tr class="memdesc:aea0cbd55821926045632dd14a8d1a8f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get notified of an update to the sample rate.  <br /></td></tr>
-<tr class="memitem:a71663725dcb1925fd492e2dc1094c02a" id="r_a71663725dcb1925fd492e2dc1094c02a"><td class="memItemLeft" align="right" valign="top"><a id="a71663725dcb1925fd492e2dc1094c02a" name="a71663725dcb1925fd492e2dc1094c02a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setWindowSize</b> (SampleType _windowSize)</td></tr>
+<tr class="memitem:a71663725dcb1925fd492e2dc1094c02a" id="r_a71663725dcb1925fd492e2dc1094c02a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71663725dcb1925fd492e2dc1094c02a">setWindowSize</a> (SampleType _windowSize)</td></tr>
+<tr class="memdesc:a71663725dcb1925fd492e2dc1094c02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the window size to use without allocating extra memory.  <br /></td></tr>
 <tr class="memitem:ae131a952a1d99ee05147ed3569926beb" id="r_ae131a952a1d99ee05147ed3569926beb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae131a952a1d99ee05147ed3569926beb">reset</a> () override</td></tr>
 <tr class="memdesc:ae131a952a1d99ee05147ed3569926beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This can be implemented to contain the code used to reset the component to a default known state.  <br /></td></tr>
 <tr class="memitem:a0b6e5d9534118be6aa1814894e97ce1b" id="r_a0b6e5d9534118be6aa1814894e97ce1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b6e5d9534118be6aa1814894e97ce1b">stepProcess</a> (int startPoint, int sampleCount) override</td></tr>
@@ -164,7 +169,18 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a3be65e7b818f2b43f06d51aebbacefc1 inherit pro_attribs_class_x_d_d_s_p_1_1_component_base_class" id="r_a3be65e7b818f2b43f06d51aebbacefc1"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>samplesToNextTrigger</b> = -1</td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename SignalIn, int SquareInputSignal = 0&gt;<br />
+class XDDSP::SignalAverage&lt; SignalIn, SquareInputSignal &gt;</div><p>A component for outputing a signal which tracks the average level of the input signal. </p>
+<p>This component uses a circular buffer to take a rectangle window average, as opposed to using a One-Pole filter</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">SignalIn</td><td>Couples to an input to average out. This can have as many channels as you like. </td></tr>
+    <tr><td class="paramname">SquareInputSignal</td><td>Set this to 1 to cause the component to square every input value before taking the average. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ae131a952a1d99ee05147ed3569926beb" name="ae131a952a1d99ee05147ed3569926beb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae131a952a1d99ee05147ed3569926beb">&#9670;&#160;</a></span>reset()</h2>
 
@@ -194,6 +210,77 @@ template&lt;typename SignalIn, int SquareInputSignal = 0&gt; </div>
 <p>At a minimum, it is expected that this method fills all output buffers with zeroes. </p>
 
 <p>Reimplemented from <a class="el" href="class_x_d_d_s_p_1_1_component.html#a7fb7ab876decfdd94c1ba3dd9f167545">XDDSP::Component&lt; SignalAverage&lt; SignalIn &gt; &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a1c1c6cc618c6deae239cf482e7bb93bf" name="a1c1c6cc618c6deae239cf482e7bb93bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1c6cc618c6deae239cf482e7bb93bf">&#9670;&#160;</a></span>setMaximumWindowSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn, int SquareInputSignal = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_signal_average.html">XDDSP::SignalAverage</a>&lt; SignalIn, SquareInputSignal &gt;::setMaximumWindowSize </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_maxWindowSize</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the maximum window size and allocate the required memory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_maxWindowSize</td><td>The desired maximum window size. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a71663725dcb1925fd492e2dc1094c02a" name="a71663725dcb1925fd492e2dc1094c02a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71663725dcb1925fd492e2dc1094c02a">&#9670;&#160;</a></span>setWindowSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename SignalIn, int SquareInputSignal = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_x_d_d_s_p_1_1_signal_average.html">XDDSP::SignalAverage</a>&lt; SignalIn, SquareInputSignal &gt;::setWindowSize </td>
+          <td>(</td>
+          <td class="paramtype">SampleType</td>          <td class="paramname"><span class="paramname"><em>_windowSize</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the window size to use without allocating extra memory. </p>
+<p>Does bounds checking against the maximum window size. The accumulated average is recalculated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_windowSize</td><td>The desired window size. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

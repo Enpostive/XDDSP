@@ -93,7 +93,7 @@ $(function(){initNavTree('class_x_d_d_s_p_1_1_output_buffer.html','','class_x_d_
 </div><!--header-->
 <div class="contents">
 
-<p>An implementation of a buffer to be used to store output data from a DSP process. Instead of inheriting the coupler code above, a similar interface is presented which returns references to the samples requested, enabling them to be written by DSP code.  
+<p>An implementation of a buffer to be used to store output data from a DSP process.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_x_d_d_s_p___classes_8h_source.html">XDDSP_Classes.h</a>&gt;</code></p>
@@ -141,7 +141,8 @@ static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>Count
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;int BufferCount&gt;<br />
-class XDDSP::OutputBuffer&lt; BufferCount &gt;</div><p>An implementation of a buffer to be used to store output data from a DSP process. Instead of inheriting the coupler code above, a similar interface is presented which returns references to the samples requested, enabling them to be written by DSP code. </p>
+class XDDSP::OutputBuffer&lt; BufferCount &gt;</div><p>An implementation of a buffer to be used to store output data from a DSP process. </p>
+<p><a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">Coupler</a> exposes a similar interface to <a class="el" href="class_x_d_d_s_p_1_1_coupler.html" title="A template class which encapsulates the connection paradigm.">XDDSP::Coupler</a> which returns references to the samples requested, enabling them to be written by DSP code. This object listens to <a class="el" href="class_x_d_d_s_p_1_1_parameters.html" title="An object which encapsulates all of the basic parameters of a DSP network.">XDDSP::Parameters</a> and automatically resizes the buffer when it is commanded to.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">BufferCount</td><td>The number of channels to support </td></tr>
