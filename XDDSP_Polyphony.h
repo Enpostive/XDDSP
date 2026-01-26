@@ -167,8 +167,6 @@ public:
  * 
  * **The component given as InternalComponent must have an output named signalOut**
  * 
- * TODO: Add another template argument to specify the output to sum, instead of assuming the output is called signalOut.
- * 
  * @tparam InternalComponent The class of the component to make an array of.
  * @tparam ComponentCount The size of the array.
  */
@@ -367,8 +365,6 @@ public:
  * @brief A special component which connects to a collection of voices to make a polyphonic component.
  * 
  * **The component given as InternalComponent must have an input named noteIn, an input named velocityIn and an output named signalOut**
- * 
- * TODO: Add another template argument to specify the input names and an output to sum, instead of assuming the names given above.
  * 
  * @tparam VoiceComponent The component that makes up each individual voice.
  * @tparam MaxVoiceCount The maximum number of voices allowed.
