@@ -477,24 +477,24 @@ class MIDIPoly : public Parameters::ParameterListener
   int allocated = voiceCount;
   bool isNotesOn {voiceOrder.size() > 0};
   
-   // Check if there is another voice already playing the same note
-   for (int i = 0; i < voiceCount; ++i)
-   {
+  // Check if there is another voice already playing the same note
+  for (int i = 0; i < voiceCount; ++i)
+  {
    if (voices[i]->noteNumber == ns.note) allocated = i;
-   }
-   
-   // If a voice is already playing the note, steal it!
-   if (allocated < voiceCount)
-   {
+  }
+  
+  // If a voice is already playing the note, steal it!
+  if (allocated < voiceCount)
+  {
    int i;
    for (i = 0;
-   i < voiceOrder.size() && voiceOrder[i] != allocated;
-   ++i)
+        i < voiceOrder.size() && voiceOrder[i] != allocated;
+        ++i)
    {}
    
    if (i < voiceOrder.size()) voiceOrder.erase(voiceOrder.begin() + i);
-   }
-   else
+  }
+  else
   {
    allocated = 0;
    
